@@ -14,6 +14,16 @@ def escape_md(text):
     return text.replace("|", "\\|").replace("\n", " ").replace("\r", "")
 
 def classify_change(line_no, sid, ja, old_cn, new_cn):
+    # com34 specific
+    if "ブロンドとは" in ja or "地毛は黒" in ja or "ナマハゲ" in ja or "悪いごいねが" in ja or "馬鹿キャラ" in ja or "頭に栄養が行ってない" in ja or "脱色" in ja:
+        return "金发笨蛋人设与生剥鬼恐吓论", "全章爆笑高潮与金发哲学：莳菜误以为满因大脑缺乏营养才变成笨蛋金发；天音自曝拿‘不吃饭就变成满那样’恐吓莳菜令其狼吞虎咽，满抓狂咆哮自己成了专吓小孩的生剥鬼（秋田Namahage）；满怒吼发根是纯黑，雄二最终评语升华‘所谓金发乃是灵魂与活法本身’"
+    if "ヤキソバ丼" in ja or "ＹＤ" in ja or "炭水化物" in ja or "粉モン" in ja or "関西人絶対変" in ja or "お好み丼" in ja or "たこ焼き丼" in ja:
+        return "炒面盖饭碳水轰炸与关西面粉异端论", "神级美食文化交锋：莳菜揭露吃咖喱先灌牛奶护胃并热爱‘YD’（炒面盖饭：白米饭铺卷心菜扣热炒面）；满震惊于‘碳水化合物叠加碳水化合物’的暴行；天音为御好烧盖饭、章鱼烧盖饭等关西粉物（粉モン）辩护，满怒斥关西人配牛奶吃炒面盖饭绝对脑子有病"
+    if "イトコ煮" in ja or "かぼちゃ" in ja or "バウムクーヘン" in ja or "カステラ" in ja or "カリントウ" in ja or "好き嫌い" in ja:
+        return "南瓜红豆表亲煮与干噎甜点大辩论", "奇葩饮食日常：天音提起曾给雄二做过南瓜红豆表亲煮（いとこ煮），满抗议南瓜又干又粉绝不能当下饭菜；天音拿年轮蛋糕、长崎蛋糕（カステラ）、花林糖（カリントウ）配牛奶反诘，莳菜自曝嗜甜将冰镇表亲煮就冰牛奶当夏日极品点心"
+    if "ガリ中" in ja or "ガーリックチキン" in ja or "贅沢焼きプリン" in ja or "自意識過剰" in ja or "ブスになる" in ja or "プリン様の仇" in ja or "ギブギブ" in ja or "かぼちゃアイス" in ja:
+        return "蒜香炸鸡中毒女与奢华烤布丁血仇", "全章爆笑开端：满日常采购蒜香炸鸡便当被莳菜天音调侃便利店外号‘蒜中’（蒜香炸鸡中毒女）；莳菜毒舌‘自我意识过剩变丑八怪’趁机偷吃满的顶配奢华烤布丁；满暴走掐脖为布丁大人复仇，天音以准备送给雄二的南瓜冰淇淋息事宁人"
+
     # com33 specific
     if "『Ｓ』" in ja or "言葉責め" in ja or "性癖の目覚め" in ja or "胸があたたかく" in ja or "遠ざけられるのは辛い" in ja or "紛らわせる" in ja:
         return "抖S觉醒告白与心意相通的温暖送别", "全章温情与反差高光：幸直言雄二毫不留情的言语责难让自己‘体内觉醒了某种不得了的东西（S与M）’，雄二吐槽遭同班同学告白性癖；幸对雄二愿意帮她向学园长交涉养猫深表感谢，坦言‘只要有一人懂我这份心情，心里就暖洋洋的’；雄二默默陪伴加快脚步的幸，深悟替其分担离别痛楚的跟踪意义"
@@ -1540,6 +1550,32 @@ def build_report():
                 "section": "灰色的果实·共通线第三十三章商店街暗号密谈与小幸的流浪猫之约 (grisaia1/com33)"
             })
 
+    # com34
+    for lno in range(20043, 20133):
+        ja_raw = ja_lines[lno - 1]
+        cn_raw = cn_lines[lno - 1]
+        sid = ja_raw.split("\t")[0] if "\t" in ja_raw else f"L{lno}"
+        ja_txt = ja_raw.split("\t")[1] if "\t" in ja_raw else ja_raw
+        cn_txt = cn_raw.split("\t")[1] if "\t" in cn_raw else cn_raw
+
+        old_txt = cn_txt
+        if git_base_cn and len(git_base_cn) >= lno:
+            head_raw = git_base_cn[lno - 1]
+            old_txt = head_raw.split("\t")[1] if "\t" in head_raw else head_raw
+
+        if cn_txt != old_txt:
+            cat, reason = classify_change(lno, sid, ja_txt, old_txt, cn_txt)
+            diffs.append({
+                "lno": lno,
+                "sid": sid,
+                "ja": ja_txt,
+                "old": old_txt,
+                "new": cn_txt,
+                "cat": cat,
+                "reason": reason,
+                "section": "灰色的果实·共通线第三十四章蒜中外号布丁血仇与生剥鬼金发辩论 (grisaia1/com34)"
+            })
+
     print(f"Total indexed modifications: {len(diffs)}")
 
     # Build Markdown
@@ -1873,6 +1909,15 @@ def build_report():
     md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
     md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
     for idx, d in enumerate(com33_diffs, 1):
+        md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
+    md.append("\n---\n")
+
+    # Section 37
+    com34_diffs = [d for d in diffs if d["section"].startswith("灰色的果实·共通线第三十四章蒜中外号布丁血仇与生剥鬼金发辩论")]
+    md.append(f"## 三十七、 灰色的果实·共通线第三十四章蒜中外号布丁血仇与生剥鬼金发辩论 (`grisaia1/com34`，共 {len(com34_diffs)} 条)\n")
+    md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
+    md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
+    for idx, d in enumerate(com34_diffs, 1):
         md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
     md.append("\n---\n")
 
