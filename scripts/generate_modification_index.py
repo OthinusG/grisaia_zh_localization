@@ -14,6 +14,14 @@ def escape_md(text):
     return text.replace("|", "\\|").replace("\n", " ").replace("\r", "")
 
 def classify_change(line_no, sid, ja, old_cn, new_cn):
+    # com43 specific
+    if "マーグロマーーーン" in ja or "被害者ヅラ" in ja or "過剰な暴力" in ja or "やめてください" in ja or "助けてください" in ja or "スーパー護身術" in ja or "カクトー術" in ja or "大声" in ja:
+        return "风见流超级护身术与施加过量暴力反装弱小受害者", "全章神级高潮与哲学爆笑：莳菜传授雄二真传的实战防身精髓——一边撕心裂肺惨叫‘求求您住手吧’‘救命啊’博取同情，一边下死手施展极刑暴力彻底抹杀暴徒反击能力；幸精辟总结为‘一边过度施暴一边装受害者，真不愧是超级护身术’；雄二格言‘习武非为争斗逞凶，只为拥有敢于放声呼救的胆量’"
+    if "縮地" in ja or "ずらし" in ja or "肉弾攻め" in ja or "頭突き" in ja or "スパルタ" in ja or "カウンター" in ja or "脳震盪" in ja or "呼吸器官" in ja or "内臓" in ja or "右手を身体の後ろ" in ja:
+        return "藏右手视觉支配与偏位缩地头槌肉弹绝杀", "全章硬核格斗动作相声：莳菜将右手藏于身后支配对方心理焦虑，利用人类注意力过度集中产生的视野盲区施展‘偏位闪移（ずらし）’与‘缩地’瞬间贴身；祭出斯巴达母亲名言向前一步，用强力头槌砸心窝、破平衡拉衣领借力平勾拳绝杀迎击（Counter）致脑震荡，再顺势踩喉踹腹；满惨沦人肉沙包当场破防"
+    if "青虫ジャージ" in ja or "ランナーズ・ハイ" in ja or "フルジップ" in ja or "サイボーグ" in ja or "サマーベッド" in ja or "体育" in ja or "泥だらけ" in ja:
+        return "青虫运动服吐槽与赛博格长跑改造人体质", "全章爆笑开篇与收尾：体育课众人嫌弃美滨运动服难看，雄二吐槽比起经典复古‘青虫运动服’这套已算帅气；天音嫌弃裤脚皮筋和非全开拉链，陪跑一圈便虚脱瘫倒，惊呼雄二顶着若无其事表情朝车站跑去是‘半机械改造人（Cyborg）’；幸回忆雄二曾坦言自己本就是被制造出来的人类"
+
     # com42 specific
     if "正露丸" in ja or "糖衣" in ja or "下痢" in ja or "ブゥワーカ" in ja or "救世主" in ja or "アイスシェイク" in ja or "一気飲み" in ja:
         return "融化冰淇淋壮烈一饮而尽与糖衣正露丸爆笑收场", "全章神级高潮相声：幸千辛万苦带回的黑芝麻冰淇淋因夏日酷暑彻底融化成一滩滚烫黑水，幸陷入极度自责濒临眼球震颤；满挺身而出化身救世主，爽朗宣称‘融化冰淇淋就是绝品奶昔’并豪迈一饮而尽解围，更把自身宿舍私藏的冰淇淋送给天音；随即满因暴饮腹泻痛苦倒地，雄二递上恶臭难当的正露丸，满娇嗔‘下次至少准备糖衣的啊大——笨——蛋’（ブゥワーカ，彻底纠正原机翻音译为‘呜哇卡’）"
@@ -1864,6 +1872,32 @@ def build_report():
                 "section": "灰色的果实·共通线第四十二章麻子的智能设计论与融化黑芝麻冰淇淋正露丸大救赎 (grisaia1/com42)"
             })
 
+    # com43
+    for lno in range(22251, 22391):
+        ja_raw = ja_lines[lno - 1]
+        cn_raw = cn_lines[lno - 1]
+        sid = ja_raw.split("\t")[0] if "\t" in ja_raw else f"L{lno}"
+        ja_txt = ja_raw.split("\t")[1] if "\t" in ja_raw else ja_raw
+        cn_txt = cn_raw.split("\t")[1] if "\t" in cn_raw else cn_raw
+
+        old_txt = cn_txt
+        if git_base_cn and len(git_base_cn) >= lno:
+            head_raw = git_base_cn[lno - 1]
+            old_txt = head_raw.split("\t")[1] if "\t" in head_raw else head_raw
+
+        if cn_txt != old_txt:
+            cat, reason = classify_change(lno, sid, ja_txt, old_txt, cn_txt)
+            diffs.append({
+                "lno": lno,
+                "sid": sid,
+                "ja": ja_txt,
+                "old": old_txt,
+                "new": cn_txt,
+                "cat": cat,
+                "reason": reason,
+                "section": "灰色的果实·共通线第四十三章风见流超级护身术与偏位缩地暴打受害者 (grisaia1/com43)"
+            })
+
     print(f"Total indexed modifications: {len(diffs)}")
 
     # Build Markdown
@@ -2278,6 +2312,15 @@ def build_report():
     md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
     md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
     for idx, d in enumerate(com42_diffs, 1):
+        md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
+    md.append("\n---\n")
+
+    # Section 46
+    com43_diffs = [d for d in diffs if d["section"].startswith("灰色的果实·共通线第四十三章风见流超级护身术与偏位缩地暴打受害者")]
+    md.append(f"## 四十六、 灰色的果实·共通线第四十三章风见流超级护身术与偏位缩地暴打受害者 (`grisaia1/com43`，共 {len(com43_diffs)} 条)\n")
+    md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
+    md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
+    for idx, d in enumerate(com43_diffs, 1):
         md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
     md.append("\n---\n")
 
