@@ -14,6 +14,18 @@ def escape_md(text):
     return text.replace("|", "\\|").replace("\n", " ").replace("\r", "")
 
 def classify_change(line_no, sid, ja, old_cn, new_cn):
+    # com35 specific
+    if "ネギトロ丼" in ja or "甘えてくれる" in ja or "思考を海に" in ja or "一風変わった正義の味方" in ja or "夢と希望" in ja or "平民英雄" in ja or "英雄譚" in ja:
+        return "葱花金枪鱼泥盖饭点餐与平民英雄温情升华", "全章神级收尾与温情升华：雄二受特摄触动罕见向天音撒娇点餐葱花金枪鱼泥盖饭（ネギトロ丼），天音又惊又喜倾注爱意下厨；雄二领悟虽为荒诞特摄，却赋予宿舍少女无尽梦想与希冀，认定复杂尘世亦需此类质朴温暖的平民英雄"
+    if "引きこもり少女" in ja or "自発行動" in ja or "サインペン" in ja or "色紙" in ja or "DVD" in ja or "委員長ですから" in ja or "胸アツな展開" in ja:
+        return "家里蹲少女签名追星行动与班长全集备货", "治愈爆笑日常：见证金枪鱼侠神勇，莳菜备受激励打破家里蹲状态誓言采购色纸签字笔迎接金枪鱼侠巡回；幸以‘毕竟我是班长’为由随时掏出全套放送录像珍藏DVD光盘供雄二补番，雄二感叹班长之职深入骨髓"
+    if "中落ち" in ja or "背カミ" in ja or "骨ばっかり" in ja or "新しい力" in ja or "ごはんが進みそう" in ja or "１２時以降に作りましたシール" in ja or "スタッフが美味しくいただきました" in ja:
+        return "绝地觉醒鱼骨中落碎肉奥义与剧组吃光声明", "特摄爆笑绝地反击：金枪鱼侠投掷全身鱼肉致腹部掏空，得少女莲华提点绝地觉醒‘中落’（中落ち，脊椎龙骨刮肉）究极奥义重创牛小排将军将其逐回老巢藤泽；残余肉块贴‘放心品质标签’赠予孩童下饭，剧组附‘拍摄所用肉类已由工作人员妥善食用完毕’电视名梗"
+    if "トロ" in ja or "和歌山県産" in ja or "備長炭" in ja or "ハラミ" in ja or "大間産クロマグロ" in ja or "メバチマグロ" in ja or "酷暑" in ja or "変身ベルト" in ja:
+        return "备长炭炙烤牛胸腹肉与温室效应酷暑暴击", "环保反套路硬核交锋：牛小排将军采购和歌山县顶级备长炭炭烤生牛胸腹横膈膜肉（ハラミ）诱敌；金枪鱼侠大腩反击因全球气候变暖、海水升温导致赤道大眼金枪鱼代替大间黑鲔而失效，当场向CO2排放痛心发难；中场变身腰带周边广告更遭雄二莳菜犀利吐槽未曾变身且未系腰带"
+    if "マグロマン" in ja or "カルビ将軍" in ja or "焼き肉帝国" in ja or "美星町" in ja or "黒田旅館" in ja or "浜ヶ瀬神社" in ja or "赤身" in ja or "硬骨魚類" in ja or "もも肉" in ja:
+        return "鲜鱼超人金枪鱼侠登场与自残剖腹肉弹攻防", "全章神级开篇与FW世界观联动：莳菜小幸痴迷周日早间档特摄《鲜鱼超人金枪鱼侠》，与雄二讨论大腿部位闹剧后全员直奔电视；正片展现牛小排将军自藤泽侵入西伊豆美星町企图将老字号黑田旅馆（星桥联动）改造成廉价烤肉自助，遭徒步环保英雄金枪鱼侠撕扯侧腹赤身肉生猛痛击，雄二吐槽舍身肉弹奇葩伦理"
+
     # com34 specific
     if "ブロンドとは" in ja or "地毛は黒" in ja or "ナマハゲ" in ja or "悪いごいねが" in ja or "馬鹿キャラ" in ja or "頭に栄養が行ってない" in ja or "脱色" in ja:
         return "金发笨蛋人设与生剥鬼恐吓论", "全章爆笑高潮与金发哲学：莳菜误以为满因大脑缺乏营养才变成笨蛋金发；天音自曝拿‘不吃饭就变成满那样’恐吓莳菜令其狼吞虎咽，满抓狂咆哮自己成了专吓小孩的生剥鬼（秋田Namahage）；满怒吼发根是纯黑，雄二最终评语升华‘所谓金发乃是灵魂与活法本身’"
@@ -1576,6 +1588,32 @@ def build_report():
                 "section": "灰色的果实·共通线第三十四章蒜中外号布丁血仇与生剥鬼金发辩论 (grisaia1/com34)"
             })
 
+    # com35
+    for lno in range(20133, 20435):
+        ja_raw = ja_lines[lno - 1]
+        cn_raw = cn_lines[lno - 1]
+        sid = ja_raw.split("\t")[0] if "\t" in ja_raw else f"L{lno}"
+        ja_txt = ja_raw.split("\t")[1] if "\t" in ja_raw else ja_raw
+        cn_txt = cn_raw.split("\t")[1] if "\t" in cn_raw else cn_raw
+
+        old_txt = cn_txt
+        if git_base_cn and len(git_base_cn) >= lno:
+            head_raw = git_base_cn[lno - 1]
+            old_txt = head_raw.split("\t")[1] if "\t" in head_raw else head_raw
+
+        if cn_txt != old_txt:
+            cat, reason = classify_change(lno, sid, ja_txt, old_txt, cn_txt)
+            diffs.append({
+                "lno": lno,
+                "sid": sid,
+                "ja": ja_txt,
+                "old": old_txt,
+                "new": cn_txt,
+                "cat": cat,
+                "reason": reason,
+                "section": "灰色的果实·共通线第三十五章鲜鱼超人金枪鱼侠特摄激战与葱花金枪鱼泥盖饭 (grisaia1/com35)"
+            })
+
     print(f"Total indexed modifications: {len(diffs)}")
 
     # Build Markdown
@@ -1918,6 +1956,15 @@ def build_report():
     md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
     md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
     for idx, d in enumerate(com34_diffs, 1):
+        md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
+    md.append("\n---\n")
+
+    # Section 38
+    com35_diffs = [d for d in diffs if d["section"].startswith("灰色的果实·共通线第三十五章鲜鱼超人金枪鱼侠特摄激战与葱花金枪鱼泥盖饭")]
+    md.append(f"## 三十八、 灰色的果实·共通线第三十五章鲜鱼超人金枪鱼侠特摄激战与葱花金枪鱼泥盖饭 (`grisaia1/com35`，共 {len(com35_diffs)} 条)\n")
+    md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
+    md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
+    for idx, d in enumerate(com35_diffs, 1):
         md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
     md.append("\n---\n")
 
