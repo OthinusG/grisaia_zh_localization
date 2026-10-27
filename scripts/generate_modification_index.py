@@ -14,6 +14,14 @@ def escape_md(text):
     return text.replace("|", "\\|").replace("\n", " ").replace("\r", "")
 
 def classify_change(line_no, sid, ja, old_cn, new_cn):
+    # com46 specific
+    if "首を撥ね飛ばした" in ja or "太刀筋" in ja or "ニホンマムシ" in ja or "大魔神" in ja or "男性自身" in ja or "長い生き物" in ja:
+        return "幸的居合斩首蝮蛇绝技与雄二男体俚语补刀", "全章硬核动作爆笑：幸手起刀落一记凌厉居合刀法斩飞锅中毒蛇首级，雄二由衷赞赏‘好刀法’；雄二向满科普‘蝮蛇在俚语中除指鳗鱼外亦代指男性胯下生殖器官’引得满羞愤尖叫；由美子吐槽满虽怕蛇却有着蝮蛇般的打不死生命力；雄二总结向幸下达委托必须提供精确技术参数指标"
+    if "ひつまぶし" in ja or "ひまつぶし" in ja or "ケツかっちん" in ja or "アナーキー" in ja or "Ｈｅｙボブ" in ja or "ジョニー" in ja:
+        return "莳菜美式教材鳗鱼消磨时间谐音冷笑话与时代剧相声", "全章经典无厘头段子：莳菜与满即兴排演时代剧，莳菜用电视圈行话催促赶死线（ケツかっちん）；莳菜一人分饰两角化身鲍勃与乔尼大讲美式口音冷笑话，用名古屋鳗鱼饭三吃（ひつまぶし）强行双关消磨时间（暇つぶし/ひまつぶし）瞬间冻结全场；满怒吼别把‘无政府主义混沌食物’硬塞给自己"
+    if "まむしごはん" in ja or "まむし" in ja or "間蒸し" in ja or "鰻重" in ja or "土用の丑の日" in ja or "フライングげっと" in ja or "ヘビごはん" in ja:
+        return "关西间蒸鳗鱼饭文化误解与剧毒日本蝮蛇乌龙", "全章神级美食文化包袱：满从网上现学关西将鳗鱼饭称为『蝮蛇（まむし/间蒸し）』的生僻方言，并在土用丑日前一天大喊提前抢跑（Flying Get）；幸却严格按字面捉拿真正的野生日本蝮蛇下锅焖煮，满开盖目睹活蛇翻滚吓得魂飞魄散当场昏厥；彻底纠正原机翻从头到尾将まむし一概机械直译为‘鳗鱼饭’导致全章剧情完全错乱脱节的灾难事故"
+
     # com45 specific
     if "枕返し" in ja or "妖怪" in ja or "人間枕返され" in ja or "腐った性根" in ja or "愚かな見落とし" in ja or "こわっぱ" in ja:
         return "翻枕鬼甩锅哲学与全能女仆致命毒舌收场", "全章神级高潮收尾：糖果在鲨鱼包内衬口袋完好起获，满当场社死并坚称‘虽然道歉了但灵魂没道歉，这才是傲娇灵魂’；幸赶来得知真相，奉上杀人诛心毒舌‘即便全归咎于满大人的愚蠢疏漏与推卸责任的腐朽劣根性，我依然祝贺您失而复得’；满强行甩锅是百鬼夜行的‘翻枕鬼（枕返し）’在暗中作祟，雄二沉思‘若被翻枕鬼调转枕头，人是否会变成人类被翻枕者（人間枕返され）’"
@@ -1966,6 +1974,32 @@ def build_report():
                 "section": "灰色的果实·共通线第四十五章波子汽水糖神隐与阿提卡半岛流亡大案 (grisaia1/com45)"
             })
 
+    # com46
+    for lno in range(22771, 22923):
+        ja_raw = ja_lines[lno - 1]
+        cn_raw = cn_lines[lno - 1]
+        sid = ja_raw.split("\t")[0] if "\t" in ja_raw else f"L{lno}"
+        ja_txt = ja_raw.split("\t")[1] if "\t" in ja_raw else ja_raw
+        cn_txt = cn_raw.split("\t")[1] if "\t" in cn_raw else cn_raw
+
+        old_txt = cn_txt
+        if git_base_cn and len(git_base_cn) >= lno:
+            head_raw = git_base_cn[lno - 1]
+            old_txt = head_raw.split("\t")[1] if "\t" in head_raw else head_raw
+
+        if cn_txt != old_txt:
+            cat, reason = classify_change(lno, sid, ja_txt, old_txt, cn_txt)
+            diffs.append({
+                "lno": lno,
+                "sid": sid,
+                "ja": ja_txt,
+                "old": old_txt,
+                "new": cn_txt,
+                "cat": cat,
+                "reason": reason,
+                "section": "灰色的果实·共通线第四十六章关西间蒸鳗鱼饭与真蝮蛇居合斩首骚动 (grisaia1/com46)"
+            })
+
     print(f"Total indexed modifications: {len(diffs)}")
 
     # Build Markdown
@@ -2407,6 +2441,15 @@ def build_report():
     md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
     md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
     for idx, d in enumerate(com45_diffs, 1):
+        md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
+    md.append("\n---\n")
+
+    # Section 49
+    com46_diffs = [d for d in diffs if d["section"].startswith("灰色的果实·共通线第四十六章关西间蒸鳗鱼饭与真蝮蛇居合斩首骚动")]
+    md.append(f"## 四十九、 灰色的果实·共通线第四十六章关西间蒸鳗鱼饭与真蝮蛇居合斩首骚动 (`grisaia1/com46`，共 {len(com46_diffs)} 条)\n")
+    md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
+    md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
+    for idx, d in enumerate(com46_diffs, 1):
         md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
     md.append("\n---\n")
 
