@@ -14,6 +14,22 @@ def escape_md(text):
     return text.replace("|", "\\|").replace("\n", " ").replace("\r", "")
 
 def classify_change(line_no, sid, ja, old_cn, new_cn):
+    # com15 specific
+    if "タダの" in ja or "免费" in old_cn:
+        return "机翻多义词严重纠错", "纠正将『纯粹只是个好色大姐姐/超级大色女（ただのエッチ/ドスケベなお姉さん）』荒唐误译为『免费好色大姐姐』"
+    if "ランニング・カデンス" in ja or "カデンス" in ja or "战歌" in new_cn or "口号" in new_cn:
+        return "军旅战术文化梗还原", "还原美军传统行军跑步口号歌（Running Cadence / カデンス・コール）及雄二教莳菜齐唱的特工魔性口令"
+    if "ネズミの歌" in ja or "老鼠之歌" in new_cn or "洒落にならない" in ja:
+        return "经典影视梗与版权吐槽", "还原《全金属外壳》米老鼠进行曲军旅口号梗，以及天音惊恐吐槽迪斯尼法务部铁拳警告"
+    if "お目覚めのキス" in ja or "叫醒之吻" in new_cn or "暗殺" in ja:
+        return "特工创伤反差萌还原", "还原天音娇羞策划『晨间叫醒之吻』却反被雄二误判为敌国暗杀特工渗透的经典反差名场面"
+    if "お嫁いかれへん" in ja or "嫁不出" in new_cn:
+        return "方言声线与心理还原", "还原天音心态彻底崩溃时脱口而出的关西腔口吻『我已经没脸嫁人了啦（お嫁いかれへん）』"
+    if "アメーバ赤痢" in ja or "阿米巴痢疾" in new_cn:
+        return "角色天然呆搞笑还原", "还原莳菜天然呆追问反锁在厕所的天音是否得了『阿米巴痢疾（アメーバ赤痢）』的无厘头搞笑"
+    if "俺" in old_cn and "我" in new_cn:
+        return "第一人称去AI土味", "彻底剔除机翻中将雄二沉着冷静内心独白荒唐粗鄙化为乡土口吻『俺』的AI味缺陷，恢复标准第一人称『我』"
+
     # com14 specific
     if "ブルーシート" in ja or "防潮垫" in new_cn:
         return "野外战术动作/冷笑话还原", "还原雄二误以为野外苟合而厉声质问『防潮垫（ブルーシート）铺好了没有』的特种冷笑话"
@@ -750,6 +766,32 @@ def build_report():
                 "section": "灰色的果实·共通线第十四章黑猫初遇与阿登凸出部作战 (grisaia1/com14)"
             })
 
+    # Section 17: com15 (15238 - 15418)
+    for lno in range(15238, 15419):
+        ja_raw = ja_lines[lno - 1]
+        cn_raw = cn_lines[lno - 1]
+        sid = ja_raw.split("\t")[0] if "\t" in ja_raw else f"L{lno}"
+        ja_txt = ja_raw.split("\t")[1] if "\t" in ja_raw else ja_raw
+        cn_txt = cn_raw.split("\t")[1] if "\t" in cn_raw else cn_raw
+
+        old_txt = cn_txt
+        if git_base_cn and len(git_base_cn) >= lno:
+            head_raw = git_base_cn[lno - 1]
+            old_txt = head_raw.split("\t")[1] if "\t" in head_raw else head_raw
+
+        if cn_txt != old_txt:
+            cat, reason = classify_change(lno, sid, ja_txt, old_txt, cn_txt)
+            diffs.append({
+                "lno": lno,
+                "sid": sid,
+                "ja": ja_txt,
+                "old": old_txt,
+                "new": cn_txt,
+                "cat": cat,
+                "reason": reason,
+                "section": "灰色的果实·共通线第十五章天音潜入与特工行军口号 (grisaia1/com15)"
+            })
+
     print(f"Total indexed modifications: {len(diffs)}")
 
     # Build Markdown
@@ -912,6 +954,15 @@ def build_report():
     md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
     md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
     for idx, d in enumerate(com14_diffs, 1):
+        md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
+    md.append("\n---\n")
+
+    # Section 17
+    com15_diffs = [d for d in diffs if d["section"].startswith("灰色的果实·共通线第十五章")]
+    md.append(f"## 十八、 灰色的果实·共通线第十五章天音潜入与特工行军口号 (`grisaia1/com15`，共 {len(com15_diffs)} 条)\n")
+    md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
+    md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
+    for idx, d in enumerate(com15_diffs, 1):
         md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
     md.append("\n---\n")
 
