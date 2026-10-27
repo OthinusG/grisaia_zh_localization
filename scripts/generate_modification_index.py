@@ -14,6 +14,28 @@ def escape_md(text):
     return text.replace("|", "\\|").replace("\n", " ").replace("\r", "")
 
 def classify_change(line_no, sid, ja, old_cn, new_cn):
+    # com14 specific
+    if "ブルーシート" in ja or "防潮垫" in new_cn:
+        return "野外战术动作/冷笑话还原", "还原雄二误以为野外苟合而厉声质问『防潮垫（ブルーシート）铺好了没有』的特种冷笑话"
+    if "ナチュラル・ボーン" in ja or "波恩" in new_cn or "天生自带" in new_cn:
+        return "角色声线/名梗还原", "纠正将美智留『天生自带纯血傲娇（Natural Born Tsundere）』误译为『傲娇骨』，还原与雄二复读机名场面"
+    if "タワシ" in ja or "除毛" in new_cn or "钢丝球" in new_cn:
+        return "恶趣味黄段子双关还原", "还原美智留将黑色毛团黑猫误听为私处体毛『明明做过除毛脱毛处理』的经典误会段子"
+    if "飯事" in ja or "过家家" in new_cn:
+        return "成语俗语纠错", "纠正将幼童过家家酒（飯事/ままごと）荒唐误译为『陪你饭局』的恶性机翻"
+    if "バルジ猫作戦" in ja or "凸出部" in new_cn:
+        return "二战战役特种军事梗", "纠正将雄二以二战阿登反击战命名的『凸出部猫咪作战（Battle of the Bulge Cat）』荒唐误译为『炸毛猫作战』"
+    if "チャーリー" in ja or "呆毛" in new_cn or "查理" in new_cn:
+        return "角色战术代号还原", "还原雄二将美智留双马尾命名为阿尔法与布拉沃、头顶翘立呆毛命名为查理（Charlie）的战术恶搞"
+    if "脱水症状" in ja or "水分補給" in ja or "水分补给" in new_cn:
+        return "角色军事创伤声线还原", "还原雄二患有严苛野外生存后遗症、对脱水与水分补给近乎神圣不可侵犯的硬汉说教"
+    if "猫かぶる" in ja or "猫かぶり" in ja or "装纯" in new_cn or "やや受け" in ja:
+        return "双关俗语成语还原", "还原美智留『头顶猫咪装纯乖（猫かぶる）』的经典双关，以及雄二评价『节目效果好评（やや受け）』"
+    if "猫ニャー" in ja or "猫咪喵" in new_cn:
+        return "角色蠢萌爱称还原", "还原美智留随口给小黑猫起的蠢萌专属爱称『猫咪喵（猫ニャー）』及其傲娇掩饰"
+    if "ルルラーン" in ja or "噜噜啦" in new_cn:
+        return "角色台词/密码脑补还原", "还原美智留临走怪叫『噜噜啦――嗯（ルルラーン）』以及雄二脑补为绝密战术密码的搞笑反差"
+
     # com13 specific
     if "インプリンティング" in ja or "印痕" in new_cn or "铭印" in new_cn:
         return "专业术语/科学修辞", "规范生物学习性与心理学概念『雏鸟印痕/铭印现象（インプリンティング/Imprinting）』"
@@ -702,6 +724,32 @@ def build_report():
                 "section": "灰色的果实·共通线第十三章阿幸雏鸟印痕与内衣女仆大轰动 (grisaia1/com13)"
             })
 
+    # Section 16: com14 (15024 - 15237)
+    for lno in range(15024, 15238):
+        ja_raw = ja_lines[lno - 1]
+        cn_raw = cn_lines[lno - 1]
+        sid = ja_raw.split("\t")[0] if "\t" in ja_raw else f"L{lno}"
+        ja_txt = ja_raw.split("\t")[1] if "\t" in ja_raw else ja_raw
+        cn_txt = cn_raw.split("\t")[1] if "\t" in cn_raw else cn_raw
+
+        old_txt = cn_txt
+        if git_base_cn and len(git_base_cn) >= lno:
+            head_raw = git_base_cn[lno - 1]
+            old_txt = head_raw.split("\t")[1] if "\t" in head_raw else head_raw
+
+        if cn_txt != old_txt:
+            cat, reason = classify_change(lno, sid, ja_txt, old_txt, cn_txt)
+            diffs.append({
+                "lno": lno,
+                "sid": sid,
+                "ja": ja_txt,
+                "old": old_txt,
+                "new": cn_txt,
+                "cat": cat,
+                "reason": reason,
+                "section": "灰色的果实·共通线第十四章黑猫初遇与阿登凸出部作战 (grisaia1/com14)"
+            })
+
     print(f"Total indexed modifications: {len(diffs)}")
 
     # Build Markdown
@@ -855,6 +903,15 @@ def build_report():
     md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
     md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
     for idx, d in enumerate(com13_diffs, 1):
+        md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
+    md.append("\n---\n")
+
+    # Section 16
+    com14_diffs = [d for d in diffs if d["section"].startswith("灰色的果实·共通线第十四章")]
+    md.append(f"## 十七、 灰色的果实·共通线第十四章黑猫初遇与阿登凸出部作战 (`grisaia1/com14`，共 {len(com14_diffs)} 条)\n")
+    md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
+    md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
+    for idx, d in enumerate(com14_diffs, 1):
         md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
     md.append("\n---\n")
 
