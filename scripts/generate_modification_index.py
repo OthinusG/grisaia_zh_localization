@@ -14,6 +14,24 @@ def escape_md(text):
     return text.replace("|", "\\|").replace("\n", " ").replace("\r", "")
 
 def classify_change(line_no, sid, ja, old_cn, new_cn):
+    # com05 specific
+    if "ヒモ" in ja and "拉皮条" in old_cn:
+        return "严重恶性误译", "纠正将雄二自嘲吃软饭/小白脸（ヒモ）严重荒唐误译为犯罪性质的『拉皮条』"
+    if "女校生" in old_cn and "スクールボーイ" in ja:
+        return "性别混淆误译", "纠正将美式俚语学生小子/毛头小伙（スクールボーイ）颠倒误译为『女校生』"
+    if "ジャッカス" in ja and "胆小鬼" in old_cn:
+        return "俚语含义误译", "纠正将美式俚语蠢驴/笨蛋（ジャッカス/Jackass）严重误译为『胆小鬼』"
+    if "アンタサイテーね" in ja and "看不出来" in old_cn:
+        return "严重语义颠倒", "纠正将天音鄙视雄二『你这人真是有够差劲（アンタサイテーね）』误译为『你还真是看不出来』"
+    if "コキ使われ" in ja and "狠狠干着" in old_cn:
+        return "粗俗机翻误译", "纠正将工作上被当牛做马使唤（コキ使われている）粗鄙生硬机翻为『在工作上被狠狠干着』"
+    if "泣くわよ" in ja and "我才不要哭" in old_cn:
+        return "否定逻辑反转", "纠正JB被雄二冷言吐槽时气急败坏的『信不信我哭给你看（泣くわよっ!?）』被颠倒反转为『我才不要哭呢』"
+    if "母方の親戚" in ja and "撑到下课" in old_cn:
+        return "机翻严重幻觉", "纠正将伪造身份借口硬说是母亲亲戚（押し通しなさいな）胡乱机翻为毫无逻辑的『撑到下课吧』"
+    if "春寺三佐" in ja or "三佐" in ja:
+        return "军事编制军衔", "规范自卫队/特工军阶称谓『春寺三佐（三等陆佐/少校）』与雄二打趣口吻"
+
     # com04 specific
     if "蟑螂" in old_cn and ("ザリガニ" in ja or "ザニガニ" in ja):
         return "荒唐恶性误译", "纠正将小龙虾/鳌虾（ザリガニ）荒唐误译为『蟑螂』的恶性翻译事故"
@@ -328,6 +346,32 @@ def build_report():
                 "section": "灰色的果实·共通线第四章玫瑰园与钓小龙虾 (grisaia1/com04)"
             })
 
+    # Section 7: com05 (13262 - 13455)
+    for lno in range(13262, 13456):
+        ja_raw = ja_lines[lno - 1]
+        cn_raw = cn_lines[lno - 1]
+        sid = ja_raw.split("\t")[0] if "\t" in ja_raw else f"L{lno}"
+        ja_txt = ja_raw.split("\t")[1] if "\t" in ja_raw else ja_raw
+        cn_txt = cn_raw.split("\t")[1] if "\t" in cn_raw else cn_raw
+
+        old_txt = cn_txt
+        if git_base_cn and len(git_base_cn) >= lno:
+            head_raw = git_base_cn[lno - 1]
+            old_txt = head_raw.split("\t")[1] if "\t" in head_raw else head_raw
+
+        if cn_txt != old_txt:
+            cat, reason = classify_change(lno, sid, ja_txt, old_txt, cn_txt)
+            diffs.append({
+                "lno": lno,
+                "sid": sid,
+                "ja": ja_txt,
+                "old": old_txt,
+                "new": cn_txt,
+                "cat": cat,
+                "reason": reason,
+                "section": "灰色的果实·共通线第五章JB黄色跑车与暗号秘密 (grisaia1/com05)"
+            })
+
     print(f"Total indexed modifications: {len(diffs)}")
 
     # Build Markdown
@@ -400,6 +444,15 @@ def build_report():
     md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
     md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
     for idx, d in enumerate(com04_diffs, 1):
+        md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
+    md.append("\n---\n")
+
+    # Section 7
+    com05_diffs = [d for d in diffs if d["section"].startswith("灰色的果实·共通线第五章")]
+    md.append(f"## 八、 灰色的果实·共通线第五章JB黄色跑车与暗号秘密 (`grisaia1/com05`，共 {len(com05_diffs)} 条)\n")
+    md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
+    md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
+    for idx, d in enumerate(com05_diffs, 1):
         md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
     md.append("\n---\n")
 
