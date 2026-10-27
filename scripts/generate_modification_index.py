@@ -14,6 +14,26 @@ def escape_md(text):
     return text.replace("|", "\\|").replace("\n", " ").replace("\r", "")
 
 def classify_change(line_no, sid, ja, old_cn, new_cn):
+    # com24 specific
+    if "罪悪感" in ja or "悪いガス" in ja or "ドロドロ" in ja or "冷たい毒" in ja or "なくした物" in ja or "自問" in ja:
+        return "肺中剧毒与战后PTSD罪恶感", "极高文学水准重塑雄二在看似平静的学园生活中深陷创伤后应激障碍（PTSD）的心灵深渊：笑容如罪、内脏如积淤腐烂毒气、双肺如旋涡冰冷剧毒，直击灰色系列‘无法挽回逝者之痛’的灵魂母题"
+    if "一目惚れ" in ja or "オートバイ" in ja or "暴走族" in ja or "アンタは俺のいくつ上だ" in ja or "周防" in ja:
+        return "哈雷机车太妹天音与校长年龄禁区", "生动还原雄二被天音一见钟情疑为全校最危险人物、千鹤爆料天音骑美式地狱天使重型机车（Chopper）轰鸣入学的反差黑历史，以及雄二反问千鹤年龄致其冷汗直冒的绝妙互动"
+    if "絵日記" in ja or "大人の世界" in ja or "庇護" in ja or "打算的" in ja or "自分を守る方法" in ja or "マキナ" in ja:
+        return "莳菜软弱拟态求生欲与防卫教学", "还原雄二开玩笑‘教莳菜大人的世界’引千鹤惊恐，精准剖析莳菜走与美智留相反的极端‘谄媚求怜悯’生存拟态，以及雄二立志授人以渔教其自卫防身的硬汉温柔"
+    if "カメタイプ" in ja or "城を建てろ" in ja or "石垣" in ja or "ロボット" in ja or "ガス抜き" in ja or "小嶺" in ja:
+        return "小岭幸老黄牛发条傀儡与排气阀", "生动还原雄二对幸自我催眠放弃特长的‘乌龟人格’分析、‘命其筑城便独自一人默默垒石十年’的发条机器人盲从自虐心理，以及必须适时排气的警示"
+    if "ブリーチ" in ja or "銀紙" in ja or "毒電波" in ja or "警戒色" in ja or "ハイ・ビジビリティー" in ja or "みちる" in ja:
+        return "美智留金发警戒色与脑电波邪教乌龙", "纠正机翻将美智留裹保鲜膜漂白头发痛到呻吟误解为头顶锡纸防御宇宙毒电波的邪教乌龙，深度还原雄二关于美智留夸张金发实为弱者‘高可见度警戒色（High Visibility）’与测试幸底线的深刻洞察"
+    if "カッターで切りつけ" in ja or "縦の物が横" in ja or "自分の領域" in ja or "榊" in ja:
+        return "由美子绝对领地与美工刀防御机制", "还原雄二对由美子‘横物绝不扶正’极度怠惰冷漠的精准剖析，揭示其一言不合掏美工刀砍人本质是因不懂构筑信任而采取的极端领地防御机制"
+    if "負け犬" in ja or "傷の舐め合い" in ja or "テストケース" in ja or "助成金" in ja or "板金屋" in ja or "民間資本" in ja:
+        return "败犬收容所与钣金工隐喻", "纠正机翻生硬，还原雄二一针见血揭露学园是将有钱人家问题孩子集中圈养互相舔舐伤口、学园长借此搜刮赞助金的刻薄嘴脸，以及将矫正创伤比作钣金工人用铁锤敲打废铁的尖锐讽刺"
+    if "潜入工作" in ja or "サルかテメー" in ja or "抱き枕" in ja or "歯を見せて笑っている" in ja or "性行為" in ja:
+        return "潜伏错位感与猴子交尾荒谬自嘲", "纠正机翻粗俗丢失，生动还原雄二无法融入日常、见自己在玻璃倒影中微笑便如潜伏特工暴露般的剧烈违和，以及类比‘性爱时照镜自嘲像猴子’与‘抱枕被父母撞破’的极致讽刺"
+    if "助成" in ja or "判子" in ja or "寡黙" in ja or "師匠の言葉" in ja or "命の恩人" in ja or "借りを作ったまま" in ja:
+        return "校长室闲职论与救命之恩债务博弈", "还原雄二将学园长视作数钱盖章闲职的讽刺心理与‘好男人在这种时候就该保持沉默’的硬汉幽默，以及橘千鹤执意报恩与雄二公私分明的拉扯"
+
     # com23 specific
     if "ユニバーシ・ティー" in ja or "大学茶" in new_cn or "シンクロニシ・ティー" in ja or "炭酸抜き" in ja:
         return "大学茶与谐音梗连环吐槽", "纠正机翻将雄二冷笑话谐音‘大学茶（University / ユニバーシ・ティー）’误译为普通红茶的重大语义丢失，还原莳菜‘共时茶（Synchronicity）’跟风捧哏"
@@ -1132,6 +1152,32 @@ def build_report():
                 "section": "灰色的果实·共通线第二十三章大学茶谐音梗与北海道挤奶狂想曲 (grisaia1/com23)"
             })
 
+    # com24
+    for lno in range(17400, 17615):
+        ja_raw = ja_lines[lno - 1]
+        cn_raw = cn_lines[lno - 1]
+        sid = ja_raw.split("\t")[0] if "\t" in ja_raw else f"L{lno}"
+        ja_txt = ja_raw.split("\t")[1] if "\t" in ja_raw else ja_raw
+        cn_txt = cn_raw.split("\t")[1] if "\t" in cn_raw else cn_raw
+
+        old_txt = cn_txt
+        if git_base_cn and len(git_base_cn) >= lno:
+            head_raw = git_base_cn[lno - 1]
+            old_txt = head_raw.split("\t")[1] if "\t" in head_raw else head_raw
+
+        if cn_txt != old_txt:
+            cat, reason = classify_change(lno, sid, ja_txt, old_txt, cn_txt)
+            diffs.append({
+                "lno": lno,
+                "sid": sid,
+                "ja": ja_txt,
+                "old": old_txt,
+                "new": cn_txt,
+                "cat": cat,
+                "reason": reason,
+                "section": "灰色的果实·共通线第二十四章校长室各人心理剖析与深渊罪恶感 (grisaia1/com24)"
+            })
+
     print(f"Total indexed modifications: {len(diffs)}")
 
     # Build Markdown
@@ -1375,6 +1421,15 @@ def build_report():
     md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
     md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
     for idx, d in enumerate(com23_diffs, 1):
+        md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
+    md.append("\n---\n")
+
+    # Section 27
+    com24_diffs = [d for d in diffs if d["section"].startswith("灰色的果实·共通线第二十四章校长室各人心理剖析与深渊罪恶感")]
+    md.append(f"## 二十七、 灰色的果实·共通线第二十四章校长室各人心理剖析与深渊罪恶感 (`grisaia1/com24`，共 {len(com24_diffs)} 条)\n")
+    md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
+    md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
+    for idx, d in enumerate(com24_diffs, 1):
         md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
     md.append("\n---\n")
 
