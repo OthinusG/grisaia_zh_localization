@@ -14,6 +14,14 @@ def escape_md(text):
     return text.replace("|", "\\|").replace("\n", " ").replace("\r", "")
 
 def classify_change(line_no, sid, ja, old_cn, new_cn):
+    # com03 specific
+    if "铜锣烧" in old_cn and "みたらし" in ja:
+        return "食物名/谐音梗误读", "纠正将御手洗团子（见者即死团子/みたらし団子）双关冷笑话荒唐误译为『铜锣烧』"
+    if "needless" in old_cn:
+        return "生硬残留英文字词", "消除句中未处理生硬残留的英文单词『needless』"
+    if "クセっ毛" in ja and "脾气" in old_cn:
+        return "词义误读", "纠正将自然卷微卷发质（クセっ毛）望文生义误译为『脾气有点怪』"
+
     # com02 specific
     if "欧巴桑" in old_cn and "オヤジ" in ja:
         return "性别颠倒/误读", "纠正将男性大叔（オヤジ）荒谬误译为女性老太婆（欧巴桑）"
@@ -93,6 +101,8 @@ def classify_change(line_no, sid, ja, old_cn, new_cn):
         return "成语误读", "纠正将将棋成语“关键时刻欠一把火候/收尾大意”误译为“吃瘪太容易”"
     if "孫の手" in ja:
         return "文化常识", "纠正将“老头乐/痒痒挠”误译为“逗猫棒”"
+    if "八百屋" in ja:
+        return "生搬日文汉字", "汉化日文汉字“八百屋”为“蔬菜水果店/果蔬铺”"
     if "ウッドエレメンタル" in ja:
         return "谐音梗修正", "还原“木の精/気のせい”谐音梗，删除机翻臆造的“胡桃夹子”"
     if "ジョンジョロ" in ja:
@@ -254,6 +264,32 @@ def build_report():
                 "section": "灰色的果实·共通线第二章天音更衣与买菜 (grisaia1/com02)"
             })
 
+    # Section 5: com03 (12813 - 12941)
+    for lno in range(12813, 12942):
+        ja_raw = ja_lines[lno - 1]
+        cn_raw = cn_lines[lno - 1]
+        sid = ja_raw.split("\t")[0] if "\t" in ja_raw else f"L{lno}"
+        ja_txt = ja_raw.split("\t")[1] if "\t" in ja_raw else ja_raw
+        cn_txt = cn_raw.split("\t")[1] if "\t" in cn_raw else cn_raw
+
+        old_txt = cn_txt
+        if git_base_cn and len(git_base_cn) >= lno:
+            head_raw = git_base_cn[lno - 1]
+            old_txt = head_raw.split("\t")[1] if "\t" in head_raw else head_raw
+
+        if cn_txt != old_txt:
+            cat, reason = classify_change(lno, sid, ja_txt, old_txt, cn_txt)
+            diffs.append({
+                "lno": lno,
+                "sid": sid,
+                "ja": ja_txt,
+                "old": old_txt,
+                "new": cn_txt,
+                "cat": cat,
+                "reason": reason,
+                "section": "灰色的果实·共通线第三章莳菜电子宠物与见死团子 (grisaia1/com03)"
+            })
+
     print(f"Total indexed modifications: {len(diffs)}")
 
     # Build Markdown
@@ -308,6 +344,15 @@ def build_report():
     md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
     md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
     for idx, d in enumerate(com02_diffs, 1):
+        md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
+    md.append("\n---\n")
+
+    # Section 5
+    com03_diffs = [d for d in diffs if d["section"].startswith("灰色的果实·共通线第三章")]
+    md.append(f"## 六、 灰色的果实·共通线第三章莳菜电子宠物与见死团子 (`grisaia1/com03`，共 {len(com03_diffs)} 条)\n")
+    md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
+    md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
+    for idx, d in enumerate(com03_diffs, 1):
         md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
     md.append("\n---\n")
 
