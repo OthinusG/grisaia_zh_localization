@@ -14,6 +14,16 @@ def escape_md(text):
     return text.replace("|", "\\|").replace("\n", " ").replace("\r", "")
 
 def classify_change(line_no, sid, ja, old_cn, new_cn):
+    # com42 specific
+    if "正露丸" in ja or "糖衣" in ja or "下痢" in ja or "ブゥワーカ" in ja or "救世主" in ja or "アイスシェイク" in ja or "一気飲み" in ja:
+        return "融化冰淇淋壮烈一饮而尽与糖衣正露丸爆笑收场", "全章神级高潮相声：幸千辛万苦带回的黑芝麻冰淇淋因夏日酷暑彻底融化成一滩滚烫黑水，幸陷入极度自责濒临眼球震颤；满挺身而出化身救世主，爽朗宣称‘融化冰淇淋就是绝品奶昔’并豪迈一饮而尽解围，更把自身宿舍私藏的冰淇淋送给天音；随即满因暴饮腹泻痛苦倒地，雄二递上恶臭难当的正露丸，满娇嗔‘下次至少准备糖衣的啊大——笨——蛋’（ブゥワーカ，彻底纠正原机翻音译为‘呜哇卡’）"
+    if "こすり土下座" in ja or "切腹" in ja or "粉砕" in ja or "爪を剥" in ja or "指の骨" in ja:
+        return "幸的刮地皮式极度土下座与粉碎骨折切腹谢罪", "全章神级爆笑相声：幸误以为满因自己代购迟到而雷霆大怒，当场拉着天音在走廊地板上表演‘刮地皮式极度土下座’（こすり土下座），更面不改色提议‘剥去指甲、粉碎十指指骨乃至剖腹自尽’谢罪；满吓得花容失色当场尖叫秒速原谅"
+    if "シマウマ" in ja or "オーロラ" in ja or "アイスランド" in ja or "ビラビラ" in ja or "ロラ" in ja or "CMソング" in ja or "おまんじゅう" in ja:
+        return "斑马一年份空耳悬赏与极光罗拉薄片广告歌相声", "经典无厘头相声：莳菜将电视上豆沙包老铺的有奖征集大奖‘冰岛极光旅游’空耳误听为‘非洲狮子抢破头的斑马一年份配额’（邮箱lion@百兽之王.com）；莳菜追问极光为何物，天音形容薄如羽衣飘拂（ビラビラ），莳菜误唤极光为‘罗拉’，满打肿脸充胖子自称本小姐便是罗拉且薄片飘拂引发当场社死；雄二更是一本正经高水平即兴演唱昭和复古CM歌，反被满吐槽‘这不是完美到挑不出刺了嘛’（纠正原机翻否定逻辑反转）"
+    if "インテリジェント・デザイン" in ja or "光あれ" in ja or "ビールあれ" in ja or "歯車" in ja or "代替品" in ja or "師匠" in ja:
+        return "麻子的智能设计论与要有光要有啤酒硬核开篇", "全章硬核开篇独白：雄二反思智能设计论，回忆日下部麻子盘腿坐在自己背上做俯卧撑，引用创世记‘要有光’点烟、‘要有啤酒’开易拉罐畅饮；深刻剖析社会齿轮与不可替代性的虚妄，唯有顿悟自身只是微不足道的中继站才能在世间保持理性"
+
     # com41 specific
     if "えむじゃない" in ja or "縄酔い" in ja or "加圧トレーニング" in ja or "性的な趣向" in ja or "縄師" in ja or "フム" in ja or "Ｓというわけ" in ja:
         return "SM性癖倾向误会绳醉与加压训练解脱感", "全章神级收尾相声：雄二调侃松绑后血流奔涌如加压训练般爽快，满羞愤否认自己是M（えむじゃない，彻底纠正原机翻将‘えむ’音译为‘唔’的灾难性错漏）；满扬言要绑雄二，反被雄二断定为S属性并吐槽‘至少对自己的性癖有个清醒认知’；莳菜展露惊人绳艺天赋却遭满严厉镇压，雄二独白‘绳艺奇才之星就此陨落’爆笑收场"
@@ -1828,6 +1838,32 @@ def build_report():
                 "section": "灰色的果实·共通线第四十一章心理声学哼歌操控与走廊龟甲缚特训 (grisaia1/com41)"
             })
 
+    # com42
+    for lno in range(21860, 22251):
+        ja_raw = ja_lines[lno - 1]
+        cn_raw = cn_lines[lno - 1]
+        sid = ja_raw.split("\t")[0] if "\t" in ja_raw else f"L{lno}"
+        ja_txt = ja_raw.split("\t")[1] if "\t" in ja_raw else ja_raw
+        cn_txt = cn_raw.split("\t")[1] if "\t" in cn_raw else cn_raw
+
+        old_txt = cn_txt
+        if git_base_cn and len(git_base_cn) >= lno:
+            head_raw = git_base_cn[lno - 1]
+            old_txt = head_raw.split("\t")[1] if "\t" in head_raw else head_raw
+
+        if cn_txt != old_txt:
+            cat, reason = classify_change(lno, sid, ja_txt, old_txt, cn_txt)
+            diffs.append({
+                "lno": lno,
+                "sid": sid,
+                "ja": ja_txt,
+                "old": old_txt,
+                "new": cn_txt,
+                "cat": cat,
+                "reason": reason,
+                "section": "灰色的果实·共通线第四十二章麻子的智能设计论与融化黑芝麻冰淇淋正露丸大救赎 (grisaia1/com42)"
+            })
+
     print(f"Total indexed modifications: {len(diffs)}")
 
     # Build Markdown
@@ -2233,6 +2269,15 @@ def build_report():
     md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
     md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
     for idx, d in enumerate(com41_diffs, 1):
+        md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
+    md.append("\n---\n")
+
+    # Section 45
+    com42_diffs = [d for d in diffs if d["section"].startswith("灰色的果实·共通线第四十二章麻子的智能设计论与融化黑芝麻冰淇淋正露丸大救赎")]
+    md.append(f"## 四十五、 灰色的果实·共通线第四十二章麻子的智能设计论与融化黑芝麻冰淇淋正露丸大救赎 (`grisaia1/com42`，共 {len(com42_diffs)} 条)\n")
+    md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
+    md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
+    for idx, d in enumerate(com42_diffs, 1):
         md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
     md.append("\n---\n")
 
