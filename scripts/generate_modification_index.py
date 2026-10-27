@@ -14,6 +14,20 @@ def escape_md(text):
     return text.replace("|", "\\|").replace("\n", " ").replace("\r", "")
 
 def classify_change(line_no, sid, ja, old_cn, new_cn):
+    # com23 specific
+    if "ユニバーシ・ティー" in ja or "大学茶" in new_cn or "シンクロニシ・ティー" in ja or "炭酸抜き" in ja:
+        return "大学茶与谐音梗连环吐槽", "纠正机翻将雄二冷笑话谐音‘大学茶（University / ユニバーシ・ティー）’误译为普通红茶的重大语义丢失，还原莳菜‘共时茶（Synchronicity）’跟风捧哏"
+    if "北海道" in ja or "搾りたて" in ja or "牛乳" in ja or "新幹線" in ja or "挤奶" in new_cn:
+        return "女仆幸北海道亲手挤奶暴走", "还原女仆幸为给莳菜买到‘全天下最好喝的牛奶’直接杀到车站买票准备直飞北海道牧场亲手挤奶的超级天然呆反差暴走"
+    if "借りてきた猫" in ja or "お人形遊び" in ja or "昔の話" in ja or "流浪猫" in new_cn:
+        return "莳菜心结与流浪猫往事", "揭露莳菜刚来美滨学园时如战战兢兢的流浪猫一般不与任何人说话、只抱破洋娃娃蜷缩角落的令人心疼的创伤往事"
+    if "食わず嫌い" in ja or "生き残った者" in ja or "死んだ仲間" in ja or "不吃之嫌" in new_cn:
+        return "经验教训与不吃之嫌铁则", "还原雄二将挑食坏习惯升华为战地生死铁律‘死去的战友用鲜血教训换来的经验’、严厉纠正莳菜‘不尝便讨厌’毛病的硬汉作风"
+    if "ツンデレ" in ja or "傲娇" in new_cn or "ヨシ子" in ja or "良子" in new_cn:
+        return "小鬼傲娇教学与美智留炸毛", "还原莳菜自作聪明把由美子喊作‘良子’、向美智留示范‘先狠狠损一通再告白一笔勾销’的魔性自创傲娇教学引发美智留疯狂抓狂"
+    if "リファレンス" in ja or "参考范本" in new_cn or "心得た" in ja or "尊大" in ja:
+        return "参考范本质量堪忧与冷吐槽", "还原莳菜迅速吸收雄二军人腔调‘属下领命’、雄二冷酷反思‘莳菜之所以人格扭曲完全是因为身旁的参考范本质量太差’的经典自嘲"
+
     # com22 specific
     if "早飯早糞" in ja or "兵舎" in ja or "流し込む" in ja or "幹部クラス" in ja:
         return "早饭早粪与军营进食创伤", "还原雄二在特工军校中被强制要求‘早饭早粪’、数分钟内狼吞虎咽灌下海量食物且吐出必须重咽的非人军事创伤"
@@ -1092,6 +1106,32 @@ def build_report():
                 "section": "灰色的果实·共通线第二十二章便当手作哲学与家庭围炉之痛 (grisaia1/com22)"
             })
 
+    # Section 25: com23 (17279 - 17399)
+    for lno in range(17279, 17400):
+        ja_raw = ja_lines[lno - 1]
+        cn_raw = cn_lines[lno - 1]
+        sid = ja_raw.split("\t")[0] if "\t" in ja_raw else f"L{lno}"
+        ja_txt = ja_raw.split("\t")[1] if "\t" in ja_raw else ja_raw
+        cn_txt = cn_raw.split("\t")[1] if "\t" in cn_raw else cn_raw
+
+        old_txt = cn_txt
+        if git_base_cn and len(git_base_cn) >= lno:
+            head_raw = git_base_cn[lno - 1]
+            old_txt = head_raw.split("\t")[1] if "\t" in head_raw else head_raw
+
+        if cn_txt != old_txt:
+            cat, reason = classify_change(lno, sid, ja_txt, old_txt, cn_txt)
+            diffs.append({
+                "lno": lno,
+                "sid": sid,
+                "ja": ja_txt,
+                "old": old_txt,
+                "new": cn_txt,
+                "cat": cat,
+                "reason": reason,
+                "section": "灰色的果实·共通线第二十三章大学茶谐音梗与北海道挤奶狂想曲 (grisaia1/com23)"
+            })
+
     print(f"Total indexed modifications: {len(diffs)}")
 
     # Build Markdown
@@ -1326,6 +1366,15 @@ def build_report():
     md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
     md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
     for idx, d in enumerate(com22_diffs, 1):
+        md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
+    md.append("\n---\n")
+
+    # Section 25
+    com23_diffs = [d for d in diffs if d["section"].startswith("灰色的果实·共通线第二十三章")]
+    md.append(f"## 二十六、 灰色的果实·共通线第二十三章大学茶谐音梗与北海道挤奶狂想曲 (`grisaia1/com23`，共 {len(com23_diffs)} 条)\n")
+    md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
+    md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
+    for idx, d in enumerate(com23_diffs, 1):
         md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
     md.append("\n---\n")
 
