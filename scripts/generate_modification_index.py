@@ -14,6 +14,16 @@ def escape_md(text):
     return text.replace("|", "\\|").replace("\n", " ").replace("\r", "")
 
 def classify_change(line_no, sid, ja, old_cn, new_cn):
+    # com08 specific
+    if "根暗" in ja and "家里蹲" in old_cn:
+        return "心理词义严重混淆", "纠正将由美子揭穿天音外向伪装下的阴郁性格（根暗/Nekura）荒唐误译为风马牛不相及的宅居词汇『家里蹲（Hikikomori）』"
+    if "モヤシ" in ja and "金针菇" in old_cn:
+        return "生活用语常识误译", "纠正将超市常见蔬菜绿豆芽（モヤシ/Moyashi）荒唐指鹿为马误译为『金针菇』"
+    if "不幸自慢" in ja and "说到自己" in old_cn:
+        return "特有文化词汇还原", "规范日语社会流行语『炫耀自身不幸/以惨博同情（不幸自慢）』与由美子通透冷静的心理剖析"
+    if "プレイ" in ja and "剧本" in old_cn:
+        return "二次元/Galgame梗还原", "纠正将天音调戏雄二的『大姐姐扮演游戏（お姉ちゃんプレイ）』机械死板直译为『大姐姐剧本』"
+
     # com07 specific
     if "そいつはすまなかった" in ja and "那家伙" in old_cn:
         return "成语俚语望文生义", "纠正将雄二口语道歉『那还真是不好意思/是我对不住你（そいつはすまなかった）』荒唐误读为『那家伙太惨了』"
@@ -466,6 +476,32 @@ def build_report():
                 "section": "灰色的果实·共通线第七章自贩机与丛林手榴弹怪谈 (grisaia1/com07)"
             })
 
+    # Section 10: com08 (13806 - 14003)
+    for lno in range(13806, 14004):
+        ja_raw = ja_lines[lno - 1]
+        cn_raw = cn_lines[lno - 1]
+        sid = ja_raw.split("\t")[0] if "\t" in ja_raw else f"L{lno}"
+        ja_txt = ja_raw.split("\t")[1] if "\t" in ja_raw else ja_raw
+        cn_txt = cn_raw.split("\t")[1] if "\t" in cn_raw else cn_raw
+
+        old_txt = cn_txt
+        if git_base_cn and len(git_base_cn) >= lno:
+            head_raw = git_base_cn[lno - 1]
+            old_txt = head_raw.split("\t")[1] if "\t" in head_raw else head_raw
+
+        if cn_txt != old_txt:
+            cat, reason = classify_change(lno, sid, ja_txt, old_txt, cn_txt)
+            diffs.append({
+                "lno": lno,
+                "sid": sid,
+                "ja": ja_txt,
+                "old": old_txt,
+                "new": cn_txt,
+                "cat": cat,
+                "reason": reason,
+                "section": "灰色的果实·共通线第八章天音肢体接触与由美子心理剖析 (grisaia1/com08)"
+            })
+
     print(f"Total indexed modifications: {len(diffs)}")
 
     # Build Markdown
@@ -565,6 +601,15 @@ def build_report():
     md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
     md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
     for idx, d in enumerate(com07_diffs, 1):
+        md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
+    md.append("\n---\n")
+
+    # Section 10
+    com08_diffs = [d for d in diffs if d["section"].startswith("灰色的果实·共通线第八章")]
+    md.append(f"## 十一、 灰色的果实·共通线第八章天音肢体接触与由美子心理剖析 (`grisaia1/com08`，共 {len(com08_diffs)} 条)\n")
+    md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
+    md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
+    for idx, d in enumerate(com08_diffs, 1):
         md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
     md.append("\n---\n")
 
