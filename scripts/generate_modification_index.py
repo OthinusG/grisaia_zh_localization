@@ -14,6 +14,16 @@ def escape_md(text):
     return text.replace("|", "\\|").replace("\n", " ").replace("\r", "")
 
 def classify_change(line_no, sid, ja, old_cn, new_cn):
+    # com38 specific
+    if "ガクエンチャー" in ja or "お茶" in ja or "異物感" in ja or "馴染む" in ja:
+        return "学园切尔特产茶爆笑收尾与异物感反思", "全章神级收尾与荒诞搞笑：雄二遭满宣布取消外号大作战后，遇千鹤询问骚动随手抛出‘学园切尔’（ガクエンチャー）抽身离去，引得千鹤原地抓狂怀疑是某种特产茶叶；雄二暗自反思本想借互取绰号打成一片消除外来者异物感，深知融入正常人集体仍需漫长磨合"
+    if "サッチャー" in ja or "アッチャー" in ja or "マッチャー" in ja or "ミッチャー" in ja or "改名の時代" in ja:
+        return "铁娘子撒切尔宣誓入戏与改名大时代狂潮", "经典神级相声爆发：雄二报复满擅取绰号，用音变将其贬为‘米切尔’并令莳菜全校传达；幸闻讯赶来被雄二赐名‘撒切尔’（サッチャー，铁娘子梗），幸一本正经起誓作为撒切尔坚毅生活并宣称‘改名大时代降临’；天音被赐名‘阿切尔’，莳菜被赐名‘玛切尔’（抹茶梗），逼得满抱头痛哭求饶叫回雄二"
+    if "汚い金髪" in ja or "外見的な特徴" in ja or "小汚い" in ja or "乾物感" in ja or "干し柿" in ja:
+        return "邋遢烂金发外貌暴击与果实多汁柿饼论战", "傲娇金发互损交锋：满吐槽雄二没有柠檬汁般晶莹剔透闪光、更像风干干瘪枯槁的柿饼；雄二反唇相讥，以客观外貌写照为由当场赐予满‘邋遢烂金发’外号，满跳脚抗议平时为染发光鲜亮丽付诸无数心血"
+    if "ジューシーユージー" in ja or "ユジユジ" in ja or "ザ・近寄りがたい人" in ja or "黒板消し" in ja or "ハム" in ja or "茅ヶ崎めぐみ" in ja:
+        return "多汁雄二生人勿近选项与由美子反差萌取名", "全章神级开篇与分支抉择：雄二课间阅读前偶像歌手茅崎惠（星桥联动彩蛋）自传遭满搭话纠缠；满以雄二气场难搭话为由强行推销外号，莳菜提出‘多汁雄二’（Juicy Yuji），满提出‘The·生人勿近之人’；由美子不堪其扰随口敷衍‘雄二雄二’尽显反差萌，进入三项绰号分支选择"
+
     # com37 specific
     if "アロハ" in ja or "糞虫" in ja or "きな臭い" in ja or "定住" in ja or "脱却" in ja or "普通" in ja:
         return "抢滩演习硝烟心理创伤与普通人夏威夷衫纠结", "全章神级收尾与深刻心理独白：雄二反思海边对自己唯有当年特种抢滩登陆演习被教官怒吼‘把头给我放低点臭蛆虫’的硝烟焦臭创伤；为追求‘普通凡人’生活努力催眠自己只需纠结穿什么颜色夏威夷花衬衫，在渴望解脱与贪恋安定烟火之间深刻解剖人类自我矛盾"
@@ -1690,6 +1700,32 @@ def build_report():
                 "section": "灰色的果实·共通线第三十七章夏日热浪海滨策划与千鹤求婚交涉 (grisaia1/com37)"
             })
 
+    # com38
+    for lno in range(21004, 21181):
+        ja_raw = ja_lines[lno - 1]
+        cn_raw = cn_lines[lno - 1]
+        sid = ja_raw.split("\t")[0] if "\t" in ja_raw else f"L{lno}"
+        ja_txt = ja_raw.split("\t")[1] if "\t" in ja_raw else ja_raw
+        cn_txt = cn_raw.split("\t")[1] if "\t" in cn_raw else cn_raw
+
+        old_txt = cn_txt
+        if git_base_cn and len(git_base_cn) >= lno:
+            head_raw = git_base_cn[lno - 1]
+            old_txt = head_raw.split("\t")[1] if "\t" in head_raw else head_raw
+
+        if cn_txt != old_txt:
+            cat, reason = classify_change(lno, sid, ja_txt, old_txt, cn_txt)
+            diffs.append({
+                "lno": lno,
+                "sid": sid,
+                "ja": ja_txt,
+                "old": old_txt,
+                "new": cn_txt,
+                "cat": cat,
+                "reason": reason,
+                "section": "灰色的果实·共通线第三十八章外号大作战多汁雄二与改名大时代 (grisaia1/com38)"
+            })
+
     print(f"Total indexed modifications: {len(diffs)}")
 
     # Build Markdown
@@ -2059,6 +2095,15 @@ def build_report():
     md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
     md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
     for idx, d in enumerate(com37_diffs, 1):
+        md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
+    md.append("\n---\n")
+
+    # Section 41
+    com38_diffs = [d for d in diffs if d["section"].startswith("灰色的果实·共通线第三十八章外号大作战多汁雄二与改名大时代")]
+    md.append(f"## 四十一、 灰色的果实·共通线第三十八章外号大作战多汁雄二与改名大时代 (`grisaia1/com38`，共 {len(com38_diffs)} 条)\n")
+    md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
+    md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
+    for idx, d in enumerate(com38_diffs, 1):
         md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
     md.append("\n---\n")
 
