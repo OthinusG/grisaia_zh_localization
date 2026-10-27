@@ -14,6 +14,18 @@ def escape_md(text):
     return text.replace("|", "\\|").replace("\n", " ").replace("\r", "")
 
 def classify_change(line_no, sid, ja, old_cn, new_cn):
+    # com36 specific
+    if "カウンセラー" in ja or "罪悪感" in ja or "足し引き" in ja or "自問自答" in ja or "理解者" in ja or "メリット" in ja or "憂鬱" in ja:
+        return "雄二心魔自白与天台残风罪恶感反思", "全章神级收尾与深刻心理独白：由美子决然退场后海风席卷天台砂砾，雄二反思自己绝非故作善解人意，而是无法心安理得享受安稳日常，始终背负着深沉罪恶感；即便扮演冒牌蹩脚心理咨询师，若能抹消罪恶感亦属利己，然而连善意都用冷血利益得失权衡考量之举本身，恰恰构成了雄二心底最大的自责与困顿"
+    if "見遣る" in ja or "アレは会わん" in ja or "フン…" in ja or "静かに遠ざかっていく後ろ姿" in ja or "ため息" in ja or "何も聞かないのね" in ja or "話しかけないで" in ja:
+        return "道昭冷酷蔑称亲女与天台长叹坚冰微融", "全章核心高潮与父女悲剧对立：东急总裁榊道昭冷眼回身蔑称亲女由美子为‘那东西’（アレ），不屑冷哼旋踵绝情离去；由美子死死凭栏俯瞰长叹悲怆低徊，因雄二始终克制不探隐私，首次对身边之人卸下心防，相约倾听，坚冰气场微妙融化"
+    if "盗品急行" in ja or "東浜急行電鉄" in ja or "理事長" in ja or "土地取得" in ja or "好人物" in ja or "屋上から" in ja or "虚像" in ja or "視察" in ja:
+        return "理事长恶名起底与天台凭栏观瞻谜团", "主线背景揭秘：校长千鹤向雄二展示美滨招生简介，揭露理事长正是东急社长榊道昭，其手段狠辣被世人讥讽为‘盗品急行’；千鹤点破父女从未相见，但由美子每逢视察必在宿舍天台居高临下观瞻，请求雄二作为唯一能靠近之人给予关照"
+    if "ビッチメイド" in ja or "夜のお伴" in ja or "性的" in ja or "キッチンドランカー" in ja or "アル中" in ja or "大名行列" in ja or "スモーク" in ja:
+        return "碧池女仆侍寝暴论与厨房酒鬼关西连环咆哮", "经典神级爆笑相声：莳菜自豪宣称将幸调教为‘极品碧池女仆’（ビッチメイド），幸端庄提议日间侍寝暖床与全套性服务，雄二双提后颈召天音问罪反遭莳菜开黄腔；天音揭露黑车大名出巡，雄二犀利吐槽天音‘厨房酒鬼’（キッチンドランカー）偷酒成瘾，天音怒吼狂飙关西腔否认酗酒，满插嘴烟熏车窗火上浇油"
+    if "港湾作業者Ａ" in ja or "マグロマンキーホルダー" in ja or "黒塗りの高級車" in ja or "ヤクザ" in ja or "ヤブヘビ" in ja or "日曜の昼間" in ja or "昼ドラ" in ja:
+        return "港湾作业员钥匙扣与黑涂高级车队初现", "全章神级开篇与悬念展开：雄二剖析日式周日忧郁症与雇佣兵心境差异；莳菜采购金枪鱼侠周边第14弹‘港湾作业员A’，用八点档肥皂剧恶毒台词反将雄二一军导致自讨苦吃；三岛崎站前突现挤压公交、保镖林立的黑涂高级车队，莳菜敏锐察觉市侩大人腐臭味"
+
     # com35 specific
     if "ネギトロ丼" in ja or "甘えてくれる" in ja or "思考を海に" in ja or "一風変わった正義の味方" in ja or "夢と希望" in ja or "平民英雄" in ja or "英雄譚" in ja:
         return "葱花金枪鱼泥盖饭点餐与平民英雄温情升华", "全章神级收尾与温情升华：雄二受特摄触动罕见向天音撒娇点餐葱花金枪鱼泥盖饭（ネギトロ丼），天音又惊又喜倾注爱意下厨；雄二领悟虽为荒诞特摄，却赋予宿舍少女无尽梦想与希冀，认定复杂尘世亦需此类质朴温暖的平民英雄"
@@ -1614,6 +1626,32 @@ def build_report():
                 "section": "灰色的果实·共通线第三十五章鲜鱼超人金枪鱼侠特摄激战与葱花金枪鱼泥盖饭 (grisaia1/com35)"
             })
 
+    # com36
+    for lno in range(20435, 20850):
+        ja_raw = ja_lines[lno - 1]
+        cn_raw = cn_lines[lno - 1]
+        sid = ja_raw.split("\t")[0] if "\t" in ja_raw else f"L{lno}"
+        ja_txt = ja_raw.split("\t")[1] if "\t" in ja_raw else ja_raw
+        cn_txt = cn_raw.split("\t")[1] if "\t" in cn_raw else cn_raw
+
+        old_txt = cn_txt
+        if git_base_cn and len(git_base_cn) >= lno:
+            head_raw = git_base_cn[lno - 1]
+            old_txt = head_raw.split("\t")[1] if "\t" in head_raw else head_raw
+
+        if cn_txt != old_txt:
+            cat, reason = classify_change(lno, sid, ja_txt, old_txt, cn_txt)
+            diffs.append({
+                "lno": lno,
+                "sid": sid,
+                "ja": ja_txt,
+                "old": old_txt,
+                "new": cn_txt,
+                "cat": cat,
+                "reason": reason,
+                "section": "灰色的果实·共通线第三十六章黑涂高级车队视察与由美子天台长叹 (grisaia1/com36)"
+            })
+
     print(f"Total indexed modifications: {len(diffs)}")
 
     # Build Markdown
@@ -1965,6 +2003,15 @@ def build_report():
     md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
     md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
     for idx, d in enumerate(com35_diffs, 1):
+        md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
+    md.append("\n---\n")
+
+    # Section 39
+    com36_diffs = [d for d in diffs if d["section"].startswith("灰色的果实·共通线第三十六章黑涂高级车队视察与由美子天台长叹")]
+    md.append(f"## 三十九、 灰色的果实·共通线第三十六章黑涂高级车队视察与由美子天台长叹 (`grisaia1/com36`，共 {len(com36_diffs)} 条)\n")
+    md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
+    md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
+    for idx, d in enumerate(com36_diffs, 1):
         md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
     md.append("\n---\n")
 
