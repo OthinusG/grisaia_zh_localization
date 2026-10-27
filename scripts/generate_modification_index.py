@@ -14,6 +14,14 @@ def escape_md(text):
     return text.replace("|", "\\|").replace("\n", " ").replace("\r", "")
 
 def classify_change(line_no, sid, ja, old_cn, new_cn):
+    # com39 specific
+    if "金型屋" in ja or "職人気質" in ja or "阿鼻叫喚" in ja or "トラウマ" in ja or "乙女の尊厳" in ja or "面相筆" in ja or "恐ろしい" in ja:
+        return "模具工匠匠人血统与惨绝人寰恐怖女仆妆容", "全章神级高潮与反差惊悚爆笑：幸亮出精密金属模具工匠家庭出身的执拗匠人作风，闭门施展独门妆容；揭晓瞬间天音、满、莳菜、由美子四人目睹惨状发出撕心裂肺惨绝人寰的恐惧尖叫；天音为守护幸身为少女的尊严并防止给雄二留下终生心理创伤，死命飞扑肉身挡视线，莳菜吓得发誓此生再也不提化妆二字"
+    if "白粉" in ja or "舞妓" in ja or "つけまつげ" in ja or "５枚重ね" in ja or "食塩水" in ja or "ローション" in ja or "下地" in ja:
+        return "五层浓密假睫毛与京都艺妓白粉面具", "爆笑化妆实操：满错把化妆水当生理食盐水，更贴上五层假睫毛导致眼皮沉重难以睁开被雄二毒舌吐槽；莳菜偷吃草莓味妆前乳，更从幸橱柜翻出京都舞妓白粉涂抹得全脸惨白宛如纸扎人偶，尽显校园无厘头日常"
+    if "女子力" in ja or "化粧" in ja or "ユニコーン" in ja or "後ろ手に縛" in ja or "メイク" in ja or "女の道" in ja:
+        return "女子力化妆大作战与后手捆绑绑架由美子", "全章神级开篇相声：莳菜与幸受电视节目蛊惑央求天音传授女人化妆技巧；满半路杀出，幸更是直接将孤高独角兽由美子反剪双手五花大绑挟持至走廊开班；天音硬拉雄二留堂作为激励，开启女子力梳妆打扮大作战"
+
     # com38 specific
     if "ガクエンチャー" in ja or "お茶" in ja or "異物感" in ja or "馴染む" in ja:
         return "学园切尔特产茶爆笑收尾与异物感反思", "全章神级收尾与荒诞搞笑：雄二遭满宣布取消外号大作战后，遇千鹤询问骚动随手抛出‘学园切尔’（ガクエンチャー）抽身离去，引得千鹤原地抓狂怀疑是某种特产茶叶；雄二暗自反思本想借互取绰号打成一片消除外来者异物感，深知融入正常人集体仍需漫长磨合"
@@ -1726,6 +1734,32 @@ def build_report():
                 "section": "灰色的果实·共通线第三十八章外号大作战多汁雄二与改名大时代 (grisaia1/com38)"
             })
 
+    # com39
+    for lno in range(21181, 21388):
+        ja_raw = ja_lines[lno - 1]
+        cn_raw = cn_lines[lno - 1]
+        sid = ja_raw.split("\t")[0] if "\t" in ja_raw else f"L{lno}"
+        ja_txt = ja_raw.split("\t")[1] if "\t" in ja_raw else ja_raw
+        cn_txt = cn_raw.split("\t")[1] if "\t" in cn_raw else cn_raw
+
+        old_txt = cn_txt
+        if git_base_cn and len(git_base_cn) >= lno:
+            head_raw = git_base_cn[lno - 1]
+            old_txt = head_raw.split("\t")[1] if "\t" in head_raw else head_raw
+
+        if cn_txt != old_txt:
+            cat, reason = classify_change(lno, sid, ja_txt, old_txt, cn_txt)
+            diffs.append({
+                "lno": lno,
+                "sid": sid,
+                "ja": ja_txt,
+                "old": old_txt,
+                "new": cn_txt,
+                "cat": cat,
+                "reason": reason,
+                "section": "灰色的果实·共通线第三十九章女子力化妆讲堂与五花大绑由美子 (grisaia1/com39)"
+            })
+
     print(f"Total indexed modifications: {len(diffs)}")
 
     # Build Markdown
@@ -2104,6 +2138,15 @@ def build_report():
     md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
     md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
     for idx, d in enumerate(com38_diffs, 1):
+        md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
+    md.append("\n---\n")
+
+    # Section 42
+    com39_diffs = [d for d in diffs if d["section"].startswith("灰色的果实·共通线第三十九章女子力化妆讲堂与五花大绑由美子")]
+    md.append(f"## 四十二、 灰色的果实·共通线第三十九章女子力化妆讲堂与五花大绑由美子 (`grisaia1/com39`，共 {len(com39_diffs)} 条)\n")
+    md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
+    md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
+    for idx, d in enumerate(com39_diffs, 1):
         md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
     md.append("\n---\n")
 
