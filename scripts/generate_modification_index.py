@@ -14,6 +14,22 @@ def escape_md(text):
     return text.replace("|", "\\|").replace("\n", " ").replace("\r", "")
 
 def classify_change(line_no, sid, ja, old_cn, new_cn):
+    # com27 specific
+    if "美浜女子餃子隊" in ja or "敗戦間際の軍" in ja or "鯛の刺身餃子" in ja or "つけダレ" in ja or "フツーのが一番" in ja:
+        return "美滨女子饺子队与百鬼夜行兵器盛宴", "生动还原美滨女子饺子队成立、搜刮冰箱速成增产120枚水饺，芝士、明太子、红香肠乃至鲷鱼刺身黑暗水饺如二战末期轴心国穷途决战兵器大博览；莳菜直击灵魂吐槽‘还是普普通通的原味饺子最好吃’为全会画上和平句号"
+    if "輜重" in ja or "主計" in ja or "第一線が維持される" in ja or "感謝をしなさい" in ja or "挺身にも等しい" in ja or "ゴブゴブ" in ja:
+        return "后勤辎重论与美智留暴走索谢", "神级日常互动高光：美智留痛斥雄二理所当然大口灌乌龙茶、不知感恩天音照顾；雄二搬出‘唯有军需与辎重保障到位前线方能维持战力’战术常识，并暗讽‘平时习惯无所作为之人视寻常琐碎犹如挺身舍己’，致美智留炸毛暴走索要感谢"
+    if "煎り米" in ja or "生活の知恵" in ja or "ズギョーン" in ja or "手抜き" in ja or "工夫" in ja or "ウーロン茶" in ja or "ベチャベチャ" in ja:
+        return "家常手艺精髓与乌龙茶秘制馅料", "极具烟火气的家常教学：炒米充当防潮干燥剂的老妪智慧；天音传授‘家庭料理精髓全在合理偷懒，初学者失败八成因私自瞎搞创新’，并自创‘往饺馅淋乌龙茶提鲜解腻’的独门秘法与折叠捏褶手法"
+    if "次女" in ja or "エビ餃子" in ja or "甲殻類" in ja or "長女は料理なんてからっきし" in ja or "軍の糧食工場" in ja or "粘土遊び" in ja:
+        return "美滨四姐妹生态位与鲜虾水饺", "生动刻画美滨学园家庭定位：长女由美子生活自理废柴只会泡面、三女幸如军粮工厂般流水线克隆、四女莳菜将食材当橡皮泥，次女美智留性格别扭别称‘最少女’；因雄二偏爱海鲜白肉而特意包鲜虾水饺"
+    if "一畳半" in ja or "ドラえもん" in ja or "メールボックス" in ja or "聖域" in ja or "過去でも詰まってる" in ja or "触れられたくない物" in ja:
+        return "一叠半密室圣域与沉重过去", "关键人物设定揭秘：雄二犹如哆啦A梦般只在一叠半逼仄壁橱中起居沉睡，天音郑重告诫‘擅闯会动真格暴怒杀人’，并以‘空荡手机收件箱’精妙喻指雄二压抑封存的惨痛过去与不可侵犯的心灵圣域"
+    if "パージ" in ja or "同棲" in ja or "ブラが脱ぎ捨てて" in ja or "麦茶" in ja or "着替える" in ja:
+        return "男寝更衣大卸甲与半同居疑云", "爆笑名场面：天音熟门熟路开雄二房门开冰箱端麦茶，当面脱外套换家居服；美智留大惊失色怒吼‘一进男生寝室当场大卸甲暴衣脱光光’并发现床头蕾丝胸罩，连环质问二人是否早已半同居"
+    if "卵" in ja or "タイムセール" in ja or "余ってるぐらいじゃないと落ち着かない" in ja or "正義を呼ぶ声" in ja or "９８円" in ja:
+        return "翔荣囤蛋执念与正义使者登场", "生动还原翔荣超市限购特卖98日元鸡蛋；美智留摆出正义使者架势却被抓去借人头排队，天音道出‘冰箱空荡便心慌、食物必须富余到吃不完才踏实’的饥荒创伤心理后遗症"
+
     # com26 specific
     if "トンビ" in ja or "立ったまま寝ている" in ja or "貴方…聞かないのね" in ja or "向こうの方から、俺に歩み寄って来た時だけ" in ja or "変わってるわね" in ja or "お互い様" in ja:
         return "屋顶黑鸢孤影与两只刺猬微光初融", "全章神级情感升华：屋顶夏日海风中，由美子主动向雄二搭话破冰，困惑于雄二‘勒令不问便绝不再问’的绝对克制；雄二阐明‘绝不主动干涉侵犯他人私域、但若对方迈出第一步也绝不避让推拒’的处世哲学，令由美子罕见展露浅笑，两只满身尖刺的孤独灵魂在此刻悄然叩开彼此心扉"
@@ -1264,6 +1280,32 @@ def build_report():
                 "section": "灰色的果实·共通线第二十六章无爱好之叹与由美子屋顶黑鸢破冰 (grisaia1/com26)"
             })
 
+    # com27
+    for lno in range(18279, 18449):
+        ja_raw = ja_lines[lno - 1]
+        cn_raw = cn_lines[lno - 1]
+        sid = ja_raw.split("\t")[0] if "\t" in ja_raw else f"L{lno}"
+        ja_txt = ja_raw.split("\t")[1] if "\t" in ja_raw else ja_raw
+        cn_txt = cn_raw.split("\t")[1] if "\t" in cn_raw else cn_raw
+
+        old_txt = cn_txt
+        if git_base_cn and len(git_base_cn) >= lno:
+            head_raw = git_base_cn[lno - 1]
+            old_txt = head_raw.split("\t")[1] if "\t" in head_raw else head_raw
+
+        if cn_txt != old_txt:
+            cat, reason = classify_change(lno, sid, ja_txt, old_txt, cn_txt)
+            diffs.append({
+                "lno": lno,
+                "sid": sid,
+                "ja": ja_txt,
+                "old": old_txt,
+                "new": cn_txt,
+                "cat": cat,
+                "reason": reason,
+                "section": "灰色的果实·共通线第二十七章美滨饺子队与一叠半密室圣域 (grisaia1/com27)"
+            })
+
     print(f"Total indexed modifications: {len(diffs)}")
 
     # Build Markdown
@@ -1534,6 +1576,15 @@ def build_report():
     md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
     md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
     for idx, d in enumerate(com26_diffs, 1):
+        md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
+    md.append("\n---\n")
+
+    # Section 30
+    com27_diffs = [d for d in diffs if d["section"].startswith("灰色的果实·共通线第二十七章美滨饺子队与一叠半密室圣域")]
+    md.append(f"## 三十、 灰色的果实·共通线第二十七章美滨饺子队与一叠半密室圣域 (`grisaia1/com27`，共 {len(com27_diffs)} 条)\n")
+    md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
+    md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
+    for idx, d in enumerate(com27_diffs, 1):
         md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
     md.append("\n---\n")
 
