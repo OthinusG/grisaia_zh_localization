@@ -14,6 +14,24 @@ def escape_md(text):
     return text.replace("|", "\\|").replace("\n", " ").replace("\r", "")
 
 def classify_change(line_no, sid, ja, old_cn, new_cn):
+    # com18 specific
+    if "カツ丼部屋" in ja or "猪排饭单间" in new_cn:
+        return "日本刑事侦讯经典俚语", "还原日本刑警经典审讯室俚语『猪排饭单间（カツ丼部屋）』，纠正机翻误译为普通餐馆式的‘炸猪排屋’"
+    if "バスキー・ロビンソン" in ja or "カラメル・リボン" in ja or "焦糖彩带" in new_cn or "パッポンストリートシャワー" in ja:
+        return "知名连锁甜品名梗还原", "还原恶搞芭斯罗缤（31冰淇淋）经典招牌口味『焦糖彩带（Caramel Ribbon）』与莳菜特选猎奇口味，纠正机翻走形"
+    if "３枚の１万円札" in ja or "3万円" in ja or "株に" in ja or "炒股" in new_cn:
+        return "雄二战术诱饵与人设还原", "还原雄二为保护莳菜甩出三万日元并让她拿多余的钱去炒股的硬核特工豪横人设"
+    if "スタンガン" in ja or "電撃" in ja or "基節骨" in ja or "ビールケース" in ja or "电击棒" in new_cn:
+        return "CQC近身徒手格斗与战术反制", "还原雄二利用人体解剖学反关节技与着力穴位制服电击棒暴徒的教科书级特工CQC"
+    if "Ｍａｏ" in ja or "ネット殺人" in ja or "仕置き人" in ja or "真央" in new_cn:
+        return "网络杀人悬赏论坛与暗网剧情", "还原地下杀人委托论坛『真央（Mao）』针对美滨学园的悬赏阴谋线索与暗网伏笔"
+    if "ブス" in ja or "丑八怪" in new_cn or "結婚してくれないか" in ja or "投獄" in ja:
+        return "雄二与JB传奇损友斗嘴", "还原雄二对顶头上司JB求婚调情后冷不防骂其『丑八怪』瞬间挂断电话的绝顶名场面"
+    if "影が長くなる" in ja or "姉だったような気" in ja or "風見一姫" in new_cn:
+        return "风见一姬回忆与亲情伏笔", "还原雄二夕阳下牵手莳菜引发幼年被姐姐一姬牵手解释夕阳影长的珍贵温暖回忆"
+    if "勘ピューター" in ja or "直觉计算机" in new_cn:
+        return "昭和老刑警谐音冷笑话", "还原老刑警自诩靠『直觉计算机（勘ピューター）』办案引发雄二吐槽的昭和冷笑话"
+
     # com17 specific
     if "Ａ液" in ja or "脱色" in new_cn or "漂白" in new_cn:
         return "日常生活/美容美发术语规范", "还原美智留忍受头皮剧痛漂白金发（调配脱色Ａ液与脱色Ｂ液、保鲜膜封头）的经典日常内幕"
@@ -874,6 +892,32 @@ def build_report():
                 "section": "灰色的果实·共通线第十七章美智留漂发受难与暗黑舞踏大赏 (grisaia1/com17)"
             })
 
+    # Section 20: com18 (15679 - 16066)
+    for lno in range(15679, 16067):
+        ja_raw = ja_lines[lno - 1]
+        cn_raw = cn_lines[lno - 1]
+        sid = ja_raw.split("\t")[0] if "\t" in ja_raw else f"L{lno}"
+        ja_txt = ja_raw.split("\t")[1] if "\t" in ja_raw else ja_raw
+        cn_txt = cn_raw.split("\t")[1] if "\t" in cn_raw else cn_raw
+
+        old_txt = cn_txt
+        if git_base_cn and len(git_base_cn) >= lno:
+            head_raw = git_base_cn[lno - 1]
+            old_txt = head_raw.split("\t")[1] if "\t" in head_raw else head_raw
+
+        if cn_txt != old_txt:
+            cat, reason = classify_change(lno, sid, ja_txt, old_txt, cn_txt)
+            diffs.append({
+                "lno": lno,
+                "sid": sid,
+                "ja": ja_txt,
+                "old": old_txt,
+                "new": cn_txt,
+                "cat": cat,
+                "reason": reason,
+                "section": "灰色的果实·共通线第十八章街头伏击战与猪排饭审讯室 (grisaia1/com18)"
+            })
+
     print(f"Total indexed modifications: {len(diffs)}")
 
     # Build Markdown
@@ -1063,6 +1107,15 @@ def build_report():
     md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
     md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
     for idx, d in enumerate(com17_diffs, 1):
+        md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
+    md.append("\n---\n")
+
+    # Section 20
+    com18_diffs = [d for d in diffs if d["section"].startswith("灰色的果实·共通线第十八章")]
+    md.append(f"## 二十一、 灰色的果实·共通线第十八章街头伏击战与猪排饭审讯室 (`grisaia1/com18`，共 {len(com18_diffs)} 条)\n")
+    md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
+    md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
+    for idx, d in enumerate(com18_diffs, 1):
         md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
     md.append("\n---\n")
 
