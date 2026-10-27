@@ -14,6 +14,12 @@ def escape_md(text):
     return text.replace("|", "\\|").replace("\n", " ").replace("\r", "")
 
 def classify_change(line_no, sid, ja, old_cn, new_cn):
+    # com46b specific
+    if "姿見" in ja or "岡山の桃" in ja or "植木のスイカ" in ja or "マネキン" in ja or "お尻" in ja or "尻が小さ" in ja or "ふふふ" in ja:
+        return "由美子对镜窃喜名场面与冈山白桃翘臀精校", "全章神级高潮名场面：雄二送大包裹上楼撞破由美子虚掩房门，冷傲大小姐竟独自在落地穿衣镜前确认‘小脸’、‘端正五官’与‘不输假人模特的冈山白桃小翘臀’并‘呵呵呵呵呵’窃喜得不能自已；被雄二撞破并直球调侃‘屁股小挺好的’后羞愤到理智熔断、美工刀杀意骤起，雄二夺门百米狂奔；彻底清除机翻僵硬感，生动传神再现经典反差萌"
+    if "クーデレ" in ja or "褒め殺し" in ja or "キャバレー" in ja or "パスタ" in ja or "大本営批判" in ja or "憲兵" in ja or "デレ作戦" in ja or "デレ" in ja or "ツンデレ" in ja:
+        return "冷娇理论辩驳与夜总会式夸杀大作战爆笑溃败", "全章核心爆笑相声：莳菜将由美子定性为冷娇（クーデレ/Cool-dere）并绘制大字报发起‘露娇大作战’，传授源自高级夜总会的‘夸杀（褒め殺し）’绝技；满被幸吐槽‘只要能吃上面条便幸福万分的单纯生物’；全员兵分三路（洗漱台、大浴场、走廊）突击猛夸，却因战术生硬遭遇由美子冷面冰封全线溃败，莳菜叫嚣大本营批判要派宪兵队镇压；深刻梳理ACG冷娇概念与角色鲜活声线"
+
     # com46 specific
     if "首を撥ね飛ばした" in ja or "太刀筋" in ja or "ニホンマムシ" in ja or "大魔神" in ja or "男性自身" in ja or "長い生き物" in ja:
         return "幸的居合斩首蝮蛇绝技与雄二男体俚语补刀", "全章硬核动作爆笑：幸手起刀落一记凌厉居合刀法斩飞锅中毒蛇首级，雄二由衷赞赏‘好刀法’；雄二向满科普‘蝮蛇在俚语中除指鳗鱼外亦代指男性胯下生殖器官’引得满羞愤尖叫；由美子吐槽满虽怕蛇却有着蝮蛇般的打不死生命力；雄二总结向幸下达委托必须提供精确技术参数指标"
@@ -2000,6 +2006,32 @@ def build_report():
                 "section": "灰色的果实·共通线第四十六章关西间蒸鳗鱼饭与真蝮蛇居合斩首骚动 (grisaia1/com46)"
             })
 
+    # com46b
+    for lno in range(22923, 23168):
+        ja_raw = ja_lines[lno - 1]
+        cn_raw = cn_lines[lno - 1]
+        sid = ja_raw.split("\t")[0] if "\t" in ja_raw else f"L{lno}"
+        ja_txt = ja_raw.split("\t")[1] if "\t" in ja_raw else ja_raw
+        cn_txt = cn_raw.split("\t")[1] if "\t" in cn_raw else cn_raw
+
+        old_txt = cn_txt
+        if git_base_cn and len(git_base_cn) >= lno:
+            head_raw = git_base_cn[lno - 1]
+            old_txt = head_raw.split("\t")[1] if "\t" in head_raw else head_raw
+
+        if cn_txt != old_txt:
+            cat, reason = classify_change(lno, sid, ja_txt, old_txt, cn_txt)
+            diffs.append({
+                "lno": lno,
+                "sid": sid,
+                "ja": ja_txt,
+                "old": old_txt,
+                "new": cn_txt,
+                "cat": cat,
+                "reason": reason,
+                "section": "灰色的果实·共通线第四十六章B冷娇由美子露娇大作战与穿衣镜窃喜骚动 (grisaia1/com46b)"
+            })
+
     print(f"Total indexed modifications: {len(diffs)}")
 
     # Build Markdown
@@ -2450,6 +2482,15 @@ def build_report():
     md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
     md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
     for idx, d in enumerate(com46_diffs, 1):
+        md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
+    md.append("\n---\n")
+
+    # Section 50
+    com46b_diffs = [d for d in diffs if d["section"].startswith("灰色的果实·共通线第四十六章B冷娇由美子露娇大作战与穿衣镜窃喜骚动")]
+    md.append(f"## 五十、 灰色的果实·共通线第四十六章B冷娇由美子露娇大作战与穿衣镜窃喜骚动 (`grisaia1/com46b`，共 {len(com46b_diffs)} 条)\n")
+    md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
+    md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
+    for idx, d in enumerate(com46b_diffs, 1):
         md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
     md.append("\n---\n")
 
