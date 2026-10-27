@@ -14,6 +14,22 @@ def escape_md(text):
     return text.replace("|", "\\|").replace("\n", " ").replace("\r", "")
 
 def classify_change(line_no, sid, ja, old_cn, new_cn):
+    # com20 specific
+    if "サバの水煮缶" in ja or "サバ缶" in ja or "ザリガニ" in ja or "水煮鲭鱼" in new_cn or "青いザリガニ" in ja:
+        return "小龙虾饲育与生物实验", "还原莳菜用无色素水煮鲭鱼罐头培育‘蓝色小龙虾（螯虾）’的经典夏日自由研究，纠正机翻将鲭鱼误译为沙丁鱼"
+    if "ヴァギナ" in ja or "マキナ" in ja and "陰道" in new_cn or "Vagina" in new_cn or "ヴァッギーナ" in ja:
+        return "莳菜名字谐音暴论还原", "还原莳菜嫌弃自己名字发音像‘阴道（Vagina）’引发雄二无语吐槽的经典无厘头黄段子"
+    if "オッパイの下" in ja or "あせも" in ja or "痱子" in new_cn:
+        return "天音巨乳苦恼细节纠错", "纠正机翻将天音巨乳下沿捂出痱子（オッパイの下に“あせも”）荒唐误译为‘腋下湿疹’的恶劣低级错误"
+    if "シャクレ" in ja or "地包天" in new_cn or "ホンマ" in ja or "待ちぃ" in ja or "口縫うてまう" in ja:
+        return "天音关西腔暴走与外貌互损", "还原莳菜怒喷天音‘地包天/兜齿（シャクレ）’引发天音秒变关西腔暴走追打的爆笑日常相声"
+    if "右脳" in ja or "左脳" in ja or "姉" in ja and "記憶" in ja or "スパイン" in ja or "シナプス" in ja or "照相记忆" in new_cn or "風見一姫" in new_cn:
+        return "一姬照相记忆与脑科学伏笔", "还原风见一姬与莳菜共有的超常‘照相记忆（直观像记忆）’神经学原理与左右眼分读两本书的天才伏笔"
+    if "オデン" in ja or "オーディン" in ja or "インターセプト" in ja or "奥丁" in new_cn:
+        return "关东煮与北欧神话谐音梗", "还原莳菜试图把关东煮（Oden）谐音为北欧主神奥丁（Odin）被天音当场凌空拦截的经典捧哏吐槽"
+    if "歯医者" in ja or "本を読む" in ja or "師匠" in ja and "読みたい" in ja:
+        return "师傅日下部麻子读书哲学", "还原师傅日下部麻子教会雄二享受读书之乐是‘为了不在牙医诊所排队候诊时白白浪费时间’的硬核幽默回忆"
+
     # com19 specific
     if "ソマリア" in ja or "索马里" in new_cn or "歩哨を投入" in ja or "前哨斥候" in new_cn or "六時間" in ja:
         return "特工特种突入战术妄想", "还原雄二将推开教室门夸大为特种作战排查索马里战场、将美智留推作探路前哨斥候的重度特工妄想症"
@@ -958,6 +974,32 @@ def build_report():
                 "section": "灰色的果实·共通线第十九章大黄蜂骚乱与由美子最强传说 (grisaia1/com19)"
             })
 
+    # Section 22: com20 (16194 - 16605)
+    for lno in range(16194, 16606):
+        ja_raw = ja_lines[lno - 1]
+        cn_raw = cn_lines[lno - 1]
+        sid = ja_raw.split("\t")[0] if "\t" in ja_raw else f"L{lno}"
+        ja_txt = ja_raw.split("\t")[1] if "\t" in ja_raw else ja_raw
+        cn_txt = cn_raw.split("\t")[1] if "\t" in cn_raw else cn_raw
+
+        old_txt = cn_txt
+        if git_base_cn and len(git_base_cn) >= lno:
+            head_raw = git_base_cn[lno - 1]
+            old_txt = head_raw.split("\t")[1] if "\t" in head_raw else head_raw
+
+        if cn_txt != old_txt:
+            cat, reason = classify_change(lno, sid, ja_txt, old_txt, cn_txt)
+            diffs.append({
+                "lno": lno,
+                "sid": sid,
+                "ja": ja_txt,
+                "old": old_txt,
+                "new": cn_txt,
+                "cat": cat,
+                "reason": reason,
+                "section": "灰色的果实·共通线第二十章蓝色螯虾饲育与照相记忆天才 (grisaia1/com20)"
+            })
+
     print(f"Total indexed modifications: {len(diffs)}")
 
     # Build Markdown
@@ -1165,6 +1207,15 @@ def build_report():
     md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
     md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
     for idx, d in enumerate(com19_diffs, 1):
+        md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
+    md.append("\n---\n")
+
+    # Section 22
+    com20_diffs = [d for d in diffs if d["section"].startswith("灰色的果实·共通线第二十章")]
+    md.append(f"## 二十三、 灰色的果实·共通线第二十章蓝色螯虾饲育与照相记忆天才 (`grisaia1/com20`，共 {len(com20_diffs)} 条)\n")
+    md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
+    md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
+    for idx, d in enumerate(com20_diffs, 1):
         md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
     md.append("\n---\n")
 
