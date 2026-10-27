@@ -14,6 +14,14 @@ def escape_md(text):
     return text.replace("|", "\\|").replace("\n", " ").replace("\r", "")
 
 def classify_change(line_no, sid, ja, old_cn, new_cn):
+    # com40 specific
+    if "夜のお誘い" in ja or "仲良くする" in ja or "ウブ" in ja or "セサミ" in ja or "ふぁめれふか" in ja or "ふぇふぁみ" in ja or "ふぁべてみまふか" in ja:
+        return "侍寝邀约误会纯情羞涩与唇齿分食短酥饼", "全章神级高潮与纯爱爆笑：幸叼着半截芝麻酥饼邀请雄二品尝（ふぁめれふか？），雄二谨慎咬下，幸调侃雄二‘外表老练骨子里却格外纯情羞涩’（ウブ，彻底纠正原机翻误作‘色狼’的极端相反错译）；雄二表达想与同伴更加融洽亲近，幸竟一本正经询问是否为‘夜晚侍寝邀约’（夜のお誘い），雄二崩溃吐槽"
+    if "赤マムシ" in ja or "フランス軍" in ja or "胸の谷間" in ja or "秘密のポケット" in ja or "萌え萌えキュン" in ja or "ショートブレッド" in ja:
+        return "乳沟秘密口袋野战口粮与赤蝮蛇生猛精华", "全章核心爆笑相声：幸称天音教导‘女孩子胸口是秘密口袋’并在雄二眼前伸手掏胸，掏出手工烘焙高热量能量块；涵盖浓香芝麻、复合维生素、膳食蔬菜与赤蝮蛇精华（彻底纠正原机翻将赤マムシ误译为‘赤马鲛’鱼类的荒谬错误）；自豪宣称口感堪比法军现役单兵口粮（RCIR），并反问雄二是否脑补了‘萌萌哒心跳♡’（萌え萌えキュン）的虚幻小岭幸"
+    if "段ボール" in ja or "アルゼンチン" in ja or "ドゥルセ・デ・レチェ" in ja or "エンゲル係数" in ja or "ストライプ" in ja:
+        return "阿根廷焦糖牛奶酱逃离与会说话的纸箱幸", "全章神级开篇设定：雄二为逃避天音恩格尔系数爆表的奢靡便当谎称漫步去阿根廷（布宜诺斯艾利斯经纬度），天音飙关西方言怒吼买正宗焦糖牛奶酱（Dulce de leche）；雄二撞见行走的巨大纸箱幸，展开FBI特工间谍盘问，连番逼问生日、O型血及蓝白条纹内衣"
+
     # com39 specific
     if "金型屋" in ja or "職人気質" in ja or "阿鼻叫喚" in ja or "トラウマ" in ja or "乙女の尊厳" in ja or "面相筆" in ja or "恐ろしい" in ja:
         return "模具工匠匠人血统与惨绝人寰恐怖女仆妆容", "全章神级高潮与反差惊悚爆笑：幸亮出精密金属模具工匠家庭出身的执拗匠人作风，闭门施展独门妆容；揭晓瞬间天音、满、莳菜、由美子四人目睹惨状发出撕心裂肺惨绝人寰的恐惧尖叫；天音为守护幸身为少女的尊严并防止给雄二留下终生心理创伤，死命飞扑肉身挡视线，莳菜吓得发誓此生再也不提化妆二字"
@@ -1760,6 +1768,32 @@ def build_report():
                 "section": "灰色的果实·共通线第三十九章女子力化妆讲堂与五花大绑由美子 (grisaia1/com39)"
             })
 
+    # com40
+    for lno in range(21388, 21639):
+        ja_raw = ja_lines[lno - 1]
+        cn_raw = cn_lines[lno - 1]
+        sid = ja_raw.split("\t")[0] if "\t" in ja_raw else f"L{lno}"
+        ja_txt = ja_raw.split("\t")[1] if "\t" in ja_raw else ja_raw
+        cn_txt = cn_raw.split("\t")[1] if "\t" in cn_raw else cn_raw
+
+        old_txt = cn_txt
+        if git_base_cn and len(git_base_cn) >= lno:
+            head_raw = git_base_cn[lno - 1]
+            old_txt = head_raw.split("\t")[1] if "\t" in head_raw else head_raw
+
+        if cn_txt != old_txt:
+            cat, reason = classify_change(lno, sid, ja_txt, old_txt, cn_txt)
+            diffs.append({
+                "lno": lno,
+                "sid": sid,
+                "ja": ja_txt,
+                "old": old_txt,
+                "new": cn_txt,
+                "cat": cat,
+                "reason": reason,
+                "section": "灰色的果实·共通线第四十章会走动的大纸箱幸与乳沟军粮酥饼 (grisaia1/com40)"
+            })
+
     print(f"Total indexed modifications: {len(diffs)}")
 
     # Build Markdown
@@ -2147,6 +2181,15 @@ def build_report():
     md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
     md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
     for idx, d in enumerate(com39_diffs, 1):
+        md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
+    md.append("\n---\n")
+
+    # Section 43
+    com40_diffs = [d for d in diffs if d["section"].startswith("灰色的果实·共通线第四十章会走动的大纸箱幸与乳沟军粮酥饼")]
+    md.append(f"## 四十三、 灰色的果实·共通线第四十章会走动的大纸箱幸与乳沟军粮酥饼 (`grisaia1/com40`，共 {len(com40_diffs)} 条)\n")
+    md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
+    md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
+    for idx, d in enumerate(com40_diffs, 1):
         md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
     md.append("\n---\n")
 
