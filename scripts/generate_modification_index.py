@@ -14,6 +14,20 @@ def escape_md(text):
     return text.replace("|", "\\|").replace("\n", " ").replace("\r", "")
 
 def classify_change(line_no, sid, ja, old_cn, new_cn):
+    # com19 specific
+    if "ソマリア" in ja or "索马里" in new_cn or "歩哨を投入" in ja or "前哨斥候" in new_cn or "六時間" in ja:
+        return "特工特种突入战术妄想", "还原雄二将推开教室门夸大为特种作战排查索马里战场、将美智留推作探路前哨斥候的重度特工妄想症"
+    if "ヴァルター" in ja or "Walther P38" in new_cn or "ペー・アハト" in ja:
+        return "经典名作与德国军工枪械梗", "还原恶搞鲁邦三世经典名曲与德国瓦尔特P38手枪（Walther P38）的雄二特制军用鼓舞士气歌"
+    if "スズメバチ" in ja or "毒のカクテル" in ja or "虎头蜂" in new_cn or "雀蜂" in new_cn or "ボヘミア民謡" in ja:
+        return "昆虫毒理学与一本正经胡说八道", "还原雄二将大虎头蜂毒素科普为『毒药鸡尾酒』，并严肃建议美智留用金发当同色系伪装哼唱波希米亚民歌的绝顶幽默"
+    if "神経毒" in ja or "十五分" in ja or "特製カクテル" in ja or "特制鸡尾酒" in new_cn:
+        return "女仆幸生化反差萌与夺命关怀", "还原幸拖出工业高压药罐热情推销吸入一口即死『自制神经毒素杀虫剂』、美智留疯狂求生的女仆极致反差萌"
+    if "由美子最強説" in ja or "踏んだ" in ja or "ペタンコ" in ja or "踩烂" in new_cn or "最强生物" in new_cn:
+        return "由美子高冷女王气场与降维打击", "还原由美子大清早嫌吵、不经意一脚踩扁致命大黄蜂后淡定回座翻书看小说的全校最强王者气场"
+    if "ノルマンディ" in ja or "诺曼底" in new_cn or "パラシュート部隊" in ja or "伞兵" in new_cn:
+        return "二战战史与空降兵军事比喻", "还原将美智留元气满满冲进教室比喻为二战诺曼底登陆伞兵特攻跳伞的经典雄二冷幽默"
+
     # com18 specific
     if "カツ丼部屋" in ja or "猪排饭单间" in new_cn:
         return "日本刑事侦讯经典俚语", "还原日本刑警经典审讯室俚语『猪排饭单间（カツ丼部屋）』，纠正机翻误译为普通餐馆式的‘炸猪排屋’"
@@ -918,6 +932,32 @@ def build_report():
                 "section": "灰色的果实·共通线第十八章街头伏击战与猪排饭审讯室 (grisaia1/com18)"
             })
 
+    # Section 21: com19 (16067 - 16193)
+    for lno in range(16067, 16194):
+        ja_raw = ja_lines[lno - 1]
+        cn_raw = cn_lines[lno - 1]
+        sid = ja_raw.split("\t")[0] if "\t" in ja_raw else f"L{lno}"
+        ja_txt = ja_raw.split("\t")[1] if "\t" in ja_raw else ja_raw
+        cn_txt = cn_raw.split("\t")[1] if "\t" in cn_raw else cn_raw
+
+        old_txt = cn_txt
+        if git_base_cn and len(git_base_cn) >= lno:
+            head_raw = git_base_cn[lno - 1]
+            old_txt = head_raw.split("\t")[1] if "\t" in head_raw else head_raw
+
+        if cn_txt != old_txt:
+            cat, reason = classify_change(lno, sid, ja_txt, old_txt, cn_txt)
+            diffs.append({
+                "lno": lno,
+                "sid": sid,
+                "ja": ja_txt,
+                "old": old_txt,
+                "new": cn_txt,
+                "cat": cat,
+                "reason": reason,
+                "section": "灰色的果实·共通线第十九章大黄蜂骚乱与由美子最强传说 (grisaia1/com19)"
+            })
+
     print(f"Total indexed modifications: {len(diffs)}")
 
     # Build Markdown
@@ -1116,6 +1156,15 @@ def build_report():
     md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
     md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
     for idx, d in enumerate(com18_diffs, 1):
+        md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
+    md.append("\n---\n")
+
+    # Section 21
+    com19_diffs = [d for d in diffs if d["section"].startswith("灰色的果实·共通线第十九章")]
+    md.append(f"## 二十二、 灰色的果实·共通线第十九章大黄蜂骚乱与由美子最强传说 (`grisaia1/com19`，共 {len(com19_diffs)} 条)\n")
+    md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
+    md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
+    for idx, d in enumerate(com19_diffs, 1):
         md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
     md.append("\n---\n")
 
