@@ -14,6 +14,12 @@ def escape_md(text):
     return text.replace("|", "\\|").replace("\n", " ").replace("\r", "")
 
 def classify_change(line_no, sid, ja, old_cn, new_cn):
+    # com47a specific
+    if "ヨンバー" in ja or "ケットラ" in ja or "スーパーチャージャー" in ja or "独立懸架" in ja or "六連星" in ja or "デフロック" in ja or "ヌバル" in ja or "白い悪魔" in ja or "ヘアピン" in ja or "クリップ" in ja or "２速" in ja or "ベタ踏み" in ja or "リアがリフト" in ja or "手放し" in ja or "落っこちる" in ja:
+        return "天音山道轻卡漂移与白色恶魔超车狂飙", "全章神级高潮竞速戏：天音驾驶斯巴鲁Sambar农用小卡（搭载同级罕见机械增压、四轮独悬与拉力六连星血统的‘农道保时捷’），在盘山急弯狂飙下坡，降挡补油、循迹刹车切深弯心、极限制动硬超1.8T跑车并双手脱把漂移，满吓至灵魂出窍全线崩溃，抵达海滩时满‘立地顿悟参透生死’、眼神空洞宣告心死"
+    if "スクール水着" in ja or "忘れ物クイーン" in ja or "忘れ物の天才" in ja or "ツンボケ" in ja or "ゲラゲラ" in ja or "オーマイガー" in ja or "飛ぶ鳥の目を抜く" in ja or "お笑い種" in ja or "出っ張った下腹部" in ja or "水着" in ja or "アイス" in ja or "ジャンケン" in ja:
+        return "满的丢三落四女王与死库水夺门相声", "全章神级出行相声：满自封‘遗忘界旷世奇才’却因慌乱单穿一件深蓝学校死库水（スク水）狂奔出门，私服全丢，遭雄二剥夺傲娇人设改封‘傲呆（ツンボケ）’并被莳菜魔性大笑嘲讽；深刻还原J.B.的‘先无脑夸奖女人’处世生存哲学，以及由美子因清晨照镜尴尬而眼神游移、羞涩拒绝冰淇淋的微妙微表情"
+
     # com46b specific
     if "姿見" in ja or "岡山の桃" in ja or "植木のスイカ" in ja or "マネキン" in ja or "お尻" in ja or "尻が小さ" in ja or "ふふふ" in ja:
         return "由美子对镜窃喜名场面与冈山白桃翘臀精校", "全章神级高潮名场面：雄二送大包裹上楼撞破由美子虚掩房门，冷傲大小姐竟独自在落地穿衣镜前确认‘小脸’、‘端正五官’与‘不输假人模特的冈山白桃小翘臀’并‘呵呵呵呵呵’窃喜得不能自已；被雄二撞破并直球调侃‘屁股小挺好的’后羞愤到理智熔断、美工刀杀意骤起，雄二夺门百米狂奔；彻底清除机翻僵硬感，生动传神再现经典反差萌"
@@ -2032,6 +2038,32 @@ def build_report():
                 "section": "灰色的果实·共通线第四十六章B冷娇由美子露娇大作战与穿衣镜窃喜骚动 (grisaia1/com46b)"
             })
 
+    # com47a
+    for lno in range(23168, 23428):
+        ja_raw = ja_lines[lno - 1]
+        cn_raw = cn_lines[lno - 1]
+        sid = ja_raw.split("\t")[0] if "\t" in ja_raw else f"L{lno}"
+        ja_txt = ja_raw.split("\t")[1] if "\t" in ja_raw else ja_raw
+        cn_txt = cn_raw.split("\t")[1] if "\t" in cn_raw else cn_raw
+
+        old_txt = cn_txt
+        if git_base_cn and len(git_base_cn) >= lno:
+            head_raw = git_base_cn[lno - 1]
+            old_txt = head_raw.split("\t")[1] if "\t" in head_raw else head_raw
+
+        if cn_txt != old_txt:
+            cat, reason = classify_change(lno, sid, ja_txt, old_txt, cn_txt)
+            diffs.append({
+                "lno": lno,
+                "sid": sid,
+                "ja": ja_txt,
+                "old": old_txt,
+                "new": cn_txt,
+                "cat": cat,
+                "reason": reason,
+                "section": "灰色的果实·共通线第四十七章A海滨出游死库水骚动与天音秋名山轻卡狂飙 (grisaia1/com47a)"
+            })
+
     print(f"Total indexed modifications: {len(diffs)}")
 
     # Build Markdown
@@ -2491,6 +2523,15 @@ def build_report():
     md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
     md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
     for idx, d in enumerate(com46b_diffs, 1):
+        md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
+    md.append("\n---\n")
+
+    # Section 51
+    com47a_diffs = [d for d in diffs if d["section"].startswith("灰色的果实·共通线第四十七章A海滨出游死库水骚动与天音秋名山轻卡狂飙")]
+    md.append(f"## 五十一、 灰色的果实·共通线第四十七章A海滨出游死库水骚动与天音秋名山轻卡狂飙 (`grisaia1/com47a`，共 {len(com47a_diffs)} 条)\n")
+    md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
+    md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
+    for idx, d in enumerate(com47a_diffs, 1):
         md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
     md.append("\n---\n")
 
