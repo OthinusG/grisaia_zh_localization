@@ -14,6 +14,12 @@ def escape_md(text):
     return text.replace("|", "\\|").replace("\n", " ").replace("\r", "")
 
 def classify_change(line_no, sid, ja, old_cn, new_cn):
+    # com48 specific
+    if "赤外線" in ja or "ケータイ原始人" in ja or "クロマニョン" in ja or "ハノイ・ハンナ" in ja or "京子" in ja or "迷惑メール" in ja or "アドレス" in ja or "目玉をくり" in ja or "皮を剥" in ja or "誘拐" in ja or "身代金" in ja or "石橋" in ja or "テスト" in ja or "鬼ラブリー" in ja or "ハイムリック" in ja or "飴" in ja or "キャンディ" in ja or "窒息" in ja:
+        return "手机原始人红外交换与糖果窒息急救", "雄二老古董手机遭调侃克罗马农手机原始人；幸以挖眼剥皮温柔施压交换邮箱；满图谋截胡红外线绑架未来女儿索要赎金；由美子'测试'邮件脑补大戏；中庭莳菜蜜柑糖果卡喉命悬一线，雄二雷霆施展海姆立克急救击背法救命"
+    if "パパ" in ja or "お父" in ja or "８万６千" in ja or "センチュリオン" in ja or "チタン" in ja or "ブラックカード" in ja or "７千万円" in ja or "小切手" in ja or "スイス銀行" in ja or "全財産" in ja or "世界を敵に" in ja or "契約成立" in ja or "父親" in ja:
+        return "莳菜七千万支票买父与与世界为敌誓言", "莳菜掏出8.6万日元私房钱、钛合金百夫长黑卡乃至七千万日元瑞士保付支票欲'全资买断雄二当爸爸'；雄二严词拒绝金钱交易，却郑重许下即便与全世界为敌也必定赌命守护莳菜的如山父爱誓言"
+
     # com47b specific
     if "プラハ城" in ja or "ウミガメ" in ja or "産卵" in ja or "ガメ" in ja or "フラッチャニ" in ja or "ギネス" in ja or "ダルマ浮き" in ja or "クラゲ浮き" in ja or "伏し浮き" in ja or "急速潜航" in ja or "潜水艦" in ja or "バラストタンク" in ja or "ザボン" in ja or "潜望鏡" in ja or "Ｃカード" in ja or "潜水士" in ja:
         return "水下潜艇操典教学与1比1布拉格城堡堆沙相声", "全章神级沙滩相声：满因晕车虚脱如难产海龟般在沙滩涕泪横流求下蛋；幸一本正经建议在沙滩堆砌吉尼斯级长570米、以赫拉德恰尼山丘为底座的原尺寸等比例布拉格城堡，满吓哭求换简单项目；雄二亮出国际潜水C卡与专业潜水士资质传授‘恒河水葬浮尸水母漂’与‘俯卧平浮潜艇下潜操典’，莳菜高呼吹气排水升起潜望镜，天音巨乳压载水舱过大犹如泡澡大柚子失衡沉底"
@@ -2096,6 +2102,32 @@ def build_report():
                 "section": "灰色的果实·共通线第四十七章B海滩夏日祭玉米棒魅惑与由美子未婚必杀残局 (grisaia1/com47b)"
             })
 
+    # com48
+    for lno in range(23810, 24378):
+        ja_raw = ja_lines[lno - 1]
+        cn_raw = cn_lines[lno - 1]
+        sid = ja_raw.split("\t")[0] if "\t" in ja_raw else f"L{lno}"
+        ja_txt = ja_raw.split("\t")[1] if "\t" in ja_raw else ja_raw
+        cn_txt = cn_raw.split("\t")[1] if "\t" in cn_raw else cn_raw
+
+        old_txt = cn_txt
+        if git_base_cn and len(git_base_cn) >= lno:
+            head_raw = git_base_cn[lno - 1]
+            old_txt = head_raw.split("\t")[1] if "\t" in head_raw else head_raw
+
+        if cn_txt != old_txt:
+            cat, reason = classify_change(lno, sid, ja_txt, old_txt, cn_txt)
+            diffs.append({
+                "lno": lno,
+                "sid": sid,
+                "ja": ja_txt,
+                "old": old_txt,
+                "new": cn_txt,
+                "cat": cat,
+                "reason": reason,
+                "section": "灰色的果实·共通线第四十八章红外通信穴居人与莳菜七千万契约买父誓言 (grisaia1/com48)"
+            })
+
     print(f"Total indexed modifications: {len(diffs)}")
 
     # Build Markdown
@@ -2573,6 +2605,15 @@ def build_report():
     md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
     md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
     for idx, d in enumerate(com47b_diffs, 1):
+        md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
+    md.append("\n---\n")
+
+    # Section 53
+    com48_diffs = [d for d in diffs if d["section"].startswith("灰色的果实·共通线第四十八章红外通信穴居人与莳菜七千万契约买父誓言")]
+    md.append(f"## 五十三、 灰色的果实·共通线第四十八章红外通信穴居人与莳菜七千万契约买父誓言 (`grisaia1/com48`，共 {len(com48_diffs)} 条)\n")
+    md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
+    md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
+    for idx, d in enumerate(com48_diffs, 1):
         md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
     md.append("\n---\n")
 
