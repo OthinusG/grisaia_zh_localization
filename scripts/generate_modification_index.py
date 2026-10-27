@@ -14,6 +14,20 @@ def escape_md(text):
     return text.replace("|", "\\|").replace("\n", " ").replace("\r", "")
 
 def classify_change(line_no, sid, ja, old_cn, new_cn):
+    # com26 specific
+    if "トンビ" in ja or "立ったまま寝ている" in ja or "貴方…聞かないのね" in ja or "向こうの方から、俺に歩み寄って来た時だけ" in ja or "変わってるわね" in ja or "お互い様" in ja:
+        return "屋顶黑鸢孤影与两只刺猬微光初融", "全章神级情感升华：屋顶夏日海风中，由美子主动向雄二搭话破冰，困惑于雄二‘勒令不问便绝不再问’的绝对克制；雄二阐明‘绝不主动干涉侵犯他人私域、但若对方迈出第一步也绝不避让推拒’的处世哲学，令由美子罕见展露浅笑，两只满身尖刺的孤独灵魂在此刻悄然叩开彼此心扉"
+    if "思わせぶりな態度" in ja or "釣りみたいな事" in ja or "露出狂" in ja or "一人で居た方が楽" in ja:
+        return "人际钓鱼论反驳与天音直球主张", "还原天音揣测雄二欲擒故纵‘钓由美子主动接近’，雄二断然反驳‘从不把下套把戏用于人际关系’，并直言‘对于某些人而言独自一人反而更轻松’的灵魂共鸣"
+    if "質問の答えが微妙に食い違っている" in ja or "今からしようとしている事に神経が向いている" in ja or "これ以上は聞かない" in ja:
+        return "清晨答非所问交锋与雄二克制后撤", "心理交锋高光笔触：雄二敏锐指出由美子将‘去哪儿’错答为‘干什么是我的自由’暴露其心思全在行动上，并在由美子勒令停止追问后利落干脆全盘撤退，反倒让习惯了被防备逼迫的由美子当场错愕动摇"
+    if "トートバッグ" in ja or "本を読んでいる素振り" in ja or "決まった数ページ" in ja or "ナイフアクション" in ja or "プラナリア" in ja or "羽を伸ばしたい" in ja:
+        return "由美子神秘托特包与涡虫分裂再生论", "生动还原幸侦察揭露由美子在教室‘连续数日盯着同几页假装阅读’的自闭伪装，以及莳菜脑补由美子大包裹装恶魔翅膀Cosplay、怂恿美智留尾随并戏称‘就算被美工刀切三截也能像涡虫一样再生三个新美智留’的魔性狂想"
+    if "イッチョカミ" in ja or "親指だけの腕立て伏せ" in ja or "自慰" in ja or "建物ごと爆破" in ja or "オカズ" in ja or "サルみたいな扱い" in ja:
+        return "关西一丁咬与闺房自慰暴走闹剧", "纠正机翻将关西俚语‘一丁咬（爱插一脚爱凑热闹之人）’误译为‘ITCHOKAMI往脑子里钻’的重大失误，深度还原莳菜与天音联手调侃美智留自慰频率、幸一本正经核实‘每周三至四次’引美智留抓狂欲爆破宿舍的顶级搞笑对话"
+    if "無趣味人間" in ja or "生きてる事が苦痛" in ja or "アヴァンチュール" in ja or "処女解放" in ja or "そ・れ・は・家・事" in ja or "反吐が出そう" in ja:
+        return "无爱好之叹与天音家务暴击", "纠正机翻将莳菜‘处女解放（処女解放）’误翻为‘处男解放’的滑稽重大错译，生动还原雄二拉伸体操被天音与莳菜阴阳怪气为‘无趣味人类’、雄二反杀指出天音爱好‘做饭洗衣打扫那叫家务’致其破防跪地的名场面"
+
     # com25 specific
     if "迷路" in ja or "真っ直ぐな線" in ja or "真実は絡まって" in ja or "良かれと思って嘘をつく" in ja or "正直でいたい" in ja:
         return "善意谎言死结与心之迷宫救赎", "极高文学水准升华全章：雄二从美智留隐瞒重疾联想到世人因‘善意’而筑起心之迷宫、终将真实缠绕成死结的悲哀，道出传世金句‘若想在复杂的环境中恪守诚实，至少要祈祷在自己亲手雕琢的迷宫中不要迷失归途’"
@@ -1224,6 +1238,32 @@ def build_report():
                 "section": "灰色的果实·共通线第二十五章拼图碎片哲学与美智留心之迷宫 (grisaia1/com25)"
             })
 
+    # com26
+    for lno in range(17912, 18279):
+        ja_raw = ja_lines[lno - 1]
+        cn_raw = cn_lines[lno - 1]
+        sid = ja_raw.split("\t")[0] if "\t" in ja_raw else f"L{lno}"
+        ja_txt = ja_raw.split("\t")[1] if "\t" in ja_raw else ja_raw
+        cn_txt = cn_raw.split("\t")[1] if "\t" in cn_raw else cn_raw
+
+        old_txt = cn_txt
+        if git_base_cn and len(git_base_cn) >= lno:
+            head_raw = git_base_cn[lno - 1]
+            old_txt = head_raw.split("\t")[1] if "\t" in head_raw else head_raw
+
+        if cn_txt != old_txt:
+            cat, reason = classify_change(lno, sid, ja_txt, old_txt, cn_txt)
+            diffs.append({
+                "lno": lno,
+                "sid": sid,
+                "ja": ja_txt,
+                "old": old_txt,
+                "new": cn_txt,
+                "cat": cat,
+                "reason": reason,
+                "section": "灰色的果实·共通线第二十六章无爱好之叹与由美子屋顶黑鸢破冰 (grisaia1/com26)"
+            })
+
     print(f"Total indexed modifications: {len(diffs)}")
 
     # Build Markdown
@@ -1485,6 +1525,15 @@ def build_report():
     md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
     md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
     for idx, d in enumerate(com25_diffs, 1):
+        md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
+    md.append("\n---\n")
+
+    # Section 29
+    com26_diffs = [d for d in diffs if d["section"].startswith("灰色的果实·共通线第二十六章无爱好之叹与由美子屋顶黑鸢破冰")]
+    md.append(f"## 二十九、 灰色的果实·共通线第二十六章无爱好之叹与由美子屋顶黑鸢破冰 (`grisaia1/com26`，共 {len(com26_diffs)} 条)\n")
+    md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
+    md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
+    for idx, d in enumerate(com26_diffs, 1):
         md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
     md.append("\n---\n")
 
