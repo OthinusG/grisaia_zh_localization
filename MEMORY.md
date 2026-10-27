@@ -15,10 +15,16 @@
 
 ## Key Systematic MT / AI Flaws Uncovered
 1. **Pervasive False-Friend & Machine Translation Tells**:
-   - `ユージ君` hallucinated as `优一君` (8+ occurrences in com01; should be 雄二君).
+   - `オヤジ` (中年大叔/老头) mistranslated as `欧巴桑` (老太婆/欧巴桑) (gender inversion; com02 L12627, L12672).
+   - `しらたき` (魔芋丝/蒟蒻丝) mistranslated as `柴鱼` (com02 L12764).
+   - `ハッピー・ジョブ` (自渎俚语) brutally translated as `大演欢乐.job` (com02 L12585).
+   - `飯ごう` (户外便携军用饭盒) translated as `圆筒饭锅` (com02 L12782).
+   - `口三味線を弾く` (推诿为难/压低对方预期) misread as `敲退堂鼓` (com02 L12707).
+   - `女慣れしてる` (习惯与女生相处) misread as `很熟女` (com02 L12639).
+   - `ユージ君` hallucinated as `优一君` / `优一` (15+ occurrences across com01 & com02; should be 雄二君/雄二).
    - `オマエ` directly phonetically transliterated as `欧马埃` (disastrous MT artifact).
    - `腹を探られない内に` mistranslated literally as `在肚子被抓住之前` (should be 趁底细未被摸透/探明虚实之前).
-   - Raw English words unhandled in Chinese dialogue (e.g. `student life也包括这种烦恼对吧？`).
+   - Raw English words unhandled in Chinese dialogue (e.g. `student life也包括这种烦恼对吧？`, `yay`).
    - Inverted subject/agency: `クラスメイトを殺傷しようとした事` mistranslated as `企图杀伤同班同学的我` (attributing attack to Yuuji instead of Yumiko).
    - `貴方` translated literally as `贵方` (business/legal phrasing) instead of `你` / `您` (87+ occurrences in corpus).
    - `八百屋` left raw/untranslated as `八百屋` instead of `菜店` / `果蔬铺` / `果蔬摊` (26+ occurrences in corpus).
@@ -41,7 +47,8 @@
 - `_varstr` (Lines 1 - 629): 71 systematic errors corrected via `scripts/patch_varstr.py` (Angelic Howl days 1-16 "天使之咆哮", "瑞士军刀", "步频号子", "白给女主的品格", etc.).
 - `grisaia1/ama_001` (Lines 630 - 1163, 534 lines): 100% polished and humanized via `scripts/apply_ama_001.py`. Completely eliminates AI taste, restores character voices, military/slang humor, and comedic timing.
 - `grisaia1/com01` (Lines 12337 - 12575, 239 lines): 100% polished and humanized via `scripts/patch_com01.py`. Eradicated "欧马埃", "优一君", "在肚子被抓住之前", raw English "student life", restored box cutter ratchet clicking details, Yuuji & Chizuru banter, and mutual surname agreement with Yumiko.
-- Total indexed modifications: 783 entries documented in `grisaia_modification_index.md`.
+- `grisaia1/com02` (Lines 12576 - 12812, 237 lines): 100% polished and humanized via `scripts/patch_com02.py`. Eradicated "欧巴桑" (reversed from オヤジ), "柴鱼" (mistranslated from しらたき), "大演欢乐.job" (slang), "含铅量为零的汽油", "很熟女" (mistranslated from 女慣れ), restored military mess tin, Asako's master teachings, and Kazuki sister mentions.
+- Total indexed modifications: 1,011 entries documented in `grisaia_modification_index.md`.
 - Alignment: Full 110,622-line structural verification (`python3 scripts/verify_alignment.py`) passes 100% with zero line drift, tab drift, or tag corruption.
 - Git Remote: Tracked with `git@github.com:OthinusG/grisaia_zh_localization.git`.
 - Project Plan & Roadmap: Formulated comprehensive 6-milestone project plan at `analysis/grisaia_localization_project_plan.md` covering all 110,622 lines (Fruit common route -> Heroines -> Labyrinth -> Eden -> Side stories).

@@ -14,9 +14,27 @@ def escape_md(text):
     return text.replace("|", "\\|").replace("\n", " ").replace("\r", "")
 
 def classify_change(line_no, sid, ja, old_cn, new_cn):
-    # com01 specific
-    if "优一君" in old_cn:
-        return "人名错误修正", "纠正将雄二（ユージ君）严重机翻幻觉为『优一君』"
+    # com02 specific
+    if "欧巴桑" in old_cn and "オヤジ" in ja:
+        return "性别颠倒/误读", "纠正将男性大叔（オヤジ）荒谬误译为女性老太婆（欧巴桑）"
+    if "柴魚" in old_cn or ("しらたき" in ja and "魔芋丝" in new_cn):
+        return "食物生活用语误译", "纠正将豆腐店贩售的魔芋丝（白滝）荒唐误译为『柴鱼』"
+    if "欢乐.job" in old_cn or "大演欢乐" in old_cn or "ハッピー・ジョブ" in ja:
+        return "机翻俚语直译", "消除将自渎俚语粗暴直译为『大演欢乐.job』的恶性机翻痕迹"
+    if "口三味線" in ja:
+        return "成语习惯用语误读", "纠正将日文成语『推诿为难/压低对方预期』误读为『敲退堂鼓』"
+    if "飯ごう" in ja:
+        return "军品生活常识", "修正将户外军用便携饭盒生硬直译为『圆筒饭锅』"
+    if "含铅量为零" in old_cn or "無鉛ガソリン" in ja:
+        return "生活常识/术语", "修正将无铅汽油机械冗长直译为『含铅量为零的汽油』"
+    if "女慣れ" in ja:
+        return "词义误读", "纠正将习惯与女孩子相处望文生义误译为『很熟女』"
+    if "わっち" in ja:
+        return "特殊自称/口吻还原", "还原天音打趣扮演传统名门闺秀时的古典戏剧自称『咱家』"
+    if "八百屋" in ja or "蔬果店老板" in old_cn:
+        return "角色声线还原", "还原商店街果蔬铺大叔豪迈爽朗、爱开玩笑的江户子街坊口吻"
+    if "優一" in old_cn or "优一" in old_cn:
+        return "人名错误修正", "纠正将雄二（ユージ）严重机翻幻觉为『优一』"
     if "欧马埃" in old_cn:
         return "机翻音译幻觉", "纠正将日文『オマエ（你）』直接音译为『欧马埃』的荒唐机翻"
     if "student life" in old_cn:
@@ -75,8 +93,6 @@ def classify_change(line_no, sid, ja, old_cn, new_cn):
         return "成语误读", "纠正将将棋成语“关键时刻欠一把火候/收尾大意”误译为“吃瘪太容易”"
     if "孫の手" in ja:
         return "文化常识", "纠正将“老头乐/痒痒挠”误译为“逗猫棒”"
-    if "八百屋" in ja:
-        return "生搬日文汉字", "汉化日文汉字“八百屋”为“蔬菜水果店/果蔬铺”"
     if "ウッドエレメンタル" in ja:
         return "谐音梗修正", "还原“木の精/気のせい”谐音梗，删除机翻臆造的“胡桃夹子”"
     if "ジョンジョロ" in ja:
@@ -129,13 +145,13 @@ def build_report():
             for m in pattern2.finditer(content):
                 recovered_ama[int(m.group(1))] = m.group(4)
 
-    # 3. Baseline from git HEAD
-    git_head_cn = []
+    # 3. Baseline from git initial commit (1f92993)
+    git_base_cn = []
     try:
-        out = subprocess.check_output(["git", "show", "HEAD:ALL_TEXT_cn.txt"], text=True)
-        git_head_cn = out.splitlines()
+        out = subprocess.check_output(["git", "show", "1f92993:ALL_TEXT_cn.txt"], text=True)
+        git_base_cn = out.splitlines()
     except Exception as e:
-        print(f"Warning: could not get git HEAD: {e}")
+        print(f"Warning: could not get git base: {e}")
 
     # 4. Read current JA and CN
     with open("ALL_TEXT.txt", "r", encoding="utf-8") as fj:
@@ -195,8 +211,8 @@ def build_report():
         cn_txt = cn_raw.split("\t")[1] if "\t" in cn_raw else cn_raw
 
         old_txt = cn_txt
-        if git_head_cn and len(git_head_cn) >= lno:
-            head_raw = git_head_cn[lno - 1]
+        if git_base_cn and len(git_base_cn) >= lno:
+            head_raw = git_base_cn[lno - 1]
             old_txt = head_raw.split("\t")[1] if "\t" in head_raw else head_raw
 
         if cn_txt != old_txt:
@@ -210,6 +226,32 @@ def build_report():
                 "cat": cat,
                 "reason": reason,
                 "section": "灰色的果实·共通线开篇美工刀对峙与初遇 (grisaia1/com01)"
+            })
+
+    # Section 4: com02 (12576 - 12812)
+    for lno in range(12576, 12813):
+        ja_raw = ja_lines[lno - 1]
+        cn_raw = cn_lines[lno - 1]
+        sid = ja_raw.split("\t")[0] if "\t" in ja_raw else f"L{lno}"
+        ja_txt = ja_raw.split("\t")[1] if "\t" in ja_raw else ja_raw
+        cn_txt = cn_raw.split("\t")[1] if "\t" in cn_raw else cn_raw
+
+        old_txt = cn_txt
+        if git_base_cn and len(git_base_cn) >= lno:
+            head_raw = git_base_cn[lno - 1]
+            old_txt = head_raw.split("\t")[1] if "\t" in head_raw else head_raw
+
+        if cn_txt != old_txt:
+            cat, reason = classify_change(lno, sid, ja_txt, old_txt, cn_txt)
+            diffs.append({
+                "lno": lno,
+                "sid": sid,
+                "ja": ja_txt,
+                "old": old_txt,
+                "new": cn_txt,
+                "cat": cat,
+                "reason": reason,
+                "section": "灰色的果实·共通线第二章天音更衣与买菜 (grisaia1/com02)"
             })
 
     print(f"Total indexed modifications: {len(diffs)}")
@@ -252,11 +294,20 @@ def build_report():
     md.append("\n---\n")
 
     # Section 3
-    com01_diffs = [d for d in diffs if d["section"].startswith("灰色的果实·共通线")]
+    com01_diffs = [d for d in diffs if d["section"].startswith("灰色的果实·共通线开篇")]
     md.append(f"## 四、 灰色的果实·共通线开篇美工刀对峙与初遇 (`grisaia1/com01`，共 {len(com01_diffs)} 条)\n")
     md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
     md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
     for idx, d in enumerate(com01_diffs, 1):
+        md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
+    md.append("\n---\n")
+
+    # Section 4
+    com02_diffs = [d for d in diffs if d["section"].startswith("灰色的果实·共通线第二章")]
+    md.append(f"## 五、 灰色的果实·共通线第二章天音更衣与买菜日常 (`grisaia1/com02`，共 {len(com02_diffs)} 条)\n")
+    md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
+    md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
+    for idx, d in enumerate(com02_diffs, 1):
         md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
     md.append("\n---\n")
 
