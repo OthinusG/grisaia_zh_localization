@@ -14,6 +14,22 @@ def escape_md(text):
     return text.replace("|", "\\|").replace("\n", " ").replace("\r", "")
 
 def classify_change(line_no, sid, ja, old_cn, new_cn):
+    # com28 specific
+    if "シュガーレス" in ja or "貧乏人" in ja or "ブドウ糖" in ja or "ジャンクフード" in ja or "ラムネ" in ja or "二種類の女" in ja or "唇を塞いでしまう" in ja:
+        return "说谎者悖论交锋与无糖流浪汉绝杀", "神级日常论战高光：雄二引克里特岛说谎者悖论阐明‘傲娇一旦承认即破产’；美智留混淆豪猪两难/长疹刺猬/纸箱猫咪并误认遭遇心理测试；美智留嚼波子汽水糖痛斥讨糖雄二为‘无糖流浪汉’；雄二洞察世间仅存‘吵闹的女人’与‘更吵闹的女人’，以早睡收尾全章"
+    if "キラキラ" in ja or "ホスィー" in ja or "順位" in ja or "イヌ、チルチル、ヤブイヌ" in ja or "獣に挟まれてる" in ja or "鳴くぞ" in ja or "ハポポポッ" in ja:
+        return "心理学饥饿营销与猛兽顺位金字塔", "顶级爆笑名场面：美智留微缩挂包触发莳菜‘猎物离我远去’掠夺潜意识，雄二顺水推舟强力甩锅推销；莳菜爆出‘大狗、奇露奇露、薮犬、大狗’神级喜爱顺位致美智留抓狂；幸加装十种叫声音效芯片，神兽挂包当场萌化全场"
+    if "チョコチップ" in ja or "迷彩" in ja or "ナイロン" in ja or "ラインストーン" in ja or "アジャスター" in ja or "最高傑作" in ja or "ギラギラ" in ja:
+        return "人体面部拖把与巧克力碎片沙漠迷彩", "硬核军武与暴发户反差碰撞：美智留扑街散落糖果被雄二戏称为军校惩戒‘人体活体拖把舌舔清洁’；幸以专业抗撕裂耐磨防水尼龙与六色沙漠‘巧克力碎片迷彩’打造神兽挂包，却因通体贴满高亮人造水钻致雄二险些眩晕栽倒"
+    if "ヤブイヌ" in ja or "ブッシュドッグ" in ja or "アルゼンチン" in ja or "二○分です" in ja or "ゴールデンライオンタマリン" in ja or "睡眠の重要性" in ja:
+        return "冷门神兽薮犬拖延战术与20分钟极限", "雄二特工心机破防现场：企图以阿根廷倒退奔跑冷门神兽‘薮犬’拖延工期，未料顶级女仆幸秒报20分钟预估极限；雄二痛悔未选金头狮面狨，走廊失控咆哮‘睡眠的重要性’，反手将莳菜送的‘补钙鹅卵石’优雅掷出"
+    if "サメさんポーチ" in ja or "マッハ" in ja or "ミリミリ" in ja or "ワニさん" in ja or "トレーシングペーパー" in ja:
+        return "音速女仆毫米匠心与鳄鱼调包失败", "高水准还原幸音速马赫赶工且进度过半，陶醉于‘风见佩戴鲨鱼包超级可爱’；雄二深知战场一瞬误判足以扭转乾坤，试图调包为小鳄鱼却被幸瞬间揭纸改版轻易化解的绝望博弈"
+    if "キラブラ生活" in ja or "井戸の気持ち" in ja or "ハイバネーション" in ja or "キルスイッチ" in ja or "サメニスト" in ja:
+        return "睡眠剥夺翻车与闪亮水钻鲨鱼包", "生动刻画雄二熬夜读《水井的心情》导致注意力涣散触发大脑休眠切断开关，防御三连随口敷衍误应承幸缝制布灵布灵水钻鲨鱼包；雄二脑补好莱坞大片级‘终极闪亮大悬挂生活’几近精神崩溃"
+    if "女三人寄ればかしましい" in ja or "壁を相手に延々と話す" in ja or "なるほど" in ja or "すごいな" in ja or "悪いのはきみじゃない" in ja or "スリーワード" in ja:
+        return "女人闲聊本质与防御三连箴言", "全章神级开篇哲学：雄二剖析‘女三人一台戏乃是一派胡言，一人便可对白墙长谈’；正经要件湮灭于减肥美妆明星甜品八卦迷宫；揭秘雄二曾陪聊四小时的独门防御三大法宝『原来如此/真厉害啊/错的又不是你』"
+
     # com27 specific
     if "美浜女子餃子隊" in ja or "敗戦間際の軍" in ja or "鯛の刺身餃子" in ja or "つけダレ" in ja or "フツーのが一番" in ja:
         return "美滨女子饺子队与百鬼夜行兵器盛宴", "生动还原美滨女子饺子队成立、搜刮冰箱速成增产120枚水饺，芝士、明太子、红香肠乃至鲷鱼刺身黑暗水饺如二战末期轴心国穷途决战兵器大博览；莳菜直击灵魂吐槽‘还是普普通通的原味饺子最好吃’为全会画上和平句号"
@@ -1306,6 +1322,32 @@ def build_report():
                 "section": "灰色的果实·共通线第二十七章美滨饺子队与一叠半密室圣域 (grisaia1/com27)"
             })
 
+    # com28
+    for lno in range(18449, 18749):
+        ja_raw = ja_lines[lno - 1]
+        cn_raw = cn_lines[lno - 1]
+        sid = ja_raw.split("\t")[0] if "\t" in ja_raw else f"L{lno}"
+        ja_txt = ja_raw.split("\t")[1] if "\t" in ja_raw else ja_raw
+        cn_txt = cn_raw.split("\t")[1] if "\t" in cn_raw else cn_raw
+
+        old_txt = cn_txt
+        if git_base_cn and len(git_base_cn) >= lno:
+            head_raw = git_base_cn[lno - 1]
+            old_txt = head_raw.split("\t")[1] if "\t" in head_raw else head_raw
+
+        if cn_txt != old_txt:
+            cat, reason = classify_change(lno, sid, ja_txt, old_txt, cn_txt)
+            diffs.append({
+                "lno": lno,
+                "sid": sid,
+                "ja": ja_txt,
+                "old": old_txt,
+                "new": cn_txt,
+                "cat": cat,
+                "reason": reason,
+                "section": "灰色的果实·共通线第二十八章防御三连绝技与神兽薮犬挂包大骚动 (grisaia1/com28)"
+            })
+
     print(f"Total indexed modifications: {len(diffs)}")
 
     # Build Markdown
@@ -1585,6 +1627,15 @@ def build_report():
     md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
     md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
     for idx, d in enumerate(com27_diffs, 1):
+        md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
+    md.append("\n---\n")
+
+    # Section 31
+    com28_diffs = [d for d in diffs if d["section"].startswith("灰色的果实·共通线第二十八章防御三连绝技与神兽薮犬挂包大骚动")]
+    md.append(f"## 三十一、 灰色的果实·共通线第二十八章防御三连绝技与神兽薮犬挂包大骚动 (`grisaia1/com28`，共 {len(com28_diffs)} 条)\n")
+    md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
+    md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
+    for idx, d in enumerate(com28_diffs, 1):
         md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
     md.append("\n---\n")
 
