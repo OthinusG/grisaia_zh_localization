@@ -14,6 +14,18 @@ def escape_md(text):
     return text.replace("|", "\\|").replace("\n", " ").replace("\r", "")
 
 def classify_change(line_no, sid, ja, old_cn, new_cn):
+    # com32 specific
+    if "空はすんごくでっかいフタ" in ja or "銀の銃弾" in ja or "死んだら" in ja or "墓を作って" in ja or "マロン" in ja or "おごルール" in ja or "永遠に覚めない眠り" in ja or "埋めて欲しい" in ja:
+        return "草坪仰卧长空感喟与临海立墓生死伏笔", "全章终极灵魂高光与核心伏笔：满坦露夜空如密闭巨盖透气孔、渴望银弹贯穿心脏的病理隐秘心迹；雄二仰卧青草畅谈死亡不过永眠，誓言死后不哭泣唯在墓前大笑献花；满交付临海立墓重任，把浪漫（ロマン）念反成板栗（マロン）后嬉笑狂奔打赌果汁收尾"
+    if "ロンメル" in ja or "猫ニャー" in ja or "牛乳" in ja or "赤兎馬" in ja or "馬猫" in ja or "馬を撫でて" in ja or "ボンキュッボン" in ja or "ミチルサマノオムネ" in ja or "猫の喉" in ja:
+        return "黑猫隆美尔猫咪喵命名战与赤兔马胡言", "萌系猫咪日常交锋：黑猫亲昵依偎，雄二以元帅隆美尔相称激起满抗议其真名『猫咪喵』；私藏纸盒牛奶因猫咪乳糖不耐受阻，满手足无措语无伦次宣称『猫乃外人赤兔马』；雄二捧读平坦前胸，满誓言成长为极品身材"
+    if "特殊監視行動" in ja or "暗号" in ja or "カッパ" in ja or "お皿" in ja or "キュウリ" in ja or "ブリーチ" in ja or "黒い毛" in ja or "ちっぽけな悩み" in ja or "海を、見てた" in ja:
+        return "观海特殊监视谍报猜想与河童顶盘黑发破功", "自卫队谍报脑与傲娇破防：将满『看海』脑补为自卫队山海切口特种监视行动；怀疑其感染嗜海细菌或承袭河童血统，顺手拔除满漂染金发中隐匿的真实黑发，令满惊呼顶盘碎裂暴露出假金发本色；借大海渺小感叹青春期烦恼"
+    if "赤痢" in ja or "検便" in ja or "粗大ゴミ" in ja or "ステッカー" in ja or "インチキな金髪" in ja or "排出せよ" in ja or "毒キノコ" in ja or "頬張って即死" in ja or "青い鳥" in ja:
+        return "急腹症阿米巴痢疾猜想与当场排泄验便指令", "神级爆笑交锋：见满呆坐悬崖如弃置脏衣，雄二毒舌质询是否等垃圾车拖走回收山寨金发；脑补出阿米巴痢疾恶化荒诞结论并强令当场排便验便；精准吐槽满若遇剧毒蘑菇定在惊呼可爱瞬间塞满嘴暴毙"
+    if "マーライオン" in ja or "シンガポール" in ja or "１６キロ" in ja or "チキンライス" in ja or "人格の条件付け" in ja or "適正化" in ja or "強迫観念" in ja or "学友" in ja or "ランドリーボックス" in ja:
+        return "十六公里晨跑习惯论与新加坡鱼尾狮", "雄二独具特色的军旅日常哲学：晨跑16公里累计年程等同跨越新加坡，自嘲非为瞻仰鱼尾狮或饱腹海南鸡饭；将规律作息视为人格塑造之条件反射，偶遇心事重重的同班同学松岛满"
+
     # com31 specific
     if "計算づくに決まってる" in ja or "わざとだったのね" in ja or "てへッ" in ja or "サボタージュ" in ja or "逃げるぞ" in ja or "絶対に許さない" in ja or "相応しい終わり方" in ja:
         return "美工刀追杀与全班集体大逃课", "全章爆笑收尾高光：美智留死鸭子嘴硬自吹『一切皆在精确计算中』，由美子伴随不祥声响持美工刀无声贴背捉奸；天音小幸光速卖队友，雄二果断发出『全员逃跑』指令；全班集体翘课逃命，创下美滨学园开学以来史无前例的旷课骚动"
@@ -1464,6 +1476,32 @@ def build_report():
                 "section": "灰色的果实·共通线第三十一章由美子亲近竞赛与九局下半扣书大逆转 (grisaia1/com31)"
             })
 
+    # com32
+    for lno in range(19412, 19712):
+        ja_raw = ja_lines[lno - 1]
+        cn_raw = cn_lines[lno - 1]
+        sid = ja_raw.split("\t")[0] if "\t" in ja_raw else f"L{lno}"
+        ja_txt = ja_raw.split("\t")[1] if "\t" in ja_raw else ja_raw
+        cn_txt = cn_raw.split("\t")[1] if "\t" in cn_raw else cn_raw
+
+        old_txt = cn_txt
+        if git_base_cn and len(git_base_cn) >= lno:
+            head_raw = git_base_cn[lno - 1]
+            old_txt = head_raw.split("\t")[1] if "\t" in head_raw else head_raw
+
+        if cn_txt != old_txt:
+            cat, reason = classify_change(lno, sid, ja_txt, old_txt, cn_txt)
+            diffs.append({
+                "lno": lno,
+                "sid": sid,
+                "ja": ja_txt,
+                "old": old_txt,
+                "new": cn_txt,
+                "cat": cat,
+                "reason": reason,
+                "section": "灰色的果实·共通线第三十二章高台远眺汪洋与黑猫隆美尔立墓伏笔 (grisaia1/com32)"
+            })
+
     print(f"Total indexed modifications: {len(diffs)}")
 
     # Build Markdown
@@ -1779,6 +1817,15 @@ def build_report():
     md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
     md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
     for idx, d in enumerate(com31_diffs, 1):
+        md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
+    md.append("\n---\n")
+
+    # Section 35
+    com32_diffs = [d for d in diffs if d["section"].startswith("灰色的果实·共通线第三十二章高台远眺汪洋与黑猫隆美尔立墓伏笔")]
+    md.append(f"## 三十五、 灰色的果实·共通线第三十二章高台远眺汪洋与黑猫隆美尔立墓伏笔 (`grisaia1/com32`，共 {len(com32_diffs)} 条)\n")
+    md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
+    md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
+    for idx, d in enumerate(com32_diffs, 1):
         md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
     md.append("\n---\n")
 
