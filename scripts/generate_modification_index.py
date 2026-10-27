@@ -14,6 +14,18 @@ def escape_md(text):
     return text.replace("|", "\\|").replace("\n", " ").replace("\r", "")
 
 def classify_change(line_no, sid, ja, old_cn, new_cn):
+    # com37 specific
+    if "アロハ" in ja or "糞虫" in ja or "きな臭い" in ja or "定住" in ja or "脱却" in ja or "普通" in ja:
+        return "抢滩演习硝烟心理创伤与普通人夏威夷衫纠结", "全章神级收尾与深刻心理独白：雄二反思海边对自己唯有当年特种抢滩登陆演习被教官怒吼‘把头给我放低点臭蛆虫’的硝烟焦臭创伤；为追求‘普通凡人’生活努力催眠自己只需纠结穿什么颜色夏威夷花衬衫，在渴望解脱与贪恋安定烟火之间深刻解剖人类自我矛盾"
+    if "女にはいつだって正直であれ" in ja or "師匠" in ja or "優しい嘘" in ja or "ＪＢ" in ja or "言いくるめる" in ja or "騙し通す" in ja:
+        return "师父麻子坦诚铁则与JB善意谎言女性哲学", "灵魂设定与角色哲学：千鹤看穿雄二花言巧语哄骗自己充当免费司机兼出车，吐槽‘哄骗女人就要彻底骗到底才是礼仪’；雄二回味日下部麻子‘对女人永远坦诚’的硬派信条与JB‘对女人撒温柔体贴谎言’的世故处世，感叹懂女人与包容任性方为真正成熟"
+    if "プロポーズ" in ja or "生理" in ja or "ハッピー・ジョブ" in ja or "５年早く" in ja or "お楽しみ" in ja:
+        return "校长室幸福工作误会与早生五年求婚暴论", "全章神级爆笑相声：雄二擅闯校长室吐槽千鹤享受‘幸福工作’引发千鹤以为自慰被撞破的惊慌误会，紧接着雄二关心千鹤暴躁‘导致提前绝经闭经’逼得千鹤跳脚；雄二正色宣称‘若早出生五年定毫不犹豫向千鹤求婚’引发校长害羞满脸通红"
+    if "苦い思い出" in ja or "海に行こう" in ja or "免許" in ja or "環境整備棟" in ja or "２台" in ja:
+        return "往昔恐怖海滨回忆与兵分两路车辆筹备", "主线事件发起：天音热瘫提议全员海滨度假，由美子满面色变回味当年苦不堪言的惨烈灾难；天音豪爽夸口持有普通驾照兼征调环境整备栋公车，令深知其底细的由美子与满陷入死寂绝望，年幼组欢天喜地筹划野餐烧烤"
+    if "サイボーグ" in ja or "夏なんて" in ja or "飢餓" in ja or "栄養失調" in ja or "カップ焼きそば" in ja or "恐竜" in ja or "マンモス" in ja or "俺のルール" in ja:
+        return "酷暑空调罢工舌战与天音荒野绝地求生体质伏笔", "全章神级开篇与关键伏笔：教室酷热天音狂飙关西腔怒咒夏天消失，莳菜嘲弄天音恐龙猛犸象身躯引发腰间软肉掐捏；天音自曝曾断粮濒临饿死导致身体疯狂囤积营养（一草一木埋藏一之濑惨案主线伏笔），由美子偷吃泡面怕胖求教食谱；幸惊叹雄二未出汗疑为生化改造人，雄二一本正经胡说八道‘这就是我的信条’"
+
     # com36 specific
     if "カウンセラー" in ja or "罪悪感" in ja or "足し引き" in ja or "自問自答" in ja or "理解者" in ja or "メリット" in ja or "憂鬱" in ja:
         return "雄二心魔自白与天台残风罪恶感反思", "全章神级收尾与深刻心理独白：由美子决然退场后海风席卷天台砂砾，雄二反思自己绝非故作善解人意，而是无法心安理得享受安稳日常，始终背负着深沉罪恶感；即便扮演冒牌蹩脚心理咨询师，若能抹消罪恶感亦属利己，然而连善意都用冷血利益得失权衡考量之举本身，恰恰构成了雄二心底最大的自责与困顿"
@@ -1652,6 +1664,32 @@ def build_report():
                 "section": "灰色的果实·共通线第三十六章黑涂高级车队视察与由美子天台长叹 (grisaia1/com36)"
             })
 
+    # com37
+    for lno in range(20850, 21004):
+        ja_raw = ja_lines[lno - 1]
+        cn_raw = cn_lines[lno - 1]
+        sid = ja_raw.split("\t")[0] if "\t" in ja_raw else f"L{lno}"
+        ja_txt = ja_raw.split("\t")[1] if "\t" in ja_raw else ja_raw
+        cn_txt = cn_raw.split("\t")[1] if "\t" in cn_raw else cn_raw
+
+        old_txt = cn_txt
+        if git_base_cn and len(git_base_cn) >= lno:
+            head_raw = git_base_cn[lno - 1]
+            old_txt = head_raw.split("\t")[1] if "\t" in head_raw else head_raw
+
+        if cn_txt != old_txt:
+            cat, reason = classify_change(lno, sid, ja_txt, old_txt, cn_txt)
+            diffs.append({
+                "lno": lno,
+                "sid": sid,
+                "ja": ja_txt,
+                "old": old_txt,
+                "new": cn_txt,
+                "cat": cat,
+                "reason": reason,
+                "section": "灰色的果实·共通线第三十七章夏日热浪海滨策划与千鹤求婚交涉 (grisaia1/com37)"
+            })
+
     print(f"Total indexed modifications: {len(diffs)}")
 
     # Build Markdown
@@ -2012,6 +2050,15 @@ def build_report():
     md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
     md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
     for idx, d in enumerate(com36_diffs, 1):
+        md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
+    md.append("\n---\n")
+
+    # Section 40
+    com37_diffs = [d for d in diffs if d["section"].startswith("灰色的果实·共通线第三十七章夏日热浪海滨策划与千鹤求婚交涉")]
+    md.append(f"## 四十、 灰色的果实·共通线第三十七章夏日热浪海滨策划与千鹤求婚交涉 (`grisaia1/com37`，共 {len(com37_diffs)} 条)\n")
+    md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
+    md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
+    for idx, d in enumerate(com37_diffs, 1):
         md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
     md.append("\n---\n")
 
