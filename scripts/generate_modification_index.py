@@ -14,6 +14,26 @@ def escape_md(text):
     return text.replace("|", "\\|").replace("\n", " ").replace("\r", "")
 
 def classify_change(line_no, sid, ja, old_cn, new_cn):
+    # com11 specific
+    if "自墜落" in ja or "自坠落" in new_cn:
+        return "错字谐音梗还原", "还原满将『自甘堕落（自堕落）』文盲念错为『自坠落（自墜落）』的经典错字喜剧包袱"
+    if "アズレンスルホン酸ナトリウム" in ja:
+        return "医药常识误译纠正", "纠正将胃黏膜保护药奥磺酸钠（アズレンスルホン酸ナトリウム）荒唐机翻为『碳酸氢钠（小苏打）』"
+    if "掌の上に人" in ja or "掌心" in new_cn:
+        return "民俗偏方心理暗示", "还原在掌心连写三遍『人』字吞下壮胆的传统民间偏方（纠正原机翻『手心朝上托着人』的荒诞表述）"
+    if "鰯" in ja and "沙丁鱼" in new_cn:
+        return "鱼类名词常识误译", "纠正将沙丁鱼（鰯/Iwashi）指鹿为马误译为『鲭鱼（Saba）』"
+    if "ＤＨＡ" in ja:
+        return "科学常识与傲娇包袱", "还原满将健脑不饱和脂肪酸DHA与维生素C张冠李戴搞混的可爱笨蛋设定"
+    if "和製ポルノ" in ja:
+        return "演出与修辞还原", "规范幸因感冒女仆装松垮不整的犀利吐槽『廉价国产AV录像带里的落魄女仆』"
+    if "由緒正しきツンデレ" in ja:
+        return "Galgame核心属性规范", "规范二次元经典术语『恪守正统的教科书式经典傲娇台词』"
+    if "ユミーン" in ja:
+        return "角色昵称趣味还原", "还原雄二给由美子起的打趣外号『由美恩（ユミーン）』"
+    if "賞味期限２０１２年" in ja:
+        return "年份时间差笑话", "还原满将2012年保质期误当成已过期、被天音当场揭穿当前是2011年的经典吃瘪喜剧"
+
     # com10 specific
     if "グーリー" in ja or "恶食怪" in new_cn:
         return "俚语绰号/梗误译", "纠正将美军军营俚语『恶食怪/烂胃王（Gross Eater / Ghoulie）』荒谬误译为『贪吃鬼』"
@@ -580,6 +600,32 @@ def build_report():
                 "section": "灰色的果实·共通线第十章军营恶食怪与天音蟹肉炒饭 (grisaia1/com10)"
             })
 
+    # Section 13: com11 (14291 - 14571)
+    for lno in range(14291, 14572):
+        ja_raw = ja_lines[lno - 1]
+        cn_raw = cn_lines[lno - 1]
+        sid = ja_raw.split("\t")[0] if "\t" in ja_raw else f"L{lno}"
+        ja_txt = ja_raw.split("\t")[1] if "\t" in ja_raw else ja_raw
+        cn_txt = cn_raw.split("\t")[1] if "\t" in cn_raw else cn_raw
+
+        old_txt = cn_txt
+        if git_base_cn and len(git_base_cn) >= lno:
+            head_raw = git_base_cn[lno - 1]
+            old_txt = head_raw.split("\t")[1] if "\t" in head_raw else head_raw
+
+        if cn_txt != old_txt:
+            cat, reason = classify_change(lno, sid, ja_txt, old_txt, cn_txt)
+            diffs.append({
+                "lno": lno,
+                "sid": sid,
+                "ja": ja_txt,
+                "old": old_txt,
+                "new": cn_txt,
+                "cat": cat,
+                "reason": reason,
+                "section": "灰色的果实·共通线第十一章满的纯度VC与全员风寒骚动 (grisaia1/com11)"
+            })
+
     print(f"Total indexed modifications: {len(diffs)}")
 
     # Build Markdown
@@ -706,6 +752,15 @@ def build_report():
     md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
     md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
     for idx, d in enumerate(com10_diffs, 1):
+        md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
+    md.append("\n---\n")
+
+    # Section 13
+    com11_diffs = [d for d in diffs if d["section"].startswith("灰色的果实·共通线第十一章")]
+    md.append(f"## 十四、 灰色的果实·共通线第十一章满的纯度VC与全员风寒骚动 (`grisaia1/com11`，共 {len(com11_diffs)} 条)\n")
+    md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
+    md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
+    for idx, d in enumerate(com11_diffs, 1):
         md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
     md.append("\n---\n")
 
