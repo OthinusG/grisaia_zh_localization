@@ -14,6 +14,14 @@ def escape_md(text):
     return text.replace("|", "\\|").replace("\n", " ").replace("\r", "")
 
 def classify_change(line_no, sid, ja, old_cn, new_cn):
+    # com44 specific
+    if "ザマス" in ja or "アルトリコーダー" in ja or "リコーダー" in ja or "習い事" in ja:
+        return "由美子的中音竖笛自卑与贵妇腔小提琴名梗", "全章神级萌点：由美子害羞自卑地承认自己未曾上过豪门才艺班、唯一勉强能拿得出手的只有小学音乐课竖笛（羞愤大喊中音竖笛/アルトリコーダー）；彻底纠正原机翻将豪门阔太太专属贵妇口癖『ざます（Zamasu言葉）』荒唐机翻为『真棒』的离谱灾难"
+    if "テルミン" in ja or "シンセ" in ja or "ハープ" in ja or "木琴" in ja or "エレキギター" in ja or "ビッチ" in ja or "両刀" in ja or "ストリップ" in ja or "チンパンジー" in ja:
+        return "乐器挑选全员爆笑相声与特雷门琴黑猩猩木琴处刑", "全章核心乐器大相声：幸误会满是男女通吃的‘双刀流’愿宽衣解带一丝不挂任凭差遣（喜んで裸になりましょう），满暴走吐槽‘傲娇人设已经够累了别随便给我加奇葩设定’并被天音当场揭穿‘傲娇只是人设’；天音选电吉他被满吐槽像‘演出后在厕所跟野男人乱搞’，天音怒斥别逼我当碧池（Bitch），雄二补刀‘先改改把胸往人身上硬贴的毛病’；满选爱尔兰竖琴却被重量压扁，雄二递上广播木琴并被幸补刀‘从头敲一遍就是下课铃’、全员默许满智商同等黑猩猩；莳菜玩电子琴音效；幸拿出两根天线的特雷门琴（Theremin），由美子科普被莳菜揭穿是上网误当萌系吉祥物搜索"
+    if "合唱" in ja or "モルジブ" in ja or "モルダウ" in ja or "カバンのように" in ja or "勝てばカングン" in ja or "ノーーウェーーーイッ" in ja or "ツンデレなめんじゃないわよ" in ja:
+        return "虚构合奏谣言败露与公文包抱式女仆神速大逃亡", "全章神级高潮收尾：千鹤揭穿第五节课实际上是‘全员合唱’，满还把斯美塔那《莫尔多河》（Moldau）空耳成‘马尔代夫’（モルジブ）并误以为是股票代号；得知全员为虚无缥缈的乐器合奏搭上整场午休午饭后，由美子、天音、满化身恶鬼索命；莳菜以胜者即正义（勝てば官軍）为由雇佣幸把自己像提包公文包一样夹在腋下神速逃窜，在午休结束钟声敲响瞬间被两人合围擒获悲鸣‘No way’爆笑落幕"
+
     # com43 specific
     if "マーグロマーーーン" in ja or "被害者ヅラ" in ja or "過剰な暴力" in ja or "やめてください" in ja or "助けてください" in ja or "スーパー護身術" in ja or "カクトー術" in ja or "大声" in ja:
         return "风见流超级护身术与施加过量暴力反装弱小受害者", "全章神级高潮与哲学爆笑：莳菜传授雄二真传的实战防身精髓——一边撕心裂肺惨叫‘求求您住手吧’‘救命啊’博取同情，一边下死手施展极刑暴力彻底抹杀暴徒反击能力；幸精辟总结为‘一边过度施暴一边装受害者，真不愧是超级护身术’；雄二格言‘习武非为争斗逞凶，只为拥有敢于放声呼救的胆量’"
@@ -1898,6 +1906,32 @@ def build_report():
                 "section": "灰色的果实·共通线第四十三章风见流超级护身术与偏位缩地暴打受害者 (grisaia1/com43)"
             })
 
+    # com44
+    for lno in range(22392, 22606):
+        ja_raw = ja_lines[lno - 1]
+        cn_raw = cn_lines[lno - 1]
+        sid = ja_raw.split("\t")[0] if "\t" in ja_raw else f"L{lno}"
+        ja_txt = ja_raw.split("\t")[1] if "\t" in ja_raw else ja_raw
+        cn_txt = cn_raw.split("\t")[1] if "\t" in cn_raw else cn_raw
+
+        old_txt = cn_txt
+        if git_base_cn and len(git_base_cn) >= lno:
+            head_raw = git_base_cn[lno - 1]
+            old_txt = head_raw.split("\t")[1] if "\t" in head_raw else head_raw
+
+        if cn_txt != old_txt:
+            cat, reason = classify_change(lno, sid, ja_txt, old_txt, cn_txt)
+            diffs.append({
+                "lno": lno,
+                "sid": sid,
+                "ja": ja_txt,
+                "old": old_txt,
+                "new": cn_txt,
+                "cat": cat,
+                "reason": reason,
+                "section": "灰色的果实·共通线第四十四章音乐课假情报骚动与公文包女仆神速大逃亡 (grisaia1/com44)"
+            })
+
     print(f"Total indexed modifications: {len(diffs)}")
 
     # Build Markdown
@@ -2321,6 +2355,15 @@ def build_report():
     md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
     md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
     for idx, d in enumerate(com43_diffs, 1):
+        md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
+    md.append("\n---\n")
+
+    # Section 47
+    com44_diffs = [d for d in diffs if d["section"].startswith("灰色的果实·共通线第四十四章音乐课假情报骚动与公文包女仆神速大逃亡")]
+    md.append(f"## 四十七、 灰色的果实·共通线第四十四章音乐课假情报骚动与公文包女仆神速大逃亡 (`grisaia1/com44`，共 {len(com44_diffs)} 条)\n")
+    md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
+    md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
+    for idx, d in enumerate(com44_diffs, 1):
         md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
     md.append("\n---\n")
 
