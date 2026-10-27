@@ -14,6 +14,24 @@ def escape_md(text):
     return text.replace("|", "\\|").replace("\n", " ").replace("\r", "")
 
 def classify_change(line_no, sid, ja, old_cn, new_cn):
+    # com22 specific
+    if "早飯早糞" in ja or "兵舎" in ja or "流し込む" in ja or "幹部クラス" in ja:
+        return "早饭早粪与军营进食创伤", "还原雄二在特工军校中被强制要求‘早饭早粪’、数分钟内狼吞虎咽灌下海量食物且吐出必须重咽的非人军事创伤"
+    if "京料理" in ja or "神田" in ja or "お母はん" in ja or "お父はん" in ja or "関西訛り" in ja:
+        return "天音神田老家与关西口音渊源", "揭秘天音母亲出身京都老牌料亭千金、父亲是神田江户厨师的身世，解释其关西口音与江户子豪爽急躁性格的根源"
+    if "身長よ" in ja or "乳がか" in ja or "肉食獣" in ja or "肉が嫌い" in ja:
+        return "天音巨乳与高挑身材苦恼", "还原莳菜揭发天音讨厌吃肉、天音担忧吃肉会继续‘变大’被雄二反问‘胸围吗’后娇嗔反驳‘是身高啦’的经典日常斗嘴"
+    if "ドイツ女" in ja or "山小屋" in ja or "母親じゃあるまいし" in ja or "メソメソ" in ja:
+        return "混血德国女人JB之哭包回忆", "还原JB（日耳曼混血）常去山中小屋擅自打扫做饭、被雄二吐槽‘又不是我妈’后像小女孩一样嚎啕大哭的珍贵往事与三大对女人教训"
+    if "ブルータス" in ja or "両手に花" in ja or "布鲁图" in new_cn or "王様待遇" in ja:
+        return "两面夹击帝王待遇与布鲁图之叹", "还原天音与莳菜左右开弓强行‘啊~嗯’喂食、雄二绝望悲鸣‘布鲁图，连你也背叛我’与美少女包围网战术分析"
+    if "庇護の傘" in ja or "軍事力" in ja or "榊よ" in ja or "金満学園" in ja:
+        return "由美子高冷观战与国防安全讽刺", "还原雄二向冷眼旁观的由美子眼神求救无果，悲愤将由美子比拟为在霸权大国核保护伞下背弃防卫盟约的辛辣国际政治黑幽默"
+    if "自損自弁" in ja or "耐えがたき" in ja or "明鏡止水" in ja or "否定する自分" in ja or "人並み" in ja or "黒いシミ" in ja:
+        return "自负盈亏与明镜止水战伤心理", "还原雄二在面对天音家常便当温暖时胸中泛起罪恶黑斑、质疑自己作为弃子恶犬不配享受‘普通人幸福’的灵魂深处自毁拉扯"
+    if "キドニー豆" in ja or "煮豆" in ja or "豆さえ食ってりゃ" in ja or "悪食" in ja:
+        return "日下部麻子之豆子哲学与恶食", "还原雄二自制红芸豆番茄炖豆便当、践行师父日下部麻子名言‘人只要有豆子吃就死不了’的硬核糙汉生活史"
+
     # com21 specific
     if "ピッチャー返し" in ja or "投手回击" in new_cn or "投手反弹" in new_cn or "ナゲシ" in ja:
         return "传说中的投手回击球拉锯战", "还原美智留与天音在球场上互飙‘投手回击（Comebacker）’直到十数重反弹的白热化死斗与莳菜咬舌头谐音梗"
@@ -1048,6 +1066,32 @@ def build_report():
                 "section": "灰色的果实·共通线第二十一章美滨极限运动会与保健室契约 (grisaia1/com21)"
             })
 
+    # Section 24: com22 (17015 - 17278)
+    for lno in range(17015, 17279):
+        ja_raw = ja_lines[lno - 1]
+        cn_raw = cn_lines[lno - 1]
+        sid = ja_raw.split("\t")[0] if "\t" in ja_raw else f"L{lno}"
+        ja_txt = ja_raw.split("\t")[1] if "\t" in ja_raw else ja_raw
+        cn_txt = cn_raw.split("\t")[1] if "\t" in cn_raw else cn_raw
+
+        old_txt = cn_txt
+        if git_base_cn and len(git_base_cn) >= lno:
+            head_raw = git_base_cn[lno - 1]
+            old_txt = head_raw.split("\t")[1] if "\t" in head_raw else head_raw
+
+        if cn_txt != old_txt:
+            cat, reason = classify_change(lno, sid, ja_txt, old_txt, cn_txt)
+            diffs.append({
+                "lno": lno,
+                "sid": sid,
+                "ja": ja_txt,
+                "old": old_txt,
+                "new": cn_txt,
+                "cat": cat,
+                "reason": reason,
+                "section": "灰色的果实·共通线第二十二章便当手作哲学与家庭围炉之痛 (grisaia1/com22)"
+            })
+
     print(f"Total indexed modifications: {len(diffs)}")
 
     # Build Markdown
@@ -1273,6 +1317,15 @@ def build_report():
     md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
     md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
     for idx, d in enumerate(com21_diffs, 1):
+        md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
+    md.append("\n---\n")
+
+    # Section 24
+    com22_diffs = [d for d in diffs if d["section"].startswith("灰色的果实·共通线第二十二章")]
+    md.append(f"## 二十五、 灰色的果实·共通线第二十二章便当手作哲学与家庭围炉之痛 (`grisaia1/com22`，共 {len(com22_diffs)} 条)\n")
+    md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
+    md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
+    for idx, d in enumerate(com22_diffs, 1):
         md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
     md.append("\n---\n")
 
