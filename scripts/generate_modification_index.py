@@ -14,6 +14,18 @@ def escape_md(text):
     return text.replace("|", "\\|").replace("\n", " ").replace("\r", "")
 
 def classify_change(line_no, sid, ja, old_cn, new_cn):
+    # com33 specific
+    if "『Ｓ』" in ja or "言葉責め" in ja or "性癖の目覚め" in ja or "胸があたたかく" in ja or "遠ざけられるのは辛い" in ja or "紛らわせる" in ja:
+        return "抖S觉醒告白与心意相通的温暖送别", "全章温情与反差高光：幸直言雄二毫不留情的言语责难让自己‘体内觉醒了某种不得了的东西（S与M）’，雄二吐槽遭同班同学告白性癖；幸对雄二愿意帮她向学园长交涉养猫深表感谢，坦言‘只要有一人懂我这份心情，心里就暖洋洋的’；雄二默默陪伴加快脚步的幸，深悟替其分担离别痛楚的跟踪意义"
+    if "マサヒコ" in ja or "ビッグニュース" in ja or "かーちゃん" in ja or "段ボール" in ja or "俺んちになる" in ja or "目つきの悪い" in ja or "毎日" in ja or "飼い主" in ja or "引き取って育てたい" in ja:
+        return "小猫收养喜讯与幸的默默割爱", "催泪与反差日常：邻居少年雅彦飞奔报喜老妈终于准许养猫，小猫告别纸箱；幸温柔割爱将猫交托，少年邀其随时来家探望，幸当场一本正经提出‘放学后天天来’吓退少年；少年告别顺带吐槽‘眼神凶恶的大哥哥’；雄二洞察幸心底实则无比渴望亲自抚养的落寞心声"
+    if "ペット禁止" in ja or "ワガママ" in ja or "悪い子" in ja or "ザリガニ" in ja or "乳糖" in ja or "酵素" in ja or "触診" in ja or "衰弱死" in ja:
+        return "宿舍宠物禁令与好孩子心理防线", "核心人设与硬核救护：雄二为幼猫触诊检查脉搏，指出断奶期喂牛奶因缺乏乳糖分解酶极易致死并提醒科普；雄二提出找校长通融破例（如莳菜养螯虾），幸因深植心底的‘任性给别人添麻烦就是坏孩子’执念严词拒绝，展现其深层心理束缚"
+    if "キャットフード" in ja or "Ｋａｍｋａｎ" in ja or "マグロ味" in ja or "袋小路" in ja or "人間ですけど" in ja or "英語の直訳" in ja or "ぶち撒けて" in ja or "命を救われました" in ja or "様子をみる" in ja:
+        return "散落猫罐头与英语直译腔无厘头对话", "无厘头天然呆爆笑名场面：幸撞人散落杂物，雄二帮忙收拾拾得Kamkan金枪鱼猫罐头；因幸一本正经应答‘会吃哦’让雄二惊骇以为其有吃宠物罐头癖好；幸以‘我是人类，怀里抱的是猫’极具美式英语直译腔的反差呆萌化解尴尬，带雄二拐进死胡同看望暗中喂养的流浪幼猫"
+    if "探偵" in ja or "二人がかり" in ja or "男女のペア" in ja or "尾行" in ja or "煮豆" in ja or "頭のカタイ狸" in ja or "等身大ポスター" in ja or "顔見知り" in ja or "カリカリ" in ja or "エコバッグ" in ja or "シュヌドゥッテ" in ja or "暗号" in ja or "榊教授" in ja or "大悦び" in ja:
+        return "双人尾随跟踪术与商店街外星暗号谜题", "全章神级喜剧开篇：雄二尾随小幸反被由美子跟踪，当场抓包组成男女双人跟踪组；由美子因雄二无厘头‘好物是煮豆’及报警威胁抓狂，辩解幸亏被跟踪的不是自己；二人一路目睹小幸在商店街备受欢迎，连荞麦面大叔都因外用药膏治好腰伤使老婆‘大悦（双关大喜）’而狂谢；小幸与孩童更用完全未知的自创外星暗语流利对话，令由美子与雄二彻底看呆"
+
     # com32 specific
     if "空はすんごくでっかいフタ" in ja or "銀の銃弾" in ja or "死んだら" in ja or "墓を作って" in ja or "マロン" in ja or "おごルール" in ja or "永遠に覚めない眠り" in ja or "埋めて欲しい" in ja:
         return "草坪仰卧长空感喟与临海立墓生死伏笔", "全章终极灵魂高光与核心伏笔：满坦露夜空如密闭巨盖透气孔、渴望银弹贯穿心脏的病理隐秘心迹；雄二仰卧青草畅谈死亡不过永眠，誓言死后不哭泣唯在墓前大笑献花；满交付临海立墓重任，把浪漫（ロマン）念反成板栗（マロン）后嬉笑狂奔打赌果汁收尾"
@@ -1502,6 +1514,32 @@ def build_report():
                 "section": "灰色的果实·共通线第三十二章高台远眺汪洋与黑猫隆美尔立墓伏笔 (grisaia1/com32)"
             })
 
+    # com33
+    for lno in range(19712, 20043):
+        ja_raw = ja_lines[lno - 1]
+        cn_raw = cn_lines[lno - 1]
+        sid = ja_raw.split("\t")[0] if "\t" in ja_raw else f"L{lno}"
+        ja_txt = ja_raw.split("\t")[1] if "\t" in ja_raw else ja_raw
+        cn_txt = cn_raw.split("\t")[1] if "\t" in cn_raw else cn_raw
+
+        old_txt = cn_txt
+        if git_base_cn and len(git_base_cn) >= lno:
+            head_raw = git_base_cn[lno - 1]
+            old_txt = head_raw.split("\t")[1] if "\t" in head_raw else head_raw
+
+        if cn_txt != old_txt:
+            cat, reason = classify_change(lno, sid, ja_txt, old_txt, cn_txt)
+            diffs.append({
+                "lno": lno,
+                "sid": sid,
+                "ja": ja_txt,
+                "old": old_txt,
+                "new": cn_txt,
+                "cat": cat,
+                "reason": reason,
+                "section": "灰色的果实·共通线第三十三章商店街暗号密谈与小幸的流浪猫之约 (grisaia1/com33)"
+            })
+
     print(f"Total indexed modifications: {len(diffs)}")
 
     # Build Markdown
@@ -1826,6 +1864,15 @@ def build_report():
     md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
     md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
     for idx, d in enumerate(com32_diffs, 1):
+        md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
+    md.append("\n---\n")
+
+    # Section 36
+    com33_diffs = [d for d in diffs if d["section"].startswith("灰色的果实·共通线第三十三章商店街暗号密谈与小幸的流浪猫之约")]
+    md.append(f"## 三十六、 灰色的果实·共通线第三十三章商店街暗号密谈与小幸的流浪猫之约 (`grisaia1/com33`，共 {len(com33_diffs)} 条)\n")
+    md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
+    md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
+    for idx, d in enumerate(com33_diffs, 1):
         md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
     md.append("\n---\n")
 
