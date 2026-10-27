@@ -14,6 +14,20 @@ def escape_md(text):
     return text.replace("|", "\\|").replace("\n", " ").replace("\r", "")
 
 def classify_change(line_no, sid, ja, old_cn, new_cn):
+    # com10 specific
+    if "グーリー" in ja or "恶食怪" in new_cn:
+        return "俚语绰号/梗误译", "纠正将美军军营俚语『恶食怪/烂胃王（Gross Eater / Ghoulie）』荒谬误译为『贪吃鬼』"
+    if "タクアン" in ja or "腌萝卜" in new_cn:
+        return "食物常识/严重误译", "纠正将日式便携军用配给『腌萝卜罐头（沢庵漬け）』离谱误译为植物『虎杖罐头』或『腌竹笋』"
+    if "オタマの背" in ja or "勺背" in new_cn:
+        return "烹饪常识/误读", "纠正将烹饪铁勺勺背（お玉の背）误读为『蛋壳背（卵）』"
+    if "居るんじゃない" in ja and "人不在啊" in old_cn:
+        return "否定逻辑反转", "纠正反问句否定语气误读（『这不是在嘛』反被机翻成『人不在啊』）"
+    if "豚も食わないメシ" in ja:
+        return "俚语生动化", "将字面直译『连猪都不吃的饭』生动润色为军用配给黑话『连猪都嫌弃的泔水伙食』"
+    if "卓袱台" in ja:
+        return "日式生活常识", "规范日语『卓袱台（ちゃぶ台）』为和室折叠小矮桌/矮方桌"
+
     # com09 specific
     if "ギャフン" in ja and "打嗝" in old_cn:
         return "成语误译为生理反应", "纠正将日语甘拜下风/吃瘪认栽口语『哑口无言/彻底吃瘪（ギャフン）』荒谬机翻为风马牛不相及的生理反应『打嗝』"
@@ -540,6 +554,32 @@ def build_report():
                 "section": "灰色的果实·共通线第九章由美子赠书与大马卡罗夫给养 (grisaia1/com09)"
             })
 
+    # Section 12: com10 (14174 - 14290)
+    for lno in range(14174, 14291):
+        ja_raw = ja_lines[lno - 1]
+        cn_raw = cn_lines[lno - 1]
+        sid = ja_raw.split("\t")[0] if "\t" in ja_raw else f"L{lno}"
+        ja_txt = ja_raw.split("\t")[1] if "\t" in ja_raw else ja_raw
+        cn_txt = cn_raw.split("\t")[1] if "\t" in cn_raw else cn_raw
+
+        old_txt = cn_txt
+        if git_base_cn and len(git_base_cn) >= lno:
+            head_raw = git_base_cn[lno - 1]
+            old_txt = head_raw.split("\t")[1] if "\t" in head_raw else head_raw
+
+        if cn_txt != old_txt:
+            cat, reason = classify_change(lno, sid, ja_txt, old_txt, cn_txt)
+            diffs.append({
+                "lno": lno,
+                "sid": sid,
+                "ja": ja_txt,
+                "old": old_txt,
+                "new": cn_txt,
+                "cat": cat,
+                "reason": reason,
+                "section": "灰色的果实·共通线第十章军营恶食怪与天音蟹肉炒饭 (grisaia1/com10)"
+            })
+
     print(f"Total indexed modifications: {len(diffs)}")
 
     # Build Markdown
@@ -657,6 +697,15 @@ def build_report():
     md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
     md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
     for idx, d in enumerate(com09_diffs, 1):
+        md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
+    md.append("\n---\n")
+
+    # Section 12
+    com10_diffs = [d for d in diffs if d["section"].startswith("灰色的果实·共通线第十章")]
+    md.append(f"## 十三、 灰色的果实·共通线第十章军营恶食怪与天音蟹肉炒饭 (`grisaia1/com10`，共 {len(com10_diffs)} 条)\n")
+    md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
+    md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
+    for idx, d in enumerate(com10_diffs, 1):
         md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
     md.append("\n---\n")
 
