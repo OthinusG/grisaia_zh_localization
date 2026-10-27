@@ -14,6 +14,28 @@ def escape_md(text):
     return text.replace("|", "\\|").replace("\n", " ").replace("\r", "")
 
 def classify_change(line_no, sid, ja, old_cn, new_cn):
+    # com21 specific
+    if "ピッチャー返し" in ja or "投手回击" in new_cn or "投手反弹" in new_cn or "ナゲシ" in ja:
+        return "传说中的投手回击球拉锯战", "还原美智留与天音在球场上互飙‘投手回击（Comebacker）’直到十数重反弹的白热化死斗与莳菜咬舌头谐音梗"
+    if "汚名挽回" in ja or "汚名" in ja or "返上" in ja or "挽回污名" in old_cn:
+        return "经典语文误用恶搞与雪耻梗", "还原美智留把‘洗刷污名/雪耻（汚名返上）’口误说成‘挽回污名’被天音与雄二连环抓包无情嘲弄的经典爆笑桥段"
+    if "反吐" in ja or "キラキラ" in ja or "彩虹" in new_cn or "双重KO" in new_cn or "ダブルＫＯ" in ja:
+        return "美智留脱水眩晕与绝美彩虹吐", "还原美智留逞强狂傲大笑后突发起立性贫血、当场跪地喷吐‘闪闪发光的反刍之物（彩虹吐）’与双重KO惨烈现场"
+    if "体操用のメイド服" in ja or "メイド服" in ja or "女仆装" in new_cn:
+        return "幸之超凡脱俗体操用女仆装", "还原全校唯独幸一人身穿‘体操专用女仆装’上体育课，并对雄二的常识质疑投以反向关爱眼神的呆萌特质"
+    if "ドク" in ja or "急患" in ja or "军医" in new_cn or "救護" in ja or "RICE" in new_cn or "不全骨折" in ja or "捻挫" in ja:
+        return "野战急救常识与军医本能", "还原雄二脱口而出呼叫‘军医（Doc）’、凭借军队战伤救护经验为天音包扎固定冷敷踝关节的硬核特工本色"
+    if "小嶺幸！いただきます！" in ja or "いただきます" in ja or "领命" in new_cn or "挙手敬礼" in ja:
+        return "野战急救处突与女仆敬礼领命", "还原雄二以战场连长姿态向幸下达现地指挥命令、幸煞有介事立正敬礼高呼‘小岭幸领命！’的绝妙反差萌"
+    if "ドＭ" in ja or "超M" in new_cn or "抖M" in new_cn or "サディスト" in ja:
+        return "天音极品抖M宣言与防备突破", "还原天音被按压脚踝痛呼后自曝‘骨子里其实是个超M（抖M）’、调戏雄二‘施虐狂’的极品恶作剧大姐姐属性"
+    if "お姉ちゃん" in ja or "大姐姐" in new_cn or "彼氏" in ja or "交往" in new_cn or "妥協" in ja or "政治家" in ja:
+        return "门面效应谈判心理战与姐姐契约", "还原天音以‘当男朋友’的高阶要求诱敌深入、再后撤妥协为‘当大姐姐’的教科书级门面效应谈判心理学"
+    if "賢い犬" in ja or "主人以外" in ja or "尻尾" in ja or "摇尾" in new_cn:
+        return "忠犬绝不向主人以外摇尾", "还原雄二被天音摸头后暗自告诫自己‘忠犬除了主人（日下部麻子）以外绝不向任何人摇尾巴’的冷酷孤独内心独白"
+    if "松島満" in old_cn or "松岛满" in old_cn:
+        return "核心女主译名纠偏", "将机翻残存的‘松岛满’彻底修正为官方通用译名‘松岛美智留’"
+
     # com20 specific
     if "サバの水煮缶" in ja or "サバ缶" in ja or "ザリガニ" in ja or "水煮鲭鱼" in new_cn or "青いザリガニ" in ja:
         return "小龙虾饲育与生物实验", "还原莳菜用无色素水煮鲭鱼罐头培育‘蓝色小龙虾（螯虾）’的经典夏日自由研究，纠正机翻将鲭鱼误译为沙丁鱼"
@@ -1000,6 +1022,32 @@ def build_report():
                 "section": "灰色的果实·共通线第二十章蓝色螯虾饲育与照相记忆天才 (grisaia1/com20)"
             })
 
+    # Section 23: com21 (16606 - 17014)
+    for lno in range(16606, 17015):
+        ja_raw = ja_lines[lno - 1]
+        cn_raw = cn_lines[lno - 1]
+        sid = ja_raw.split("\t")[0] if "\t" in ja_raw else f"L{lno}"
+        ja_txt = ja_raw.split("\t")[1] if "\t" in ja_raw else ja_raw
+        cn_txt = cn_raw.split("\t")[1] if "\t" in cn_raw else cn_raw
+
+        old_txt = cn_txt
+        if git_base_cn and len(git_base_cn) >= lno:
+            head_raw = git_base_cn[lno - 1]
+            old_txt = head_raw.split("\t")[1] if "\t" in head_raw else head_raw
+
+        if cn_txt != old_txt:
+            cat, reason = classify_change(lno, sid, ja_txt, old_txt, cn_txt)
+            diffs.append({
+                "lno": lno,
+                "sid": sid,
+                "ja": ja_txt,
+                "old": old_txt,
+                "new": cn_txt,
+                "cat": cat,
+                "reason": reason,
+                "section": "灰色的果实·共通线第二十一章美滨极限运动会与保健室契约 (grisaia1/com21)"
+            })
+
     print(f"Total indexed modifications: {len(diffs)}")
 
     # Build Markdown
@@ -1216,6 +1264,15 @@ def build_report():
     md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
     md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
     for idx, d in enumerate(com20_diffs, 1):
+        md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
+    md.append("\n---\n")
+
+    # Section 23
+    com21_diffs = [d for d in diffs if d["section"].startswith("灰色的果实·共通线第二十一章")]
+    md.append(f"## 二十四、 灰色的果实·共通线第二十一章美滨极限运动会与保健室契约 (`grisaia1/com21`，共 {len(com21_diffs)} 条)\n")
+    md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
+    md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
+    for idx, d in enumerate(com21_diffs, 1):
         md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
     md.append("\n---\n")
 
