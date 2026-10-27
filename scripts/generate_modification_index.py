@@ -14,6 +14,24 @@ def escape_md(text):
     return text.replace("|", "\\|").replace("\n", " ").replace("\r", "")
 
 def classify_change(line_no, sid, ja, old_cn, new_cn):
+    # com07 specific
+    if "そいつはすまなかった" in ja and "那家伙" in old_cn:
+        return "成语俚语望文生义", "纠正将雄二口语道歉『那还真是不好意思/是我对不住你（そいつはすまなかった）』荒唐误读为『那家伙太惨了』"
+    if "手榴弾を渡した相手" in ja and "交给男人的" in old_cn:
+        return "主客逻辑反转", "纠正将『那个男人把手榴弹递给的对象是谁』彻底颠倒误译为『把手榴弹交给男人的究竟是谁』"
+    if "目が見えない" in ja and "眼睛听不清" in old_cn:
+        return "荒谬机翻笑话", "纠正将震伤失聪『耳が上手く聞こえない』荒谬机翻为『眼睛听不清』的严重生理逻辑事故"
+    if "なぶり殺し" in ja and "据说有不少人宁愿被这样虐杀" in old_cn:
+        return "机翻断句漏译修复", "补全并深度重构在战场被残虐折磨而决绝自爆的被截断译文（原机翻残缺为『据说有不少人宁愿被这样虐杀，也――』）"
+    if "オシッコ" in ja and "膀胱" in old_cn:
+        return "角色声线还原", "消除机械直白生硬医学词『膀胱吓破』，还原莳菜童真幼态的『吓得人家都要尿裤子了说』"
+    if "バードマン" in ja:
+        return "Ruby标签/军语代号", "规范美军丛林特种作战代号与Ruby标签『$[密林狙击手$/丛林鸟人$]（Birdman）』"
+    if "自販機" in ja and "我把硬币" in old_cn:
+        return "主语颠倒误读", "纠正将莳菜从青蛙钱包倒零钱买饮料主语颠倒误译为雄二"
+    if "タコツボ" in ja:
+        return "军事单兵掩体术语", "规范战壕避炮穴/单兵掩体为专业军事术语『散兵坑（タコツボ/Foxhole）』"
+
     # com06 specific
     if "女体流しそうめん" in ja or "女子流挂面" in old_cn:
         return "经典名梗误译", "纠正将天音调戏雄二的经典黄段子『女体盛流水素面（女体流しそうめん）』荒唐机翻为『女子流挂面』"
@@ -422,6 +440,32 @@ def build_report():
                 "section": "灰色的果实·共通线第六章阿幸万能柜与天台流水素面 (grisaia1/com06)"
             })
 
+    # Section 9: com07 (13659 - 13805)
+    for lno in range(13659, 13806):
+        ja_raw = ja_lines[lno - 1]
+        cn_raw = cn_lines[lno - 1]
+        sid = ja_raw.split("\t")[0] if "\t" in ja_raw else f"L{lno}"
+        ja_txt = ja_raw.split("\t")[1] if "\t" in ja_raw else ja_raw
+        cn_txt = cn_raw.split("\t")[1] if "\t" in cn_raw else cn_raw
+
+        old_txt = cn_txt
+        if git_base_cn and len(git_base_cn) >= lno:
+            head_raw = git_base_cn[lno - 1]
+            old_txt = head_raw.split("\t")[1] if "\t" in head_raw else head_raw
+
+        if cn_txt != old_txt:
+            cat, reason = classify_change(lno, sid, ja_txt, old_txt, cn_txt)
+            diffs.append({
+                "lno": lno,
+                "sid": sid,
+                "ja": ja_txt,
+                "old": old_txt,
+                "new": cn_txt,
+                "cat": cat,
+                "reason": reason,
+                "section": "灰色的果实·共通线第七章自贩机与丛林手榴弹怪谈 (grisaia1/com07)"
+            })
+
     print(f"Total indexed modifications: {len(diffs)}")
 
     # Build Markdown
@@ -512,6 +556,15 @@ def build_report():
     md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
     md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
     for idx, d in enumerate(com06_diffs, 1):
+        md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
+    md.append("\n---\n")
+
+    # Section 9
+    com07_diffs = [d for d in diffs if d["section"].startswith("灰色的果实·共通线第七章")]
+    md.append(f"## 十、 灰色的果实·共通线第七章自贩机与丛林手榴弹怪谈 (`grisaia1/com07`，共 {len(com07_diffs)} 条)\n")
+    md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
+    md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
+    for idx, d in enumerate(com07_diffs, 1):
         md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
     md.append("\n---\n")
 
