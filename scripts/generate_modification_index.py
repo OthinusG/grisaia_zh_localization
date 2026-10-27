@@ -14,6 +14,14 @@ def escape_md(text):
     return text.replace("|", "\\|").replace("\n", " ").replace("\r", "")
 
 def classify_change(line_no, sid, ja, old_cn, new_cn):
+    # com45 specific
+    if "枕返し" in ja or "妖怪" in ja or "人間枕返され" in ja or "腐った性根" in ja or "愚かな見落とし" in ja or "こわっぱ" in ja:
+        return "翻枕鬼甩锅哲学与全能女仆致命毒舌收场", "全章神级高潮收尾：糖果在鲨鱼包内衬口袋完好起获，满当场社死并坚称‘虽然道歉了但灵魂没道歉，这才是傲娇灵魂’；幸赶来得知真相，奉上杀人诛心毒舌‘即便全归咎于满大人的愚蠢疏漏与推卸责任的腐朽劣根性，我依然祝贺您失而复得’；满强行甩锅是百鬼夜行的‘翻枕鬼（枕返し）’在暗中作祟，雄二沉思‘若被翻枕鬼调转枕头，人是否会变成人类被翻枕者（人間枕返され）’"
+    if "アッティカ" in ja or "あっちか" in ja or "パルテノン" in ja or "リンガラ語" in ja or "ボンバイエ" in ja or "尻尾" in ja:
+        return "阿提卡半岛空耳流亡与莳菜偷吃虚空长尾巴", "全章神级空耳与谐音梗：天音打发幸‘去那边或者别处（あっちか/Acchi）’，幸竟空耳误听为希腊南部的‘阿提卡半岛（Attica）’，当场收拾了数日跨洋渡航行李准备去雅典帕特农神庙买手信特产，雄二神补刀‘帕特农石柱豆沙包确实美味’；莳菜问‘猪木口号Bom-ba-ye’是何语，雄二秒答刚果林加拉语；满诈审莳菜露出狐狸尾巴，莳菜吓哭招供偷吃天音抽屉私藏零食，哭问自己屁股上长出的尾巴是蓬松还是湿漉漉触手"
+    if "ラムネ" in ja or "サメのポーチ" in ja or "ラム目" in ja or "下着" in ja or "パイナップル" in ja:
+        return "波子汽水糖丢失慌乱与鲨鱼包内底走光相声", "全章神级开篇相声：雄二哲学独白『不幸无法相对衡量，丧友之痛与少女厌恶胡萝卜之痛均属同等剧痛』；满把鲨鱼零钱包翻底狂叫波子汽水糖丢失（纠正原机翻误作‘汽水饮料瓶’装在铅笔包里的荒谬错误），趴在地上找糖被雄二提醒纯白内裤走光并撞头；满捕风捉影怀疑由美子长了‘满脸想吃波子汽水的拉姆目脸’，又闭眼设套诈审天音"
+
     # com44 specific
     if "ザマス" in ja or "アルトリコーダー" in ja or "リコーダー" in ja or "習い事" in ja:
         return "由美子的中音竖笛自卑与贵妇腔小提琴名梗", "全章神级萌点：由美子害羞自卑地承认自己未曾上过豪门才艺班、唯一勉强能拿得出手的只有小学音乐课竖笛（羞愤大喊中音竖笛/アルトリコーダー）；彻底纠正原机翻将豪门阔太太专属贵妇口癖『ざます（Zamasu言葉）』荒唐机翻为『真棒』的离谱灾难"
@@ -1932,6 +1940,32 @@ def build_report():
                 "section": "灰色的果实·共通线第四十四章音乐课假情报骚动与公文包女仆神速大逃亡 (grisaia1/com44)"
             })
 
+    # com45
+    for lno in range(22606, 22771):
+        ja_raw = ja_lines[lno - 1]
+        cn_raw = cn_lines[lno - 1]
+        sid = ja_raw.split("\t")[0] if "\t" in ja_raw else f"L{lno}"
+        ja_txt = ja_raw.split("\t")[1] if "\t" in ja_raw else ja_raw
+        cn_txt = cn_raw.split("\t")[1] if "\t" in cn_raw else cn_raw
+
+        old_txt = cn_txt
+        if git_base_cn and len(git_base_cn) >= lno:
+            head_raw = git_base_cn[lno - 1]
+            old_txt = head_raw.split("\t")[1] if "\t" in head_raw else head_raw
+
+        if cn_txt != old_txt:
+            cat, reason = classify_change(lno, sid, ja_txt, old_txt, cn_txt)
+            diffs.append({
+                "lno": lno,
+                "sid": sid,
+                "ja": ja_txt,
+                "old": old_txt,
+                "new": cn_txt,
+                "cat": cat,
+                "reason": reason,
+                "section": "灰色的果实·共通线第四十五章波子汽水糖神隐与阿提卡半岛流亡大案 (grisaia1/com45)"
+            })
+
     print(f"Total indexed modifications: {len(diffs)}")
 
     # Build Markdown
@@ -2364,6 +2398,15 @@ def build_report():
     md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
     md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
     for idx, d in enumerate(com44_diffs, 1):
+        md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
+    md.append("\n---\n")
+
+    # Section 48
+    com45_diffs = [d for d in diffs if d["section"].startswith("灰色的果实·共通线第四十五章波子汽水糖神隐与阿提卡半岛流亡大案")]
+    md.append(f"## 四十八、 灰色的果实·共通线第四十五章波子汽水糖神隐与阿提卡半岛流亡大案 (`grisaia1/com45`，共 {len(com45_diffs)} 条)\n")
+    md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
+    md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
+    for idx, d in enumerate(com45_diffs, 1):
         md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
     md.append("\n---\n")
 
