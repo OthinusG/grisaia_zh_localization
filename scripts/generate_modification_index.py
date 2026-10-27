@@ -14,6 +14,18 @@ def escape_md(text):
     return text.replace("|", "\\|").replace("\n", " ").replace("\r", "")
 
 def classify_change(line_no, sid, ja, old_cn, new_cn):
+    # com29 specific
+    if "英語は外国人に習うな" in ja or "英会話はノリ" in ja or "本日の教訓" in ja or "ドッグとペンシルとサンキュー" in ja:
+        return "半吊子外语警世录与英语全凭感觉", "生动讽刺异国半吊子英语教学：语法错乱发音滑稽、夹杂本土极少用的地下黑话；天音金句‘全凭感觉与气氛糊弄过去’，雄二联想麻子仅凭三词走天下，确立全章终极教训：英会話はノリ（口语全凭感觉）"
+    if "ゴムの恋人" in ja or "母ちゃんミイラ" in ja or "圧縮記憶法" in ja or "恋人の中の恋人" in ja:
+        return "压缩记忆法弊端与木乃伊母亲奇想", "神级爆笑对白：雄二剖析莳菜仅记首尾压缩中间的认知缺陷；美智留造句‘天音是恋人中恋人、母亲中母亲’被莳菜曲解为‘橡胶充气塑料恋人’与‘老妈是千年木乃伊’，痛劝其在人间堂堂正正活下去"
+    if "アノマロカリス" in ja or "ハロゲンバルブ" in ja or "ハゲロンバブル" in ja or "万景峰号" in ja or "ショパン" in ja or "チョピン" in ja or "エニモー" in ja:
+        return "肖邦读乔平与奇虾绕口令处刑", "笑料百出的口语教学：莳菜狂吹‘美智留把肖邦Chopin读成乔平，我把Animal读成艾尼魔’；雄二天音幸连环绕口令处刑：寒武纪奇虾Anomalocaris、卤素灯泡念成秃头泡沫、万景峰号致莳菜破防暴走"
+    if "魚ですか" in ja or "大丈夫ですか" in ja or "ゲイですか" in ja or "ぶっ飛ばすよ" in ja or "うさぎなのか" in ja:
+        return "跨语种跨服聊天与出柜乌龙暴走", "顶级跨服聊天乌龙：美智留把问吃鱼说成‘你是鱼吗’；把‘Are you okay’误传为‘Are you gay’，美智留爽快认同自居基佬并反问莳菜遭老拳威胁；一句‘I like fish’被莳菜听成‘你是兔子吗’"
+    if "言葉の違う国" in ja or "ありがとう" in ja or "チキンヘッド" in ja or "餌をついばむ" in ja:
+        return "麻子三词保命论与鸡头歧义警诫", "全章神级开篇哲理：雄二奉师父日下部麻子为真理——赴异国先记『谢谢』，当年麻子仅凭Thank you/Dog/Pencil横趟全美；严正警诫万万不可对女性脱口Chickenhead（鸡头），谨防啄米动作联想为下流性暗示"
+
     # com28 specific
     if "シュガーレス" in ja or "貧乏人" in ja or "ブドウ糖" in ja or "ジャンクフード" in ja or "ラムネ" in ja or "二種類の女" in ja or "唇を塞いでしまう" in ja:
         return "说谎者悖论交锋与无糖流浪汉绝杀", "神级日常论战高光：雄二引克里特岛说谎者悖论阐明‘傲娇一旦承认即破产’；美智留混淆豪猪两难/长疹刺猬/纸箱猫咪并误认遭遇心理测试；美智留嚼波子汽水糖痛斥讨糖雄二为‘无糖流浪汉’；雄二洞察世间仅存‘吵闹的女人’与‘更吵闹的女人’，以早睡收尾全章"
@@ -1348,6 +1360,32 @@ def build_report():
                 "section": "灰色的果实·共通线第二十八章防御三连绝技与神兽薮犬挂包大骚动 (grisaia1/com28)"
             })
 
+    # com29
+    for lno in range(18749, 18833):
+        ja_raw = ja_lines[lno - 1]
+        cn_raw = cn_lines[lno - 1]
+        sid = ja_raw.split("\t")[0] if "\t" in ja_raw else f"L{lno}"
+        ja_txt = ja_raw.split("\t")[1] if "\t" in ja_raw else ja_raw
+        cn_txt = cn_raw.split("\t")[1] if "\t" in cn_raw else cn_raw
+
+        old_txt = cn_txt
+        if git_base_cn and len(git_base_cn) >= lno:
+            head_raw = git_base_cn[lno - 1]
+            old_txt = head_raw.split("\t")[1] if "\t" in head_raw else head_raw
+
+        if cn_txt != old_txt:
+            cat, reason = classify_change(lno, sid, ja_txt, old_txt, cn_txt)
+            diffs.append({
+                "lno": lno,
+                "sid": sid,
+                "ja": ja_txt,
+                "old": old_txt,
+                "new": cn_txt,
+                "cat": cat,
+                "reason": reason,
+                "section": "灰色的果实·共通线第二十九章跨服英语教学与口语全凭感觉 (grisaia1/com29)"
+            })
+
     print(f"Total indexed modifications: {len(diffs)}")
 
     # Build Markdown
@@ -1636,6 +1674,15 @@ def build_report():
     md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
     md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
     for idx, d in enumerate(com28_diffs, 1):
+        md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
+    md.append("\n---\n")
+
+    # Section 32
+    com29_diffs = [d for d in diffs if d["section"].startswith("灰色的果实·共通线第二十九章跨服英语教学与口语全凭感觉")]
+    md.append(f"## 三十二、 灰色的果实·共通线第二十九章跨服英语教学与口语全凭感觉 (`grisaia1/com29`，共 {len(com29_diffs)} 条)\n")
+    md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
+    md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
+    for idx, d in enumerate(com29_diffs, 1):
         md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
     md.append("\n---\n")
 
