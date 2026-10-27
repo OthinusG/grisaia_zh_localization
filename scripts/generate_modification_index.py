@@ -14,6 +14,18 @@ def escape_md(text):
     return text.replace("|", "\\|").replace("\n", " ").replace("\r", "")
 
 def classify_change(line_no, sid, ja, old_cn, new_cn):
+    # com12 specific
+    if "びっくり箱" in ja or "整蛊盒子" in new_cn:
+        return "专有名词/文化常识", "纠正将小丑惊吓弹簧玩偶盒（Jack-in-the-box/びっくり箱）荒唐误译为『百宝盒』"
+    if "百物語よろしく五物語" in ja:
+        return "民俗文化梗还原", "规范日本江户传统消暑怪谈『仿照百物语的做法，办成了“五物语”』（非生搬硬套『百鬼夜行』）"
+    if "匙を投げられた" in ja:
+        return "习惯成语意译", "规范日语医学成语『医生束手无策（匙を投げられた）』，纠正过于绝对生硬的『被判了死刑』"
+    if "オヤング" in ja or "Peyoung" in new_cn:
+        return "经典泡面名梗还原", "还原日本国民级炒面『Peyoung（オヤング）』水槽热胀冷缩轰鸣轰飞炒面的搞笑黑历史"
+    if "無神経さ" in ja:
+        return "角色心理声线还原", "还原由美子娇羞责备雄二『迟钝与不解风情（缺乏细腻体贴/無神経さ）』的傲娇名场面"
+
     # com11 specific
     if "自墜落" in ja or "自坠落" in new_cn:
         return "错字谐音梗还原", "还原满将『自甘堕落（自堕落）』文盲念错为『自坠落（自墜落）』的经典错字喜剧包袱"
@@ -626,6 +638,32 @@ def build_report():
                 "section": "灰色的果实·共通线第十一章满的纯度VC与全员风寒骚动 (grisaia1/com11)"
             })
 
+    # Section 14: com12 (14572 - 14873)
+    for lno in range(14572, 14874):
+        ja_raw = ja_lines[lno - 1]
+        cn_raw = cn_lines[lno - 1]
+        sid = ja_raw.split("\t")[0] if "\t" in ja_raw else f"L{lno}"
+        ja_txt = ja_raw.split("\t")[1] if "\t" in ja_raw else ja_raw
+        cn_txt = cn_raw.split("\t")[1] if "\t" in cn_raw else cn_raw
+
+        old_txt = cn_txt
+        if git_base_cn and len(git_base_cn) >= lno:
+            head_raw = git_base_cn[lno - 1]
+            old_txt = head_raw.split("\t")[1] if "\t" in head_raw else head_raw
+
+        if cn_txt != old_txt:
+            cat, reason = classify_change(lno, sid, ja_txt, old_txt, cn_txt)
+            diffs.append({
+                "lno": lno,
+                "sid": sid,
+                "ja": ja_txt,
+                "old": old_txt,
+                "new": cn_txt,
+                "cat": cat,
+                "reason": reason,
+                "section": "灰色的果实·共通线第十二章深夜五物语与由美子炒面怪谈 (grisaia1/com12)"
+            })
+
     print(f"Total indexed modifications: {len(diffs)}")
 
     # Build Markdown
@@ -761,6 +799,15 @@ def build_report():
     md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
     md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
     for idx, d in enumerate(com11_diffs, 1):
+        md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
+    md.append("\n---\n")
+
+    # Section 14
+    com12_diffs = [d for d in diffs if d["section"].startswith("灰色的果实·共通线第十二章")]
+    md.append(f"## 十五、 灰色的果实·共通线第十二章深夜五物语与由美子炒面怪谈 (`grisaia1/com12`，共 {len(com12_diffs)} 条)\n")
+    md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
+    md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
+    for idx, d in enumerate(com12_diffs, 1):
         md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
     md.append("\n---\n")
 
