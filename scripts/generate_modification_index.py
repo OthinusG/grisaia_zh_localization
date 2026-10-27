@@ -1873,7 +1873,7 @@ def build_report():
             })
 
     # com43
-    for lno in range(22251, 22391):
+    for lno in range(22251, 22392):
         ja_raw = ja_lines[lno - 1]
         cn_raw = cn_lines[lno - 1]
         sid = ja_raw.split("\t")[0] if "\t" in ja_raw else f"L{lno}"
