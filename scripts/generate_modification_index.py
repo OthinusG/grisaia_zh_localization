@@ -14,6 +14,18 @@ def escape_md(text):
     return text.replace("|", "\\|").replace("\n", " ").replace("\r", "")
 
 def classify_change(line_no, sid, ja, old_cn, new_cn):
+    # com09 specific
+    if "ギャフン" in ja and "打嗝" in old_cn:
+        return "成语误译为生理反应", "纠正将日语甘拜下风/吃瘪认栽口语『哑口无言/彻底吃瘪（ギャフン）』荒谬机翻为风马牛不相及的生理反应『打嗝』"
+    if "くろがね文庫" in ja and "黑铁文库" in new_cn:
+        return "军事历史典故还原", "注释并还原旧日本海军在巡洋舰/战舰上为官兵设立船载藏书库的专有历史名词『黑铁文库』"
+    if "無芸が服を着て" in ja and "无艺可施穿在身上" in old_cn:
+        return "惯用修辞生硬直译", "消除日语修辞生搬硬套『无艺可施穿在身上到处走』，重构为符合中文语境的自然讽刺『毫无才艺的空壳木头人』"
+    if "気配は“雑”" in ja or "気配" in ja and "杂" in old_cn:
+        return "军务潜伏术语规范", "规范雄二特工侦查与反潜伏专业术语为『隐匿行踪的气息太“糙”了』（非机械机翻『气息杂得很』）"
+    if "ダイマカロフ" in ja or "ダイマカロフ給養" in ja:
+        return "特摄文化梗与谐音包袱", "还原昭和特摄英雄《光速将军大马卡罗夫》战队梗，以及莳菜满脑子只记得大号马卡龙（マカロン）的美食包袱"
+
     # com08 specific
     if "根暗" in ja and "家里蹲" in old_cn:
         return "心理词义严重混淆", "纠正将由美子揭穿天音外向伪装下的阴郁性格（根暗/Nekura）荒唐误译为风马牛不相及的宅居词汇『家里蹲（Hikikomori）』"
@@ -502,6 +514,32 @@ def build_report():
                 "section": "灰色的果实·共通线第八章天音肢体接触与由美子心理剖析 (grisaia1/com08)"
             })
 
+    # Section 11: com09 (14004 - 14173)
+    for lno in range(14004, 14174):
+        ja_raw = ja_lines[lno - 1]
+        cn_raw = cn_lines[lno - 1]
+        sid = ja_raw.split("\t")[0] if "\t" in ja_raw else f"L{lno}"
+        ja_txt = ja_raw.split("\t")[1] if "\t" in ja_raw else ja_raw
+        cn_txt = cn_raw.split("\t")[1] if "\t" in cn_raw else cn_raw
+
+        old_txt = cn_txt
+        if git_base_cn and len(git_base_cn) >= lno:
+            head_raw = git_base_cn[lno - 1]
+            old_txt = head_raw.split("\t")[1] if "\t" in head_raw else head_raw
+
+        if cn_txt != old_txt:
+            cat, reason = classify_change(lno, sid, ja_txt, old_txt, cn_txt)
+            diffs.append({
+                "lno": lno,
+                "sid": sid,
+                "ja": ja_txt,
+                "old": old_txt,
+                "new": cn_txt,
+                "cat": cat,
+                "reason": reason,
+                "section": "灰色的果实·共通线第九章由美子赠书与大马卡罗夫给养 (grisaia1/com09)"
+            })
+
     print(f"Total indexed modifications: {len(diffs)}")
 
     # Build Markdown
@@ -610,6 +648,15 @@ def build_report():
     md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
     md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
     for idx, d in enumerate(com08_diffs, 1):
+        md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
+    md.append("\n---\n")
+
+    # Section 11
+    com09_diffs = [d for d in diffs if d["section"].startswith("灰色的果实·共通线第九章")]
+    md.append(f"## 十二、 灰色的果实·共通线第九章由美子赠书与大马卡罗夫给养 (`grisaia1/com09`，共 {len(com09_diffs)} 条)\n")
+    md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
+    md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
+    for idx, d in enumerate(com09_diffs, 1):
         md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
     md.append("\n---\n")
 
