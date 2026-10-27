@@ -14,6 +14,26 @@ def escape_md(text):
     return text.replace("|", "\\|").replace("\n", " ").replace("\r", "")
 
 def classify_change(line_no, sid, ja, old_cn, new_cn):
+    # com25 specific
+    if "迷路" in ja or "真っ直ぐな線" in ja or "真実は絡まって" in ja or "良かれと思って嘘をつく" in ja or "正直でいたい" in ja:
+        return "善意谎言死结与心之迷宫救赎", "极高文学水准升华全章：雄二从美智留隐瞒重疾联想到世人因‘善意’而筑起心之迷宫、终将真实缠绕成死结的悲哀，道出传世金句‘若想在复杂的环境中恪守诚实，至少要祈祷在自己亲手雕琢的迷宫中不要迷失归途’"
+    if "胸を手で押さえる" in ja or "胸が痛む" in ja or "貧血では胸に痛みは感じない" in ja or "他の子に見せたくない" in ja or "隠しているわけか" in ja:
+        return "心前区急性绞痛与不可告人之约", "画风突变直击心房：细腻刻画美智留在走廊虚脱滑落、双手死死按住胸口剧烈喘息、轻拍胸背强行调匀心律的重度心绞痛发作，以及哀求雄二保守秘密‘不要让其他女孩看到我这副狼狈模样’的心碎脆弱"
+    if "拾い食い" in ja or "カラフルな色をしたキノコ" in ja or "カニクイザル" in ja or "アメーバ赤痢" in ja or "果肉入り猿" in ja or "靴下の洗濯" in ja or "便所で出してみろ" in ja:
+        return "食蟹猴捡食妄想与越战洗袜铁律", "雄二特工脑洞大暴走顶级名场面：凭美智留惨白面色断定其长着‘爱在路边捡脏东西与毒蘑菇吞食的蠢相’、脑补其在热带雨林与食蟹猴抢螃蟹染上阿米巴痢疾，搬出越战洗袜子铁则逼其去厕所‘排便验排泄物’的极品冷幽默"
+    if "特殊な環境下で知り合った少女" in ja or "後ろから背中を撃たれ" in ja or "道具の方がブレることが少ない" in ja or "パズルのピース" in ja or "捨て駒" in ja or "マジック" in ja:
+        return "拼图碎片弃子哲学与冷硬工具论", "极高水准还原雄二冷酷特工世界观：将人际关系视作棋局中随时可弃的拼图碎片、视‘永远是朋友’为弯勺子般的廉价魔术，以及‘比起多变的人类更信赖倾注爱意绝不背叛的冷硬工具’的硬汉心防"
+    if "イマジナリーフレンド" in ja or "頭の中に作る想像上の友人" in ja or "子供の妄想" in ja:
+        return "幻想伙伴与双重人格关键伏笔", "极高文学敏锐度捕捉雄二提及‘脑内幻想伙伴（Imaginary Friend）’时美智留骤然瞳孔放大、随后因‘只是小孩子妄想’而失落自嘲的重磅心理伏笔，直指美智留受体心脏记忆与双重人格核心谜团"
+    if "あたしが今、ここにいることよ" in ja or "頭数に、ない" in ja or "哲学" in ja or "ミス・ドンストップ" in ja or "放置プレイ" in ja:
+        return "现实哲学自辩与幸的人头编制处刑", "还原美智留自作聪明发表哲学演讲‘现实就是我此刻身在此处’被全场冷眼冻结、幸一本正经补刀‘美智留大人的人气为零，不在人头编制中’以及莳菜‘不停小姐（Miss Don't Stop）’连环处刑"
+    if "薬物パーティー" in ja or "壊れたダンプカー" in ja or "仲間外れ" in ja or "ハロー由美子" in ja:
+        return "药毒派对乌龙与失控翻斗车社交", "生动还原幸误将众人聚会当成‘药毒派对’并自责未能侍奉、美智留傲娇问候由美子却被幸评价为‘如同失控报废翻斗泥头车般猛撞进对方心窝’的爆笑修辞"
+    if "ビタミンＡ" in ja or "スペシャル粉" in ja or "酸っぱいうちに" in ja or "にげええええええええ" in ja or "にがっぺー" in ja or "天邪鬼" in ja or "すっぱいよぉ" in ja:
+        return "极酸柠檬粉与苦涩味觉风暴", "纠正机翻将美智留被极酸粉刺激到惨叫‘にげええええ（好苦啊）’误翻为‘逃eeee’的经典重大错译，生动还原天音特制维生素A酸粉整包吞咽、连灌柠檬纯汁与浓缩原液的双重暴击搞笑高潮"
+    if "食べ合わせ" in ja or "梅干と鰻" in ja or "消化不良" in ja:
+        return "食物相克迷信破除与求生杂学", "还原雄二凭借野外求生记忆拆解‘梅干与烤鳗鱼相克实为节俭训诫’、科学辨析蟹肉与柿子鞣酸反应的硬核生存知识"
+
     # com24 specific
     if "罪悪感" in ja or "悪いガス" in ja or "ドロドロ" in ja or "冷たい毒" in ja or "なくした物" in ja or "自問" in ja:
         return "肺中剧毒与战后PTSD罪恶感", "极高文学水准重塑雄二在看似平静的学园生活中深陷创伤后应激障碍（PTSD）的心灵深渊：笑容如罪、内脏如积淤腐烂毒气、双肺如旋涡冰冷剧毒，直击灰色系列‘无法挽回逝者之痛’的灵魂母题"
@@ -1178,6 +1198,32 @@ def build_report():
                 "section": "灰色的果实·共通线第二十四章校长室各人心理剖析与深渊罪恶感 (grisaia1/com24)"
             })
 
+    # com25
+    for lno in range(17615, 17912):
+        ja_raw = ja_lines[lno - 1]
+        cn_raw = cn_lines[lno - 1]
+        sid = ja_raw.split("\t")[0] if "\t" in ja_raw else f"L{lno}"
+        ja_txt = ja_raw.split("\t")[1] if "\t" in ja_raw else ja_raw
+        cn_txt = cn_raw.split("\t")[1] if "\t" in cn_raw else cn_raw
+
+        old_txt = cn_txt
+        if git_base_cn and len(git_base_cn) >= lno:
+            head_raw = git_base_cn[lno - 1]
+            old_txt = head_raw.split("\t")[1] if "\t" in head_raw else head_raw
+
+        if cn_txt != old_txt:
+            cat, reason = classify_change(lno, sid, ja_txt, old_txt, cn_txt)
+            diffs.append({
+                "lno": lno,
+                "sid": sid,
+                "ja": ja_txt,
+                "old": old_txt,
+                "new": cn_txt,
+                "cat": cat,
+                "reason": reason,
+                "section": "灰色的果实·共通线第二十五章拼图碎片哲学与美智留心之迷宫 (grisaia1/com25)"
+            })
+
     print(f"Total indexed modifications: {len(diffs)}")
 
     # Build Markdown
@@ -1430,6 +1476,15 @@ def build_report():
     md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
     md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
     for idx, d in enumerate(com24_diffs, 1):
+        md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
+    md.append("\n---\n")
+
+    # Section 28
+    com25_diffs = [d for d in diffs if d["section"].startswith("灰色的果实·共通线第二十五章拼图碎片哲学与美智留心之迷宫")]
+    md.append(f"## 二十八、 灰色的果实·共通线第二十五章拼图碎片哲学与美智留心之迷宫 (`grisaia1/com25`，共 {len(com25_diffs)} 条)\n")
+    md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
+    md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
+    for idx, d in enumerate(com25_diffs, 1):
         md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
     md.append("\n---\n")
 
