@@ -1,0 +1,1887 @@
+L1:
+  JA: _varstr#00000	オープニング
+  CN: _varstr#00000	片头
+L2:
+  JA: _varstr#00001	Opening
+  CN: _varstr#00001	片头
+L3:
+  JA: _varstr#00002	スクールキラー由美子
+  CN: _varstr#00002	校园杀手由美子
+L4:
+  JA: _varstr#00003	School Killer Yumiko
+  CN: _varstr#00003	校园杀手由美子
+L5:
+  JA: _varstr#00004	サプライズ・パーティー
+  CN: _varstr#00004	惊喜派对
+L6:
+  JA: _varstr#00005	Surprise Party
+  CN: _varstr#00005	惊喜派对
+L7:
+  JA: _varstr#00006	ケミカルペット
+  CN: _varstr#00006	化学宠物
+L8:
+  JA: _varstr#00007	Plastic Pet
+  CN: _varstr#00007	塑料宠物
+L9:
+  JA: _varstr#00008	寝る子は猫
+  CN: _varstr#00008	睡着的孩子是猫
+L10:
+  JA: _varstr#00009	Catnip and Clawfish
+  CN: _varstr#00009	猫薄荷与爪鱼
+L11:
+  JA: _varstr#00010	謎の金髪登場
+  CN: _varstr#00010	神秘金发登场
+L12:
+  JA: _varstr#00011	Arrival of the Mystery Blonde
+  CN: _varstr#00011	神秘金发登场
+L13:
+  JA: _varstr#00012	格言　十徳ナイフより幸を持て！
+  CN: _varstr#00012	格言　与其带着十德小刀，不如带着幸！
+L14:
+  JA: _varstr#00013	Pack Sachi First!
+  CN: _varstr#00013	优先带幸！
+L15:
+  JA: _varstr#00014	手榴弾をくれ！
+  CN: _varstr#00014	把手榴弹给我！
+L16:
+  JA: _varstr#00015	Give me a Grenade!
+  CN: _varstr#00015	把手榴弹给我！
+L17:
+  JA: _varstr#00016	無駄に明るい便所の１００ワット
+  CN: _varstr#00016	亮得多余的厕所一百瓦
+L18:
+  JA: _varstr#00017	Hold Your Hand
+  CN: _varstr#00017	牵住你的手
+L19:
+  JA: _varstr#00018	芸は身を助く
+  CN: _varstr#00018	艺能养身
+L20:
+  JA: _varstr#00019	Art Brings Bread
+  CN: _varstr#00019	艺术带来面包
+L21:
+  JA: _varstr#00020	カニマヨ
+  CN: _varstr#00020	蟹肉蛋黄酱
+L22:
+  JA: _varstr#00021	Crab Mayo
+  CN: _varstr#00021	蟹肉蛋黄酱
+L23:
+  JA: _varstr#00022	アホの子と偽ツンデレ
+  CN: _varstr#00022	笨蛋女孩与假傲娇
+L24:
+  JA: _varstr#00023	Idiot Girl, Fake Tsundere
+  CN: _varstr#00023	笨蛋女孩与假傲娇
+L25:
+  JA: _varstr#00024	お前、ビビリやん
+  CN: _varstr#00024	你啊，胆小鬼
+L26:
+  JA: _varstr#00025	Scaredy cat
+  CN: _varstr#00025	胆小鬼
+L27:
+  JA: _varstr#00026	小嶺幸　メイド服着用の定義
+  CN: _varstr#00026	小岭幸　女仆装的意义
+L28:
+  JA: _varstr#00027	Meaning of the (Maid) Uniform
+  CN: _varstr#00027	（女仆装）的意义
+L29:
+  JA: _varstr#00028	チャーリー
+  CN: _varstr#00028	查理
+L30:
+  JA: _varstr#00029	Charlie
+  CN: _varstr#00029	查理
+L31:
+  JA: _varstr#00030	ランニング・カデンス
+  CN: _varstr#00030	跑步・韵律
+L32:
+  JA: _varstr#00031	Running Cadence
+  CN: _varstr#00031	跑步韵律
+L33:
+  JA: _varstr#00032	大魔神幸～わたしがクラス委員になったわけ～
+  CN: _varstr#00032	大魔神幸～我当上委员长的理由～
+L34:
+  JA: _varstr#00033	Demon-lord Sachi
+  CN: _varstr#00033	大魔神幸
+L35:
+  JA: _varstr#00034	みちるの儀式
+  CN: _varstr#00034	满的仪式
+L36:
+  JA: _varstr#00035	Michiru's Ritual
+  CN: _varstr#00035	满的仪式
+L37:
+  JA: _varstr#00036	風見流スーパー護身術
+  CN: _varstr#00036	风见流・超级护身术
+L38:
+  JA: _varstr#00037	Super Self-Defense
+  CN: _varstr#00037	超级护身术
+L39:
+  JA: _varstr#00038	蜂さん潰し
+  CN: _varstr#00038	蜂先生碾碎
+L40:
+  JA: _varstr#00039	Mr. Bee, Crushed
+  CN: _varstr#00039	蜂先生碾碎
+L41:
+  JA: _varstr#00040	豊かな食生活
+  CN: _varstr#00040	丰富的食生活
+L42:
+  JA: _varstr#00041	A Rich Diet
+  CN: _varstr#00041	丰富的食生活
+L43:
+  JA: _varstr#00042	痛快、エクストリームスポーツ
+  CN: _varstr#00042	痛快・极限运动
+L44:
+  JA: _varstr#00043	Thrilling Extreme Sports
+  CN: _varstr#00043	惊险的极限运动
+L45:
+  JA: _varstr#00044	甘い食生活
+  CN: _varstr#00044	甜蜜饮食
+L46:
+  JA: _varstr#00045	A Sweet Diet
+  CN: _varstr#00045	甜蜜的食生活
+L47:
+  JA: _varstr#00046	ゆびさきバラエティー
+  CN: _varstr#00046	指尖综艺秀
+L48:
+  JA: _varstr#00047	Variety Show
+  CN: _varstr#00047	综艺秀
+L49:
+  JA: _varstr#00048	グレイ・シュガー
+  CN: _varstr#00048	灰色的糖
+L50:
+  JA: _varstr#00049	Reflections on a Reflection
+  CN: _varstr#00049	影中之影
+L51:
+  JA: _varstr#00050	友達の話はドンストップ
+  CN: _varstr#00050	朋友的话题停不下来
+L52:
+  JA: _varstr#00051	Don't Stop the Friendship
+  CN: _varstr#00051	让友情停不下来
+L53:
+  JA: _varstr#00052	あなたのご趣味は？
+  CN: _varstr#00052	你的兴趣是？
+L54:
+  JA: _varstr#00053	And your Hobbies Are?
+  CN: _varstr#00053	你的兴趣是？
+L55:
+  JA: _varstr#00054	通い妻
+  CN: _varstr#00054	常来作伴的妻子
+L56:
+  JA: _varstr#00055	Commuting Wife
+  CN: _varstr#00055	通勤妻子
+L57:
+  JA: _varstr#00056	大事なポーチ
+  CN: _varstr#00056	重要的手包
+L58:
+  JA: _varstr#00057	The Precious Pouch
+  CN: _varstr#00057	重要的手包
+L59:
+  JA: _varstr#00058	犬と鉛筆ありがとう
+  CN: _varstr#00058	谢谢狗与铅笔
+L60:
+  JA: _varstr#00059	Thank You for the Dog and Pencil
+  CN: _varstr#00059	谢谢狗与铅笔
+L61:
+  JA: _varstr#00060	振り向けば幸がいる
+  CN: _varstr#00060	回头就能看见幸
+L62:
+  JA: _varstr#00061	Turn Around, and Sachi's There
+  CN: _varstr#00061	回头，幸就在那里
+L63:
+  JA: _varstr#00062	榊由美子触ってさぁ何点
+  CN: _varstr#00062	榊由美子摸一摸，几分呢
+L64:
+  JA: _varstr#00063	Sakaki Yumiko: Points of Contact
+  CN: _varstr#00063	榊由美子：接触点
+L65:
+  JA: _varstr#00064	銀の銃弾で狙う場所
+  CN: _varstr#00064	用银弹瞄准的地方
+L66:
+  JA: _varstr#00065	The Silver Bullet's Target
+  CN: _varstr#00065	银弹的目标
+L67:
+  JA: _varstr#00066	尾行
+  CN: _varstr#00066	跟踪
+L68:
+  JA: _varstr#00067	Tailing
+  CN: _varstr#00067	跟踪
+L69:
+  JA: _varstr#00068	かぼちゃとＹＤ
+  CN: _varstr#00068	南瓜与YD
+L70:
+  JA: _varstr#00069	Pumpkin and YB
+  CN: _varstr#00069	南瓜与JB
+L71:
+  JA: _varstr#00070	戦え！マグロマン
+  CN: _varstr#00070	战吧！金枪鱼侠
+L72:
+  JA: _varstr#00071	Fight! Tunafish Man
+  CN: _varstr#00071	战斗吧！金枪鱼超人
+L73:
+  JA: _varstr#00072	授業参観
+  CN: _varstr#00072	家长参观日
+L74:
+  JA: _varstr#00073	Parent-Teacher Conference
+  CN: _varstr#00073	家长会
+L75:
+  JA: _varstr#00074	そうだ、海へ行こう！
+  CN: _varstr#00074	对了，去海边吧！
+L76:
+  JA: _varstr#00075	I Know! Let's Go to the Beach
+  CN: _varstr#00075	对了！去海边吧
+L77:
+  JA: _varstr#00076	ニックネームをつけて遊ぼう
+  CN: _varstr#00076	来玩取昵称的游戏吧
+L78:
+  JA: _varstr#00077	The Nicknaming Game
+  CN: _varstr#00077	取昵称游戏
+L79:
+  JA: _varstr#00078	ザ・近寄りがたい人
+  CN: _varstr#00078	那个・难以接近的人
+L80:
+  JA: _varstr#00079	Mr. Standoffish Man
+  CN: _varstr#00079	难以接近的男人
+L81:
+  JA: _varstr#00080	ジューシーユージー
+  CN: _varstr#00080	Juicy雄二
+L82:
+  JA: _varstr#00081	Juicy-Yuuji
+  CN: _varstr#00081	Juicy雄二
+L83:
+  JA: _varstr#00082	ユジユジ
+  CN: _varstr#00082	雄二雄二
+L84:
+  JA: _varstr#00083	Yujiyuji
+  CN: _varstr#00083	雄二雄二
+L85:
+  JA: _varstr#00084	天音ちゃんビューティースクール
+  CN: _varstr#00084	天音酱美容学校
+L86:
+  JA: _varstr#00085	Amane-chan Beauty School
+  CN: _varstr#00085	天音酱美容学校
+L87:
+  JA: _varstr#00086	バランス昼食、クラスメイト
+  CN: _varstr#00086	均衡午餐・同班同学
+L88:
+  JA: _varstr#00087	Balanced Lunch, Balancing Classmate
+  CN: _varstr#00087	均衡午餐，平衡的同学
+L89:
+  JA: _varstr#00088	蒔菜の異常な才能
+  CN: _varstr#00088	莳菜的异常才能
+L90:
+  JA: _varstr#00089	Makina's Abnormal Talent
+  CN: _varstr#00089	莳菜的异常才能
+L91:
+  JA: _varstr#00090	ボンボレ印のおまんじゅう
+  CN: _varstr#00090	圆滚滚牌豆沙包
+L92:
+  JA: _varstr#00091	Bonbore Brand Manjuu
+  CN: _varstr#00091	圆滚滚牌豆沙包
+L93:
+  JA: _varstr#00092	一子相伝、風見流スーパー護身術
+  CN: _varstr#00092	一脉相承・风见流・超级护身术
+L94:
+  JA: _varstr#00093	The Kazami Self-Defense Kid
+  CN: _varstr#00093	风见流护身术小子
+L95:
+  JA: _varstr#00094	おんがく！
+  CN: _varstr#00094	音乐！
+L96:
+  JA: _varstr#00095	Music!
+  CN: _varstr#00095	音乐！
+L97:
+  JA: _varstr#00096	あやしむみちる
+  CN: _varstr#00096	可疑的满小姐
+L98:
+  JA: _varstr#00097	The Suspicions of Ms. Michiru
+  CN: _varstr#00097	满小姐的可疑之处
+L99:
+  JA: _varstr#00098	まむしごはん？
+  CN: _varstr#00098	鳗鱼饭？
+L100:
+  JA: _varstr#00099	Mamushi Rice
+  CN: _varstr#00099	鳗鱼饭
+L101:
+  JA: _varstr#00100	デレよこい
+  CN: _varstr#00100	过来撒娇
+L102:
+  JA: _varstr#00101	Come Forth, Dere
+  CN: _varstr#00101	过来撒娇
+L103:
+  JA: _varstr#00102	ゴリラが海に行く日１
+  CN: _varstr#00102	大猩猩去海边之日1
+L104:
+  JA: _varstr#00103	Storming the Beach 1
+  CN: _varstr#00103	冲上海滩1
+L105:
+  JA: _varstr#00104	ゴリラが海に行く日２
+  CN: _varstr#00104	大猩猩去海边之日2
+L106:
+  JA: _varstr#00105	Storming the Beach 2
+  CN: _varstr#00105	冲上海滩2
+L107:
+  JA: _varstr#00106	パパは狼 ママは犬
+  CN: _varstr#00106	爸爸是狼 妈妈是狗
+L108:
+  JA: _varstr#00107	Papa Was a Rollin' Stone
+  CN: _varstr#00107	爸爸是滚石
+L109:
+  JA: _varstr#00108	男の仕事、女の仕事
+  CN: _varstr#00108	男人的事，女人的事
+L110:
+  JA: _varstr#00109	Man's Work, Woman's Work
+  CN: _varstr#00109	男人的活，女人的活
+L111:
+  JA: _varstr#00110	誤植プレイ＋
+  CN: _varstr#00110	错字游戏＋
+L112:
+  JA: _varstr#00111	Xtreme Typos
+  CN: _varstr#00111	极限错字
+L113:
+  JA: _varstr#00112	突然の接近
+  CN: _varstr#00112	突然的接近
+L114:
+  JA: _varstr#00113	The Sudden Approach
+  CN: _varstr#00113	突然的接近
+L115:
+  JA: _varstr#00114	ＣＶ：榊由美子
+  CN: _varstr#00114	特别篇：榊由美子
+L116:
+  JA: _varstr#00115	Mystery Yumiko Theater
+  CN: _varstr#00115	谜之由美子剧场
+L117:
+  JA: _varstr#00116	軽い女？　重い女？
+  CN: _varstr#00116	轻的女人？重的女人？
+L118:
+  JA: _varstr#00117	Light Woman? Heavy Woman?
+  CN: _varstr#00117	轻的女人？重的女人？
+L119:
+  JA: _varstr#00118	彼女という存在
+  CN: _varstr#00118	名为女友的存在
+L120:
+  JA: _varstr#00119	The Girlfriend Enigma
+  CN: _varstr#00119	女友之谜
+L121:
+  JA: _varstr#00120	ペーパータイガー
+  CN: _varstr#00120	纸老虎
+L122:
+  JA: _varstr#00121	Paper Tiger
+  CN: _varstr#00121	纸老虎
+L123:
+  JA: _varstr#00122	ユージの過去、天音の過去
+  CN: _varstr#00122	雄二的过去，天音的过去
+L124:
+  JA: _varstr#00123	Yuuji's Past, Amane's Past
+  CN: _varstr#00123	雄二的过去，天音的过去
+L125:
+  JA: _varstr#00124	毒壷の蟲
+  CN: _varstr#00124	毒壶之虫
+L126:
+  JA: _varstr#00125	Cockroach Nest
+  CN: _varstr#00125	蟑螂窝
+L127:
+  JA: _varstr#00126	過去からの使者
+  CN: _varstr#00126	来自过去的使者
+L128:
+  JA: _varstr#00127	Emissary from the Past
+  CN: _varstr#00127	来自过去的使者
+L129:
+  JA: _varstr#00128	そして永遠に続く罰…
+  CN: _varstr#00128	以及永远的惩罚…
+L130:
+  JA: _varstr#00129	The Eternal Punishment
+  CN: _varstr#00129	永恒的惩罚
+L131:
+  JA: _varstr#00130	小さな花の咲く丘に…
+  CN: _varstr#00130	在开满小花的山丘上…
+L132:
+  JA: _varstr#00131	In a Hill Where Small Flowers Bloom...
+  CN: _varstr#00131	在小花盛开的山丘上…
+L133:
+  JA: _varstr#00132	青い果実
+  CN: _varstr#00132	青涩果实
+L134:
+  JA: _varstr#00133	Unripened Fruit
+  CN: _varstr#00133	未成熟的果实
+L135:
+  JA: _varstr#00134	エンジェリック・ハゥル（初日）
+  CN: _varstr#00134	天使咆哮（第一天）
+L136:
+  JA: _varstr#00135	Angelic Howl (First Day)
+  CN: _varstr#00135	天使咆哮（第一天）
+L137:
+  JA: _varstr#00136	エンジェリック・ハゥル（二日目）
+  CN: _varstr#00136	天使咆哮（第二天）
+L138:
+  JA: _varstr#00137	Angelic Howl (Second Day)
+  CN: _varstr#00137	天使咆哮（第二天）
+L139:
+  JA: _varstr#00138	エンジェリック・ハゥル（三日目）
+  CN: _varstr#00138	天使咆哮（第三天）
+L140:
+  JA: _varstr#00139	Angelic Howl (Third Day)
+  CN: _varstr#00139	天使咆哮（第三天）
+L141:
+  JA: _varstr#00140	エンジェリック・ハゥル（四日目）
+  CN: _varstr#00140	天使咆哮（第四天）
+L142:
+  JA: _varstr#00141	Angelic Howl (Fourth Day)
+  CN: _varstr#00141	天使咆哮（第四天）
+L143:
+  JA: _varstr#00142	エンジェリック・ハゥル（五日目）
+  CN: _varstr#00142	天使咆哮（第五天）
+L144:
+  JA: _varstr#00143	Angelic Howl (Fifth Day)
+  CN: _varstr#00143	天使咆哮（第五天）
+L145:
+  JA: _varstr#00144	エンジェリック・ハゥル（六日目）
+  CN: _varstr#00144	天使咆哮（第六天）
+L146:
+  JA: _varstr#00145	Angelic Howl (Sixth Day)
+  CN: _varstr#00145	天使咆哮（第六天）
+L147:
+  JA: _varstr#00146	エンジェリック・ハゥル（七日目）
+  CN: _varstr#00146	天使咆哮（第七天）
+L148:
+  JA: _varstr#00147	Angelic Howl (Seventh Day)
+  CN: _varstr#00147	天使咆哮（第七天）
+L149:
+  JA: _varstr#00148	エンジェリック・ハゥル（八日目）
+  CN: _varstr#00148	天使咆哮（第八天）
+L150:
+  JA: _varstr#00149	Angelic Howl (Eighth Day)
+  CN: _varstr#00149	天使咆哮（第八天）
+L151:
+  JA: _varstr#00150	エンジェリック・ハゥル（九日目）
+  CN: _varstr#00150	天使咆哮（第九天）
+L152:
+  JA: _varstr#00151	Angelic Howl (Ninth Day)
+  CN: _varstr#00151	天使咆哮（第九天）
+L153:
+  JA: _varstr#00152	エンジェリック・ハゥル（十日目）
+  CN: _varstr#00152	天使咆哮（第十天）
+L154:
+  JA: _varstr#00153	Angelic Howl (Tenth Day)
+  CN: _varstr#00153	天使咆哮（第十天）
+L155:
+  JA: _varstr#00154	エンジェリック・ハゥル（十一日目）
+  CN: _varstr#00154	天使咆哮（第十一天）
+L156:
+  JA: _varstr#00155	Angelic Howl (Eleventh Day)
+  CN: _varstr#00155	天使咆哮（第十一天）
+L157:
+  JA: _varstr#00156	エンジェリック・ハゥル（十二日目）
+  CN: _varstr#00156	天使咆哮（第十二天）
+L158:
+  JA: _varstr#00157	Angelic Howl (Twelfth Day)
+  CN: _varstr#00157	天使咆哮（第十二天）
+L159:
+  JA: _varstr#00158	エンジェリック・ハゥル（十三日目）
+  CN: _varstr#00158	天使咆哮（第十三天）
+L160:
+  JA: _varstr#00159	Angelic Howl (Thirteenth Day)
+  CN: _varstr#00159	天使咆哮（第十三天）
+L161:
+  JA: _varstr#00160	エンジェリック・ハゥル（十四日目）
+  CN: _varstr#00160	天使咆哮（第十四天）
+L162:
+  JA: _varstr#00161	Angelic Howl (Fourteenth Day)
+  CN: _varstr#00161	天使咆哮（第十四天）
+L163:
+  JA: _varstr#00162	エンジェリック・ハゥル（十五日目）
+  CN: _varstr#00162	天使咆哮（第十五天）
+L164:
+  JA: _varstr#00163	Angelic Howl (Fifteenth Day)
+  CN: _varstr#00163	天使咆哮（第十五天）
+L165:
+  JA: _varstr#00164	エンジェリック・ハゥル（十六日目）
+  CN: _varstr#00164	天使咆哮（第十六天）
+L166:
+  JA: _varstr#00165	Angelic Howl (Sixteenth Day)
+  CN: _varstr#00165	天使咆哮（第十六天）
+L167:
+  JA: _varstr#00166	セカイ樹の種０１
+  CN: _varstr#00166	世界树之种01
+L168:
+  JA: _varstr#00167	Seed of the World Tree 01
+  CN: _varstr#00167	世界树之种01
+L169:
+  JA: _varstr#00168	セカイ樹の種０２
+  CN: _varstr#00168	世界树之种02
+L170:
+  JA: _varstr#00169	Seed of the World Tree 02
+  CN: _varstr#00169	世界树之种02
+L171:
+  JA: _varstr#00170	セカイ樹の種０３
+  CN: _varstr#00170	世界树之种03
+L172:
+  JA: _varstr#00171	Seed of the World Tree 03
+  CN: _varstr#00171	世界树之种03
+L173:
+  JA: _varstr#00172	セカイ樹の種０４
+  CN: _varstr#00172	世界树之种04
+L174:
+  JA: _varstr#00173	Seed of the World Tree 04
+  CN: _varstr#00173	世界树之种04
+L175:
+  JA: _varstr#00174	セカイ樹の種０５
+  CN: _varstr#00174	世界树之种05
+L176:
+  JA: _varstr#00175	Seed of the World Tree 05
+  CN: _varstr#00175	世界树之种05
+L177:
+  JA: _varstr#00176	セカイ樹の種０６
+  CN: _varstr#00176	世界树之种06
+L178:
+  JA: _varstr#00177	Seed of the World Tree 06
+  CN: _varstr#00177	世界树之种06
+L179:
+  JA: _varstr#00178	セカイ樹の種０７
+  CN: _varstr#00178	世界树之种07
+L180:
+  JA: _varstr#00179	Seed of the World Tree 07
+  CN: _varstr#00179	世界树之种07
+L181:
+  JA: _varstr#00180	セカイ樹の種０８
+  CN: _varstr#00180	世界树之种08
+L182:
+  JA: _varstr#00181	Seed of the World Tree 08
+  CN: _varstr#00181	世界树之种08
+L183:
+  JA: _varstr#00182	セカイ樹の種０９
+  CN: _varstr#00182	世界树之种09
+L184:
+  JA: _varstr#00183	Seed of the World Tree 09
+  CN: _varstr#00183	世界树之种09
+L185:
+  JA: _varstr#00184	セカイ樹の種１０
+  CN: _varstr#00184	世界树之种10
+L186:
+  JA: _varstr#00185	Seed of the World Tree 10
+  CN: _varstr#00185	世界树之种10
+L187:
+  JA: _varstr#00186	セカイ樹の種１１
+  CN: _varstr#00186	世界树之种11
+L188:
+  JA: _varstr#00187	Seed of the World Tree 11
+  CN: _varstr#00187	世界树之种11
+L189:
+  JA: _varstr#00188	セカイ樹の種１２
+  CN: _varstr#00188	世界树之种12
+L190:
+  JA: _varstr#00189	Seed of the World Tree 12
+  CN: _varstr#00189	世界树之种12
+L191:
+  JA: _varstr#00190	セカイ樹の種１３
+  CN: _varstr#00190	世界树之种13
+L192:
+  JA: _varstr#00191	Seed of the World Tree 13
+  CN: _varstr#00191	世界树之种13
+L193:
+  JA: _varstr#00192	セカイ樹の種１４
+  CN: _varstr#00192	世界树之种14
+L194:
+  JA: _varstr#00193	Seed of the World Tree 14
+  CN: _varstr#00193	世界树之种14
+L195:
+  JA: _varstr#00194	セカイ樹の種１５
+  CN: _varstr#00194	世界树之种15
+L196:
+  JA: _varstr#00195	Seed of the World Tree 15
+  CN: _varstr#00195	世界树之种15
+L197:
+  JA: _varstr#00196	セカイ樹の種１６
+  CN: _varstr#00196	世界树之种16
+L198:
+  JA: _varstr#00197	Seed of the World Tree 16
+  CN: _varstr#00197	世界树之种16
+L199:
+  JA: _varstr#00198	セカイ樹の種１７
+  CN: _varstr#00198	世界树之种17
+L200:
+  JA: _varstr#00199	Seed of the World Tree 17
+  CN: _varstr#00199	世界树之种17
+L201:
+  JA: _varstr#00200	セカイ樹の種１８
+  CN: _varstr#00200	世界树之种18
+L202:
+  JA: _varstr#00201	Seed of the World Tree 18
+  CN: _varstr#00201	世界树之种18
+L203:
+  JA: _varstr#00202	さらば狂犬、犬死にせし者よ
+  CN: _varstr#00202	再见吧狂犬，犬一般死去的你
+L204:
+  JA: _varstr#00203	Die Like a Dog
+  CN: _varstr#00203	像狗一样死去
+L205:
+  JA: _varstr#00204	その先に大切な人が居る
+  CN: _varstr#00204	在那前方有重要的人
+L206:
+  JA: _varstr#00205	What Waits Beyond Darkness
+  CN: _varstr#00205	黑暗彼岸的等待
+L207:
+  JA: _varstr#00206	狂わされた果実
+  CN: _varstr#00206	被搅乱的果实
+L208:
+  JA: _varstr#00207	Delirious Fruit
+  CN: _varstr#00207	疯狂的果实
+L209:
+  JA: _varstr#00208	キス
+  CN: _varstr#00208	吻
+L210:
+  JA: _varstr#00209	Kiss
+  CN: _varstr#00209	吻
+L211:
+  JA: _varstr#00210	崩れるバランス
+  CN: _varstr#00210	崩塌的平衡
+L212:
+  JA: _varstr#00211	Off-Balance
+  CN: _varstr#00211	失衡
+L213:
+  JA: _varstr#00212	永遠に続くトンネル
+  CN: _varstr#00212	无尽的隧道
+L214:
+  JA: _varstr#00213	The Unending Tunnel
+  CN: _varstr#00213	无尽的隧道
+L215:
+  JA: _varstr#00214	猫の背中
+  CN: _varstr#00214	猫背
+L216:
+  JA: _varstr#00215	Capturing the Cat
+  CN: _varstr#00215	抓住猫
+L217:
+  JA: _varstr#00216	帰省の予感
+  CN: _varstr#00216	回乡的预感
+L218:
+  JA: _varstr#00217	The Destined Homecoming
+  CN: _varstr#00217	命定的归乡
+L219:
+  JA: _varstr#00218	カリスマショップリスペクト指令
+  CN: _varstr#00218	魅力商店尊重指令
+L220:
+  JA: _varstr#00219	Breaking Beautiful
+  CN: _varstr#00219	破坏美丽
+L221:
+  JA: _varstr#00220	約束
+  CN: _varstr#00220	约定
+L222:
+  JA: _varstr#00221	Promise
+  CN: _varstr#00221	约定
+L223:
+  JA: _varstr#00222	必死すぎる逢引
+  CN: _varstr#00222	拼命过头的约会
+L224:
+  JA: _varstr#00223	The Girl Who Tried Too Hard
+  CN: _varstr#00223	过于拼命的女孩
+L225:
+  JA: _varstr#00224	クラゲ少女
+  CN: _varstr#00224	水母少女
+L226:
+  JA: _varstr#00225	Jellyfish Girl
+  CN: _varstr#00225	水母少女
+L227:
+  JA: _varstr#00226	世界の補完
+  CN: _varstr#00226	补完世界
+L228:
+  JA: _varstr#00227	Building Block
+  CN: _varstr#00227	积木
+L229:
+  JA: _varstr#00228	終わるＲＰＧ
+  CN: _varstr#00228	RPG的终幕
+L230:
+  JA: _varstr#00229	End of the RPG
+  CN: _varstr#00229	RPG的终幕
+L231:
+  JA: _varstr#00230	割れたビスケット
+  CN: _varstr#00230	裂开的饼干
+L232:
+  JA: _varstr#00231	Broken Biscuit
+  CN: _varstr#00231	碎裂的饼干
+L233:
+  JA: _varstr#00232	スキップするページ
+  CN: _varstr#00232	翻过的书页
+L234:
+  JA: _varstr#00233	Skipping Pages
+  CN: _varstr#00233	跳过的页
+L235:
+  JA: _varstr#00234	過剰摂取
+  CN: _varstr#00234	过度摄取
+L236:
+  JA: _varstr#00235	Overdose
+  CN: _varstr#00235	过量
+L237:
+  JA: _varstr#00236	みちると、みちるの少女
+  CN: _varstr#00236	满，和满的少女
+L238:
+  JA: _varstr#00237	The Other Girl
+  CN: _varstr#00237	另一个女孩
+L239:
+  JA: _varstr#00238	さよならの瞬間
+  CN: _varstr#00238	告别的瞬间
+L240:
+  JA: _varstr#00239	Saying Goodbye
+  CN: _varstr#00239	告别
+L241:
+  JA: _varstr#00240	切れたグリス
+  CN: _varstr#00240	耗尽的润滑脂
+L242:
+  JA: _varstr#00241	Greaseless Gears
+  CN: _varstr#00241	无润滑的齿轮
+L243:
+  JA: _varstr#00242	空っぽの箱
+  CN: _varstr#00242	空箱子
+L244:
+  JA: _varstr#00243	The Empty Box
+  CN: _varstr#00243	空箱子
+L245:
+  JA: _varstr#00244	消えたみちる
+  CN: _varstr#00244	消失的满
+L246:
+  JA: _varstr#00245	Vanishing Act
+  CN: _varstr#00245	消失术
+L247:
+  JA: _varstr#00246	世界を終わらせる箱
+  CN: _varstr#00246	终结世界的箱子
+L248:
+  JA: _varstr#00247	A Box to End the World
+  CN: _varstr#00247	终结世界的箱子
+L249:
+  JA: _varstr#00248	VOX IN BOX
+  CN: _varstr#00248	盒中之声
+L250:
+  JA: _varstr#00249	未来の香り
+  CN: _varstr#00249	未来的香气
+L251:
+  JA: _varstr#00250	Scent of the Future
+  CN: _varstr#00250	未来的香气
+L252:
+  JA: _varstr#00251	Stuck on You
+  CN: _varstr#00251	缠上了你
+L253:
+  JA: _varstr#00252	わたしのきもち
+  CN: _varstr#00252	我的心情
+L254:
+  JA: _varstr#00253	My Feelings
+  CN: _varstr#00253	我的心情
+L255:
+  JA: _varstr#00254	断らない女
+  CN: _varstr#00254	不拒绝的她
+L256:
+  JA: _varstr#00255	The Girl Who Can't Say No
+  CN: _varstr#00255	无法说不的女孩
+L257:
+  JA: _varstr#00256	ストレスフリー
+  CN: _varstr#00256	无压力
+L258:
+  JA: _varstr#00257	Stress-Free
+  CN: _varstr#00257	无压力
+L259:
+  JA: _varstr#00258	密着メイド２４時
+  CN: _varstr#00258	贴身女仆24小时
+L260:
+  JA: _varstr#00259	24-Hour Maid Surveillance
+  CN: _varstr#00259	24小时女仆贴身监控
+L261:
+  JA: _varstr#00260	小嶺幸能力調査１
+  CN: _varstr#00260	小岭幸能力调查1
+L262:
+  JA: _varstr#00261	Komine Sachi Aptitude Test 1
+  CN: _varstr#00261	小岭幸能力测试1
+L263:
+  JA: _varstr#00262	小嶺幸能力調査２
+  CN: _varstr#00262	小岭幸能力调查2
+L264:
+  JA: _varstr#00263	Komine Sachi Aptitude Test 2
+  CN: _varstr#00263	小岭幸能力测试2
+L265:
+  JA: _varstr#00264	The Promise
+  CN: _varstr#00264	约定
+L266:
+  JA: _varstr#00265	いつもの場所で
+  CN: _varstr#00265	在老地方
+L267:
+  JA: _varstr#00266	The Usual Place
+  CN: _varstr#00266	老地方
+L268:
+  JA: _varstr#00267	追憶
+  CN: _varstr#00267	追忆
+L269:
+  JA: _varstr#00268	Recurrent Memory
+  CN: _varstr#00268	追忆
+L270:
+  JA: _varstr#00269	クレイジー・アップル
+  CN: _varstr#00269	疯狂的苹果
+L271:
+  JA: _varstr#00270	Crazy Apple
+  CN: _varstr#00270	疯狂的苹果
+L272:
+  JA: _varstr#00271	良い子、悪い子
+  CN: _varstr#00271	好孩子，坏孩子
+L273:
+  JA: _varstr#00272	Good Girl, Bad Girl
+  CN: _varstr#00272	好女孩，坏女孩
+L274:
+  JA: _varstr#00273	白い天井
+  CN: _varstr#00273	白色顶棚
+L275:
+  JA: _varstr#00274	White Ceiling
+  CN: _varstr#00274	白色天花板
+L276:
+  JA: _varstr#00275	嫌いではありません
+  CN: _varstr#00275	我并不讨厌
+L277:
+  JA: _varstr#00276	I Don't Dislike the Idea
+  CN: _varstr#00276	我并不讨厌这个主意
+L278:
+  JA: _varstr#00277	幸がメイドで俺もメイドで
+  CN: _varstr#00277	幸是女仆，我也是女仆
+L279:
+  JA: _varstr#00278	Twin Maids
+  CN: _varstr#00278	双人女仆
+L280:
+  JA: _varstr#00279	合い言葉はレンジャー！
+  CN: _varstr#00279	暗号是游侠！
+L281:
+  JA: _varstr#00280	Birth of a Ranger
+  CN: _varstr#00280	游侠的诞生
+L282:
+  JA: _varstr#00281	デートらしいデート
+  CN: _varstr#00281	像样的约会
+L283:
+  JA: _varstr#00282	A ❝Date❞ Date
+  CN: _varstr#00282	约得像约会
+L284:
+  JA: _varstr#00283	メイドにご奉仕？
+  CN: _varstr#00283	要我侍奉女仆吗？
+L285:
+  JA: _varstr#00284	Servicing the Maid
+  CN: _varstr#00284	侍奉女仆
+L286:
+  JA: _varstr#00285	メイドの嗜み
+  CN: _varstr#00285	女仆的修养
+L287:
+  JA: _varstr#00286	Maidly Wiles
+  CN: _varstr#00286	女仆的小手段
+L288:
+  JA: _varstr#00287	波紋
+  CN: _varstr#00287	涟漪
+L289:
+  JA: _varstr#00288	Ripple in Still Water
+  CN: _varstr#00288	静水中的涟漪
+L290:
+  JA: _varstr#00289	テストをなくせ
+  CN: _varstr#00289	消除测试
+L291:
+  JA: _varstr#00290	Get Rid of the Test
+  CN: _varstr#00290	干掉考试
+L292:
+  JA: _varstr#00291	悪巧み１
+  CN: _varstr#00291	小把戏1
+L293:
+  JA: _varstr#00292	The Scheme, Part 1
+  CN: _varstr#00292	小把戏1
+L294:
+  JA: _varstr#00293	悪巧み２
+  CN: _varstr#00293	小把戏2
+L295:
+  JA: _varstr#00294	The Scheme, Part 2
+  CN: _varstr#00294	小把戏2
+L296:
+  JA: _varstr#00295	悪巧み３
+  CN: _varstr#00295	小把戏3
+L297:
+  JA: _varstr#00296	The Scheme, Part 3
+  CN: _varstr#00296	小把戏3
+L298:
+  JA: _varstr#00297	少女のペルソナ
+  CN: _varstr#00297	少女的面具
+L299:
+  JA: _varstr#00298	Persona
+  CN: _varstr#00298	人格面具
+L300:
+  JA: _varstr#00299	インプロージョン
+  CN: _varstr#00299	即兴
+L301:
+  JA: _varstr#00300	Improvisation
+  CN: _varstr#00300	即兴
+L302:
+  JA: _varstr#00301	ただいま
+  CN: _varstr#00301	我回来了
+L303:
+  JA: _varstr#00302	We're Home
+  CN: _varstr#00302	我们回来了
+L304:
+  JA: _varstr#00303	ハニー・ソー・スウィート
+  CN: _varstr#00303	蜜糖如此甜蜜
+L305:
+  JA: _varstr#00304	Honey-Sweet
+  CN: _varstr#00304	蜜糖甜蜜
+L306:
+  JA: _varstr#00305	幸せの手紙
+  CN: _varstr#00305	幸福的信
+L307:
+  JA: _varstr#00306	Happiness
+  CN: _varstr#00306	幸福
+L308:
+  JA: _varstr#00307	託された鍵
+  CN: _varstr#00307	托付之钥
+L309:
+  JA: _varstr#00308	A Key Entrusted
+  CN: _varstr#00308	被托付的钥匙
+L310:
+  JA: _varstr#00309	悪夢
+  CN: _varstr#00309	噩梦
+L311:
+  JA: _varstr#00310	Nightmares
+  CN: _varstr#00310	噩梦
+L312:
+  JA: _varstr#00311	殺すべきモノ
+  CN: _varstr#00311	该杀之物
+L313:
+  JA: _varstr#00312	That Which Must be Killed
+  CN: _varstr#00312	该杀之物
+L314:
+  JA: _varstr#00313	“どうして”
+  CN: _varstr#00313	“为什么”
+L315:
+  JA: _varstr#00314	❝Why?❞
+  CN: _varstr#00314	“为什么？”
+L316:
+  JA: _varstr#00315	日だまりの公園
+  CN: _varstr#00315	洒满阳光的公园
+L317:
+  JA: _varstr#00316	Dazzling Playground
+  CN: _varstr#00316	阳光灿烂的游乐场
+L318:
+  JA: _varstr#00317	レーゾン・デートル
+  CN: _varstr#00317	存在理由
+L319:
+  JA: _varstr#00318	Raison d'Etre
+  CN: _varstr#00318	存在理由
+L320:
+  JA: _varstr#00319	彼女の不安な日常１
+  CN: _varstr#00319	她的不安日常1
+L321:
+  JA: _varstr#00320	Uneasy Balance 1
+  CN: _varstr#00320	不安的天平1
+L322:
+  JA: _varstr#00321	彼女の不安な日常２
+  CN: _varstr#00321	她的不安日常2
+L323:
+  JA: _varstr#00322	Uneasy Balance 2
+  CN: _varstr#00322	不安的天平2
+L324:
+  JA: _varstr#00323	それぞれの思惑
+  CN: _varstr#00323	各自的心思
+L325:
+  JA: _varstr#00324	Cross-Purposes
+  CN: _varstr#00324	各自打算
+L326:
+  JA: _varstr#00325	失われた日々１
+  CN: _varstr#00325	失落的日子1
+L327:
+  JA: _varstr#00326	Lost Days 1
+  CN: _varstr#00326	失落的日子1
+L328:
+  JA: _varstr#00327	失われた日々２
+  CN: _varstr#00327	失落的日子2
+L329:
+  JA: _varstr#00328	Lost Days 2
+  CN: _varstr#00328	失落的日子2
+L330:
+  JA: _varstr#00329	侵入者たち
+  CN: _varstr#00329	入侵者们
+L331:
+  JA: _varstr#00330	The Intruders
+  CN: _varstr#00330	入侵者们
+L332:
+  JA: _varstr#00331	疾走の日
+  CN: _varstr#00331	疾驰之日
+L333:
+  JA: _varstr#00332	Turkey Shoot
+  CN: _varstr#00332	疾驰之日
+L334:
+  JA: _varstr#00333	契りと約束
+  CN: _varstr#00333	盟约与约定
+L335:
+  JA: _varstr#00334	Bonds and Promises
+  CN: _varstr#00334	盟约与约定
+L336:
+  JA: _varstr#00335	行先は果てへ
+  CN: _varstr#00335	目的地在尽头
+L337:
+  JA: _varstr#00336	To the Ends of the Earth
+  CN: _varstr#00336	去往大地尽头
+L338:
+  JA: _varstr#00337	ひとつの道から
+  CN: _varstr#00337	源自一条路
+L339:
+  JA: _varstr#00338	The Road Not Followed
+  CN: _varstr#00338	未曾走过的路
+L340:
+  JA: _varstr#00339	日々を取り戻して
+  CN: _varstr#00339	夺回明天
+L341:
+  JA: _varstr#00340	Taking Back Tomorrow
+  CN: _varstr#00340	夺回明天
+L342:
+  JA: _varstr#00341	ロワゾー・ブリュー
+  CN: _varstr#00341	蓝鸟
+L343:
+  JA: _varstr#00342	L'oiseau bleu
+  CN: _varstr#00342	蓝鸟
+L344:
+  JA: _varstr#00343	fool on the hill
+  CN: _varstr#00343	山上的傻瓜
+L345:
+  JA: _varstr#00344	カプリスの繭＃１
+  CN: _varstr#00344	任性的茧1
+L346:
+  JA: _varstr#00345	The Cocoon of Caprice 1
+  CN: _varstr#00345	任性的茧1
+L347:
+  JA: _varstr#00346	カプリスの繭＃２
+  CN: _varstr#00346	任性的茧2
+L348:
+  JA: _varstr#00347	The Cocoon of Caprice 2
+  CN: _varstr#00347	任性的茧2
+L349:
+  JA: _varstr#00348	カプリスの繭＃３
+  CN: _varstr#00348	任性的茧3
+L350:
+  JA: _varstr#00349	The Cocoon of Caprice 3
+  CN: _varstr#00349	任性的茧3
+L351:
+  JA: _varstr#00350	カプリスの繭＃４
+  CN: _varstr#00350	任性的茧4
+L352:
+  JA: _varstr#00351	The Cocoon of Caprice 4
+  CN: _varstr#00351	任性的茧4
+L353:
+  JA: _varstr#00352	カプリスの繭＃５
+  CN: _varstr#00352	任性的茧5
+L354:
+  JA: _varstr#00353	The Cocoon of Caprice 5
+  CN: _varstr#00353	任性的茧5
+L355:
+  JA: _varstr#00354	カプリスの繭＃６
+  CN: _varstr#00354	任性的茧6
+L356:
+  JA: _varstr#00355	The Cocoon of Caprice 6
+  CN: _varstr#00355	任性的茧6
+L357:
+  JA: _varstr#00356	カプリスの繭＃７
+  CN: _varstr#00356	任性的茧7
+L358:
+  JA: _varstr#00357	The Cocoon of Caprice 7
+  CN: _varstr#00357	任性的茧7
+L359:
+  JA: _varstr#00358	カプリスの繭＃８
+  CN: _varstr#00358	任性的茧8
+L360:
+  JA: _varstr#00359	The Cocoon of Caprice 8
+  CN: _varstr#00359	任性的茧8
+L361:
+  JA: _varstr#00360	カプリスの繭＃９
+  CN: _varstr#00360	任性的茧9
+L362:
+  JA: _varstr#00361	The Cocoon of Caprice 9
+  CN: _varstr#00361	任性的茧9
+L363:
+  JA: _varstr#00362	カプリスの繭＃１０
+  CN: _varstr#00362	任性的茧10
+L364:
+  JA: _varstr#00363	The Cocoon of Caprice 10
+  CN: _varstr#00363	任性的茧10
+L365:
+  JA: _varstr#00364	カプリスの繭＃１１
+  CN: _varstr#00364	任性的茧11
+L366:
+  JA: _varstr#00365	The Cocoon of Caprice 11
+  CN: _varstr#00365	任性的茧11
+L367:
+  JA: _varstr#00366	カプリスの繭＃１２
+  CN: _varstr#00366	任性的茧12
+L368:
+  JA: _varstr#00367	The Cocoon of Caprice 12
+  CN: _varstr#00367	任性的茧12
+L369:
+  JA: _varstr#00368	カプリスの繭＃１３
+  CN: _varstr#00368	任性的茧13
+L370:
+  JA: _varstr#00369	The Cocoon of Caprice 13
+  CN: _varstr#00369	任性的茧13
+L371:
+  JA: _varstr#00370	カプリスの繭＃１４
+  CN: _varstr#00370	任性的茧14
+L372:
+  JA: _varstr#00371	The Cocoon of Caprice 14
+  CN: _varstr#00371	任性的茧14
+L373:
+  JA: _varstr#00372	カプリスの繭＃１５
+  CN: _varstr#00372	任性的茧15
+L374:
+  JA: _varstr#00373	The Cocoon of Caprice 15
+  CN: _varstr#00373	任性的茧15
+L375:
+  JA: _varstr#00374	雄二の不思議・天音の不安
+  CN: _varstr#00374	雄二的神秘・天音的不安
+L376:
+  JA: _varstr#00375	Yuuji's Secrets, Amane's Anxieties
+  CN: _varstr#00375	雄二的神秘，天音的不安
+L377:
+  JA: _varstr#00376	愛されボンデ
+  CN: _varstr#00376	被爱的束缚
+L378:
+  JA: _varstr#00377	Beloved Bondage
+  CN: _varstr#00377	被爱的束缚
+L379:
+  JA: _varstr#00378	温い風呂でイチャイチャと
+  CN: _varstr#00378	在温热的浴缸里亲热
+L380:
+  JA: _varstr#00379	Quality Time in the Tub
+  CN: _varstr#00379	浴缸里的美好时光
+L381:
+  JA: _varstr#00380	動物園でイチャイチャと
+  CN: _varstr#00380	在动物园里亲热
+L382:
+  JA: _varstr#00381	Quality Time at the Zoo
+  CN: _varstr#00381	动物园里的美好时光
+L383:
+  JA: _varstr#00382	男には、死んでも譲れない物がある
+  CN: _varstr#00382	男人有即使死也不让出的东西
+L384:
+  JA: _varstr#00383	Manly Resolve
+  CN: _varstr#00383	男人的觉悟
+L385:
+  JA: _varstr#00384	未来へ届く手紙
+  CN: _varstr#00384	寄往未来的信
+L386:
+  JA: _varstr#00385	A Letter to the Future
+  CN: _varstr#00385	寄往未来的信
+L387:
+  JA: _varstr#00386	ポジティブシンキング
+  CN: _varstr#00386	积极思考
+L388:
+  JA: _varstr#00387	Positive Thinking
+  CN: _varstr#00387	积极思考
+L389:
+  JA: _varstr#00388	箱の中身はなんでしょね
+  CN: _varstr#00388	箱子里是什么呢
+L390:
+  JA: _varstr#00389	What's in the Box?
+  CN: _varstr#00389	箱子里是什么？
+L391:
+  JA: _varstr#00390	天音は料理上手
+  CN: _varstr#00390	天音很会做菜
+L392:
+  JA: _varstr#00391	Amane's Quite the Cook
+  CN: _varstr#00391	天音手艺相当好
+L393:
+  JA: _varstr#00392	寿司
+  CN: _varstr#00392	寿司
+L394:
+  JA: _varstr#00393	Sushi
+  CN: _varstr#00393	寿司
+L395:
+  JA: _varstr#00394	マグロマン撮影中
+  CN: _varstr#00394	金枪鱼超人拍摄中
+L396:
+  JA: _varstr#00395	Behind the Scenes with Tunafish Man
+  CN: _varstr#00395	金枪鱼超人的幕后
+L397:
+  JA: _varstr#00396	帰って来た狂犬
+  CN: _varstr#00396	归来的狂犬
+L398:
+  JA: _varstr#00397	Return of the Mad Dog
+  CN: _varstr#00397	疯狗归来
+L399:
+  JA: _varstr#00398	Papa Don't Preach
+  CN: _varstr#00398	老爸别唠叨
+L400:
+  JA: _varstr#00399	懐かしの母校へ
+  CN: _varstr#00399	向怀念的母校
+L401:
+  JA: _varstr#00400	Our Dear Alma Mater
+  CN: _varstr#00400	亲爱的母校
+L402:
+  JA: _varstr#00401	ウザいツンデレ、鋭いクーデレ
+  CN: _varstr#00401	聒噪的傲娇，犀利的冷娇
+L403:
+  JA: _varstr#00402	Shrill Tsundere, Sharp Kuudere
+  CN: _varstr#00402	聒噪的傲娇，犀利的冷娇
+L404:
+  JA: _varstr#00403	語尾がニャー、そしてカレーパーリー
+  CN: _varstr#00403	语尾喵，还有咖喱派对
+L405:
+  JA: _varstr#00404	Cat Talk, Curry Carnival
+  CN: _varstr#00404	喵语，咖喱狂欢
+L406:
+  JA: _varstr#00405	どんな大人になりたい？
+  CN: _varstr#00405	想成为怎样的大人？
+L407:
+  JA: _varstr#00406	Goals for the Future
+  CN: _varstr#00406	对未来的目标
+L408:
+  JA: _varstr#00407	一方その頃（１）旅立ち編
+  CN: _varstr#00407	与此同时…（1）启程篇
+L409:
+  JA: _varstr#00408	Meanwhile... (1)
+  CN: _varstr#00408	与此同时…（1）
+L410:
+  JA: _varstr#00409	一方その頃（２）ピクニック編
+  CN: _varstr#00409	与此同时…（2）野餐篇
+L411:
+  JA: _varstr#00410	Meanwhile... (2)
+  CN: _varstr#00410	与此同时…（2）
+L412:
+  JA: _varstr#00411	左胸のバッジは誰が為に輝く
+  CN: _varstr#00411	左胸的徽章为谁而闪耀
+L413:
+  JA: _varstr#00412	For Whom the Badge Shines
+  CN: _varstr#00412	徽章为谁闪耀
+L414:
+  JA: _varstr#00413	戦隊
+  CN: _varstr#00413	战队
+L415:
+  JA: _varstr#00414	The Mihama Rangers
+  CN: _varstr#00414	美滨战队
+L416:
+  JA: _varstr#00415	餅をつく
+  CN: _varstr#00415	打年糕
+L417:
+  JA: _varstr#00416	Pounding Rice Cakes
+  CN: _varstr#00416	打年糕
+L418:
+  JA: _varstr#00417	欲しいな週刊誌
+  CN: _varstr#00417	想要的周刊
+L419:
+  JA: _varstr#00418	Magazines of the Moment
+  CN: _varstr#00418	当红周刊
+L420:
+  JA: _varstr#00419	マキナスター
+  CN: _varstr#00419	玛琪娜星
+L421:
+  JA: _varstr#00420	Makinastar
+  CN: _varstr#00420	玛琪娜星
+L422:
+  JA: _varstr#00421	終わりよければ全てよし
+  CN: _varstr#00421	结局好，一切都好
+L423:
+  JA: _varstr#00422	All's Well That Ends Well
+  CN: _varstr#00422	结局好，一切都好
+L424:
+  JA: _varstr#00423	冬がはじまるよ
+  CN: _varstr#00423	冬天开始了
+L425:
+  JA: _varstr#00424	Winter Begins
+  CN: _varstr#00424	冬天开始了
+L426:
+  JA: _varstr#00425	カルビと美白
+  CN: _varstr#00425	牛肋排与美白
+L427:
+  JA: _varstr#00426	Spare Ribs and Whitening
+  CN: _varstr#00426	牛肋排与美白
+L428:
+  JA: _varstr#00427	神様、魔法使い、ペテン師
+  CN: _varstr#00427	神、魔术师、骗子
+L429:
+  JA: _varstr#00428	God, Magician, Conman
+  CN: _varstr#00428	神、魔术师、骗子
+L430:
+  JA: _varstr#00429	セカンドキス
+  CN: _varstr#00429	第二个吻
+L431:
+  JA: _varstr#00430	Second Kiss
+  CN: _varstr#00430	第二个吻
+L432:
+  JA: _varstr#00431	真夏の奇跡
+  CN: _varstr#00431	盛夏的奇迹
+L433:
+  JA: _varstr#00432	The Midsummer Miracle
+  CN: _varstr#00432	仲夏的奇迹
+L434:
+  JA: _varstr#00433	名探偵みちるの冒険
+  CN: _varstr#00433	名侦探满的冒险
+L435:
+  JA: _varstr#00434	The Adventures of Detective Michiru
+  CN: _varstr#00434	名侦探满的冒险
+L436:
+  JA: _varstr#00435	スーパーで焼き鳥を買って
+  CN: _varstr#00435	在超市买烤串
+L437:
+  JA: _varstr#00436	Buying Yakitori at the Supermarket
+  CN: _varstr#00436	在超市买烤鸡串
+L438:
+  JA: _varstr#00437	ごっこ遊び
+  CN: _varstr#00437	过家家
+L439:
+  JA: _varstr#00438	Make-believe
+  CN: _varstr#00438	角色扮演
+L440:
+  JA: _varstr#00439	風見雄二、デレる
+  CN: _varstr#00439	风见雄二，沦陷
+L441:
+  JA: _varstr#00440	Kazami Yuuji goes "Dere"
+  CN: _varstr#00440	风见雄二，沦陷
+L442:
+  JA: _varstr#00441	公園遊びの達人
+  CN: _varstr#00441	公园玩耍的达人
+L443:
+  JA: _varstr#00442	Master of Playground Activities
+  CN: _varstr#00442	公园玩乐达人
+L444:
+  JA: _varstr#00443	マリッジブルー
+  CN: _varstr#00443	婚姻忧郁
+L445:
+  JA: _varstr#00444	Cold Feet
+  CN: _varstr#00444	婚姻忧郁
+L446:
+  JA: _varstr#00445	前倒しの初夜
+  CN: _varstr#00445	提前的初夜
+L447:
+  JA: _varstr#00446	Premature Wedding Night
+  CN: _varstr#00446	提前的新婚夜
+L448:
+  JA: _varstr#00447	幸せのカタチ
+  CN: _varstr#00447	幸福的形状
+L449:
+  JA: _varstr#00448	Forms of Happiness
+  CN: _varstr#00448	幸福的样子
+L450:
+  JA: _varstr#00449	祝福の音色
+  CN: _varstr#00449	祝福的音色
+L451:
+  JA: _varstr#00450	The Sound of Joy
+  CN: _varstr#00450	祝福之声
+L452:
+  JA: _varstr#00451	ジンくんとサッちん
+  CN: _varstr#00451	金君和幸酱
+L453:
+  JA: _varstr#00452	Jin-kun and Sacchin
+  CN: _varstr#00452	金君和幸酱
+L454:
+  JA: _varstr#00453	逆襲のジャー
+  CN: _varstr#00453	电饭煲的逆袭
+L455:
+  JA: _varstr#00454	The Rice Cooker Strikes Back
+  CN: _varstr#00454	电饭煲的逆袭
+L456:
+  JA: _varstr#00455	サチデレラ
+  CN: _varstr#00455	幸德瑞拉
+L457:
+  JA: _varstr#00456	Sachiderella
+  CN: _varstr#00456	幸德瑞拉
+L458:
+  JA: _varstr#00457	幸のモノローグ
+  CN: _varstr#00457	幸的独白
+L459:
+  JA: _varstr#00458	Sachi's Monologue
+  CN: _varstr#00458	幸的独白
+L460:
+  JA: _varstr#00459	虎が兎に…
+  CN: _varstr#00459	虎变兔…
+L461:
+  JA: _varstr#00460	The Tiger Becomes A Rabbit
+  CN: _varstr#00460	虎变兔
+L462:
+  JA: _varstr#00461	デレ×２
+  CN: _varstr#00461	沦陷×2
+L463:
+  JA: _varstr#00462	Double Dere
+  CN: _varstr#00462	双重沦陷
+L464:
+  JA: _varstr#00463	覗き見
+  CN: _varstr#00463	偷看
+L465:
+  JA: _varstr#00464	Sneak Peek
+  CN: _varstr#00464	偷看
+L466:
+  JA: _varstr#00465	空を見上げて
+  CN: _varstr#00465	抬头仰望天空
+L467:
+  JA: _varstr#00466	Look Up at the Sky
+  CN: _varstr#00466	抬头仰望天空
+L468:
+  JA: _varstr#00467	三嶋崎の休日
+  CN: _varstr#00467	三嶋崎的假日
+L469:
+  JA: _varstr#00468	Mishima Cape Holiday
+  CN: _varstr#00468	三嶋崎的假日
+L470:
+  JA: _varstr#00469	petits bonheurs
+  CN: _varstr#00469	一点点小幸福
+L471:
+  JA: _varstr#00470	俺がにゃいつでにゃいつが俺で
+  CN: _varstr#00470	我是猫，猫是我
+L472:
+  JA: _varstr#00471	The Taming of the Cat
+  CN: _varstr#00471	驯猫
+L473:
+  JA: _varstr#00472	由美子のお金で解決
+  CN: _varstr#00472	用由美子的钱解决
+L474:
+  JA: _varstr#00473	Yumiko Solves Everything
+  CN: _varstr#00473	由美子解决一切
+L475:
+  JA: _varstr#00474	テッテレー
+  CN: _varstr#00474	被耍了
+L476:
+  JA: _varstr#00475	Punk'd
+  CN: _varstr#00475	被戏弄
+L477:
+  JA: _varstr#00476	電波の入らない女
+  CN: _varstr#00476	收不到信号的女人
+L478:
+  JA: _varstr#00477	The Girl With No Reception
+  CN: _varstr#00477	没有信号的女孩
+L479:
+  JA: _varstr#00478	由美子の秘密
+  CN: _varstr#00478	由美子的秘密
+L480:
+  JA: _varstr#00479	Yumiko's Secret
+  CN: _varstr#00479	由美子的秘密
+L481:
+  JA: _varstr#00480	トルネードデビル
+  CN: _varstr#00480	龙卷风恶魔
+L482:
+  JA: _varstr#00481	Tornado Devil
+  CN: _varstr#00481	龙卷风恶魔
+L483:
+  JA: _varstr#00482	HPH
+  CN: _varstr#00482	HPH
+L484:
+  JA: _varstr#00483	YTC
+  CN: _varstr#00483	YTC
+L485:
+  JA: _varstr#00484	鬼ごっこ
+  CN: _varstr#00484	抓鬼游戏
+L486:
+  JA: _varstr#00485	Tag
+  CN: _varstr#00485	抓鬼游戏
+L487:
+  JA: _varstr#00486	みちるの話
+  CN: _varstr#00486	满的故事
+L488:
+  JA: _varstr#00487	Cool Story, Michiru
+  CN: _varstr#00487	满的精彩故事
+L489:
+  JA: _varstr#00488	わっ、さすが風見さんです
+  CN: _varstr#00488	哇，不愧是风见先生
+L490:
+  JA: _varstr#00489	Never Ceases to Amaze Me
+  CN: _varstr#00489	令人惊叹
+L491:
+  JA: _varstr#00490	天音の寝言
+  CN: _varstr#00490	天音说梦话
+L492:
+  JA: _varstr#00491	Amane's Sleeptalk
+  CN: _varstr#00491	天音说梦话
+L493:
+  JA: _varstr#00492	みちると幸のケツバットエデュケーション
+  CN: _varstr#00492	满与幸的球棒打屁股教育
+L494:
+  JA: _varstr#00493	Michiru & Sachi's Butt-Batt Education
+  CN: _varstr#00493	满与幸的球棒打屁股教育
+L495:
+  JA: _varstr#00494	ヤンデレ由美子
+  CN: _varstr#00494	病娇由美子
+L496:
+  JA: _varstr#00495	Yandere Yumiko
+  CN: _varstr#00495	病娇由美子
+L497:
+  JA: _varstr#00496	Bang The Jawohller
+  CN: _varstr#00496	敲锣
+L498:
+  JA: _varstr#00497	テュポーン計画
+  CN: _varstr#00497	提丰计划
+L499:
+  JA: _varstr#00498	Project Typhon
+  CN: _varstr#00498	提丰计划
+L500:
+  JA: _varstr#00499	見えない敵
+  CN: _varstr#00499	隐形敌人
+L501:
+  JA: _varstr#00500	Unseen Enemies
+  CN: _varstr#00500	看不见的敌人
+L502:
+  JA: _varstr#00501	タナトス・システム
+  CN: _varstr#00501	塔纳托斯系统
+L503:
+  JA: _varstr#00502	Thanatos System
+  CN: _varstr#00502	塔纳托斯系统
+L504:
+  JA: _varstr#00503	日の過ぎ行くままに
+  CN: _varstr#00503	就着日光的流逝
+L505:
+  JA: _varstr#00504	As the Day Flows By
+  CN: _varstr#00504	随着日子流逝
+L506:
+  JA: _varstr#00505	兵科の壁
+  CN: _varstr#00505	兵科的墙
+L507:
+  JA: _varstr#00506	Internal Politics
+  CN: _varstr#00506	内部倾轧
+L508:
+  JA: _varstr#00507	窮鼠猫のような何かを噛む
+  CN: _varstr#00507	困兽犹斗
+L509:
+  JA: _varstr#00508	The Cornered Rat
+  CN: _varstr#00508	困住的老鼠
+L510:
+  JA: _varstr#00509	薄暮の誓い
+  CN: _varstr#00509	薄暮的誓言
+L511:
+  JA: _varstr#00510	An Oath at Twilight
+  CN: _varstr#00510	薄暮之誓
+L512:
+  JA: _varstr#00511	抜錨の時ぞ来る
+  CN: _varstr#00511	起锚时刻将至
+L513:
+  JA: _varstr#00512	Weighing Anchor
+  CN: _varstr#00512	拔锚
+L514:
+  JA: _varstr#00513	I wanna be a little fishing
+  CN: _varstr#00513	我想当一条小鱼
+L515:
+  JA: _varstr#00514	I'd Rather be Fishing
+  CN: _varstr#00514	我更想钓鱼
+L516:
+  JA: _varstr#00515	ティット・フォー・タット
+  CN: _varstr#00515	以牙还牙
+L517:
+  JA: _varstr#00516	Tit for Tat
+  CN: _varstr#00516	以牙还牙
+L518:
+  JA: _varstr#00517	サイモンセッズ
+  CN: _varstr#00517	西蒙说游戏
+L519:
+  JA: _varstr#00518	Simon Says
+  CN: _varstr#00518	西蒙说游戏
+L520:
+  JA: _varstr#00519	深緑のゼロ
+  CN: _varstr#00519	深绿的零
+L521:
+  JA: _varstr#00520	The Dark-Green Zero
+  CN: _varstr#00520	深绿的零
+L522:
+  JA: _varstr#00521	青のワルツ
+  CN: _varstr#00521	蓝色圆舞曲
+L523:
+  JA: _varstr#00522	Blue Waltz
+  CN: _varstr#00522	蓝色圆舞曲
+L524:
+  JA: _varstr#00523	交差膨張室
+  CN: _varstr#00523	交叉膨胀室
+L525:
+  JA: _varstr#00524	Digital Friends
+  CN: _varstr#00524	数字朋友
+L526:
+  JA: _varstr#00525	天使の咆哮、顛末
+  CN: _varstr#00525	天使的咆哮・始末
+L527:
+  JA: _varstr#00526	Angelic Howl: Denouement
+  CN: _varstr#00526	天使咆哮：结局
+L528:
+  JA: _varstr#00527	死神誕生
+  CN: _varstr#00527	死神诞生
+L529:
+  JA: _varstr#00528	The God of Death is Born
+  CN: _varstr#00528	死神诞生
+L530:
+  JA: _varstr#00529	一姫だよね？
+  CN: _varstr#00529	是一姬吧？
+L531:
+  JA: _varstr#00530	You're Kazuki, Right?
+  CN: _varstr#00530	你是一姬吧？
+L532:
+  JA: _varstr#00531	Toy to the joy
+  CN: _varstr#00531	欢乐的玩具
+L533:
+  JA: _varstr#00532	New Toys
+  CN: _varstr#00532	新玩具
+L534:
+  JA: _varstr#00533	RTB
+  CN: _varstr#00533	RTB
+L535:
+  JA: _varstr#00534	風見雄二奪還作戦・概要
+  CN: _varstr#00534	夺回风见雄二作战・概要
+L536:
+  JA: _varstr#00535	Operation: Rescue Kazami Yuuji
+  CN: _varstr#00535	作战：营救风见雄二
+L537:
+  JA: _varstr#00536	紅い月と銀の髪
+  CN: _varstr#00536	红月与银发
+L538:
+  JA: _varstr#00537	Red Moon, Silver Hair
+  CN: _varstr#00537	红月与银发
+L539:
+  JA: _varstr#00538	混濁の中で
+  CN: _varstr#00538	在混沌之中
+L540:
+  JA: _varstr#00539	In the Midst of Chaos
+  CN: _varstr#00539	混沌之中
+L541:
+  JA: _varstr#00540	Para el nuevo mundo
+  CN: _varstr#00540	为了新世界
+L542:
+  JA: _varstr#00541	ミッションブリーフィング
+  CN: _varstr#00541	任务简报
+L543:
+  JA: _varstr#00542	Mission Briefing
+  CN: _varstr#00542	任务简报
+L544:
+  JA: _varstr#00543	作戦行動開始
+  CN: _varstr#00543	作战行动开始
+L545:
+  JA: _varstr#00544	The Operation Commences
+  CN: _varstr#00544	作战行动开始
+L546:
+  JA: _varstr#00545	作戦行動開始２
+  CN: _varstr#00545	作战行动开始2
+L547:
+  JA: _varstr#00546	The Operation Commences (2)
+  CN: _varstr#00546	作战行动开始（2）
+L548:
+  JA: _varstr#00547	正を踏んで畏れず
+  CN: _varstr#00547	秉正不惧
+L549:
+  JA: _varstr#00548	The Righteous Path
+  CN: _varstr#00548	正义之路
+L550:
+  JA: _varstr#00549	Open Fire.
+  CN: _varstr#00549	开火。
+L551:
+  JA: _varstr#00550	Open Fire
+  CN: _varstr#00550	开火
+L552:
+  JA: _varstr#00551	スペシャル・ステージ
+  CN: _varstr#00551	特别舞台
+L553:
+  JA: _varstr#00552	Special Stage
+  CN: _varstr#00552	特别舞台
+L554:
+  JA: _varstr#00553	タナトス・システム・コア分離
+  CN: _varstr#00553	塔纳托斯系统・核心分离
+L555:
+  JA: _varstr#00554	Core Detachment
+  CN: _varstr#00554	核心分离
+L556:
+  JA: _varstr#00555	再会、そして…
+  CN: _varstr#00555	重逢，然后…
+L557:
+  JA: _varstr#00556	A Reunion, And...
+  CN: _varstr#00556	重逢，然后…
+L558:
+  JA: _varstr#00557	発つ男、残される女
+  CN: _varstr#00557	离去的男，留下的女
+L559:
+  JA: _varstr#00558	Those Left Behind
+  CN: _varstr#00558	被留下的人
+L560:
+  JA: _varstr#00559	一人殺せば悪党で
+  CN: _varstr#00559	杀一人便是恶徒
+L561:
+  JA: _varstr#00560	Kill One Man, and You're A Villain
+  CN: _varstr#00560	杀一人便是恶徒
+L562:
+  JA: _varstr#00561	Nap-Of-the-Earth
+  CN: _varstr#00561	贴地飞行
+L563:
+  JA: _varstr#00562	Hang on & Fuck up
+  CN: _varstr#00562	撑住并搞砸
+L564:
+  JA: _varstr#00563	Debacle
+  CN: _varstr#00563	崩溃
+L565:
+  JA: _varstr#00564	危急存亡の秋
+  CN: _varstr#00564	生死存亡之际
+L566:
+  JA: _varstr#00565	Moment of Truth
+  CN: _varstr#00565	真相时刻
+L567:
+  JA: _varstr#00566	楽園に進路を取れ
+  CN: _varstr#00566	向乐园进发
+L568:
+  JA: _varstr#00567	Setting a Course for Paradise
+  CN: _varstr#00567	朝着乐园前进
+L569:
+  JA: _varstr#00568	星屑症候群
+  CN: _varstr#00568	星屑症候群
+L570:
+  JA: _varstr#00569	Stardust Syndrome
+  CN: _varstr#00569	星屑症候群
+L571:
+  JA: _varstr#00570	楽園の徒花
+  CN: _varstr#00570	乐园的徒花
+L572:
+  JA: _varstr#00571	Barren Blossoms of Paradise
+  CN: _varstr#00571	乐园的虚花
+L573:
+  JA: _varstr#00572	桜の花の香る方へ──
+  CN: _varstr#00572	向着樱花的香气──
+L574:
+  JA: _varstr#00573	The Scent of Cherry Blossoms
+  CN: _varstr#00573	樱花的香气
+L575:
+  JA: _varstr#00574	護国に花の咲くころ
+  CN: _varstr#00574	故乡花开之时
+L576:
+  JA: _varstr#00575	When Flowers Bloom Back Home
+  CN: _varstr#00575	故乡花开之时
+L577:
+  JA: _varstr#00576	籠の中の鳥
+  CN: _varstr#00576	笼中鸟
+L578:
+  JA: _varstr#00577	The Caged Bird
+  CN: _varstr#00577	笼中鸟
+L579:
+  JA: _varstr#00578	赤鬼
+  CN: _varstr#00578	红鬼
+L580:
+  JA: _varstr#00579	The Red Ogre
+  CN: _varstr#00579	红鬼
+L581:
+  JA: _varstr#00580	ふたり
+  CN: _varstr#00580	两人
+L582:
+  JA: _varstr#00581	Classmates
+  CN: _varstr#00581	同班同学
+L583:
+  JA: _varstr#00582	スケッチブック
+  CN: _varstr#00582	速写本
+L584:
+  JA: _varstr#00583	The Sketchbook
+  CN: _varstr#00583	速写本
+L585:
+  JA: _varstr#00584	なんかメンドクサイ金髪
+  CN: _varstr#00584	有点烦人的金发
+L586:
+  JA: _varstr#00585	An Annoying Blonde
+  CN: _varstr#00585	烦人的金发
+L587:
+  JA: _varstr#00586	松嶋みちるは逆らえない！
+  CN: _varstr#00586	松岛满无法违抗！
+L588:
+  JA: _varstr#00587	Michiru's Put In Her Place
+  CN: _varstr#00587	满被摆平了
+L589:
+  JA: _varstr#00588	海の日
+  CN: _varstr#00588	海之日
+L590:
+  JA: _varstr#00589	Day at the Sea
+  CN: _varstr#00589	海边的一天
+L591:
+  JA: _varstr#00590	機械仕掛けの虹の女神
+  CN: _varstr#00590	机械降下的彩虹女神
+L592:
+  JA: _varstr#00591	Iris Ex Machina
+  CN: _varstr#00591	机械女神伊里斯
+L593:
+  JA: _varstr#00592	懐かない猫
+  CN: _varstr#00592	不亲人的猫
+L594:
+  JA: _varstr#00593	The Untamed Cat
+  CN: _varstr#00593	不驯的猫
+L595:
+  JA: _varstr#00594	普通の子
+  CN: _varstr#00594	普通女孩
+L596:
+  JA: _varstr#00595	A Normal Girl
+  CN: _varstr#00595	普通女孩
+L597:
+  JA: _varstr#00596	委員長メイド
+  CN: _varstr#00596	委员长女仆
+L598:
+  JA: _varstr#00597	The Class Rep Is A Maid
+  CN: _varstr#00597	委员长是女仆
+L599:
+  JA: _varstr#00598	MIHAMA FIVE
+  CN: _varstr#00598	美滨五人组
+L600:
+  JA: _varstr#00599	グレースケール
+  CN: _varstr#00599	灰色的学园
+L601:
+  JA: _varstr#00600	The Grey School
+  CN: _varstr#00600	灰色的学园
+L602:
+  JA: _varstr#00601	その男、風見雄二
+  CN: _varstr#00601	那男人，风见雄二
+L603:
+  JA: _varstr#00602	His Name: Kazami Yuuji
+  CN: _varstr#00602	他的名字：风见雄二
+L604:
+  JA: _varstr#00603	楽園アフター
+  CN: _varstr#00603	乐园后日谈
+L605:
+  JA: _varstr#00604	Eden Afterstory
+  CN: _varstr#00604	伊甸后日谈
+L606:
+  JA: _varstr#00605	グリザイアの旋律１
+  CN: _varstr#00605	灰色的旋律1
+L607:
+  JA: _varstr#00606	The Melody of Grisaia 1
+  CN: _varstr#00606	灰色的旋律1
+L608:
+  JA: _varstr#00607	グリザイアの旋律２
+  CN: _varstr#00607	灰色的旋律2
+L609:
+  JA: _varstr#00608	The Melody of Grisaia 2
+  CN: _varstr#00608	灰色的旋律2
+L610:
+  JA: _varstr#00609	グリザイアの旋律３
+  CN: _varstr#00609	灰色的旋律3
+L611:
+  JA: _varstr#00610	The Melody of Grisaia 3
+  CN: _varstr#00610	灰色的旋律3
+L612:
+  JA: _varstr#00611	グリザイアの旋律４
+  CN: _varstr#00611	灰色的旋律4
+L613:
+  JA: _varstr#00612	The Melody of Grisaia 4
+  CN: _varstr#00612	灰色的旋律4
+L614:
+  JA: _varstr#00613	グリザイアの有閑
+  CN: _varstr#00613	灰色的悠闲
+L615:
+  JA: _varstr#00614	The Leisure of Grisaia
+  CN: _varstr#00614	灰色的悠闲
+L616:
+  JA: _varstr#00615	グリザイアの残光／上田から見た９０２９
+  CN: _varstr#00615	灰色的残光／上田眼中的9029
+L617:
+  JA: _varstr#00616	9029 from Ueda's Perspective
+  CN: _varstr#00616	上田眼中的9029
+L618:
+  JA: _varstr#00617	グリザイアの残光／帰るべき場所
+  CN: _varstr#00617	灰色的残光／该回去的地方
+L619:
+  JA: _varstr#00618	A Place to Come Home To
+  CN: _varstr#00618	可以回去的地方
+L620:
+  JA: _varstr#00619	グリザイアの残光／チョロインの品格
+  CN: _varstr#00619	灰色的残光／傲娇少女的品格
+L621:
+  JA: _varstr#00620	An Easy Girl's Virtue
+  CN: _varstr#00620	傲娇少女的品格
+L622:
+  JA: _varstr#00621	グリザイアの残光／麻子とＪＢ
+  CN: _varstr#00621	灰色的残光／麻子与JB
+L623:
+  JA: _varstr#00622	Asako & JB
+  CN: _varstr#00622	麻子与JB
+L624:
+  JA: _varstr#00623	グリザイアの残光／Ｉ-９０２９と号す
+  CN: _varstr#00623	灰色的残光／自称I-9029
+L625:
+  JA: _varstr#00624	Your Number's I-9029
+  CN: _varstr#00624	我的编号是I-9029
+L626:
+  JA: _varstr#00625	グリザイアの残光／親友、ダニエル・ボーン
+  CN: _varstr#00625	灰色的残光／挚友丹尼尔・伯恩
+L627:
+  JA: _varstr#00626	Best Friend: Daniel Bone
+  CN: _varstr#00626	挚友：丹尼尔・伯恩
+L628:
+  JA: _varstr#00627	グリザイアの残光／射界１５センチ
+  CN: _varstr#00627	灰色的残光／射界15厘米
+L629:
+  JA: _varstr#00628	Field of Fire: 15 Centimeters
+  CN: _varstr#00628	射界：15厘米
