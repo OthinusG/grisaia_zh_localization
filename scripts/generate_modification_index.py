@@ -14,6 +14,20 @@ def escape_md(text):
     return text.replace("|", "\\|").replace("\n", " ").replace("\r", "")
 
 def classify_change(line_no, sid, ja, old_cn, new_cn):
+    # com16 specific
+    if "カッター" in ja or "美工刀" in new_cn:
+        return "角色专属武器道具还原", "还原由美子动辄亮出的标志性随身凶器『美工刀（カッター）』，纠正机翻荒唐走形的‘甩脸色’"
+    if "大魔神" in ja:
+        return "经典特摄梗与角色反差萌", "还原天音与莳菜将看似人畜无害的小岭幸尊称为宿舍最终决战兵器『大魔神』的经典特摄名梗"
+    if "ぶち" in ja or "広島弁" in ja or "广岛" in new_cn:
+        return "角色方言与吐槽还原", "还原莳菜冷不防冒出的广岛方言粗话口癖『ぶち（超级/巨凶）』，以及天音当场敏锐抓包吐槽"
+    if "目で人を焦がす" in ja or "目で殺す" in ja or "十万马力" in new_cn or "10万馬力" in ja:
+        return "成语混淆与动漫名梗", "还原美智留将成语‘眼神杀人’误说为‘眼神融化人’，以及吐槽幸的杀气眼神足足有阿童木『十万马力』"
+    if "妾身" in old_cn:
+        return "第一人称古风去AI味", "彻底纠正机翻将高冷千金由美子冰冷自称『わたし』荒唐古风化为‘妾身’的恶性AI味，恢复现代高冷第一人称『我』"
+    if "ボードゲーム" in ja or "桌游" in new_cn:
+        return "宿舍日常文化规范", "规范灰色系列宿舍标志性传统活动『桌游棋牌大会（ボードゲーム大会）』"
+
     # com15 specific
     if "タダの" in ja or "免费" in old_cn:
         return "机翻多义词严重纠错", "纠正将『纯粹只是个好色大姐姐/超级大色女（ただのエッチ/ドスケベなお姉さん）』荒唐误译为『免费好色大姐姐』"
@@ -792,6 +806,32 @@ def build_report():
                 "section": "灰色的果实·共通线第十五章天音潜入与特工行军口号 (grisaia1/com15)"
             })
 
+    # Section 18: com16 (15419 - 15528)
+    for lno in range(15419, 15529):
+        ja_raw = ja_lines[lno - 1]
+        cn_raw = cn_lines[lno - 1]
+        sid = ja_raw.split("\t")[0] if "\t" in ja_raw else f"L{lno}"
+        ja_txt = ja_raw.split("\t")[1] if "\t" in ja_raw else ja_raw
+        cn_txt = cn_raw.split("\t")[1] if "\t" in cn_raw else cn_raw
+
+        old_txt = cn_txt
+        if git_base_cn and len(git_base_cn) >= lno:
+            head_raw = git_base_cn[lno - 1]
+            old_txt = head_raw.split("\t")[1] if "\t" in head_raw else head_raw
+
+        if cn_txt != old_txt:
+            cat, reason = classify_change(lno, sid, ja_txt, old_txt, cn_txt)
+            diffs.append({
+                "lno": lno,
+                "sid": sid,
+                "ja": ja_txt,
+                "old": old_txt,
+                "new": cn_txt,
+                "cat": cat,
+                "reason": reason,
+                "section": "灰色的果实·共通线第十六章由美子美工刀与阿幸大魔神威慑 (grisaia1/com16)"
+            })
+
     print(f"Total indexed modifications: {len(diffs)}")
 
     # Build Markdown
@@ -963,6 +1003,15 @@ def build_report():
     md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
     md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
     for idx, d in enumerate(com15_diffs, 1):
+        md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
+    md.append("\n---\n")
+
+    # Section 18
+    com16_diffs = [d for d in diffs if d["section"].startswith("灰色的果实·共通线第十六章")]
+    md.append(f"## 十九、 灰色的果实·共通线第十六章由美子美工刀与阿幸大魔神威慑 (`grisaia1/com16`，共 {len(com16_diffs)} 条)\n")
+    md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
+    md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
+    for idx, d in enumerate(com16_diffs, 1):
         md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
     md.append("\n---\n")
 
