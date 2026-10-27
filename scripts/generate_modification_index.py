@@ -14,6 +14,30 @@ def escape_md(text):
     return text.replace("|", "\\|").replace("\n", " ").replace("\r", "")
 
 def classify_change(line_no, sid, ja, old_cn, new_cn):
+    # com06 specific
+    if "女体流しそうめん" in ja or "女子流挂面" in old_cn:
+        return "经典名梗误译", "纠正将天音调戏雄二的经典黄段子『女体盛流水素面（女体流しそうめん）』荒唐机翻为『女子流挂面』"
+    if "流しそうめん" in ja and "流挂面" in old_cn:
+        return "民俗风物诗术语", "规范日本夏日传统民俗风物诗名称为『流水素面』（非机械直译『流挂面』）"
+    if "十徳ナイフ" in ja and "十德刀" in old_cn:
+        return "专有名词/梗", "纠正生搬日文汉字『十德刀』，还原美滨经典格言『与其备瑞士军刀，不如随身带上阿幸』"
+    if "負け組葉っぱ" in ja or "败组生菜叶" in old_cn:
+        return "谐音冷笑话误读", "纠正将莳菜把活页纸（ルーズリーフ/Loose Leaf）双关谐音为『败犬叶子（負け組葉っぱ）』严重误译为『败组生菜叶』"
+    if "キャベツの芯" in ja or "卷心菜" in ja:
+        return "谐音双关笑话", "还原阿幸将铅笔芯（芯）偷换概念递给满『卷心菜心（キャベツの芯）』的天然黑谐音冷幽默"
+    if "山ごもり" in ja and "迷路" in old_cn:
+        return "词义严重误读", "纠正将雄二在山野隐遁求生技能（山ごもり）荒唐误译为毫无逻辑的『在山里迷路』"
+    if "刃、流しましょうか" in ja and "冲一下" in old_cn:
+        return "反差声线还原", "纠正将由美子在流水素面滑道顺流放刀片的致命冷幽默威胁误译为『把刀刃冲一下』"
+    if "熱を入れて" in ja and "在加热" in old_cn:
+        return "恶性机翻直译", "消除将『讲得热血沸腾/情绪高涨（熱を入れて語ってる）』荒诞机翻为『在加热在说话』的笑话"
+    if "買収" in ja and "收购" in old_cn:
+        return "词义误读", "纠正将天音以美色行贿买通（買収）商业公文生搬为『收购』"
+    if "らめぇ" in ja:
+        return "角色声线还原", "还原莳菜装模作样娇喘调侃的『雅蠛蝶~！不行啦~！』声线"
+    if "ハエ" in ja and "肝っ玉" in ja:
+        return "角色声线还原", "还原满逞强声称自己拥有『苍蝇般硕大肝胆』的滑稽吃瘪声线"
+
     # com05 specific
     if "ヒモ" in ja and "拉皮条" in old_cn:
         return "严重恶性误译", "纠正将雄二自嘲吃软饭/小白脸（ヒモ）严重荒唐误译为犯罪性质的『拉皮条』"
@@ -372,6 +396,32 @@ def build_report():
                 "section": "灰色的果实·共通线第五章JB黄色跑车与暗号秘密 (grisaia1/com05)"
             })
 
+    # Section 8: com06 (13456 - 13658)
+    for lno in range(13456, 13659):
+        ja_raw = ja_lines[lno - 1]
+        cn_raw = cn_lines[lno - 1]
+        sid = ja_raw.split("\t")[0] if "\t" in ja_raw else f"L{lno}"
+        ja_txt = ja_raw.split("\t")[1] if "\t" in ja_raw else ja_raw
+        cn_txt = cn_raw.split("\t")[1] if "\t" in cn_raw else cn_raw
+
+        old_txt = cn_txt
+        if git_base_cn and len(git_base_cn) >= lno:
+            head_raw = git_base_cn[lno - 1]
+            old_txt = head_raw.split("\t")[1] if "\t" in head_raw else head_raw
+
+        if cn_txt != old_txt:
+            cat, reason = classify_change(lno, sid, ja_txt, old_txt, cn_txt)
+            diffs.append({
+                "lno": lno,
+                "sid": sid,
+                "ja": ja_txt,
+                "old": old_txt,
+                "new": cn_txt,
+                "cat": cat,
+                "reason": reason,
+                "section": "灰色的果实·共通线第六章阿幸万能柜与天台流水素面 (grisaia1/com06)"
+            })
+
     print(f"Total indexed modifications: {len(diffs)}")
 
     # Build Markdown
@@ -453,6 +503,15 @@ def build_report():
     md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
     md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
     for idx, d in enumerate(com05_diffs, 1):
+        md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
+    md.append("\n---\n")
+
+    # Section 8
+    com06_diffs = [d for d in diffs if d["section"].startswith("灰色的果实·共通线第六章")]
+    md.append(f"## 九、 灰色的果实·共通线第六章阿幸万能柜与天台流水素面 (`grisaia1/com06`，共 {len(com06_diffs)} 条)\n")
+    md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
+    md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
+    for idx, d in enumerate(com06_diffs, 1):
         md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
     md.append("\n---\n")
 
