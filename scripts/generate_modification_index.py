@@ -6,14 +6,29 @@ Generate comprehensive, indexed markdown report of all localized text modificati
 import os
 import re
 import glob
+import subprocess
 
 def escape_md(text):
     if text is None:
         return ""
-    # Replace pipe with escaped pipe for tables, and strip newlines
     return text.replace("|", "\\|").replace("\n", " ").replace("\r", "")
 
 def classify_change(line_no, sid, ja, old_cn, new_cn):
+    # com01 specific
+    if "优一君" in old_cn:
+        return "人名错误修正", "纠正将雄二（ユージ君）严重机翻幻觉为『优一君』"
+    if "欧马埃" in old_cn:
+        return "机翻音译幻觉", "纠正将日文『オマエ（你）』直接音译为『欧马埃』的荒唐机翻"
+    if "student life" in old_cn:
+        return "生硬残留英文字词", "消除译文中未处理直接残留的生硬英文词汇『student life』"
+    if "企图杀伤同班同学的我" in old_cn:
+        return "主客逻辑反转", "纠正主谓语逻辑反转（由美子刺杀雄二，反被译成雄二企图杀伤同学）"
+    if "腹を探られない内に" in ja or "肚子被抓住" in old_cn:
+        return "成语习惯用语误读", "纠正将日文成语『探清虚实/摸清底细』严重误译为『在肚子被抓住之前』"
+    if "好敵手" in ja or "ライバル" in ja:
+        return "Ruby标签/专有名词", "规范Galgame标签格式，还原『$[好对手$/宿敌$]』"
+    if "チキチキ" in ja or "咔哒咔哒" in new_cn:
+        return "拟声词/武器细节", "还原美工刀滑轨咔哒咔哒推刀声与对峙细节"
     if "十徳ナイフ" in ja or "十德小刀" in old_cn:
         return "专有名词/梗", "纠正机翻直搬日文汉字，还原“瑞士军刀/阿幸万能”双关梗"
     if "オヤング" in ja:
@@ -68,6 +83,8 @@ def classify_change(line_no, sid, ja, old_cn, new_cn):
         return "拟声词拟态词", "消除将失禁拟声词直接音译为括号“（乔恩乔罗）”的机翻痕迹"
     if "マキナ" in ja and "玛琪娜" in old_cn:
         return "人名统一", "统一全剧本译名为“莳菜”"
+    if "@学園長@" in ja or "@学园长@" in old_cn or "@学园长@" in new_cn:
+        return "角色声线还原", "还原千鹤学园长爱摸鱼被抓包、气急败坏的天然大姐姐口吻"
     if "@由美子@" in old_cn or "@由美子@" in new_cn:
         return "角色声线还原", "消除AI生硬感，还原由美子毒舌千金、读书人措辞与傲娇口吻"
     if "@天音@" in old_cn or "@天音@" in new_cn:
@@ -85,18 +102,19 @@ def classify_change(line_no, sid, ja, old_cn, new_cn):
 def build_report():
     # 1. Recover original varstr
     old_varstr = {}
-    with open("analysis/varstr_comparison.txt", "r", encoding="utf-8") as f:
-        cur_line = None
-        for line in f:
-            line = line.rstrip("\r\n")
-            if line.startswith("L") and line.endswith(":"):
-                cur_line = int(line[1:-1])
-            elif line.strip().startswith("CN:") and cur_line is not None:
-                cn_part = line.split("CN:", 1)[1].strip()
-                if "\t" in cn_part:
-                    old_varstr[cur_line] = cn_part.split("\t", 1)[1]
-                else:
-                    old_varstr[cur_line] = cn_part
+    if os.path.exists("analysis/varstr_comparison.txt"):
+        with open("analysis/varstr_comparison.txt", "r", encoding="utf-8") as f:
+            cur_line = None
+            for line in f:
+                line = line.rstrip("\r\n")
+                if line.startswith("L") and line.endswith(":"):
+                    cur_line = int(line[1:-1])
+                elif line.strip().startswith("CN:") and cur_line is not None:
+                    cn_part = line.split("CN:", 1)[1].strip()
+                    if "\t" in cn_part:
+                        old_varstr[cur_line] = cn_part.split("\t", 1)[1]
+                    else:
+                        old_varstr[cur_line] = cn_part
 
     # 2. Recover original ama_001
     recovered_ama = {}
@@ -111,13 +129,20 @@ def build_report():
             for m in pattern2.finditer(content):
                 recovered_ama[int(m.group(1))] = m.group(4)
 
-    # 3. Read current JA and CN
+    # 3. Baseline from git HEAD
+    git_head_cn = []
+    try:
+        out = subprocess.check_output(["git", "show", "HEAD:ALL_TEXT_cn.txt"], text=True)
+        git_head_cn = out.splitlines()
+    except Exception as e:
+        print(f"Warning: could not get git HEAD: {e}")
+
+    # 4. Read current JA and CN
     with open("ALL_TEXT.txt", "r", encoding="utf-8") as fj:
         ja_lines = [l.rstrip("\r\n") for l in fj]
     with open("ALL_TEXT_cn.txt", "r", encoding="utf-8") as fc:
         cn_lines = [l.rstrip("\r\n") for l in fc]
 
-    # Collect all diffs
     diffs = []
     # Section 1: varstr (1 - 629)
     for lno in range(1, 630):
@@ -161,6 +186,32 @@ def build_report():
                 "section": "灰色的果实·天音篇开篇 (grisaia1/ama_001)"
             })
 
+    # Section 3: com01 (12337 - 12575)
+    for lno in range(12337, 12576):
+        ja_raw = ja_lines[lno - 1]
+        cn_raw = cn_lines[lno - 1]
+        sid = ja_raw.split("\t")[0] if "\t" in ja_raw else f"L{lno}"
+        ja_txt = ja_raw.split("\t")[1] if "\t" in ja_raw else ja_raw
+        cn_txt = cn_raw.split("\t")[1] if "\t" in cn_raw else cn_raw
+
+        old_txt = cn_txt
+        if git_head_cn and len(git_head_cn) >= lno:
+            head_raw = git_head_cn[lno - 1]
+            old_txt = head_raw.split("\t")[1] if "\t" in head_raw else head_raw
+
+        if cn_txt != old_txt:
+            cat, reason = classify_change(lno, sid, ja_txt, old_txt, cn_txt)
+            diffs.append({
+                "lno": lno,
+                "sid": sid,
+                "ja": ja_txt,
+                "old": old_txt,
+                "new": cn_txt,
+                "cat": cat,
+                "reason": reason,
+                "section": "灰色的果实·共通线开篇美工刀对峙与初遇 (grisaia1/com01)"
+            })
+
     print(f"Total indexed modifications: {len(diffs)}")
 
     # Build Markdown
@@ -192,7 +243,7 @@ def build_report():
     md.append("\n---\n")
 
     # Section 2
-    ama_diffs = [d for d in diffs if d["section"].startswith("灰色的果实")]
+    ama_diffs = [d for d in diffs if d["section"].startswith("灰色的果实·天音篇")]
     md.append(f"## 三、 灰色的果实·天音线开篇剧情正文修改索引 (`grisaia1/ama_001`，共 {len(ama_diffs)} 条)\n")
     md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
     md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
@@ -200,13 +251,24 @@ def build_report():
         md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
     md.append("\n---\n")
 
+    # Section 3
+    com01_diffs = [d for d in diffs if d["section"].startswith("灰色的果实·共通线")]
+    md.append(f"## 四、 灰色的果实·共通线开篇美工刀对峙与初遇 (`grisaia1/com01`，共 {len(com01_diffs)} 条)\n")
+    md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
+    md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
+    for idx, d in enumerate(com01_diffs, 1):
+        md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
+    md.append("\n---\n")
+
     md_content = "\n".join(md)
 
-    # Write to analysis/
+    # Write to root & analysis/
+    with open("grisaia_modification_index.md", "w", encoding="utf-8") as f:
+        f.write(md_content)
     workspace_path = "/Users/wqin/workplace/agy/analysis/grisaia_modification_index.md"
     with open(workspace_path, "w", encoding="utf-8") as f:
         f.write(md_content)
-    print(f"Report written to workspace: {workspace_path}")
+    print(f"Report written to root and analysis: {workspace_path}")
 
     # Write to artifacts directory
     artifact_dir = "/Users/wqin/.gemini/antigravity-cli/brain/58bc9ea3-8e40-4e4b-af2d-7c0dbd91401e"

@@ -15,6 +15,11 @@
 
 ## Key Systematic MT / AI Flaws Uncovered
 1. **Pervasive False-Friend & Machine Translation Tells**:
+   - `ユージ君` hallucinated as `优一君` (8+ occurrences in com01; should be 雄二君).
+   - `オマエ` directly phonetically transliterated as `欧马埃` (disastrous MT artifact).
+   - `腹を探られない内に` mistranslated literally as `在肚子被抓住之前` (should be 趁底细未被摸透/探明虚实之前).
+   - Raw English words unhandled in Chinese dialogue (e.g. `student life也包括这种烦恼对吧？`).
+   - Inverted subject/agency: `クラスメイトを殺傷しようとした事` mistranslated as `企图杀伤同班同学的我` (attributing attack to Yuuji instead of Yumiko).
    - `貴方` translated literally as `贵方` (business/legal phrasing) instead of `你` / `您` (87+ occurrences in corpus).
    - `八百屋` left raw/untranslated as `八百屋` instead of `菜店` / `果蔬铺` / `果蔬摊` (26+ occurrences in corpus).
    - `場数` -> `菜式数量` (wrong; should be 掌勺经验/阅历/经历过的大场面).
@@ -35,6 +40,9 @@
 ## Completed Milestones & Current State
 - `_varstr` (Lines 1 - 629): 71 systematic errors corrected via `scripts/patch_varstr.py` (Angelic Howl days 1-16 "天使之咆哮", "瑞士军刀", "步频号子", "白给女主的品格", etc.).
 - `grisaia1/ama_001` (Lines 630 - 1163, 534 lines): 100% polished and humanized via `scripts/apply_ama_001.py`. Completely eliminates AI taste, restores character voices, military/slang humor, and comedic timing.
+- `grisaia1/com01` (Lines 12337 - 12575, 239 lines): 100% polished and humanized via `scripts/patch_com01.py`. Eradicated "欧马埃", "优一君", "在肚子被抓住之前", raw English "student life", restored box cutter ratchet clicking details, Yuuji & Chizuru banter, and mutual surname agreement with Yumiko.
+- Total indexed modifications: 783 entries documented in `grisaia_modification_index.md`.
 - Alignment: Full 110,622-line structural verification (`python3 scripts/verify_alignment.py`) passes 100% with zero line drift, tab drift, or tag corruption.
+- Git Remote: Tracked with `git@github.com:OthinusG/grisaia_zh_localization.git`.
 - Project Plan & Roadmap: Formulated comprehensive 6-milestone project plan at `analysis/grisaia_localization_project_plan.md` covering all 110,622 lines (Fruit common route -> Heroines -> Labyrinth -> Eden -> Side stories).
 
