@@ -14,6 +14,20 @@ def escape_md(text):
     return text.replace("|", "\\|").replace("\n", " ").replace("\r", "")
 
 def classify_change(line_no, sid, ja, old_cn, new_cn):
+    # com04 specific
+    if "蟑螂" in old_cn and ("ザリガニ" in ja or "ザニガニ" in ja):
+        return "荒唐恶性误译", "纠正将小龙虾/鳌虾（ザリガニ）荒唐误译为『蟑螂』的恶性翻译事故"
+    if "优一" in old_cn or "優一" in old_cn:
+        return "人名错误修正", "纠正将风见雄二（ユージ）严重机翻幻觉为『风见优一』"
+    if "送给别人" in old_cn and "チルチル" in ja:
+        return "人名混淆误译", "纠正将送给松岛满（琪尔琪尔/チルチル）的波子汽水糖误读为『送给别人』"
+    if "倒是没有" in old_cn and "あるけど" in ja:
+        return "否定逻辑反转", "纠正将随身带有棉线颠倒误译为『倒是没有』"
+    if "美丽的小姐" in old_cn and "お姉様" in ja:
+        return "名作文化梗还原", "还原经典的圣母在上女校贵安梗『贵安，姐姐大人（ごきげんよう、お姉様）』"
+    if "我可以说给你听" in old_cn and "聞いてやる" in ja:
+        return "主客逻辑反转", "纠正将『你想倾诉我可以听』颠倒误译为『我可以说给你听』"
+
     # com03 specific
     if "铜锣烧" in old_cn and "みたらし" in ja:
         return "食物名/谐音梗误读", "纠正将御手洗团子（见者即死团子/みたらし団子）双关冷笑话荒唐误译为『铜锣烧』"
@@ -41,8 +55,6 @@ def classify_change(line_no, sid, ja, old_cn, new_cn):
         return "特殊自称/口吻还原", "还原天音打趣扮演传统名门闺秀时的古典戏剧自称『咱家』"
     if "八百屋" in ja or "蔬果店老板" in old_cn:
         return "角色声线还原", "还原商店街果蔬铺大叔豪迈爽朗、爱开玩笑的江户子街坊口吻"
-    if "優一" in old_cn or "优一" in old_cn:
-        return "人名错误修正", "纠正将雄二（ユージ）严重机翻幻觉为『优一』"
     if "欧马埃" in old_cn:
         return "机翻音译幻觉", "纠正将日文『オマエ（你）』直接音译为『欧马埃』的荒唐机翻"
     if "student life" in old_cn:
@@ -290,6 +302,32 @@ def build_report():
                 "section": "灰色的果实·共通线第三章莳菜电子宠物与见死团子 (grisaia1/com03)"
             })
 
+    # Section 6: com04 (12942 - 13261)
+    for lno in range(12942, 13262):
+        ja_raw = ja_lines[lno - 1]
+        cn_raw = cn_lines[lno - 1]
+        sid = ja_raw.split("\t")[0] if "\t" in ja_raw else f"L{lno}"
+        ja_txt = ja_raw.split("\t")[1] if "\t" in ja_raw else ja_raw
+        cn_txt = cn_raw.split("\t")[1] if "\t" in cn_raw else cn_raw
+
+        old_txt = cn_txt
+        if git_base_cn and len(git_base_cn) >= lno:
+            head_raw = git_base_cn[lno - 1]
+            old_txt = head_raw.split("\t")[1] if "\t" in head_raw else head_raw
+
+        if cn_txt != old_txt:
+            cat, reason = classify_change(lno, sid, ja_txt, old_txt, cn_txt)
+            diffs.append({
+                "lno": lno,
+                "sid": sid,
+                "ja": ja_txt,
+                "old": old_txt,
+                "new": cn_txt,
+                "cat": cat,
+                "reason": reason,
+                "section": "灰色的果实·共通线第四章玫瑰园与钓小龙虾 (grisaia1/com04)"
+            })
+
     print(f"Total indexed modifications: {len(diffs)}")
 
     # Build Markdown
@@ -353,6 +391,15 @@ def build_report():
     md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
     md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
     for idx, d in enumerate(com03_diffs, 1):
+        md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
+    md.append("\n---\n")
+
+    # Section 6
+    com04_diffs = [d for d in diffs if d["section"].startswith("灰色的果实·共通线第四章")]
+    md.append(f"## 七、 灰色的果实·共通线第四章玫瑰园与钓小龙虾 (`grisaia1/com04`，共 {len(com04_diffs)} 条)\n")
+    md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
+    md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
+    for idx, d in enumerate(com04_diffs, 1):
         md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
     md.append("\n---\n")
 
