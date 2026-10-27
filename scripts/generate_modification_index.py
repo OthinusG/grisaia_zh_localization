@@ -14,6 +14,18 @@ def escape_md(text):
     return text.replace("|", "\\|").replace("\n", " ").replace("\r", "")
 
 def classify_change(line_no, sid, ja, old_cn, new_cn):
+    # com31 specific
+    if "計算づくに決まってる" in ja or "わざとだったのね" in ja or "てへッ" in ja or "サボタージュ" in ja or "逃げるぞ" in ja or "絶対に許さない" in ja or "相応しい終わり方" in ja:
+        return "美工刀追杀与全班集体大逃课", "全章爆笑收尾高光：美智留死鸭子嘴硬自吹『一切皆在精确计算中』，由美子伴随不祥声响持美工刀无声贴背捉奸；天音小幸光速卖队友，雄二果断发出『全员逃跑』指令；全班集体翘课逃命，创下美滨学园开学以来史无前例的旷课骚动"
+    if "本を被せる" in ja or "本を被る" in ja or "アッパー" in ja or "９回裏" in ja or "タイムアップ" in ja or "優勝はみちる" in ja or "１万点" in ja or "負け犬の遠吠え" in ja or "シュールな光景" in ja:
+        return "书本倒扣神级大逆转与九局下半封神", "戏剧性绝地反击：美智留剪刀掉落钻地捡拾，猛然起身逼出由美子挥手格挡，硬皮精装书不偏不倚如帽子般倒扣由美子头顶；众人惊骇失色中下课铃响，美智留凭扣书神迹狂揽1万分斩获『九局下半逆转胜』，当即尾巴翘上天大放厥词"
+    if "周防天音探検隊" in ja or "本を引っこ抜こう" in ja or "関西のオバチャン" in ja or "枝毛" in ja or "白髪" in ja or "髪の手入れ" in ja or "名実共に仲良し" in ja or "ボタン取れてます" in ja:
+        return "周防天音探险队突击与头发分叉攻势", "爆笑攻防战：天音探险队借『互不打扰反省』麻痹由美子，莳菜夺书未果，幸借查看扭伤稳拿2分；天音施展关西大妈连环拍猛轰25分，更借『秀发分叉』弱点借剪刀精修长发狂揽破百分，雄二惊叹天音心机与由美子难掩的微妙亲近"
+    if "誘い受け" in ja or "テンプレ" in ja or "氷の笑み" in ja or "手を触れたら" in ja or "引っ張ったら" in ja or "抜いたら" in ja or "切ったセンチメートル" in ja or "キナ臭く" in ja or "本に榊を読ませる" in ja:
+        return "由美子诱受定性与搭话竞赛规则", "美少女心机对白：莳菜以ACG套路武断判定由美子为『傲娇诱受』遭雄二吐槽；天音借题发挥设立由美子攻略积分赛（摸手1分、扯衣3分、拔发5分、剪发10分/cm）；美智留因恐惧由美子冰霜冷笑退缩，全员硝烟弥漫"
+    if "ウサギが寂しくなる" in ja or "距離感が大事" in ja or "セカイ系" in ja or "地球が危ない" in ja or "半径１キロ圏内" in ja or "スケールダウン" in ja or "全員寄ってくると" in ja or "一人足りない" in ja:
+        return "兔子寂寞致死论与世界系班级危机", "全章哲理与爆笑开篇：雄二借兔子孤独致死与过度逗弄应激逃跑，引申不善沟通者履足失当之祸；莳菜慌乱大呼『地球危机』瞬时缩水为班级事件，天音以『半径一公里关键事项』顺水推舟，引出由美子离群索居的核心命题"
+
     # com30 specific
     if "赤ちゃん言葉" in ja or "ペットに話しかけるクセ" in ja or "席を移して" in ja or "浮気を問い詰めるような口調" in ja or "まだ" in ja or "振られちゃった" in ja or "小嶺さんに何かした" in ja:
         return "同桌迁座风波与千鹤夹嗓暴击", "全章神级高光尾声：幸毫无征兆将课桌迁至雄二身旁引发全班海啸；天音抓奸口吻逼供、美智留脑补勒索，幸平静澄清‘尚未产生恋情’令由美子直击要害指出‘尚未意味着无限可能’；幸直球向千鹤校长复读‘改掉跟宠物讲话夹嗓装婴儿的恶癖’致校长当场破防崩溃"
@@ -1426,6 +1438,32 @@ def build_report():
                 "section": "灰色的果实·共通线第三十章空手女仆箴言与大浴场保洁骚动 (grisaia1/com30)"
             })
 
+    # com31
+    for lno in range(19141, 19412):
+        ja_raw = ja_lines[lno - 1]
+        cn_raw = cn_lines[lno - 1]
+        sid = ja_raw.split("\t")[0] if "\t" in ja_raw else f"L{lno}"
+        ja_txt = ja_raw.split("\t")[1] if "\t" in ja_raw else ja_raw
+        cn_txt = cn_raw.split("\t")[1] if "\t" in cn_raw else cn_raw
+
+        old_txt = cn_txt
+        if git_base_cn and len(git_base_cn) >= lno:
+            head_raw = git_base_cn[lno - 1]
+            old_txt = head_raw.split("\t")[1] if "\t" in head_raw else head_raw
+
+        if cn_txt != old_txt:
+            cat, reason = classify_change(lno, sid, ja_txt, old_txt, cn_txt)
+            diffs.append({
+                "lno": lno,
+                "sid": sid,
+                "ja": ja_txt,
+                "old": old_txt,
+                "new": cn_txt,
+                "cat": cat,
+                "reason": reason,
+                "section": "灰色的果实·共通线第三十一章由美子亲近竞赛与九局下半扣书大逆转 (grisaia1/com31)"
+            })
+
     print(f"Total indexed modifications: {len(diffs)}")
 
     # Build Markdown
@@ -1732,6 +1770,15 @@ def build_report():
     md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
     md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
     for idx, d in enumerate(com30_diffs, 1):
+        md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
+    md.append("\n---\n")
+
+    # Section 34
+    com31_diffs = [d for d in diffs if d["section"].startswith("灰色的果实·共通线第三十一章由美子亲近竞赛与九局下半扣书大逆转")]
+    md.append(f"## 三十四、 灰色的果实·共通线第三十一章由美子亲近竞赛与九局下半扣书大逆转 (`grisaia1/com31`，共 {len(com31_diffs)} 条)\n")
+    md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
+    md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
+    for idx, d in enumerate(com31_diffs, 1):
         md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
     md.append("\n---\n")
 
