@@ -14,6 +14,12 @@ def escape_md(text):
     return text.replace("|", "\\|").replace("\n", " ").replace("\r", "")
 
 def classify_change(line_no, sid, ja, old_cn, new_cn):
+    # com47b specific
+    if "プラハ城" in ja or "ウミガメ" in ja or "産卵" in ja or "ガメ" in ja or "フラッチャニ" in ja or "ギネス" in ja or "ダルマ浮き" in ja or "クラゲ浮き" in ja or "伏し浮き" in ja or "急速潜航" in ja or "潜水艦" in ja or "バラストタンク" in ja or "ザボン" in ja or "潜望鏡" in ja or "Ｃカード" in ja or "潜水士" in ja:
+        return "水下潜艇操典教学与1比1布拉格城堡堆沙相声", "全章神级沙滩相声：满因晕车虚脱如难产海龟般在沙滩涕泪横流求下蛋；幸一本正经建议在沙滩堆砌吉尼斯级长570米、以赫拉德恰尼山丘为底座的原尺寸等比例布拉格城堡，满吓哭求换简单项目；雄二亮出国际潜水C卡与专业潜水士资质传授‘恒河水葬浮尸水母漂’与‘俯卧平浮潜艇下潜操典’，莳菜高呼吹气排水升起潜望镜，天音巨乳压载水舱过大犹如泡澡大柚子失衡沉底"
+    if "飯ごう" in ja or "炊爨" in ja or "五合炊き" in ja or "兵式" in ja or "ニワトリ" in ja or "無人島" in ja or "赤道" in ja or "必殺" in ja or "独身" in ja or "花火" in ja or "ロケット花火" in ja or "線香花火" in ja or "セムテックス" in ja or "あきらめるには、まだ早い" in ja or "焼きとうもろこし" in ja or "棒状の物" in ja or "お歳暮のハム" in ja or "紐" in ja or "乳がこぼれ" in ja or "ポロリ" in ja:
+        return "圆筒饭盒焖饭传艺与由美子的必杀告白残局", "全章核心温情与爆笑高潮：天音细绳比基尼与吃烤玉米棒娇喘引得全场男性耳根赤红；雄二大秀军旅野战饭盒焖饭技巧并回忆赤道跳海与无名荒岛抓鸡求生往事；由美子鼓起勇气践行千鹤传授的未婚‘必杀口令’——『若没有你同行，我大概绝不会来』，却惨遭雄二木头脑回路真诚谢罪，由美子秒懂学园长万年单身因由；全员在绚烂花火与微凉晚风中体悟“现在言弃为时尚早”的夏日余韵"
+
     # com47a specific
     if "ヨンバー" in ja or "ケットラ" in ja or "スーパーチャージャー" in ja or "独立懸架" in ja or "六連星" in ja or "デフロック" in ja or "ヌバル" in ja or "白い悪魔" in ja or "ヘアピン" in ja or "クリップ" in ja or "２速" in ja or "ベタ踏み" in ja or "リアがリフト" in ja or "手放し" in ja or "落っこちる" in ja:
         return "天音山道轻卡漂移与白色恶魔超车狂飙", "全章神级高潮竞速戏：天音驾驶斯巴鲁Sambar农用小卡（搭载同级罕见机械增压、四轮独悬与拉力六连星血统的‘农道保时捷’），在盘山急弯狂飙下坡，降挡补油、循迹刹车切深弯心、极限制动硬超1.8T跑车并双手脱把漂移，满吓至灵魂出窍全线崩溃，抵达海滩时满‘立地顿悟参透生死’、眼神空洞宣告心死"
@@ -2064,6 +2070,32 @@ def build_report():
                 "section": "灰色的果实·共通线第四十七章A海滨出游死库水骚动与天音秋名山轻卡狂飙 (grisaia1/com47a)"
             })
 
+    # com47b
+    for lno in range(23428, 23810):
+        ja_raw = ja_lines[lno - 1]
+        cn_raw = cn_lines[lno - 1]
+        sid = ja_raw.split("\t")[0] if "\t" in ja_raw else f"L{lno}"
+        ja_txt = ja_raw.split("\t")[1] if "\t" in ja_raw else ja_raw
+        cn_txt = cn_raw.split("\t")[1] if "\t" in cn_raw else cn_raw
+
+        old_txt = cn_txt
+        if git_base_cn and len(git_base_cn) >= lno:
+            head_raw = git_base_cn[lno - 1]
+            old_txt = head_raw.split("\t")[1] if "\t" in head_raw else head_raw
+
+        if cn_txt != old_txt:
+            cat, reason = classify_change(lno, sid, ja_txt, old_txt, cn_txt)
+            diffs.append({
+                "lno": lno,
+                "sid": sid,
+                "ja": ja_txt,
+                "old": old_txt,
+                "new": cn_txt,
+                "cat": cat,
+                "reason": reason,
+                "section": "灰色的果实·共通线第四十七章B海滩夏日祭玉米棒魅惑与由美子未婚必杀残局 (grisaia1/com47b)"
+            })
+
     print(f"Total indexed modifications: {len(diffs)}")
 
     # Build Markdown
@@ -2532,6 +2564,15 @@ def build_report():
     md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
     md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
     for idx, d in enumerate(com47a_diffs, 1):
+        md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
+    md.append("\n---\n")
+
+    # Section 52
+    com47b_diffs = [d for d in diffs if d["section"].startswith("灰色的果实·共通线第四十七章B海滩夏日祭玉米棒魅惑与由美子未婚必杀残局")]
+    md.append(f"## 五十二、 灰色的果实·共通线第四十七章B海滩夏日祭玉米棒魅惑与由美子未婚必杀残局 (`grisaia1/com47b`，共 {len(com47b_diffs)} 条)\n")
+    md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
+    md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
+    for idx, d in enumerate(com47b_diffs, 1):
         md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
     md.append("\n---\n")
 
