@@ -14,6 +14,14 @@ def escape_md(text):
     return text.replace("|", "\\|").replace("\n", " ").replace("\r", "")
 
 def classify_change(line_no, sid, ja, old_cn, new_cn):
+    # com41 specific
+    if "えむじゃない" in ja or "縄酔い" in ja or "加圧トレーニング" in ja or "性的な趣向" in ja or "縄師" in ja or "フム" in ja or "Ｓというわけ" in ja:
+        return "SM性癖倾向误会绳醉与加压训练解脱感", "全章神级收尾相声：雄二调侃松绑后血流奔涌如加压训练般爽快，满羞愤否认自己是M（えむじゃない，彻底纠正原机翻将‘えむ’音译为‘唔’的灾难性错漏）；满扬言要绑雄二，反被雄二断定为S属性并吐槽‘至少对自己的性癖有个清醒认知’；莳菜展露惊人绳艺天赋却遭满严厉镇压，雄二独白‘绳艺奇才之星就此陨落’爆笑收场"
+    if "亀甲縛り" in ja or "ジュート縄" in ja or "バールのような物" in ja or "蜜蝋" in ja or "女同士" in ja or "バールです" in ja:
+        return "撬棍钝器法医梗与由美子撞破走廊龟甲缚", "全章核心爆笑相声：幸提议用‘类似撬棍的钝器’撬开天灵盖并坦言是为了‘刑侦新闻的专业肃杀氛围感’，满吓得抢先装死休克；幸拿出蜜蜡打磨的高级黄麻绳，莳菜现场即兴施展精湛龟甲缚将满五花大绑在走廊；由美子撞见当场三观震碎，痛批‘不仅特殊性癖居然还是女女百合SM’，严肃勒令公共场合克制"
+    if "鼻歌" in ja or "旋律" in ja or "ローリングソバット" in ja or "みぞおち" in ja or "腹パン" in ja or "空飛ぶ" in ja or "ハニャニャニャーン" in ja:
+        return "心理声学哼歌诱导与腹部重拳负负得正特训", "全章神级开篇相声：雄二在满背后哼歌将大调明快旋律引向阴郁低调进行潜意识心理操控；满以‘旋风后旋踢’（ローリングソバット，彻底纠正原机翻误作‘铁山靠’）比划空击拳击；莳菜搬出‘负负得正’歪理提议把不坦率的满与由美子物理捆绑，连续用飞碟谎言手刀劈颈、甚至直接送上一记结结实实的胃窝腹部重拳（腹パン）"
+
     # com40 specific
     if "夜のお誘い" in ja or "仲良くする" in ja or "ウブ" in ja or "セサミ" in ja or "ふぁめれふか" in ja or "ふぇふぁみ" in ja or "ふぁべてみまふか" in ja:
         return "侍寝邀约误会纯情羞涩与唇齿分食短酥饼", "全章神级高潮与纯爱爆笑：幸叼着半截芝麻酥饼邀请雄二品尝（ふぁめれふか？），雄二谨慎咬下，幸调侃雄二‘外表老练骨子里却格外纯情羞涩’（ウブ，彻底纠正原机翻误作‘色狼’的极端相反错译）；雄二表达想与同伴更加融洽亲近，幸竟一本正经询问是否为‘夜晚侍寝邀约’（夜のお誘い），雄二崩溃吐槽"
@@ -1794,6 +1802,32 @@ def build_report():
                 "section": "灰色的果实·共通线第四十章会走动的大纸箱幸与乳沟军粮酥饼 (grisaia1/com40)"
             })
 
+    # com41
+    for lno in range(21639, 21860):
+        ja_raw = ja_lines[lno - 1]
+        cn_raw = cn_lines[lno - 1]
+        sid = ja_raw.split("\t")[0] if "\t" in ja_raw else f"L{lno}"
+        ja_txt = ja_raw.split("\t")[1] if "\t" in ja_raw else ja_raw
+        cn_txt = cn_raw.split("\t")[1] if "\t" in cn_raw else cn_raw
+
+        old_txt = cn_txt
+        if git_base_cn and len(git_base_cn) >= lno:
+            head_raw = git_base_cn[lno - 1]
+            old_txt = head_raw.split("\t")[1] if "\t" in head_raw else head_raw
+
+        if cn_txt != old_txt:
+            cat, reason = classify_change(lno, sid, ja_txt, old_txt, cn_txt)
+            diffs.append({
+                "lno": lno,
+                "sid": sid,
+                "ja": ja_txt,
+                "old": old_txt,
+                "new": cn_txt,
+                "cat": cat,
+                "reason": reason,
+                "section": "灰色的果实·共通线第四十一章心理声学哼歌操控与走廊龟甲缚特训 (grisaia1/com41)"
+            })
+
     print(f"Total indexed modifications: {len(diffs)}")
 
     # Build Markdown
@@ -2190,6 +2224,15 @@ def build_report():
     md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
     md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
     for idx, d in enumerate(com40_diffs, 1):
+        md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
+    md.append("\n---\n")
+
+    # Section 44
+    com41_diffs = [d for d in diffs if d["section"].startswith("灰色的果实·共通线第四十一章心理声学哼歌操控与走廊龟甲缚特训")]
+    md.append(f"## 四十四、 灰色的果实·共通线第四十一章心理声学哼歌操控与走廊龟甲缚特训 (`grisaia1/com41`，共 {len(com41_diffs)} 条)\n")
+    md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
+    md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
+    for idx, d in enumerate(com41_diffs, 1):
         md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
     md.append("\n---\n")
 
