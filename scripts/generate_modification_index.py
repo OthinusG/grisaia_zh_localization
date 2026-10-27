@@ -14,6 +14,22 @@ def escape_md(text):
     return text.replace("|", "\\|").replace("\n", " ").replace("\r", "")
 
 def classify_change(line_no, sid, ja, old_cn, new_cn):
+    # com17 specific
+    if "Ａ液" in ja or "脱色" in new_cn or "漂白" in new_cn:
+        return "日常生活/美容美发术语规范", "还原美智留忍受头皮剧痛漂白金发（调配脱色Ａ液与脱色Ｂ液、保鲜膜封头）的经典日常内幕"
+    if "暗黒舞踏" in ja or "先锋艺术" in new_cn:
+        return "日本先锋现代艺术名梗", "还原雄二将美智留头皮剧痛抽搐胡扯解释为日本先锋艺术『暗黑舞踏（Butoh）』苦练，幸竟然深信不疑的绝顶幽默"
+    if "生贄" in ja or "マヤ文明" in ja or "玛雅" in new_cn:
+        return "历史典故与角色脑补还原", "还原雄二闻到化学异味脑补为古玛雅文明将祭品全身涂蓝向太阳神献祭的特工被害妄想症"
+    if "オツム" in ja or "脑瓜子" in new_cn or "奥兹姆" in old_cn:
+        return "俚语误译严重纠错", "纠正将美智留智力头脑（オツム/おつむ）荒唐音译为‘奥兹姆’的恶性机翻"
+    if "不感症" in ja or "性冷淡" in new_cn:
+        return "双关黄段子名场面还原", "还原雄二吐槽天音对艺术麻木‘不感症’引发天音娇羞抗议『人家在床上才不是性冷淡不感症』的爆笑双关黄段子"
+    if "匍匐" in ja or "第五匍匐" in new_cn:
+        return "军事战术步兵动作还原", "还原雄二遭遇未知‘外星人’在走廊展开战术受身与步兵『第五类匍匐（第五匍匐）』的硬核特工习惯"
+    if "マザーシップ" in ja or "母艦" in ja or "宇宙人" in ja:
+        return "角色妄想与科幻调侃还原", "还原全员将美智留漂发怪态脑补为『与宇宙母舰进行深空跨星际交信』的经典日常胡扯"
+
     # com16 specific
     if "カッター" in ja or "美工刀" in new_cn:
         return "角色专属武器道具还原", "还原由美子动辄亮出的标志性随身凶器『美工刀（カッター）』，纠正机翻荒唐走形的‘甩脸色’"
@@ -832,6 +848,32 @@ def build_report():
                 "section": "灰色的果实·共通线第十六章由美子美工刀与阿幸大魔神威慑 (grisaia1/com16)"
             })
 
+    # Section 19: com17 (15529 - 15678)
+    for lno in range(15529, 15679):
+        ja_raw = ja_lines[lno - 1]
+        cn_raw = cn_lines[lno - 1]
+        sid = ja_raw.split("\t")[0] if "\t" in ja_raw else f"L{lno}"
+        ja_txt = ja_raw.split("\t")[1] if "\t" in ja_raw else ja_raw
+        cn_txt = cn_raw.split("\t")[1] if "\t" in cn_raw else cn_raw
+
+        old_txt = cn_txt
+        if git_base_cn and len(git_base_cn) >= lno:
+            head_raw = git_base_cn[lno - 1]
+            old_txt = head_raw.split("\t")[1] if "\t" in head_raw else head_raw
+
+        if cn_txt != old_txt:
+            cat, reason = classify_change(lno, sid, ja_txt, old_txt, cn_txt)
+            diffs.append({
+                "lno": lno,
+                "sid": sid,
+                "ja": ja_txt,
+                "old": old_txt,
+                "new": cn_txt,
+                "cat": cat,
+                "reason": reason,
+                "section": "灰色的果实·共通线第十七章美智留漂发受难与暗黑舞踏大赏 (grisaia1/com17)"
+            })
+
     print(f"Total indexed modifications: {len(diffs)}")
 
     # Build Markdown
@@ -1012,6 +1054,15 @@ def build_report():
     md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
     md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
     for idx, d in enumerate(com16_diffs, 1):
+        md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
+    md.append("\n---\n")
+
+    # Section 19
+    com17_diffs = [d for d in diffs if d["section"].startswith("灰色的果实·共通线第十七章")]
+    md.append(f"## 二十、 灰色的果实·共通线第十七章美智留漂发受难与暗黑舞踏大赏 (`grisaia1/com17`，共 {len(com17_diffs)} 条)\n")
+    md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
+    md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
+    for idx, d in enumerate(com17_diffs, 1):
         md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
     md.append("\n---\n")
 
