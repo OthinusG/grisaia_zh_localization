@@ -1186,6 +1186,16 @@ def classify_change(line_no, sid, ja, old_cn, new_cn):
     if "タンデムローター" in ja or "ＣＨ−４７" in ja or "投石器" in ja or "スパルタ式ジョーク" in ja or "撃墜" in ja or "ＴＥ２７" in ja or "５１０ブル" in ja:
         return "支奴干重型直升机过境与斯巴达式投石击落论", "展现搜救直升机飞跃峡谷时众人点燃湿木生烟、天音拼命鸣响车载喇叭的绝境求生；一姬专业辨识出纵列双旋翼机CH-47支奴干多为驻日美军或自卫队路过机，并幽默提出砍树造巨型投石机‘击落直升机引来自卫队大军搜救’的硬核斯巴达式黑色幽默"
 
+    # ama_old_003 specific
+    if "立ち泳ぎ" in ja or "不況" in ja or "年功序列" in ja or "脳味噌" in ja or "６個" in ja:
+        return "萧条期精英隐喻与社团长幼阶层困局", "天音以经济不景气下高学历精英求职悖论喻指一姬在社团的微妙处境：实力凌驾部长却碍于一年级资历无法废除年功序列；一姬以‘脑子里分设日常与日记区、长了六个脑子’的冷幽默开场，阐释危机中记录日记对稳固精神内核与客观测定现实的心理学意义"
+    if "小出" in ja or "シンパ" in ja or "ドクダミ" in ja or "劣る子" in ja or "お友達になってあげる" in ja:
+        return "女生群体社交心理与替罪同党政治剖析", "一姬一针见血剖析女生挑选朋友往往挑选各方面劣于自己的‘施舍优越感’心理；揭示小出葎因第一天依一姬之言烧水被坂下部长打为‘一姬同党’并遭排挤边缘化的真相；一姬体贴安排葎照看卧床伤员，化解其无事可做沦为食粮累赘的尴尬"
+    if "弟" in ja or "保育器" in ja or "生殖" in ja or "お風呂に入って" in ja or "ありがとう" in ja or "１６００円" in ja:
+        return "绝世弟控一姬的畸形宠溺与感恩育儿哲学", "一姬自爆狂热宠爱幼弟雄二：亲吻无数次、至今共浴同眠甚至欲科普生殖生理，遭天音惊呼‘脑子坏掉了’并吐槽其家庭教育从生母便彻底崩坏；一姬深情宣告‘哪怕全世界讨厌他我也要比任何人都深爱他’，核心在于将雄二培养成懂由衷感恩‘谢谢’并能获得幸福的人"
+    if "高級スポーツカー" in ja or "軽自動車" in ja or "ナトリウム" in ja or "カレーコロッケ" in ja or "毒キノコ" in ja or "俗説" in ja or "犠牲" in ja:
+        return "K-car超跑身材自嘲、电解质盐分危机与试毒蘑菇冷酷铁律", "一姬以‘豪华超跑旁被迫停靠微型K-car’自嘲胸围拒绝与天音共浴冲凉，天音化身老司机援引改装大师名言力挺轻量化；一姬科普体内钠离子不可再生严密私藏食盐；一姬辟谣‘菌柄纵裂无毒’民间伪科学，冰冷提议‘给讨厌的人试吃观察三天’，以骇人冰冷击碎全员盲目乐观幻想"
+
     return "消除AI味/润色优化", "重构生硬日式倒装与机械直译，润色为符合Galgame演出的自然中文"
 
 def build_report():
@@ -3563,6 +3573,32 @@ def build_report():
                 "section": "灰色的果实·天音线天使之声篇第二日西施犬阿里昂与斯巴达式幽默 (grisaia1/ama_old_002 Part 2)"
             })
 
+    # ama_old_003 (Milestone 2 Chapter 35 - Angelic Howl Day 3)
+    for lno in range(8528, 8973):
+        ja_raw = ja_lines[lno - 1]
+        cn_raw = cn_lines[lno - 1]
+        sid = ja_raw.split("\t")[0] if "\t" in ja_raw else f"L{lno}"
+        ja_txt = ja_raw.split("\t")[1] if "\t" in ja_raw else ja_raw
+        cn_txt = cn_raw.split("\t")[1] if "\t" in cn_raw else cn_raw
+
+        old_txt = cn_txt
+        if git_base_cn and len(git_base_cn) >= lno:
+            head_raw = git_base_cn[lno - 1]
+            old_txt = head_raw.split("\t")[1] if "\t" in head_raw else head_raw
+
+        if cn_txt != old_txt:
+            cat, reason = classify_change(lno, sid, ja_txt, old_txt, cn_txt)
+            diffs.append({
+                "lno": lno,
+                "sid": sid,
+                "ja": ja_txt,
+                "old": old_txt,
+                "new": cn_txt,
+                "cat": cat,
+                "reason": reason,
+                "section": "灰色的果实·天音线天使之声篇第三日绝世弟控育儿论与试毒蘑菇生存铁律 (grisaia1/ama_old_003)"
+            })
+
     print(f"Total indexed modifications: {len(diffs)}")
 
     # Build Markdown
@@ -4391,6 +4427,15 @@ def build_report():
     md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
     md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
     for idx, d in enumerate(ama_old_002_p2_diffs, 1):
+        md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
+    md.append("\n---\n")
+
+    # Section 92 - Milestone 2: Angelic Howl Day 3
+    ama_old_003_diffs = [d for d in diffs if d["section"].startswith("灰色的果实·天音线天使之声篇第三日绝世弟控育儿论与试毒蘑菇生存铁律")]
+    md.append(f"## 九十二、 灰色的果实·天音线天使之声篇第三日绝世弟控育儿论与试毒蘑菇生存铁律 (`grisaia1/ama_old_003`，共 {len(ama_old_003_diffs)} 条) —— 【里程碑二·个人线第三十五章】\n")
+    md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
+    md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
+    for idx, d in enumerate(ama_old_003_diffs, 1):
         md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
     md.append("\n---\n")
 
