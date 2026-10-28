@@ -58,6 +58,18 @@ def classify_change(line_no, sid, ja, old_cn, new_cn):
     if "巨乳" in ja or "ハートジャック" in ja or "トランプ" in ja or "シグナルロスト" in ja or "掃討" in ja or "烏森神社" in ja:
         return "特务追踪四将瞬杀全灭与红心J巨乳撤退指令", "精准刻画雄二于东口广场深夜瞬杀全歼三叶草12、红心9、黑桃6、方块A四名追踪特工却手下留情仅折断筋骨，JB得知留守的红心J系24岁88公分大胸新人后果断下令撤退‘9029对巨乳下不了狠手’的硬核幽默与老练情报博弈"
 
+    # mak_017 specific
+    if "バンかけ" in ja or "職質" in ja or "巡査長" in ja or "銀バッジ" in ja or "出動靴" in ja or "ハザードランプ" in ja:
+        return "深夜公园盘查应对与冒用保安局证件诈夺货车", "纠正将警方盘查暗语‘バンかけ’（巡警对可疑分子的盘查盘问/职质）荒谬机翻为‘巴士犯’的特大硬伤；细腻还原雄二精神恍惚下遭遇银徽两杠老练巡查长盘查，凭借多年特工条件反射编造同事打鼾借口，并利用先前缴获的中央保安局COS019证件大摇大摆诈称反恐搜查、当着巡警面强势征用货车驾驶员车辆的教科书级心理防线突破"
+    if "船頭多くして" in ja or "内調" in ja or "バームクーヘン" in ja or "菓子折り" in ja or "胃に穴が空きそう" in ja or "前科" in ja:
+        return "CIRS总部派系内讧与年轮蛋糕登门谢罪调侃", "纠正将日本俗语‘船頭多くして船山を登る’（船夫太多把船开上山/政出多门一事无成）生硬死译、将德国年轮蛋糕‘バームクーヘン’音译荒唐机翻为‘巴姆库赫恩’的硬伤；生动展现琪娅拉饥肠辘辘吐槽警视厅总监妻子系内阁情报调查室局长旧情人八卦，以及JB调侃‘万一雄二真宰了清夏，就带着一盒年轮蛋糕去入巢家磕头谢罪’的毒舌黑色幽默"
+    if "約束" in ja or "リンゴの苗木" in ja or "沙里菜" in ja or "父親" in ja or "病室" in ja or "駅で待ってる" in ja:
+        return "重返病房托付树苗与约誓车站斩断血亲绝境", "生动呈现雄二深夜潜入增泽医院特护病房将苹果树苗完璧归赵放置于莳菜病床头，获悉莳菜重伤胞姐亟需器官移植、生母企图强摘莳菜器官的恐怖真相；雄二断然立誓化身莳菜的‘父亲’并相约明晚六点于车站私奔，决意彻底拔除入巢一族死亡阴影"
+    if "アイリスグローバル" in ja or "入庫証" in ja or "親方日の丸" in ja or "スクイズ・コッカー" in ja or "声を出すと死ぬ" in ja or "逆エビ" in ja:
+        return "潜入爱丽丝总部与铝箔短接口香糖破门CQC", "纠正将‘親方日の丸’（吃公家皇粮/官老爷）荒唐机翻为‘当大厨’、将‘スクイズ・コッカー’（H&K P7手枪的前握把击针拉机把手）死译的硬伤；硬核还原雄二身着工装伪造通行证骗过巡警、利用葡萄味泡泡糖铝箔纸短接消防门磁簧警报短路破拆，用自制‘出声就死’扎带包裹操东北方言劫持泽田秘书并以大虾姿势捆绑，借助其指纹强行突破十二层社长室门禁的教科书级CQB潜入"
+    if "おかき" in ja or "親に殴られた" in ja or "役立たず" in ja or "引き金を引く" in ja or "結婚" in ja or "嘘つき" in ja or "アクティブ・ランプ" in ja:
+        return "社长室对峙审判与扣动扳机命运抉择", "纠正机翻将入巢清夏深夜偷吃零食‘おかき’（烤年糕片/炸米饼）错译为‘御菓子’的语病；深刻刻画雄二持枪对峙冷酷生母入巢清夏，枪柄重击揭露其‘一生从未挨打故不知痛苦、视亲女为草芥’的畸形心理与生父暴虐家暴人格的同构悲剧；面对清夏‘招赘入赘结婚’的荒诞利诱坚辞拒绝，并在清夏涕泪横流求饶的丑态中幻视莳菜哭泣面容，迎来决定命运的扣动扳机分歧点"
+
     # mak_016 specific
     if "お茶汲み" in ja or "男女雇用機会均等法" in ja or "地方人" in ja or "ハム長" in ja or "予備隊" in ja or "メンコの数" in ja or "ベトナム帰還兵" in ja or "ウザイ" in ja:
         return "琪娅拉拒端茶倒水职场互怼与警视厅公安军政讽刺", "纠正将公安部警察黑话‘ハム長’（公安部长）误译为‘首领’、将旧日本陆军俚语‘星の数よりメンコの数’（战场资历比肩章星星军衔更管用）荒唐机翻为‘论数量比星星还多的是学区伞’的特大硬伤；生动呈现琪娅拉以敬语和男女均等法硬怼大冢局长拒当端茶丫鬟、讽刺大冢将外聘特工贬为‘地方杂牌兵’，以及引述《第一滴血》越战老兵兰博被警长包围梗的硬核机关讽刺幽默"
@@ -2938,6 +2950,32 @@ def build_report():
                 "section": "灰色的果实·莳菜线第十七章雨夜猎杀反伏击与冷酷生母夺命阴谋 (grisaia1/mak_016)"
             })
 
+    # mak_017 (Milestone 2 Chapter 18)
+    for lno in range(35967, 36487):
+        ja_raw = ja_lines[lno - 1]
+        cn_raw = cn_lines[lno - 1]
+        sid = ja_raw.split("\t")[0] if "\t" in ja_raw else f"L{lno}"
+        ja_txt = ja_raw.split("\t")[1] if "\t" in ja_raw else ja_raw
+        cn_txt = cn_raw.split("\t")[1] if "\t" in cn_raw else cn_raw
+
+        old_txt = cn_txt
+        if git_base_cn and len(git_base_cn) >= lno:
+            head_raw = git_base_cn[lno - 1]
+            old_txt = head_raw.split("\t")[1] if "\t" in head_raw else head_raw
+
+        if cn_txt != old_txt:
+            cat, reason = classify_change(lno, sid, ja_txt, old_txt, cn_txt)
+            diffs.append({
+                "lno": lno,
+                "sid": sid,
+                "ja": ja_txt,
+                "old": old_txt,
+                "new": cn_txt,
+                "cat": cat,
+                "reason": reason,
+                "section": "灰色的果实·莳菜线第十八章血誓突袭爱丽丝总部与生母对峙抉择 (grisaia1/mak_017)"
+            })
+
     print(f"Total indexed modifications: {len(diffs)}")
 
     # Build Markdown
@@ -3613,6 +3651,15 @@ def build_report():
     md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
     md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
     for idx, d in enumerate(mak_016_diffs, 1):
+        md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
+    md.append("\n---\n")
+
+    # Section 75 - Milestone 2: Makina Route Chapter 18
+    mak_017_diffs = [d for d in diffs if d["section"].startswith("灰色的果实·莳菜线第十八章血誓突袭爱丽丝总部与生母对峙抉择")]
+    md.append(f"## 七十五、 灰色的果实·莳菜线第十八章血誓突袭爱丽丝总部与生母对峙抉择 (`grisaia1/mak_017`，共 {len(mak_017_diffs)} 条) —— 【里程碑二·个人线第十八章】\n")
+    md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
+    md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
+    for idx, d in enumerate(mak_017_diffs, 1):
         md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
     md.append("\n---\n")
 
