@@ -1,7 +1,7 @@
 import sys
 
-def verify(part_list, start_idx, end_idx):
-    with open('scratch_mak_005.tsv', 'r', encoding='utf-8') as f:
+def verify_file(tsv_file, part_list, start_idx, end_idx):
+    with open(tsv_file, 'r', encoding='utf-8') as f:
         tsv_lines = [line.strip('\r\n').split('\t') for line in f]
 
     tsv_slice = tsv_lines[start_idx:end_idx]
@@ -30,5 +30,5 @@ def verify(part_list, start_idx, end_idx):
         print(f"[FAIL] {errors} errors found!")
 
 if __name__ == '__main__':
-    from mak_005_part1 import mak_005_part1
-    verify(mak_005_part1, 0, 318)
+    from mak_006_part1 import mak_006_part1
+    verify_file('scratch_mak_006.tsv', mak_006_part1, 0, 261)

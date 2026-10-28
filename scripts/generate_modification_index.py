@@ -32,6 +32,20 @@ def classify_change(line_no, sid, ja, old_cn, new_cn):
     if "嘘吐き" in ja or "嘘はき" in ja or "泥棒の始まり" in ja or "ブモー" in ja:
         return "日式谚语双关与傲娇口癖还原", "将满把'嘘つきは泥棒の始まり'（撒谎是当小偷的开端）读白字并强词夺理的俏皮双关自然汉化，精准呈现其被吻后瞬间切换回傲娇状态气急败坏的可爱反应"
 
+    # mak_006 specific
+    if "牛柄パジャマ" in ja or "ヒステリー女" in ja or "子宮が固まる" in ja or "赤本" in ja:
+        return "JB金发脾气规律与红宝书教范调侃", "纠正机翻将‘タダでさえ’误译为‘白给的’，以及将‘赤本’误作‘成人式教范’，生动还原雄二总结的金发女起床吃沙拉脾气恶劣规律、以及调侃子宫硬化的直男癌暴论"
+    if "ハッピ" in ja or "カタヌキ屋" in ja or "山車" in ja or "市中引き回し" in ja or "おっぱいには決して逆らえない" in ja:
+        return "神社夏祭筹备与儿童会拉车游街", "纠正机翻将法被（ハッピ）误译为水手服，将型拔雕糖（カタヌキ屋）误译为兔子摊，绝妙呈现高年级男生拜倒在天音巨乳下的悲哀雄性本能与儿童拉山车如游街示众的冷幽默"
+    if "大鎌" in ja or "ルソン島" in ja or "除草" in ja or "浮気" in ja or "本番" in ja or "ティッシュ箱" in ja:
+        return "小幸死神大镰除草与出轨特许相声", "还原幸在烈日下宛如吕宋岛司令官手挥大镰除草、向妇女会宣称雄二是男友、以及莳菜特许雄二与幸出轨但禁止亲吻与本番的爆笑拉扯"
+    if "寸胴" in ja or "作り帯" in ja or "ノーパン" in ja or "ベクタード・ノズル" in ja or "フラッペロン" in ja:
+        return "金鱼浴衣机甲喷口与真空无内裤优势", "纠正机翻将水桶直筒身材（寸胴）误译为‘寸头’，生动重现雄二将莳菜双马尾与浴衣腰带比作零重力矢量推进喷口、莳菜自豪宣称真空无内裤的战术优势、以及满把法式冰沙讲成副翼舵（Flaperon）的嘴硬名场面"
+    if "マグロマン" in ja or "出刃包丁" in ja or "実弾" in ja or "ゼロ点出し" in ja or "シアー" in ja or "暗夜に霜が降りるが如く" in ja or "残心" in ja:
+        return "金枪鱼超人射击摊与狙击兵归零校正操典", "彻底修正机翻将归零校正（ゼロ点出し）颠倒为‘打出零环’的严重军事常识错误，完整复原包含装弹、挂阻铁、屏息、暗夜降霜击发、残心警戒等全套特勤狙击操典，击毙金枪鱼超人"
+    if "早食い" in ja or "チャンペスト" in ja or "アイスクリーム頭痛" in ja or "チョコバナナ" in ja or "短冊" in ja or "づっとお兄ちゃんと一緒" in ja or "黒い携帯" in ja:
+        return "满刨冰脑结冰败退与七夕短册父女誓约", "绝妙还原满自封冠军之王（Champest）狂炫刨冰致脑结冰送医的活宝行径、天音舔食巧克力香蕉的母性反差、莳菜写错别字的七夕短册‘想永远和哥哥在一起’、以及雄二注视CIRS黑色手机暗誓守护莳菜的深情内核"
+
     # mak_005 specific
     if "チャリンコババァ" in ja or "ペルシア軍" in ja or "サー！　イエス！　サー！" in ja or "軽快車" in ja or "運行者" in ja:
         return "公路骑行战术拉练与国防部新兵操典", "纠正机翻将骑车大妈（チャリンコババァ）荒诞误译为‘小鸟肥婆’，生动再现雄二公路骑行视野、避险逻辑与‘国防部不是为了给新兵父母寄讣告才设立’的全金属狂潮式长官训导"
@@ -2460,6 +2474,32 @@ def build_report():
                 "section": "灰色的果实·莳菜线第五章布谷鸟托卵寓意与面包店初战的菠萝包报恩 (grisaia1/mak_005)"
             })
 
+    # mak_006 (Milestone 2 Chapter 6)
+    for lno in range(29009, 29530):
+        ja_raw = ja_lines[lno - 1]
+        cn_raw = cn_lines[lno - 1]
+        sid = ja_raw.split("\t")[0] if "\t" in ja_raw else f"L{lno}"
+        ja_txt = ja_raw.split("\t")[1] if "\t" in ja_raw else ja_raw
+        cn_txt = cn_raw.split("\t")[1] if "\t" in cn_raw else cn_raw
+
+        old_txt = cn_txt
+        if git_base_cn and len(git_base_cn) >= lno:
+            head_raw = git_base_cn[lno - 1]
+            old_txt = head_raw.split("\t")[1] if "\t" in head_raw else head_raw
+
+        if cn_txt != old_txt:
+            cat, reason = classify_change(lno, sid, ja_txt, old_txt, cn_txt)
+            diffs.append({
+                "lno": lno,
+                "sid": sid,
+                "ja": ja_txt,
+                "old": old_txt,
+                "new": cn_txt,
+                "cat": cat,
+                "reason": reason,
+                "section": "灰色的果实·莳菜线第六章神社夏祭金鱼浴衣与狙击金枪鱼超人 (grisaia1/mak_006)"
+            })
+
     print(f"Total indexed modifications: {len(diffs)}")
 
     # Build Markdown
@@ -3027,6 +3067,15 @@ def build_report():
     md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
     md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
     for idx, d in enumerate(mak_005_diffs, 1):
+        md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
+    md.append("\n---\n")
+
+    # Section 63 - Milestone 2: Makina Route Chapter 6
+    mak_006_diffs = [d for d in diffs if d["section"].startswith("灰色的果实·莳菜线第六章神社夏祭金鱼浴衣与狙击金枪鱼超人")]
+    md.append(f"## 六十三、 灰色的果实·莳菜线第六章神社夏祭金鱼浴衣与狙击金枪鱼超人 (`grisaia1/mak_006`，共 {len(mak_006_diffs)} 条) —— 【里程碑二·个人线第六章】\n")
+    md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
+    md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
+    for idx, d in enumerate(mak_006_diffs, 1):
         md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
     md.append("\n---\n")
 
