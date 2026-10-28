@@ -1073,6 +1073,23 @@ def classify_change(line_no, sid, ja, old_cn, new_cn):
         return "角色声线还原", "还原幸极致客气的敬语、天然黑与不苟言笑讲冷笑话口吻"
     if "@みちる@" in old_cn or "@满@" in old_cn:
         return "角色声线还原", "还原满假傲娇、元气笨蛋、常吃瘪逞强的滑稽喜剧感"
+    # ama_004 specific (Milestone 2 Chapter 25 - Amane Route Chapter 3)
+    if "ナポリタン" in ja or "ウサギリンゴ" in ja or "コールスロー" in ja or "タコさん" in ja or "居眠り" in ja or "シャンプーの香り" in ja:
+        return "便当红肠意面与少女电车幻想", "纠正机翻将经典番茄意面（ナポリタン）死译音译的语病；生动展现天音做便当（饭团、炸鸡、章鱼红肠、红得可疑的拿波里番茄意面、兔子苹果），少女心爆棚幻想回程电车上将脑袋靠在雄二肩上睡着散发洗发水香味、展露深邃乳沟的纯情小鹿乱撞"
+    if "ハードオプション" in ja or "浦安" in ja or "著作権" in ja or "ネズミ" in ja or "エディ・マーフィ" in ja or "２足歩行" in ja:
+        return "强硬方案出击与浦安巨鼠调侃", "硬核军事任务出击：纠正机翻将CIRS实弹突击方案‘ハードオプション/Hard Option’荒诞误译为‘硬盘选项’的严重硬伤！莳菜调侃全日本最大的老鼠是浦安那只两条腿走路态度狂妄的巨鼠（米老鼠梗），天音尖叫阻止其触碰迪士尼版权雷区"
+    if "バレット" in ja or "５０口径" in ja or "１２００" in ja or "１４００" in ja or "Ｍ２４" in ja or "サイレント・ソルジャー" in ja or "バンクーバー" in ja or "不殺" in ja:
+        return "东京反狙击与CIRS军论交锋", "纠正军事术语、评论家与经济分析师论战的生硬机翻；精彩再现电视转播前美国防部长遭遇1200米反器材狙击（巴雷特.50 BMG），雄二在VIP身后200米处以M24-SWS执行1400米超远距离反狙击；雄二因无法再取人性命被JB痛骂处分的内心折冲"
+    if "ロールキャベツ" in ja or "担がれた" in ja or "ウズラの卵" in ja or "土足" in ja or "お風呂掃除" in ja or "９件" in ja:
+        return "淋浴自白误会与奶油卷心菜炖菜", "纠正机翻将‘担がれた’（被摆了一道/被戏弄）荒唐误译为‘被抬进来’的严重语病；生动再现雄二收到天音9条短信与浴室诀别误以为天音自杀割腕狂奔破门而入，天音却喜气洋洋在厨房炖奶油卷心菜卷（包着鹌鹑蛋）的反差释怀"
+    if "アノマロカリス" in ja or "最後まで" in ja or "ノーパン" in ja or "パンツ" in ja or "クリントン" in ja or "ヒグラシ" in ja or "ギルロッシ" in ja:
+        return "夏祭浴衣真空骚乱与奇虾谐音梗", "纠正机翻将莳菜顺口溜口癖‘アノマロカリス’（寒武纪顶极掠食者‘奇虾’）荒唐误译为‘那孩子是我’的离谱硬伤！纠正机翻将‘顺水推舟跟心仪男生做到最后一步’胡乱编造成‘骑在花车上跳最后一支舞’的严重胡译！生动再现莳菜与幸宣称遵循古风不穿内裤（真空ノーパン）、调侃雄二技术精湛引发满暴走的爆笑群像戏"
+    if "ポルチェ" in ja or "キャレラ" in ja or "ドイツのスポーツカー" in ja or ("お尻" in ja and ("叩く" in ja or "触る" in ja)) or "タイミング" in ja or "舌を伸ばせ" in ja:
+        return "德国超跑美臀与夏日祭典亲吻时机", "极具幽默与张力地刻画众女摸天音屁股夸赞宛如德国超跑保时捷卡雷拉RS（Porsche Carrera RS）、后置引擎塞在里面；雄二宣告‘天音的屁股是我的’；天音小碎步撒娇‘不穿内裤是随时能上垒的信号’与女孩子接吻的三大黄金时机；雄二恶趣味调戏让天音闭眼吐舌头的甜蜜反差"
+    if "カブトムシ" in ja or "亀釣り" in ja or "カチカチ山" in ja or "シゴいて" in ja or "ビッチ" in ja or "ミドリガメ" in ja or "篝火" in ja:
+        return "太鼓独角仙空袭与乌龟摊卖唱满", "纠正机翻将‘ビッチ’（碧池/骚货）误译为‘变态’的错误；爆笑刻画满得意忘形敲太鼓被飞来的巨大独角仙狠命扎进侧头部，惨叫跌入篝火背部着火如《喀嗤喀嗤山》狸猫跳入钓龟摊水槽，随后以身抵债在摊位前扯开嗓门叫卖乌龟（‘能养能吃能撸它’双关梗），天音被当成碧池娇羞抗议"
+    if "毒虫" in ja or "滝園学園" in ja or "マイクロバス" in ja or "風見一姫" in ja or "生き残り" in ja or "生還" in ja or "遺族" in ja or "日記帳" in ja or "１８ページ" in ja or "引越し先" in ja:
+        return "毒虫蔑称旧识与风见一姬绝密真相", "全剧核心转折震撼降临：祭典上昔日泷园学园旧识窃窃私语天音为‘毒虫’（纠正机翻将‘毒虫’弱化误译为普通‘害虫’、将‘引越し先’误译为‘搬家公司’的严重硬伤）；天音向雄二坦白自身是泷园学园中巴客车坠崖惨案唯一幸存者，是风见一姬的同班好友，并拿出第18页开始记录惨剧的泛黄遇难日记本，悬念推向全剧巅峰《Angelic Howl》"
     return "消除AI味/润色优化", "重构生硬日式倒装与机械直译，润色为符合Galgame演出的自然中文"
 
 def build_report():
@@ -3190,6 +3207,32 @@ def build_report():
                 "section": "灰色的果实·天音线第二章百元摸胸告白与二人动物园之约 (grisaia1/ama_003)"
             })
 
+    # ama_004 (Milestone 2 Chapter 25 - Amane Route Chapter 3)
+    for lno in range(2883, 3576):
+        ja_raw = ja_lines[lno - 1]
+        cn_raw = cn_lines[lno - 1]
+        sid = ja_raw.split("\t")[0] if "\t" in ja_raw else f"L{lno}"
+        ja_txt = ja_raw.split("\t")[1] if "\t" in ja_raw else ja_raw
+        cn_txt = cn_raw.split("\t")[1] if "\t" in cn_raw else cn_raw
+
+        old_txt = cn_txt
+        if git_base_cn and len(git_base_cn) >= lno:
+            head_raw = git_base_cn[lno - 1]
+            old_txt = head_raw.split("\t")[1] if "\t" in head_raw else head_raw
+
+        if cn_txt != old_txt:
+            cat, reason = classify_change(lno, sid, ja_txt, old_txt, cn_txt)
+            diffs.append({
+                "lno": lno,
+                "sid": sid,
+                "ja": ja_txt,
+                "old": old_txt,
+                "new": cn_txt,
+                "cat": cat,
+                "reason": reason,
+                "section": "灰色的果实·天音线第三章夏祭狂欢浴衣骚乱与风见一姬真相揭晓 (grisaia1/ama_004)"
+            })
+
     print(f"Total indexed modifications: {len(diffs)}")
 
     # Build Markdown
@@ -3928,6 +3971,15 @@ def build_report():
     md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
     md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
     for idx, d in enumerate(ama_003_diffs, 1):
+        md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
+    md.append("\n---\n")
+
+    # Section 82 - Milestone 2: Amane Route Chapter 3
+    ama_004_diffs = [d for d in diffs if d["section"].startswith("灰色的果实·天音线第三章夏祭狂欢浴衣骚乱与风见一姬真相揭晓")]
+    md.append(f"## 八十二、 灰色的果实·天音线第三章夏祭狂欢浴衣骚乱与风见一姬真相揭晓 (`grisaia1/ama_004`，共 {len(ama_004_diffs)} 条) —— 【里程碑二·个人线第二十五章】\n")
+    md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
+    md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
+    for idx, d in enumerate(ama_004_diffs, 1):
         md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
     md.append("\n---\n")
 
