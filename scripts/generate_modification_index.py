@@ -58,6 +58,18 @@ def classify_change(line_no, sid, ja, old_cn, new_cn):
     if "巨乳" in ja or "ハートジャック" in ja or "トランプ" in ja or "シグナルロスト" in ja or "掃討" in ja or "烏森神社" in ja:
         return "特务追踪四将瞬杀全灭与红心J巨乳撤退指令", "精准刻画雄二于东口广场深夜瞬杀全歼三叶草12、红心9、黑桃6、方块A四名追踪特工却手下留情仅折断筋骨，JB得知留守的红心J系24岁88公分大胸新人后果断下令撤退‘9029对巨乳下不了狠手’的硬核幽默与老练情报博弈"
 
+    # mak_016 specific
+    if "お茶汲み" in ja or "男女雇用機会均等法" in ja or "地方人" in ja or "ハム長" in ja or "予備隊" in ja or "メンコの数" in ja or "ベトナム帰還兵" in ja or "ウザイ" in ja:
+        return "琪娅拉拒端茶倒水职场互怼与警视厅公安军政讽刺", "纠正将公安部警察黑话‘ハム長’（公安部长）误译为‘首领’、将旧日本陆军俚语‘星の数よりメンコの数’（战场资历比肩章星星军衔更管用）荒唐机翻为‘论数量比星星还多的是学区伞’的特大硬伤；生动呈现琪娅拉以敬语和男女均等法硬怼大冢局长拒当端茶丫鬟、讽刺大冢将外聘特工贬为‘地方杂牌兵’，以及引述《第一滴血》越战老兵兰博被警长包围梗的硬核机关讽刺幽默"
+    if "ＣＯＳ０１９" in ja or "マルアーニ" in ja or "生き餌" in ja or "ライブ・ベイト" in ja or "新聞紙" in ja or "スライドを分解" in ja:
+        return "雄二幽灵潜行反伏击与活饵围点打援战术", "硬核还原雄二在夜市逆流甩脱追踪、近身CQC碎膝折肘制服中央保安局外聘PMC特工019，搜刮四万日元与图书卡；以卸去保险实弹上膛的格洛克手枪裹报纸作简易消音器，将019当作活饵（Live Bait）围点打援射伤两名增援特工腿部后拆解套筒撤离的教科书级特工反围剿战术"
+    if "マーグロマーーーーーン" in ja or "ペンライト" in ja or "頭突き" in ja or "チョークスリーパー" in ja or "シルバーティップ" in ja or "ドロリとした殺意" in ja:
+        return "莳菜潜入取树苗遇伏中弹与雄二暴怒弑父幻觉", "纠正机翻将莳菜呼喊偶像‘マーグロマーーーーーン!!’（金枪鱼超人）误译为‘抓色狼’的离谱硬伤；细腻呈现莳菜不愿再当累赘深夜重回废弃旅馆寻找苹果树苗，遭遇搜查员A与B后装弱惨叫、飞抛手电筒头槌击碎鼻梁并以杠杆裸绞锁喉制服两人，却遗憾因缺乏实战经验被搜查员A拔枪击穿侧腹；雄二暴怒赶到将搜查员砸进墙体疯狂踩碎头颅，并在病态杀意中幻觉将对方视作虐待生母的家暴生父，被重伤莳菜一句‘不能杀人’唤回理智"
+    if "エピ混局麻剤" in ja or "二人乗り" in ja or "預金通帳" in ja or "パン屋" in ja or "２０万円" in ja:
+        return "JB携树苗夜巡急救与双座跑车深夜诀别", "生动呈现JB暗中驱车物归原主送还苹果树苗并及时施以含肾上腺素局麻急救；雄二得知莳菜脱险后，考虑到JB座驾为双座跑车无法三人同乘，毅然决然将莳菜托付给JB送往急诊，带上JB私赠的二十万现金与莳菜面包房工资存折，孤身一人消失在茫茫夜雨中继续亡命"
+    if "増沢病院" in ja or "お母様" in ja or "矍鑠" in ja or "故障" in ja or "臓器提供" in ja or "タダの屍" in ja or "カツオブシ工場" in ja:
+        return "生母清夏病房冷血逼命与活体器官摘除阴谋", "纠正机翻将‘離島のカツオブシ工場’（离岛柴鱼/鲣节加工作坊苦役）错译为‘废弃工厂’的硬伤；以入木三分的笔触揭露入巢莳菜生母入巢清夏的极端利己冷血本质——对昏迷长女毫无关爱、幸灾乐祸专横母亲因次女重伤一夜老去，甚至将两个女儿视作‘残次故障品’，当着昏迷中尚有听觉的莳菜面提出‘直接摘取莳菜器官移植给沙里菜’并企图拔掉生命维持系统，同时要求CIRS将雄二处决或发配离岛苦役"
+
     # mak_015 specific
     if "頭が痛くなって" in ja or "欠陥人間" in ja or "担任の先生" in ja or "右手の悪魔" in ja or "クローゼット" in ja or "ミイラ" in ja:
         return "童年偏头痛与右手恶魔弑师罪孽自残梦魇", "细腻呈现雄二幼年因恶魔教师羞辱而突发剧烈偏头痛并蜷缩衣柜、次日教师自杀右拳骨折的恐怖弑师疑云，以及双亲横死后自残右手绝食两周瘦成干尸渴望姐姐呼唤名字救赎的惨烈童年创伤"
@@ -2900,6 +2912,32 @@ def build_report():
                 "section": "灰色的果实·莳菜线第十六章童年右臂恶魔梦魇与绝境冷柜破局 (grisaia1/mak_015)"
             })
 
+    # mak_016 (Milestone 2 Chapter 17)
+    for lno in range(35457, 35967):
+        ja_raw = ja_lines[lno - 1]
+        cn_raw = cn_lines[lno - 1]
+        sid = ja_raw.split("\t")[0] if "\t" in ja_raw else f"L{lno}"
+        ja_txt = ja_raw.split("\t")[1] if "\t" in ja_raw else ja_raw
+        cn_txt = cn_raw.split("\t")[1] if "\t" in cn_raw else cn_raw
+
+        old_txt = cn_txt
+        if git_base_cn and len(git_base_cn) >= lno:
+            head_raw = git_base_cn[lno - 1]
+            old_txt = head_raw.split("\t")[1] if "\t" in head_raw else head_raw
+
+        if cn_txt != old_txt:
+            cat, reason = classify_change(lno, sid, ja_txt, old_txt, cn_txt)
+            diffs.append({
+                "lno": lno,
+                "sid": sid,
+                "ja": ja_txt,
+                "old": old_txt,
+                "new": cn_txt,
+                "cat": cat,
+                "reason": reason,
+                "section": "灰色的果实·莳菜线第十七章雨夜猎杀反伏击与冷酷生母夺命阴谋 (grisaia1/mak_016)"
+            })
+
     print(f"Total indexed modifications: {len(diffs)}")
 
     # Build Markdown
@@ -3566,6 +3604,15 @@ def build_report():
     md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
     md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
     for idx, d in enumerate(mak_015_diffs, 1):
+        md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
+    md.append("\n---\n")
+
+    # Section 74 - Milestone 2: Makina Route Chapter 17
+    mak_016_diffs = [d for d in diffs if d["section"].startswith("灰色的果实·莳菜线第十七章雨夜猎杀反伏击与冷酷生母夺命阴谋")]
+    md.append(f"## 七十四、 灰色的果实·莳菜线第十七章雨夜猎杀反伏击与冷酷生母夺命阴谋 (`grisaia1/mak_016`，共 {len(mak_016_diffs)} 条) —— 【里程碑二·个人线第十七章】\n")
+    md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
+    md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
+    for idx, d in enumerate(mak_016_diffs, 1):
         md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
     md.append("\n---\n")
 
