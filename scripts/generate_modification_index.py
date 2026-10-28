@@ -97,6 +97,18 @@ def classify_change(line_no, sid, ja, old_cn, new_cn):
         return "少儿足球麻子铁血信条与小岭幸湿热大腿反差", "纠正机翻将雄二足球训导‘比赛就是比弹药量’（タマ数）、‘今天就去把朋友（足球）往死里踹’死译；传神还原雄二祭出麻子棍棒教育将少儿足球打造成铁血训练营，对哭泣小球员训诫‘男人一生只为丢钱包和母亲去世流泪，为他人流泪为自己只流汗’，反差魅力点燃幸的极度兴奋（‘黑丝都湿透了，差点发推湿热中’），以及天音发来口交自拍照邮件引发雄二与幸面红耳赤真正绝句的爆笑场面"
     if "フランクフルト" in ja or "ウルシー環礁" in ja or "うるしゃ" in ja or "鬼の子" in ja or "処女" in ja or "乳" in ja or "戦場はセックスより安全" in ja or "エグッ" in ja or "グロッ" in ja or "恋愛上級者" in ja:
         return "法兰克福香肠乌利西环礁与少女初夜立场大辩论", "纠正机翻将满的口癖悲鸣‘吵死人啦’（うるしゃー）与二战盟军前线锚地‘乌利西环礁’冷知识谐音梗丢失、将法兰克福香肠私下练习口交粗暴直译的硬伤；生动展现莳菜偷窥天音口交自拍惊呼重口猎奇，以及天音质问少女们‘若雄二索要初夜’时幸表示‘风见先生执意如此便愿意献上’、莳菜表示‘瞒着天姐悄悄献身’并揭露雄二‘战场比做爱安全’的胆小鬼忠诚守则，天音顿悟唯有自身‘大波巨乳’是压倒性王牌的精彩群像戏"
+
+    # ama_003 specific
+    if "モーヒー" in ja or "ゴルチェ" in ja or "フィオルッチ" in ja or "伊達メガネ" in ja or "市ヶ谷" in ja or "主計" in ja:
+        return "学园长口误调侃与CIRS微薄津贴西服怨念", "纠正将学园长咬舌口误‘モーヒー’（把咖啡coffee念成mohee）死译抹杀的语病；生动再现雄二恶趣味调侃、吐槽CIRS层层克扣（市之谷到主计课只剩2500日元），怨念抱怨高缇耶（Jean Paul Gaultier）名牌西装、发蜡、菲奥鲁奇（Fiorucci）平光无度数眼镜（伊达眼镜）与执事侍从礼仪的冷面硬派吐槽"
+    if "百円" in ja or "１００円" in ja or "揉ませて" in ja or "まろ～ん" in ja or "ベトナム" in ja or "お守り" in ja or "髪の毛" in ja or "都合のいい女" in ja:
+        return "百元摸胸自卑痛哭与深情告白生发护符", "极具张力地刻画自动售货机前天音挂牌‘摸欧派只要100日元！’的自暴自弃；雄二正色以待严肃阐明已将领证结婚纳入人生规划，天音失控痛哭道出唯恐自身除丰满巨乳外一无是处、害怕沦为便利女人惨遭抛弃的自卑心结；伴随着雄二真挚吐露‘天音……我喜欢你……我深爱着你’与天音破涕为笑爆出经典拟声词‘波罗～嗯’（まろ～ん），以及赠送缝入自身青丝的纯手工狗狗交通安全护身符，令雄二初尝‘归宿’之温存"
+    if "紫電" in ja or "三式戦" in ja or "五式戦" in ja or "Ｐ-５１Ｄ" in ja or "ハバネロ" in ja or "アサヒクリーン" in ja or "噛め" in ja or "口移し" in ja:
+        return "战机考据过家家与朝日清洁专线隐秘警示", "生动再现幸与莳菜扮演雄二天音情侣喂食过家家：将‘天音哟’魔改呼号为‘哈巴涅罗辣椒’、硬核军事考据紫电vs紫电改、三式战飞燕vs五式战及与P-51D的误认，幸遵从命令为莳菜口对口嚼食物反差引发天音暴走；由美子向雄二点破仅有一部电话的幌子空壳公司‘有限会社朝日清洁’（Asahi Clean），并沉重警示‘天音已承受不起第二次崩溃’的深层伏笔"
+    if "ドンムーブ" in ja or "ネバー" in ja or "エバー" in ja or "デビル" in ja or "飛び蹴り" in ja or "テニアン" in ja or "伊号" in ja or "育児日記" in ja or "彼氏日記" in ja or "クロリンガス" in ja or "バッテリー室" in ja:
+        return "美智留蹦英语防卫飞踢与天音育儿男友日记", "纠正机翻将美智留英语补习后连环蹦词（Don't move! Never! Ever! NO! Devil!）生硬抹平的语病，传神展现美智留为护卫天音声称要使出必杀飞踢、雄二冷面预留住院费的反差喜剧；细腻呈现莳菜浴缸内大玩潜水艇提尼安岛突击与蓄电池室氯气泄漏求生游戏，以及天音台灯下细致入微记录莳菜营养餐（1500千卡、防止狼吞虎咽）与男友日记（1920千卡、体脂监测及闺房缠绵）的温婉贤妻模样"
+    if "老害" in ja or "サゴ椰子" in ja or "サクサク" in ja or "Ｒ３２" in ja or "Ｒ３３" in ja or "お湿りなう" in ja or "赤い玉" in ja or "黄色い玉" in ja or "掃除機のコード" in ja or "動物園" in ja or "暖簾分け" in ja:
+        return "老害之毒演说与吸尘器电源线交欢红黄球", "纠正将莳菜怒斥由美子‘老害穿着衣服招摇过市’以及天音吐槽日产Skyline R32换代R33死译的语病；生动展现莳菜立志新几内亚西米淀粉面包师、雄二‘教孩子跌倒后如何爬起’铁血育儿打动小岭幸‘湿意盎然なう’；浴室洗头揭秘天音京都老字号料亭入赘老爹与真传‘欧派降男法’的硬核奶奶，雄二以吸尘器电源线黄标缓冲警示幽默回应‘一日十二次’交欢极限，并在敲定动物园二人约会后萌生‘与常人平庸生活格格不入’的凄美孤狼心境"
     if "悪魔の手" in ja or "恩赦" in ja or "犬小屋" in ja or "脱亡" in ja or "ケースオフィサー" in ja or "次代の９０２９" in ja:
         return "特务猎犬悲歌与病房私奔破灭", "深刻剖析JB对国家非法秘匿组织CIRS‘恶魔利爪’的冷酷自白——以虚伪特赦为锁链驯化狂犬撕咬敌人，猎犬一旦咬断项圈也唯有饿毙或重返狗舍；敏锐交代莳菜从医院出逃、琪娅拉未来接任9029联络官的沉重伏笔"
     if "ピストル" in ja or "７千万" in ja or "通帳" in ja or "９０２９" in ja or "目が見えない" in ja or "春寺" in ja or "大騙子" in ja or "ウソつき" in ja:
@@ -3152,6 +3164,32 @@ def build_report():
                 "section": "灰色的果实·天音线第一章晨间契约与学园全员黑暗审判Part2 (grisaia1/ama_002_p2)"
             })
 
+    # ama_003 (Milestone 2 Chapter 24 - Amane Route Chapter 2)
+    for lno in range(2167, 2883):
+        ja_raw = ja_lines[lno - 1]
+        cn_raw = cn_lines[lno - 1]
+        sid = ja_raw.split("\t")[0] if "\t" in ja_raw else f"L{lno}"
+        ja_txt = ja_raw.split("\t")[1] if "\t" in ja_raw else ja_raw
+        cn_txt = cn_raw.split("\t")[1] if "\t" in cn_raw else cn_raw
+
+        old_txt = cn_txt
+        if git_base_cn and len(git_base_cn) >= lno:
+            head_raw = git_base_cn[lno - 1]
+            old_txt = head_raw.split("\t")[1] if "\t" in head_raw else head_raw
+
+        if cn_txt != old_txt:
+            cat, reason = classify_change(lno, sid, ja_txt, old_txt, cn_txt)
+            diffs.append({
+                "lno": lno,
+                "sid": sid,
+                "ja": ja_txt,
+                "old": old_txt,
+                "new": cn_txt,
+                "cat": cat,
+                "reason": reason,
+                "section": "灰色的果实·天音线第二章百元摸胸告白与二人动物园之约 (grisaia1/ama_003)"
+            })
+
     print(f"Total indexed modifications: {len(diffs)}")
 
     # Build Markdown
@@ -3881,6 +3919,15 @@ def build_report():
     md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
     md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
     for idx, d in enumerate(ama_002_p2_diffs, 1):
+        md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
+    md.append("\n---\n")
+
+    # Section 81 - Milestone 2: Amane Route Chapter 2
+    ama_003_diffs = [d for d in diffs if d["section"].startswith("灰色的果实·天音线第二章百元摸胸告白与二人动物园之约")]
+    md.append(f"## 八十一、 灰色的果实·天音线第二章百元摸胸告白与二人动物园之约 (`grisaia1/ama_003`，共 {len(ama_003_diffs)} 条) —— 【里程碑二·个人线第二十四章】\n")
+    md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
+    md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
+    for idx, d in enumerate(ama_003_diffs, 1):
         md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
     md.append("\n---\n")
 
