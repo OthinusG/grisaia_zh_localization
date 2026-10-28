@@ -1130,6 +1130,15 @@ def classify_change(line_no, sid, ja, old_cn, new_cn):
         return "独头重弹撕耳炙眼与特工肉搏残局", "修正枪械弹药专业术语：散弹枪下层枪管射出的单头实心重弹‘スラッグ弾’（独头鹿弹/Slug重弹）将雄二左耳生生撕裂、狂暴高压燃气灼焦左眼球致盲；纠正单挑用语‘タイマン’，真实体现特工在重度颅脑震荡下的濒死极限纠缠"
     if "噛み付き" in ja or "食い千切" in ja or "歯を引き抜き" in ja or "死神" in ja or "足首" in ja or "硝煙" in ja:
         return "恶兽撕咬断齿与死后尸僵绝境同归", "震撼呈现天音濒死化作恶兽死死咬入坂下手臂生撕下一大块血肉、牙齿折断嵌进伤口；天音气绝后右手爆发超常握力如铁钳般死扣坂下脚踝尸僵不放（‘死んでるのに、離れない’）；坂下极度恐惧发狂踢蹬失足撞岩碎颅暴毙；雄二抱尸长空悲鸣、唯余一缕孤独硝烟"
+    # ama_h specific (Milestone 2 Chapter 30 - Amane Route H-Scene / Interlude)
+    if "未知の翼" in ja or "震える獣" in ja or "人生における７つの染み" in ja or "キャラ弁" in ja or "岡田在ります" in ja:
+        return "雄二滥读杂食书单与思想审查讽刺", "刻画雄二在体制严格审查下养成的无所不读的杂食书虫做派，生动罗列其堆积如山的书单：《未知的双翼》、《战栗的野兽》、《人生中的七种污斑》、《卡通便当达人》及《冈田在室》；讽刺机构允许露骨写真却严防推理小说的荒诞审查机制"
+    if "モッサリ頭" in ja or "ジュリア" in ja or "刃物偏執狂" in ja or "散髪代" in ja or "鋏" in ja:
+        return "师父麻子读书熏陶与JB剪发偏执日常", "纠正机翻将‘モッサリ頭のジュリア’误译为‘大块头茱莉亚’为‘乱蓬蓬土气发型的茱莉亚’；细腻展现师父日久年深的读书熏陶，以及JB闲暇时如冷兵器偏执狂般将雄二按进浴室理发甚至剪破耳朵的欢脱日常"
+    if "２０００ｃｃ" in ja or "ターボ四駆" in ja or "クラッチ" in ja or "ミッション" in ja or "高級スポーツカー" in ja:
+        return "豪华超跑设问与性能涡轮四驱心愿", "呈现雄二以‘宿舍门口放超跑’为比喻引导天音，天音极速专业对答‘2000cc日系原厂涡轮增压全时四驱、悉心呵护离合器与变速箱’的汽车极客本色；雄二直言‘身为男人自然要摸清自己所爱女人的心愿’"
+    if "お姉ちゃんゴッコ" in ja or "シャンプー" in ja or "頭を洗う" in ja or "マキナ" in ja or "ドＭ" in ja:
+        return "大姐姐过家家温存共浴与莳菜纠错", "彻底纠正机翻将‘マキナ’（莳菜）荒唐误译为‘真琴’的严重角色名错乱！刻画天音因身为独生女而渴望体验‘为年下弟弟洗头的温存大姐姐过家家’，洗发露呛进雄二口中的搞笑互动，以及莳菜敲门引发天音慌乱掩饰的青春日常"
     return "消除AI味/润色优化", "重构生硬日式倒装与机械直译，润色为符合Galgame演出的自然中文"
 
 def build_report():
@@ -3377,6 +3386,32 @@ def build_report():
                 "section": "灰色的果实·天音线分歧终局染血玉碎与一缕硝烟之死斗 (grisaia1/ama_008)"
             })
 
+    # ama_h (Milestone 2 Chapter 30 - Amane Route H-Scene / Interlude)
+    for lno in range(5522, 5720):
+        ja_raw = ja_lines[lno - 1]
+        cn_raw = cn_lines[lno - 1]
+        sid = ja_raw.split("\t")[0] if "\t" in ja_raw else f"L{lno}"
+        ja_txt = ja_raw.split("\t")[1] if "\t" in ja_raw else ja_raw
+        cn_txt = cn_raw.split("\t")[1] if "\t" in cn_raw else cn_raw
+
+        old_txt = cn_txt
+        if git_base_cn and len(git_base_cn) >= lno:
+            head_raw = git_base_cn[lno - 1]
+            old_txt = head_raw.split("\t")[1] if "\t" in head_raw else head_raw
+
+        if cn_txt != old_txt:
+            cat, reason = classify_change(lno, sid, ja_txt, old_txt, cn_txt)
+            diffs.append({
+                "lno": lno,
+                "sid": sid,
+                "ja": ja_txt,
+                "old": old_txt,
+                "new": cn_txt,
+                "cat": cat,
+                "reason": reason,
+                "section": "灰色的果实·天音线幕间书籍乱读与温存鸳鸯浴之欢愉 (grisaia1/ama_h)"
+            })
+
     print(f"Total indexed modifications: {len(diffs)}")
 
     # Build Markdown
@@ -4160,6 +4195,15 @@ def build_report():
     md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
     md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
     for idx, d in enumerate(ama_008_diffs, 1):
+        md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
+    md.append("\n---\n")
+
+    # Section 87 - Milestone 2: Amane Route H-Scene / Interlude
+    ama_h_diffs = [d for d in diffs if d["section"].startswith("灰色的果实·天音线幕间书籍乱读与温存鸳鸯浴之欢愉")]
+    md.append(f"## 八十七、 灰色的果实·天音线幕间书籍乱读与温存鸳鸯浴之欢愉 (`grisaia1/ama_h`，共 {len(ama_h_diffs)} 条) —— 【里程碑二·个人线第三十章】\n")
+    md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
+    md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
+    for idx, d in enumerate(ama_h_diffs, 1):
         md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
     md.append("\n---\n")
 
