@@ -14,6 +14,18 @@ def escape_md(text):
     return text.replace("|", "\\|").replace("\n", " ").replace("\r", "")
 
 def classify_change(line_no, sid, ja, old_cn, new_cn):
+    # ama_old_013 specific (Angelic Howl Day 13)
+    if (11423 <= line_no <= 11575) or sid.startswith("grisaia1/ama_old_013"):
+        if "古森" in ja and ("痙攣" in ja or "てんかん" in ja or "花" in ja or "ジギタリス" in ja or "トリカブト" in ja or "毒" in ja or "寄生虫" in ja):
+            return "毛地黄中毒惊魂与生水杂草免疫崩解", "致命误食中毒：古森学姐因饥饿误食粉红花苞突发全身剧烈痉挛、牙齿打战抽搐，一姬排除寄生虫感染精准断定为毛地黄强心苷中毒（纠正机翻将‘乌头’误译为‘马醉花’）；全员连日痛饮生水杂草致免疫崩解，微弱毒素亦成索命绝症"
+        if "伊吹" in ja and ("何日" in ja or "帰りたい" in ja or "夢遊病" in ja or "腐るに任せる" in ja) or "佐久間" in ja and ("浮腫" in ja or "パンパン" in ja or "栄養失調が顔に出て" in ja):
+            return "伊吹记忆死循环与佐久间重度面部水肿", "神经机能衰竭：伊吹大脑机能受损陷入‘今天几号、好想回家’的断片失智死循环，佐久间崩溃痛哭‘难道只能看着她脑子烂掉’；佐久间自身面部极度低蛋白水肿、皮肤泛青眼皮难睁，一姬无奈致歉毫无医药"
+        if "桜井" in ja and ("敗血症" in ja or "細菌" in ja or "抗生物質" in ja) or "広岡" in ja and ("衰弱" in ja or "反応しない" in ja):
+            return "樱井严重败血症高热与广冈深度昏迷", "至暗生理溃败：樱井学姐腹部创口缺乏抗生素引发严重败血症，高热稽留、肌肉持续细碎痉挛；广冈学姐重度昏迷失去意识；仅能咽下几粒碎米毒草杂烩稀汤，创口加速溃烂"
+        if "錆を舐める" in ja or "塩気" in ja or "玉ねぎの皮" in ja or "心臓が止まって" in ja or "苦しまずに死ねる" in ja or "まだ諦めるのは早い" in ja:
+            return "舔舐大巴铁锈嗜盐与睡梦求死解脱悲叹", "求生极限异化：全员从渴望甜味退化至极度缺盐，疯狂舔舐大巴车体锈蚀铁屑；天音夜宿睡袋渴望‘一睡不醒无痛心脏停跳’之死愿解脱，一姬严厉训斥却宛如给自己打气自语‘现在放弃还太早’，透出领袖内心的极度动摇"
+        return "消除AI味/润色优化", "重构生硬日式倒装与机械直译，润色为符合Galgame演出的自然中文"
+
     # ama_old_012 specific (Angelic Howl Day 12)
     if (11220 <= line_no <= 11422) or sid.startswith("grisaia1/ama_old_012"):
         if "夢" in ja and ("リアカー" in ja or "缶詰" in ja or "大和煮" in ja or "味噌煮" in ja or "パイナップル" in ja or "白桃" in ja or "隠す" in ja):
@@ -3942,6 +3954,32 @@ def build_report():
                 "section": "灰色的果实·天音线天使之声篇第十二日西施犬病逝、铁棒爆头碎眼与全员含泪吞食烤狗肉 (grisaia1/ama_old_012)"
             })
 
+    # ama_old_013 (Milestone 2 Chapter 45 - Angelic Howl Day 13)
+    for lno in range(11423, 11576):
+        ja_raw = ja_lines[lno - 1]
+        cn_raw = cn_lines[lno - 1]
+        sid = ja_raw.split("\t")[0] if "\t" in ja_raw else f"L{lno}"
+        ja_txt = ja_raw.split("\t")[1] if "\t" in ja_raw else ja_raw
+        cn_txt = cn_raw.split("\t")[1] if "\t" in cn_raw else cn_raw
+
+        old_txt = cn_txt
+        if git_base_cn and len(git_base_cn) >= lno:
+            head_raw = git_base_cn[lno - 1]
+            old_txt = head_raw.split("\t")[1] if "\t" in head_raw else head_raw
+
+        if cn_txt != old_txt:
+            cat, reason = classify_change(lno, sid, ja_txt, old_txt, cn_txt)
+            diffs.append({
+                "lno": lno,
+                "sid": sid,
+                "ja": ja_txt,
+                "old": old_txt,
+                "new": cn_txt,
+                "cat": cat,
+                "reason": reason,
+                "section": "灰色的果实·天音线天使之声篇第十三日毛地黄中毒惊魂、断片失智循环与舔舐大巴铁锈嗜盐 (grisaia1/ama_old_013)"
+            })
+
     print(f"Total indexed modifications: {len(diffs)}")
 
     # Build Markdown
@@ -4860,6 +4898,15 @@ def build_report():
     md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
     md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
     for idx, d in enumerate(ama_old_012_diffs, 1):
+        md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
+    md.append("\n---\n")
+
+    # Section 102 - Milestone 2: Angelic Howl Day 13
+    ama_old_013_diffs = [d for d in diffs if d["section"].startswith("灰色的果实·天音线天使之声篇第十三日毛地黄中毒惊魂、断片失智循环与舔舐大巴铁锈嗜盐")]
+    md.append(f"## 一百〇二、 灰色的果实·天音线天使之声篇第十三日毛地黄中毒惊魂、断片失智循环与舔舐大巴铁锈嗜盐 (`grisaia1/ama_old_013`，共 {len(ama_old_013_diffs)} 条) —— 【里程碑二·个人线第四十五章】\n")
+    md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
+    md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
+    for idx, d in enumerate(ama_old_013_diffs, 1):
         md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
     md.append("\n---\n")
 
