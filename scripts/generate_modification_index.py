@@ -77,6 +77,16 @@ def classify_change(line_no, sid, ja, old_cn, new_cn):
     # mak_h specific
     if "猫の墓場" in ja or "探さないで" in ja or "靴下" in ja or "風船ガム" in ja or "三角型" in ja or "チョップ" in ja or "子供じゃない" in ja or "無茶苦茶" in ja or "抱いて" in ja:
         return "猫之墓地幽暗独白与少女的觉悟", "深度刻画莳菜空无一物的冷清房间犹如野猫等死的墓地、门缝藏袜呼应‘女人说别找我就是快来找我’的深层心理；细腻展现雄二回想当年麻子伸出的救赎援手、面对莳菜笨拙袒露三角形极品贫乳标本的诙谐吐槽，以及两人心意相通托付一生的动人告白"
+
+    # ama_002_p1 specific
+    if "ローキック" in ja or "玉子焼き" in ja or "黒焦げ" in ja or "悪食" in ja or "抱いた" in ja:
+        return "焦黑厚蛋烧与雄二当众自爆结合", "纠正将泰拳低扫腿（Low Kick）极其离谱瞎猜音译为‘低烧’的特大硬伤；传神还原雄二面对焦黑厚蛋烧坚守‘女人做的饭哪怕是毒药也绝不剩下一粒’的恶食特工信条，并在教室全员面前轻描淡写当众自爆‘昨晚我抱了天音’引发全班大地震的惊世名场面"
+    if "パンツ" in ja or "ヤキモチ" in ja or "ツンデレ" in ja or "大味" in ja or "９０２" in ja or "保護観察" in ja:
+        return "当街致电JB对质与巨乳控傲娇解密", "纠正机翻将代号9029脱口而出音译为‘九十’、将讽刺大胸‘大味’（大而无当寡淡乏味）误译为‘大胸’以及对JB频发‘您’等严重敬语与人称错误；极具张力地刻画雄二当街致电监护人JB对质洗内裤往事，JB怒喷雄二后向天音揭秘‘雄二其实是个对大胸妹子毫无抵抗力的傲娇’，解除天音心结"
+    if "安全保障条約" in ja or "膝の上" in ja or "本土決戦" in ja or "統治権" in ja or "血判" in ja or "侵略" in ja:
+        return "膝盖领土安全条约与头部摸头统治权", "生动再现美滨学园女生黑暗审判决议：莳菜以‘不惜本土决战’强行索要大哥哥膝盖领土自由使用权并签署安全保障条约，小岭幸将雄二摸头定性为‘对头部的武装侵略’并正式申请由雄二的手掌继续行使合法统治权甚至要求按血手印的绝顶爆笑日常"
+    if "ＩＲＡ" in ja or "モサド" in ja or "中野学校" in ja or "飯炊き女" in ja or "クーデレ" in ja or "赤紙" in ja or "青紙" in ja or "石粉粘土" in ja or "２コマ前" in ja or "一銭五厘" in ja:
+        return "间谍脑洞质问与战马千金军旅哲学", "纠正机翻将美满嘲讽天音‘召之即来的做饭老妈子’颠倒为主客的语病；细腻呈现美满怀疑雄二系IRA恐怖分子、摩萨德杀手或中野学校间谍残党的疯狂脑洞与傲娇泪奔，以及松山大先生雕塑课上以‘前两帧决定跃动感’指点雄二联想狙击扳机瞬间、莳菜恶搞高达第一话雕刻《冷傲娇羞由美子屹立于大地》与战时红纸五厘人命不如千金军马的冷峻历史对比"
     if "悪魔の手" in ja or "恩赦" in ja or "犬小屋" in ja or "脱亡" in ja or "ケースオフィサー" in ja or "次代の９０２９" in ja:
         return "特务猎犬悲歌与病房私奔破灭", "深刻剖析JB对国家非法秘匿组织CIRS‘恶魔利爪’的冷酷自白——以虚伪特赦为锁链驯化狂犬撕咬敌人，猎犬一旦咬断项圈也唯有饿毙或重返狗舍；敏锐交代莳菜从医院出逃、琪娅拉未来接任9029联络官的沉重伏笔"
     if "ピストル" in ja or "７千万" in ja or "通帳" in ja or "９０２９" in ja or "目が見えない" in ja or "春寺" in ja or "大騙子" in ja or "ウソつき" in ja:
@@ -3080,6 +3090,32 @@ def build_report():
                 "section": "灰色的果实·莳菜线第二十一章猫之墓地幽暗独白与少女的觉悟 (grisaia1/mak_h)"
             })
 
+    # ama_002_p1 (Milestone 2 Chapter 22 - Amane Route Chapter 1 Part 1)
+    for lno in range(1164, 1666):
+        ja_raw = ja_lines[lno - 1]
+        cn_raw = cn_lines[lno - 1]
+        sid = ja_raw.split("\t")[0] if "\t" in ja_raw else f"L{lno}"
+        ja_txt = ja_raw.split("\t")[1] if "\t" in ja_raw else ja_raw
+        cn_txt = cn_raw.split("\t")[1] if "\t" in cn_raw else cn_raw
+
+        old_txt = cn_txt
+        if git_base_cn and len(git_base_cn) >= lno:
+            head_raw = git_base_cn[lno - 1]
+            old_txt = head_raw.split("\t")[1] if "\t" in head_raw else head_raw
+
+        if cn_txt != old_txt:
+            cat, reason = classify_change(lno, sid, ja_txt, old_txt, cn_txt)
+            diffs.append({
+                "lno": lno,
+                "sid": sid,
+                "ja": ja_txt,
+                "old": old_txt,
+                "new": cn_txt,
+                "cat": cat,
+                "reason": reason,
+                "section": "灰色的果实·天音线第一章晨间契约与学园全员黑暗审判Part1 (grisaia1/ama_002_p1)"
+            })
+
     print(f"Total indexed modifications: {len(diffs)}")
 
     # Build Markdown
@@ -3791,6 +3827,15 @@ def build_report():
     md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
     md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
     for idx, d in enumerate(mak_h_diffs, 1):
+        md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
+    md.append("\n---\n")
+
+    # Section 79 - Milestone 2: Amane Route Chapter 1 Part 1
+    ama_002_p1_diffs = [d for d in diffs if d["section"].startswith("灰色的果实·天音线第一章晨间契约与学园全员黑暗审判Part1")]
+    md.append(f"## 七十九、 灰色的果实·天音线第一章晨间契约与学园全员黑暗审判Part1 (`grisaia1/ama_002_p1`，共 {len(ama_002_p1_diffs)} 条) —— 【里程碑二·个人线第二十二章】\n")
+    md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
+    md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
+    for idx, d in enumerate(ama_002_p1_diffs, 1):
         md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
     md.append("\n---\n")
 
