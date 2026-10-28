@@ -32,6 +32,20 @@ def classify_change(line_no, sid, ja, old_cn, new_cn):
     if "嘘吐き" in ja or "嘘はき" in ja or "泥棒の始まり" in ja or "ブモー" in ja:
         return "日式谚语双关与傲娇口癖还原", "将满把'嘘つきは泥棒の始まり'（撒谎是当小偷的开端）读白字并强词夺理的俏皮双关自然汉化，精准呈现其被吻后瞬间切换回傲娇状态气急败坏的可爱反应"
 
+    # com52 specific
+    if "女体盛り" in ja:
+        return "成人文化术语纠偏", "纠正原机翻将'女体盛り'（女体盛/人体盛）荒唐错翻为'胸部加垫'的离谱失误，精准传达天音等人的荤段子黄腔幽默"
+    if "チンピラ" in ja:
+        return "人物眼神与神态俚语校正", "纠正原机翻将'チンピラのような目'（如街头小混混般凶恶的眼神）反向错翻为'小动物般的眼睛'的严重走样，生动呈现由美子紧盯菜单时如临大敌的杀气"
+    if "けつね" in ja or "あげだま" in ja or "ぎょうさん" in ja or "ようけ目" in ja:
+        return "关西乌冬面方言梗还原", "纠正原机翻将大阪方言'けつね'（狐狸乌冬面/油豆腐乌冬面）荒谬误译为'鸡蛋卷'的硬伤，原汁原味还原莳菜与幸插科打诨的关西面摊相声"
+    if "コ・ノ・ウ・ラ・ミ・ハ・ラ・サ・デ" in ja or "カーン" in ja:
+        return "经典动漫名梗与大喜利恶搞还原", "修正机翻将经典漫画《魔太郎来了!!》名句'コ・ノ・ウ・ラ・ミ・ハ・ラ・サ・デ'（此恨怎能不雪）无厘头直译为'这个故事是树枝'的爆笑机翻事故，完美呈现满被迫大喜利却瞬间冷场的悲催喜剧效果"
+    if "ビッチ" in ja or "ピュアガール" in ja or "乳首" in ja:
+        return "太妹吐槽与毒舌黄腔本地化", "准确将幸调侃满发色的'ビッチ'从生硬的'泼妇'校正为贴合御宅语境的'太妹/辣妹'，并细腻润色天音自爆'乳头掉了'引发全场冻结的无厘头荤段子"
+    if "クレープ" in ja or "エロかった" in ja or "はむ" in ja or "バクバク" in ja:
+        return "由美子傲娇吃相与反差萌刻画", "精准捕捉由美子故作冷酷面瘫咽下可丽饼企图'粉碎幻想'、嘴角却沾满白奶油狼吞虎咽的微妙色气反差萌，为共通线全篇画上生动诙谐的收尾句号"
+
     # com49 specific
     if "アサヒクリーン" in ja or "ＯＨＰ" in ja or "狙撃" in ja or "紙オムツ" in ja or "眼筋" in ja or "紙おむつ" in ja or "名刺" in ja or "生保レディ" in ja or "アストンマーチン" in ja or "１８００万" in ja or "Ｈｏｗｄｙ" in ja or "ハウディー" in ja or "ただれた関係" in ja or "ツンデレ" in ja or "飯炊き女" in ja or "バーバラ" in ja or "イボンヌ" in ja or "ノンフライ" in ja:
         return "B级特勤出动与美滨宿舍门前红唇封口相声", "全章神级出警与日常相声：雄二协助天音搬运OHP投影仪；JB以日出保洁公司为掩护紧急征召雄二执行地下下水道歼敌狙击特勤，雄二传授纸尿裤与眼肌特训秘诀；食堂油炸鱿鱼圈调料引发激辩，由美子被莳菜冠以‘非油炸’、‘芭芭拉’、‘伊冯娜’绰号；JB驾驶千万豪车阿斯顿马丁送雄二回宿舍并在校门前贴脸亲吻吻别，小幸目睹全过程并以平胸起誓保守‘糜烂男女关系’秘密甚至提出以接吻封口自证"
@@ -2230,6 +2244,32 @@ def build_report():
                 "section": "灰色的果实·共通线第五十一章男女纯友谊大讨论与灯塔黑满现身唇吻契约 (grisaia1/com51)"
             })
 
+    # com52 (Milestone 1 Finale!)
+    for lno in range(25983, 26257):
+        ja_raw = ja_lines[lno - 1]
+        cn_raw = cn_lines[lno - 1]
+        sid = ja_raw.split("\t")[0] if "\t" in ja_raw else f"L{lno}"
+        ja_txt = ja_raw.split("\t")[1] if "\t" in ja_raw else ja_raw
+        cn_txt = cn_raw.split("\t")[1] if "\t" in cn_raw else cn_raw
+
+        old_txt = cn_txt
+        if git_base_cn and len(git_base_cn) >= lno:
+            head_raw = git_base_cn[lno - 1]
+            old_txt = head_raw.split("\t")[1] if "\t" in head_raw else head_raw
+
+        if cn_txt != old_txt:
+            cat, reason = classify_change(lno, sid, ja_txt, old_txt, cn_txt)
+            diffs.append({
+                "lno": lno,
+                "sid": sid,
+                "ja": ja_txt,
+                "old": old_txt,
+                "new": cn_txt,
+                "cat": cat,
+                "reason": reason,
+                "section": "灰色的果实·共通线第五十二章可丽饼店跟踪大作战与由美子吃相反差萌 (grisaia1/com52)"
+            })
+
     print(f"Total indexed modifications: {len(diffs)}")
 
     # Build Markdown
@@ -2743,6 +2783,15 @@ def build_report():
     md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
     md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
     for idx, d in enumerate(com51_diffs, 1):
+        md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
+    md.append("\n---\n")
+
+    # Section 57 - Milestone 1 Finale!
+    com52_diffs = [d for d in diffs if d["section"].startswith("灰色的果实·共通线第五十二章可丽饼店跟踪大作战与由美子吃相反差萌")]
+    md.append(f"## 五十七、 灰色的果实·共通线第五十二章可丽饼店跟踪大作战与由美子吃相反差萌 (`grisaia1/com52`，共 {len(com52_diffs)} 条) —— 【里程碑一·全共通线圆满收官】\n")
+    md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
+    md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
+    for idx, d in enumerate(com52_diffs, 1):
         md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
     md.append("\n---\n")
 
