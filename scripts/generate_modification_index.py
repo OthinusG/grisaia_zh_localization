@@ -14,6 +14,18 @@ def escape_md(text):
     return text.replace("|", "\\|").replace("\n", " ").replace("\r", "")
 
 def classify_change(line_no, sid, ja, old_cn, new_cn):
+    # mic_007 specific (Michiru Route: Kyoto Yatsuhashi, Giant Squid & Date Proposal)
+    if (38678 <= line_no <= 38835) or sid.startswith("grisaia1/mic_007"):
+        if "八ツ橋" in ja or "ニッキ" in ja or "速く" in ja or "ガイコツ" in ja or "ペナント" in ja:
+            return "京都八桥非肉桂味土产与骷髅钥匙扣三角标", "莳菜天音小幸由美子全员离舍，纠正肉桂机翻『尼基』与骷髅机翻『章鱼』，小幸神速折返扫除与锦旗三角标预订"
+        if "マゲマゲドンキーノ" in ja or "大王気取り" in ja or "イカ気分" in ja or "諸兵科連合" in ja:
+            return "轻小说阅读大王乌贼与兵种合成作战", "第二人格突然现身拍落轻小说，大王乌贼谐音梗痛斥雄二，联手助攻宛如兵种合成作战"
+        if "女心" in ja or "この子とデート" in ja or "オマエとデート" in ja or "断られたら" in ja:
+            return "第二人格代求约会助攻与雄二多管闲事驳斥", "第二人格力劝雄二主动邀请满约会，纠正机翻『欧梅』与『断られたら』被拒绝反向误译为被告白"
+        if "暇でしょ" in ja or "即死" in ja or "いぐ" in ja or "電卓" in ja or "デートだぁー" in ja:
+            return "无聊猝死论狂喜口胡与空气计算器确认档期", "满竭力搭话编造无聊奇迹论，获邀午后长跑兴奋口胡秒答，凭空按计算器核查档期大呼约会"
+        return "文本自然度与对话韵味润色优化", "重构生硬日式倒装与机械直译，润色为符合Galgame演出的自然中文"
+
     # mic_006 specific (Michiru Route: Wall-Crawling Michiru, Obscene Slip of Tongue & Sweet Military Fashion)
     if (38543 <= line_no <= 38677) or sid.startswith("grisaia1/mic_006"):
         if "ゴキブリ" in ja or "魔女狩り" in ja or "猫ニャ" in ja or "三人目のみちる" in ja:
@@ -4346,6 +4358,32 @@ def build_report():
                 "section": "灰色的果实·松岛满线壁角蟑螂潜行、下流口误白领京子与徒手拆平军事时尚出版社 (grisaia1/mic_006)"
             })
 
+    # mic_007 (Milestone 2 Chapter 55 - Michiru Route: Kyoto Yatsuhashi, Giant Squid & Date Proposal)
+    for lno in range(38678, 38836):
+        ja_raw = ja_lines[lno - 1]
+        cn_raw = cn_lines[lno - 1]
+        sid = ja_raw.split("\t")[0] if "\t" in ja_raw else f"L{lno}"
+        ja_txt = ja_raw.split("\t")[1] if "\t" in ja_raw else ja_raw
+        cn_txt = cn_raw.split("\t")[1] if "\t" in cn_raw else cn_raw
+
+        old_txt = cn_txt
+        if git_base_cn and len(git_base_cn) >= lno:
+            head_raw = git_base_cn[lno - 1]
+            old_txt = head_raw.split("\t")[1] if "\t" in head_raw else head_raw
+
+        if cn_txt != old_txt:
+            cat, reason = classify_change(lno, sid, ja_txt, old_txt, cn_txt)
+            diffs.append({
+                "lno": lno,
+                "sid": sid,
+                "ja": ja_txt,
+                "old": old_txt,
+                "new": cn_txt,
+                "cat": cat,
+                "reason": reason,
+                "section": "灰色的果实·松岛满线肉桂八桥骷髅钥匙扣、大王乌贼第二人格与空气计算器约会狂喜 (grisaia1/mic_007)"
+            })
+
     print(f"Total indexed modifications: {len(diffs)}")
 
     # Build Markdown
@@ -5354,6 +5392,15 @@ def build_report():
     md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
     md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
     for idx, d in enumerate(mic_006_diffs, 1):
+        md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
+    md.append("\n---\n")
+
+    # Section 112 - Milestone 2: Michiru Route Chapter 7
+    mic_007_diffs = [d for d in diffs if d["section"].startswith("灰色的果实·松岛满线肉桂八桥骷髅钥匙扣、大王乌贼第二人格与空气计算器约会狂喜")]
+    md.append(f"## 一百一十二、 灰色的果实·松岛满线肉桂八桥骷髅钥匙扣、大王乌贼第二人格与空气计算器约会狂喜 (`grisaia1/mic_007`，共 {len(mic_007_diffs)} 条) —— 【里程碑二·个人线第五十五章】\n")
+    md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
+    md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
+    for idx, d in enumerate(mic_007_diffs, 1):
         md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
     md.append("\n---\n")
 
