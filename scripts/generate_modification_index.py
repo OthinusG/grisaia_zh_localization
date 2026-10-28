@@ -14,6 +14,26 @@ def escape_md(text):
     return text.replace("|", "\\|").replace("\n", " ").replace("\r", "")
 
 def classify_change(line_no, sid, ja, old_cn, new_cn):
+    # ama_old_015 specific (Angelic Howl Day 15: Cannibalism Discovered, Kazuki Decoy, Amane Escape)
+    if (11677 <= line_no <= 12188) or sid.startswith("grisaia1/ama_old_015"):
+        if "食べてね" in ja or "首を吊って" in ja or "桜井先輩" in ja or "携帯電話" in ja or "愛犬と会話" in ja:
+            return "一姬死后吃我戏谑与古森绝望缢亡", "全剧心理防线彻底瓦解：一姬晨起调侃‘若我死了你就把我吃掉’，樱井败血症病逝，古森同学深陷弑犬食肉之疯狂重创，对无电手机与亡犬通话后于密林悬梁自尽，绝望死亡接二连三爆发"
+        if "等価交換" in ja or "幸福量" in ja or "早く死になよ" in ja or "遠慮しないで" in ja:
+            return "零和幸福哲学与互诅早死异化", "绝境伦理扭曲：极限绝境诞生‘他人死则我得生、全剧幸福总量固定’之命价等换妄想，金田与佐久间恶毒互诅‘快点死掉别客气’，同伴情谊荡然无存"
+        if "肝炎" in ja or "野ウサギ" in ja or "鹿" in ja or "肉に" in ja or "神のように崇め" in ja or "散々世話になった" in ja:
+            return "假借鹿肉之名与一姬坚拒死线", "食人之名伪装：越智与坂下以‘野兔与鹿肉’分食营地，众人奉若神明，此前庇护大家的一姬因无肉可分反遭怨毒白眼；一姬警觉肝炎剧毒滴肉不沾并勒令天音相让，守住人性最后死线"
+        if "白い塊" in ja or "大根のようなもの" in ja or "真実の破片" in ja or "ＡＬＩＯＮＥ" in ja or "首輪" in ja or "吐き出し" in ja or "殺してっ" in ja or "鬼" in ja:
+            return "林间食人惨剧撞破与恶鬼索命追杀", "全剧最震撼惨烈高潮：黎明前夕一姬引天音潜入密林，撞破越智与部长分食遗体惨剧，惊见阿君项圈，天音剧烈干呕狂吐，部长化身恶鬼嘶吼‘给我杀了她们’，全员化身索命饿鬼"
+        if "佐久間先輩" in ja or "３つのルール" in ja or "盗むな" in ja or "壊すな" in ja or "殺すな" in ja or "動物よ" in ja or "誤解なんだってば" in ja or "金田" in ja:
+            return "佐久间漠然旁观与文明三则彻底崩溃", "人性退化兽性：佐久间深知真相漠然旁观，一姬痛斥人类维系的三大规则‘不可偷盗、不可损坏、不可杀戮’彻底崩溃，部员受疯狂同调如饿鬼般踩泥折枝搜山，全员退化为纯粹食肉兽类"
+        if "包丁" in ja or "首を突けば" in ja or "死体に彼女達が群がっている隙に" in ja or "その役目は、私がやる" in ja:
+            return "割喉自戕代死决意与一姬反手夺刀", "灵魂至痛代死抉择：天音泥泞跌倒绝望抽刀欲割喉自尽以尸饵诱敌掩护一姬逃亡，一姬温柔覆手夺下菜刀，断然决意‘当诱饵的事，由我来担当’"
+        if "食糧と塩" in ja or "チョコレート" in ja or "脱出するための方法" in ja or "発覚していない嘘" in ja or "配点１０点" in ja or "絶対に振り返ってはダメ" in ja:
+            return "声东击西诱饵决意与十倍考题决别", "全剧最催泪告别名场面：一姬将私藏干粮、食盐、糖果与求生逃生便签尽数托付天音，以脚伤为由毅然充当诱饵反向引敌，留下经典‘未觉察谎言与真理之别’十分考题并勒令其绝不回头"
+        if "組み敷かれる" in ja or "微笑んでいた" in ja or "運命だと" in ja or "許して" in ja or "恐怖と罪悪感" in ja:
+            return "晨曦最后温柔笑靥与天音血泪奔逃", "全系列万劫不复之终身创伤：天音违约回眸见一姬被手电光束扑倒擒获，一姬坦然迎向命运平静微笑，天音在永世自责的万钧重压下痛哭奔逃‘原谅我一姬’，开启长达数年的赎罪人生"
+        return "消除AI味/润色优化", "重构生硬日式倒装与机械直译，润色为符合Galgame演出的自然中文"
+
     # ama_old_014 specific (Angelic Howl Day 14)
     if (11576 <= line_no <= 11676) or sid.startswith("grisaia1/ama_old_014"):
         if "ウミイグアナ" in ja or "体温" in ja or "日光" in ja or "カロリー" in ja or "鍋底" in ja or "関節が悲鳴" in ja or "覚醒したまま" in ja:
@@ -4018,6 +4038,32 @@ def build_report():
                 "section": "灰色的果实·天音线天使之声篇第十四日海鬣蜥晒热、雄二相识誓约与广冈遗体同类相食恶念 (grisaia1/ama_old_014)"
             })
 
+    # ama_old_015 (Milestone 2 Chapter 47 - Angelic Howl Day 15: Cannibalism Discovered, Kazuki Decoy, Amane Escape)
+    for lno in range(11677, 12189):
+        ja_raw = ja_lines[lno - 1]
+        cn_raw = cn_lines[lno - 1]
+        sid = ja_raw.split("\t")[0] if "\t" in ja_raw else f"L{lno}"
+        ja_txt = ja_raw.split("\t")[1] if "\t" in ja_raw else ja_raw
+        cn_txt = cn_raw.split("\t")[1] if "\t" in cn_raw else cn_raw
+
+        old_txt = cn_txt
+        if git_base_cn and len(git_base_cn) >= lno:
+            head_raw = git_base_cn[lno - 1]
+            old_txt = head_raw.split("\t")[1] if "\t" in head_raw else head_raw
+
+        if cn_txt != old_txt:
+            cat, reason = classify_change(lno, sid, ja_txt, old_txt, cn_txt)
+            diffs.append({
+                "lno": lno,
+                "sid": sid,
+                "ja": ja_txt,
+                "old": old_txt,
+                "new": cn_txt,
+                "cat": cat,
+                "reason": reason,
+                "section": "灰色的果实·天音线天使之声篇第十五日食人惨剧撞破、一姬诱饵掩护与天音血泪奔逃 (grisaia1/ama_old_015)"
+            })
+
     print(f"Total indexed modifications: {len(diffs)}")
 
     # Build Markdown
@@ -4954,6 +5000,15 @@ def build_report():
     md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
     md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
     for idx, d in enumerate(ama_old_014_diffs, 1):
+        md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
+    md.append("\n---\n")
+
+    # Section 104 - Milestone 2: Angelic Howl Day 15
+    ama_old_015_diffs = [d for d in diffs if d["section"].startswith("灰色的果实·天音线天使之声篇第十五日食人惨剧撞破、一姬诱饵掩护与天音血泪奔逃")]
+    md.append(f"## 一百〇四、 灰色的果实·天音线天使之声篇第十五日食人惨剧撞破、一姬诱饵掩护与天音血泪奔逃 (`grisaia1/ama_old_015`，共 {len(ama_old_015_diffs)} 条) —— 【里程碑二·个人线第四十七章】\n")
+    md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
+    md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
+    for idx, d in enumerate(ama_old_015_diffs, 1):
         md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
     md.append("\n---\n")
 
