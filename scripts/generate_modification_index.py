@@ -14,6 +14,28 @@ def escape_md(text):
     return text.replace("|", "\\|").replace("\n", " ").replace("\r", "")
 
 def classify_change(line_no, sid, ja, old_cn, new_cn):
+    # ama_old_009 specific (Angelic Howl Day 9)
+    if (10701 <= line_no <= 10903) or sid.startswith("grisaia1/ama_old_009"):
+        if "千人針" in ja or "ポンチョ" in ja or "ゴミ袋" in ja or "青年将校" in ja or "日の丸" in ja or "越智" in ja and ("下山" in ja or "出発" in ja or "助けを呼んでくる" in ja):
+            return "越智老师垃圾袋斗篷出征与千人针苦涩送别", "全章神级开端与荒诞黑色幽默：全员在凄风苦雨中以剪裁垃圾袋赶制的斗篷为独自下山求援的越智老师送行，宛如战时手挥日章旗送别青年将校出征；全员心怀‘比起老师生死更在乎自身未来’的微妙罪恶感，目送唯一成年男性带走半数存粮涉险入林"
+        if "テニス部" in ja or "スキー部" in ja or "軟派" in ja or "運否天賦" in ja or "賭け" in ja or "反面教師" in ja or "坂下" in ja and "怒鳴" in ja:
+            return "大学网球部轻浮论、反面教材部长与一姬绝对威信", "营地群像心理交锋：樱井犀利吐槽大学网球部不过是专挑美女的轻浮社交俱乐部；佐久间大谈听天由命赌博论招致坂下部长当场暴怒咆哮，反遭佐久间调侃‘绝境中狂吠的极品反面教材’；部员们对一姬娇小身躯寄予全幅生死信赖，樱井甚至对一姬尊称敬语"
+        if "クシャミ" in ja or "ペキュッ" in ja or "水着" in ja or "アーくん" in ja or "ガニ股" in ja or "貴族" in ja:
+            return "樱井学姐奇葩喷嚏与疤痕绝缘比基尼悲叹", "日常性格细腻刻画：金田大摇大摆迈八字步替生病猎犬阿君顶班采集；近乎无瑕的大美人樱井学姐打喷嚏发出‘噗啾’怪声遭一姬调侃；一姬落寞叹息腹部永久性狰狞疤痕令其演艺圈梦想与比基尼绝缘，暗含对少女肉体摧残的深层哀怜"
+        return "消除AI味/润色优化", "重构生硬日式倒装与机械直译，润色为符合Galgame演出的自然中文"
+
+    # ama_old_010 specific (Angelic Howl Day 10)
+    if (10904 <= line_no <= 11071) or sid.startswith("grisaia1/ama_old_010"):
+        if "日記" in ja or "トンカツ屋" in ja or "ブツブツ" in ja or "カタツムリ" in ja or "デンデン虫" in ja or "陸貝" in ja or "寝ちまえ" in ja:
+            return "日记碎碎念炸猪排店主吐槽与蜗牛陆贝大餐", "坠落第十天神级日常：天音饥肠辘辘一边写日记一边大声念叨被一姬抓包，遭一姬毒舌调侃‘像边自言自语边炸猪排的油腻大叔真恶心’；一姬投喂采摘的蜗牛，科普其为陆生贝类，天音哀嚎吃腻软体虫子渴望正常肉食"
+        if "ヒル" in ja or "ヒルジン" in ja or "目蓋" in ja or "首" in ja or "引き千切" in ja or "ナトリウム" in ja or "耐性" in ja:
+            return "帐篷山蛭狂潮袭来与晨起逐处剥离麻木", "残酷生存异化：连绵梅雨致山蛭大肆入侵帐篷，全员麻木形成晨起例行公事（从眼皮、脖颈、手腕、脚踝、膝窝、胯下甚至脚趾缝剥离捏死山蛭）；人体因重度失盐对水蛭素产生止血麻木，少女们不再惊恐尖叫，展露环境对人性的极端钝化"
+        if "蛆虫" in ja or "膿" in ja or "ガーゼ" in ja or "黒ずみ" in ja or "残念汁" in ja or "雑炊" in ja:
+            return "伤口溃烂生蛆惊魂与清汤残念汁日常", "全章至暗生理恐怖：天音烹煮几乎毫无菜叶的凄凉‘残羹清汤’；一姬解开樱井学姐腹部反复蒸煮发黑的纱布，脓液中赫然蠕动着肥硕狂扭的活蛆虫；极度匮乏抗生素与蛋白质致使组织坏疽，惨烈冲击少女心理防线"
+        if "カビ" in ja or "白いまだら" in ja or "死にたい" in ja or "あばら骨" in ja or "痩せ落ち" in ja or "広岡" in ja or "しょっぱかった" in ja or "羨ましかった" in ja or "ミミズ腫れ" in ja or "手ぬぐい" in ja:
+            return "广冈骨瘦如柴白霉覆体与求死绝望悲鸣", "全章终极至暗震撼高潮：广冈学姐绝食数日肋骨嶙峋毕露，因极端阴湿与免疫崩解导致活人躯体密密麻麻长满诡异白霉菌斑，因奇痒夜间自残蹭地哀嚎求救；天音含泪热敷擦拭，耳边传来广冈干裂嘴唇微弱吐出的绝望求死悲鸣‘我……已经……好想去死啊……’；天音接下广冈泪水放入口中，羡慕其尚存微弱盐分"
+        return "消除AI味/润色优化", "重构生硬日式倒装与机械直译，润色为符合Galgame演出的自然中文"
+
     # ama_old_008 specific (Angelic Howl Day 8)
     if sid.startswith("grisaia1/ama_old_008"):
         if "ウェルニッケ" in ja or "脚気" in ja or "ビタミン" in ja or "伊吹" in ja or "総回診" in ja or "耐えろ" in ja or "向こう脛" in ja or "浮腫" in ja:
@@ -3790,6 +3812,58 @@ def build_report():
                 "section": "灰色的果实·天音线天使之声篇第八日脚气病绝境、萨拉米失窃风暴与守卫天音誓言 (grisaia1/ama_old_008)"
             })
 
+    # ama_old_009 (Milestone 2 Chapter 41 - Angelic Howl Day 9)
+    for lno in range(10701, 10904):
+        ja_raw = ja_lines[lno - 1]
+        cn_raw = cn_lines[lno - 1]
+        sid = ja_raw.split("\t")[0] if "\t" in ja_raw else f"L{lno}"
+        ja_txt = ja_raw.split("\t")[1] if "\t" in ja_raw else ja_raw
+        cn_txt = cn_raw.split("\t")[1] if "\t" in cn_raw else cn_raw
+
+        old_txt = cn_txt
+        if git_base_cn and len(git_base_cn) >= lno:
+            head_raw = git_base_cn[lno - 1]
+            old_txt = head_raw.split("\t")[1] if "\t" in head_raw else head_raw
+
+        if cn_txt != old_txt:
+            cat, reason = classify_change(lno, sid, ja_txt, old_txt, cn_txt)
+            diffs.append({
+                "lno": lno,
+                "sid": sid,
+                "ja": ja_txt,
+                "old": old_txt,
+                "new": cn_txt,
+                "cat": cat,
+                "reason": reason,
+                "section": "灰色的果实·天音线天使之声篇第九日越智老师雨中涉险下山、大学网球部论与樱井学姐怪异喷嚏 (grisaia1/ama_old_009)"
+            })
+
+    # ama_old_010 (Milestone 2 Chapter 42 - Angelic Howl Day 10)
+    for lno in range(10904, 11072):
+        ja_raw = ja_lines[lno - 1]
+        cn_raw = cn_lines[lno - 1]
+        sid = ja_raw.split("\t")[0] if "\t" in ja_raw else f"L{lno}"
+        ja_txt = ja_raw.split("\t")[1] if "\t" in ja_raw else ja_raw
+        cn_txt = cn_raw.split("\t")[1] if "\t" in cn_raw else cn_raw
+
+        old_txt = cn_txt
+        if git_base_cn and len(git_base_cn) >= lno:
+            head_raw = git_base_cn[lno - 1]
+            old_txt = head_raw.split("\t")[1] if "\t" in head_raw else head_raw
+
+        if cn_txt != old_txt:
+            cat, reason = classify_change(lno, sid, ja_txt, old_txt, cn_txt)
+            diffs.append({
+                "lno": lno,
+                "sid": sid,
+                "ja": ja_txt,
+                "old": old_txt,
+                "new": cn_txt,
+                "cat": cat,
+                "reason": reason,
+                "section": "灰色的果实·天音线天使之声篇第十日梅雨山蛭侵袭、创口生蛆白霉覆体与广冈求死悲鸣 (grisaia1/ama_old_010)"
+            })
+
     print(f"Total indexed modifications: {len(diffs)}")
 
     # Build Markdown
@@ -4672,6 +4746,24 @@ def build_report():
     md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
     md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
     for idx, d in enumerate(ama_old_008_diffs, 1):
+        md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
+    md.append("\n---\n")
+
+    # Section 98 - Milestone 2: Angelic Howl Day 9
+    ama_old_009_diffs = [d for d in diffs if d["section"].startswith("灰色的果实·天音线天使之声篇第九日越智老师雨中涉险下山、大学网球部论与樱井学姐怪异喷嚏")]
+    md.append(f"## 九十八、 灰色的果实·天音线天使之声篇第九日越智老师雨中涉险下山、大学网球部论与樱井学姐怪异喷嚏 (`grisaia1/ama_old_009`，共 {len(ama_old_009_diffs)} 条) —— 【里程碑二·个人线第四十一章】\n")
+    md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
+    md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
+    for idx, d in enumerate(ama_old_009_diffs, 1):
+        md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
+    md.append("\n---\n")
+
+    # Section 99 - Milestone 2: Angelic Howl Day 10
+    ama_old_010_diffs = [d for d in diffs if d["section"].startswith("灰色的果实·天音线天使之声篇第十日梅雨山蛭侵袭、创口生蛆白霉覆体与广冈求死悲鸣")]
+    md.append(f"## 九十九、 灰色的果实·天音线天使之声篇第十日梅雨山蛭侵袭、创口生蛆白霉覆体与广冈求死悲鸣 (`grisaia1/ama_old_010`，共 {len(ama_old_010_diffs)} 条) —— 【里程碑二·个人线第四十二章】\n")
+    md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
+    md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
+    for idx, d in enumerate(ama_old_010_diffs, 1):
         md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
     md.append("\n---\n")
 
