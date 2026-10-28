@@ -58,6 +58,16 @@ def classify_change(line_no, sid, ja, old_cn, new_cn):
     if "巨乳" in ja or "ハートジャック" in ja or "トランプ" in ja or "シグナルロスト" in ja or "掃討" in ja or "烏森神社" in ja:
         return "特务追踪四将瞬杀全灭与红心J巨乳撤退指令", "精准刻画雄二于东口广场深夜瞬杀全歼三叶草12、红心9、黑桃6、方块A四名追踪特工却手下留情仅折断筋骨，JB得知留守的红心J系24岁88公分大胸新人后果断下令撤退‘9029对巨乳下不了狠手’的硬核幽默与老练情报博弈"
 
+    # mak_019 specific
+    if "ライフルスラッグ" in ja or "マスターキー" in ja or "特殊警棒" in ja or "大外刈り" in ja or "爪先蹴り" in ja or "金のボールペン" in ja or "ＣＳ" in ja or "卓上ライター" in ja or "火災報知機" in ja:
+        return "社长室CQC格斗反击与催泪弹火警掩护破局", "硬核还原雄二放弃开枪后遭SP以‘万能钥匙’（12号口径来福独头弹）破门围捕，反手以丹田卸力挑绞手腕、飞踢截击与膝击锁喉，金笔穿刺自制破损CS催泪喷雾掩护，并以女神纯铜防风打火机高温燎烧火警探头全开常闭防火门负伤脱逃的教科书级近身CQB破局"
+    if "ワンセグ" in ja or "粉飾タイプＡ" in ja or "某Ｃ国" in ja or "プライドの高い国" in ja or "法相更迭" in ja or "閻魔帳" in ja or "沙汰闇" in ja:
+        return "新闻公关粉饰推诿与入巢宗家阎魔账博弈", "纠正将‘某Ｃ国’（讽刺日本右翼评论家口头禅‘自尊心世界第二高之某C国’）和法相政治丑闻生硬直译的语病；生动刻画JB彻夜撰写国籍不明恐怖分子通稿、电视早间八卦秀经济分析师与过激军评家对喷，以及JB凭莳菜默写之入巢宗家洗钱暗账（阎魔账）逼迫入巢家全面封口‘暗中处理’（沙汰闇）的顶级机关政治博弈"
+    if "電車に揺られる" in ja or "フロリダ" in ja or "シーフードとセックス" in ja or "痛くない怪我" in ja or "寝たら死んじゃう" in ja or "仔犬" in ja:
+        return "暮色车站重逢私奔与电车站台血染长椅", "极具张力地刻画莳菜识破母亲弃子真相后私奔逃出医院，于站台重逢浴血赶来的雄二；两人在电车上相依为命畅想前往佛罗里达海边买房开面包店、放烟花买小狗的温馨未来；莳菜发现雄二失血重伤瘫软，哭求‘不要睡着、睡着就会死掉’的揪心转折"
+    if "ガムテープ" in ja or "右腕" in ja or "義手" in ja or "レウポルド" in ja or "Ｌ９６Ａ１" in ja or "９０２９…現着" or "確認した" in ja or "目薬" in ja:
+        return "佛罗里达海滨面包坊与莳菜继承9029王牌", "纠正机翻将莳菜英文应答‘ディスイズメッキーナスピーキン’荒唐音译的特大硬伤；极致呈现一年后佛罗里达海滨小镇，雄二右臂粉碎截肢安装义手调养身体，与莳菜温馨经营面包坊；莳菜接过9029杀手名号与琪娅拉电话交接，借用雄二刘波尔德战术瞄具（Leupold）出勤狙击，以‘9029抵达阵位’守护两人和平生活的圆满终章（Good Ending）"
+
     # mak_018 specific
     if "Ｐ２２０ＪＰ" in ja or "ダブルタップ" in ja or "ストロングハンド" in ja or "ウィークハンド" in ja or "蜂の羽" in ja or "耳を抉り取られた" in ja or "鼻血" in ja:
         return "执务室死斗搏杀与左耳重创负伤突围", "硬核还原雄二破门以标准双发快射（Double Tap）击倒前锋保镖、击碎副手手肘，遭遇副手强换弱手（Strong Hand -> Weak Hand）拼死盲射反击，左腿中弹、左耳被削去皮肉后于狭窄走廊零距离血腥肉搏重创对手突围的CQB残酷死斗"
@@ -3014,6 +3024,32 @@ def build_report():
                 "section": "灰色的果实·莳菜线第十九章绝路夕阳托孤诀别与继承9029杀手宿命 (grisaia1/mak_018)"
             })
 
+    # mak_019 (Milestone 2 Chapter 20 - Good Ending)
+    for lno in range(36714, 37098):
+        ja_raw = ja_lines[lno - 1]
+        cn_raw = cn_lines[lno - 1]
+        sid = ja_raw.split("\t")[0] if "\t" in ja_raw else f"L{lno}"
+        ja_txt = ja_raw.split("\t")[1] if "\t" in ja_raw else ja_raw
+        cn_txt = cn_raw.split("\t")[1] if "\t" in cn_raw else cn_raw
+
+        old_txt = cn_txt
+        if git_base_cn and len(git_base_cn) >= lno:
+            head_raw = git_base_cn[lno - 1]
+            old_txt = head_raw.split("\t")[1] if "\t" in head_raw else head_raw
+
+        if cn_txt != old_txt:
+            cat, reason = classify_change(lno, sid, ja_txt, old_txt, cn_txt)
+            diffs.append({
+                "lno": lno,
+                "sid": sid,
+                "ja": ja_txt,
+                "old": old_txt,
+                "new": cn_txt,
+                "cat": cat,
+                "reason": reason,
+                "section": "灰色的果实·莳菜线第二十章佛罗里达海滨新生与继承9029王牌 (grisaia1/mak_019)"
+            })
+
     print(f"Total indexed modifications: {len(diffs)}")
 
     # Build Markdown
@@ -3707,6 +3743,15 @@ def build_report():
     md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
     md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
     for idx, d in enumerate(mak_018_diffs, 1):
+        md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
+    md.append("\n---\n")
+
+    # Section 77 - Milestone 2: Makina Route Chapter 20 (Good Ending)
+    mak_019_diffs = [d for d in diffs if d["section"].startswith("灰色的果实·莳菜线第二十章佛罗里达海滨新生与继承9029王牌")]
+    md.append(f"## 七十七、 灰色的果实·莳菜线第二十章佛罗里达海滨新生与继承9029王牌 (`grisaia1/mak_019`，共 {len(mak_019_diffs)} 条) —— 【里程碑二·个人线第二十章·Good Ending】\n")
+    md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
+    md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
+    for idx, d in enumerate(mak_019_diffs, 1):
         md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
     md.append("\n---\n")
 
