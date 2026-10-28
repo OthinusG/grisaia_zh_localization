@@ -1101,6 +1101,15 @@ def classify_change(line_no, sid, ja, old_cn, new_cn):
         return "人体扭矩分配器与丛林绿盲症术语", "修正军事行军与汽车工学专业术语：天音展现卓越车技自嘲是‘人体扭矩分配器（人间トルクスプリッター）’；雄二解释暴风雪‘白化天（Whiteout）’对应的密林‘绿盲症（Greenout）’及火山岩强磁场对M2指南针的剧烈干扰"
     if "坂下" in ja or "慰霊碑" in ja or "広岡たまき" in ja or "古森めぐみ" in ja or "金田沙彩" in ja or "石碑" in ja or "１３人" in ja:
         return "十三罹难者慰灵碑与坂下千秋伏笔回收", "补全原版中文遗漏的遇难队友‘广冈环’（広岡たまき）姓名；精准呼应车站前搭话的诡异IT董事‘坂下’与石碑上最后一名罹难者‘坂下千秋’的血亲复仇伏笔，烘托骤然降临的疯狂杀意"
+    # ama_006 specific (Milestone 2 Chapter 27 - Amane Route Chapter 5)
+    if "上下二連" in ja or "散弾銃" in ja or "ショットシェル" in ja or "芋虫" in ja or "ナシ地処理" in ja or "中折れ式" in ja:
+        return "双联散弹枪伏击与军武创伤描写", "修正枪械术语：‘上下二連散弾銃’（上下双联装散弹枪）、‘ショットシェル’（散弹枪弹）、‘中折れ式’（折管式）与‘ナシ地処理’（消光喷砂/梨地喷砂处理）；细致刻画雄二背部中弹如毛毛虫般蜷缩蠕动摸索伤势的冷静军人战术素养"
+    if "八つ裂き" in ja or "ンごくなぁ" in ja or "ボケェ" in ja or "２週間" in ja or "天誅" in ja or "制裁" in ja:
+        return "大卸八块惨剧与坂下丧心病狂的复仇", "彻底纠正机翻将‘2週間’荒谬误译为‘两个月’的时间线硬伤！纠正将‘ンごくなぁ！’（别乱动！）误译为‘发什么呆’的语义谬误；生动再现坂下千秋遗体被分尸八块（八つ裂き）的骇人惨状，以及坂下家破人亡后以‘天诛制裁’为名的病态狂怒"
+    if "高が知れている" in ja or "狐狩り" in ja or "生き地獄" in ja or "命乞い" in ja:
+        return "极性反转修正与猎狐戏弄的绝望地狱", "彻底纠正机翻将‘殺意など高が知れている’（杀意不过尔尔/根本不值一提）180度反转误译为‘杀意高得不能再高’的荒谬极性错误！展现坂下将两人视为猎物开展‘猎狐狂欢’，企图在天音面前虐杀雄二以制造活地狱的恶毒用心"
+    if "視野狭窄" in ja or "生まれ変わって" in ja or "お姉ちゃん" in ja or "死人に話しかけるな" in ja or "天音と一緒に逃げる" in ja:
+        return "生死死斗誓言与命运分支选择点", "精准刻画天音愿与雄二同生共死、转世亦要做其姐姐的深情绝叫，以及雄二当头棒喝‘不许对着死人说话、别患上目光短浅的隧道视野（視野狭窄）’的硬汉喝醒；完美保留文末关键命运抉择分支标记（$d）"
     return "消除AI味/润色优化", "重构生硬日式倒装与机械直译，润色为符合Galgame演出的自然中文"
 
 def build_report():
@@ -3270,6 +3279,32 @@ def build_report():
                 "section": "灰色的果实·天音线第四章赎罪之罚与重返惨剧现场之慰灵 (grisaia1/ama_005)"
             })
 
+    # ama_006 (Milestone 2 Chapter 27 - Amane Route Chapter 5)
+    for lno in range(4355, 4557):
+        ja_raw = ja_lines[lno - 1]
+        cn_raw = cn_lines[lno - 1]
+        sid = ja_raw.split("\t")[0] if "\t" in ja_raw else f"L{lno}"
+        ja_txt = ja_raw.split("\t")[1] if "\t" in ja_raw else ja_raw
+        cn_txt = cn_raw.split("\t")[1] if "\t" in cn_raw else cn_raw
+
+        old_txt = cn_txt
+        if git_base_cn and len(git_base_cn) >= lno:
+            head_raw = git_base_cn[lno - 1]
+            old_txt = head_raw.split("\t")[1] if "\t" in head_raw else head_raw
+
+        if cn_txt != old_txt:
+            cat, reason = classify_change(lno, sid, ja_txt, old_txt, cn_txt)
+            diffs.append({
+                "lno": lno,
+                "sid": sid,
+                "ja": ja_txt,
+                "old": old_txt,
+                "new": cn_txt,
+                "cat": cat,
+                "reason": reason,
+                "section": "灰色的果实·天音线第五章血染旧道与疯狂猎犬之散弹枪猎杀 (grisaia1/ama_006)"
+            })
+
     print(f"Total indexed modifications: {len(diffs)}")
 
     # Build Markdown
@@ -4026,6 +4061,15 @@ def build_report():
     md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
     md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
     for idx, d in enumerate(ama_005_diffs, 1):
+        md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
+    md.append("\n---\n")
+
+    # Section 84 - Milestone 2: Amane Route Chapter 5
+    ama_006_diffs = [d for d in diffs if d["section"].startswith("灰色的果实·天音线第五章血染旧道与疯狂猎犬之散弹枪猎杀")]
+    md.append(f"## 八十四、 灰色的果实·天音线第五章血染旧道与疯狂猎犬之散弹枪猎杀 (`grisaia1/ama_006`，共 {len(ama_006_diffs)} 条) —— 【里程碑二·个人线第二十七章】\n")
+    md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
+    md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
+    for idx, d in enumerate(ama_006_diffs, 1):
         md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
     md.append("\n---\n")
 
