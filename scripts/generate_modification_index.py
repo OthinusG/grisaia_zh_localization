@@ -73,6 +73,10 @@ def classify_change(line_no, sid, ja, old_cn, new_cn):
         return "执务室死斗搏杀与左耳重创负伤突围", "硬核还原雄二破门以标准双发快射（Double Tap）击倒前锋保镖、击碎副手手肘，遭遇副手强换弱手（Strong Hand -> Weak Hand）拼死盲射反击，左腿中弹、左耳被削去皮肉后于狭窄走廊零距离血腥肉搏重创对手突围的CQB残酷死斗"
     if "トイレットペーパー" in ja or "某宗教団体" in ja or "教祖" in ja or "製紙会社" in ja or "兜町" in ja or "おっ死ぬ" in ja or "兆弾" in ja:
         return "舆论公关粉饰与内阁造纸股票黑色幽默", "纠正将‘某宗教団体の信者’（影射奥姆真理教教祖麻原彰晃被捕）生硬死译、将‘兆弾’（跳弹/跳飞弹）错译的硬伤；生动展现JB与琪娅拉起草通稿甩锅某国间谍、嘲弄电视八卦节目散布‘经济崩溃抢购卫生纸’恐慌，以及JB提前买入中央区老牌造纸厂股票大赚特赚的机关黑色讽刺幽默"
+
+    # mak_h specific
+    if "猫の墓場" in ja or "探さないで" in ja or "靴下" in ja or "風船ガム" in ja or "三角型" in ja or "チョップ" in ja or "子供じゃない" in ja or "無茶苦茶" in ja or "抱いて" in ja:
+        return "猫之墓地幽暗独白与少女的觉悟", "深度刻画莳菜空无一物的冷清房间犹如野猫等死的墓地、门缝藏袜呼应‘女人说别找我就是快来找我’的深层心理；细腻展现雄二回想当年麻子伸出的救赎援手、面对莳菜笨拙袒露三角形极品贫乳标本的诙谐吐槽，以及两人心意相通托付一生的动人告白"
     if "悪魔の手" in ja or "恩赦" in ja or "犬小屋" in ja or "脱亡" in ja or "ケースオフィサー" in ja or "次代の９０２９" in ja:
         return "特务猎犬悲歌与病房私奔破灭", "深刻剖析JB对国家非法秘匿组织CIRS‘恶魔利爪’的冷酷自白——以虚伪特赦为锁链驯化狂犬撕咬敌人，猎犬一旦咬断项圈也唯有饿毙或重返狗舍；敏锐交代莳菜从医院出逃、琪娅拉未来接任9029联络官的沉重伏笔"
     if "ピストル" in ja or "７千万" in ja or "通帳" in ja or "９０２９" in ja or "目が見えない" in ja or "春寺" in ja or "大騙子" in ja or "ウソつき" in ja:
@@ -3050,6 +3054,32 @@ def build_report():
                 "section": "灰色的果实·莳菜线第二十章佛罗里达海滨新生与继承9029王牌 (grisaia1/mak_019)"
             })
 
+    # mak_h (Milestone 2 Chapter 21 - Makina Route Finale / Prelude to H)
+    for lno in range(37098, 37185):
+        ja_raw = ja_lines[lno - 1]
+        cn_raw = cn_lines[lno - 1]
+        sid = ja_raw.split("\t")[0] if "\t" in ja_raw else f"L{lno}"
+        ja_txt = ja_raw.split("\t")[1] if "\t" in ja_raw else ja_raw
+        cn_txt = cn_raw.split("\t")[1] if "\t" in cn_raw else cn_raw
+
+        old_txt = cn_txt
+        if git_base_cn and len(git_base_cn) >= lno:
+            head_raw = git_base_cn[lno - 1]
+            old_txt = head_raw.split("\t")[1] if "\t" in head_raw else head_raw
+
+        if cn_txt != old_txt:
+            cat, reason = classify_change(lno, sid, ja_txt, old_txt, cn_txt)
+            diffs.append({
+                "lno": lno,
+                "sid": sid,
+                "ja": ja_txt,
+                "old": old_txt,
+                "new": cn_txt,
+                "cat": cat,
+                "reason": reason,
+                "section": "灰色的果实·莳菜线第二十一章猫之墓地幽暗独白与少女的觉悟 (grisaia1/mak_h)"
+            })
+
     print(f"Total indexed modifications: {len(diffs)}")
 
     # Build Markdown
@@ -3752,6 +3782,15 @@ def build_report():
     md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
     md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
     for idx, d in enumerate(mak_019_diffs, 1):
+        md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
+    md.append("\n---\n")
+
+    # Section 78 - Milestone 2: Makina Route Chapter 21 (Prelude / Epilogue)
+    mak_h_diffs = [d for d in diffs if d["section"].startswith("灰色的果实·莳菜线第二十一章猫之墓地幽暗独白与少女的觉悟")]
+    md.append(f"## 七十八、 灰色的果实·莳菜线第二十一章猫之墓地幽暗独白与少女的觉悟 (`grisaia1/mak_h`，共 {len(mak_h_diffs)} 条) —— 【里程碑二·个人线第二十一章·H前置/终章收尾】\n")
+    md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
+    md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
+    for idx, d in enumerate(mak_h_diffs, 1):
         md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
     md.append("\n---\n")
 
