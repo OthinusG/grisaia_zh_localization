@@ -1110,6 +1110,17 @@ def classify_change(line_no, sid, ja, old_cn, new_cn):
         return "极性反转修正与猎狐戏弄的绝望地狱", "彻底纠正机翻将‘殺意など高が知れている’（杀意不过尔尔/根本不值一提）180度反转误译为‘杀意高得不能再高’的荒谬极性错误！展现坂下将两人视为猎物开展‘猎狐狂欢’，企图在天音面前虐杀雄二以制造活地狱的恶毒用心"
     if "視野狭窄" in ja or "生まれ変わって" in ja or "お姉ちゃん" in ja or "死人に話しかけるな" in ja or "天音と一緒に逃げる" in ja:
         return "生死死斗誓言与命运分支选择点", "精准刻画天音愿与雄二同生共死、转世亦要做其姐姐的深情绝叫，以及雄二当头棒喝‘不许对着死人说话、别患上目光短浅的隧道视野（視野狭窄）’的硬汉喝醒；完美保留文末关键命运抉择分支标记（$d）"
+    # ama_007 specific (Milestone 2 Chapter 28 - Amane Route Chapter 6 / True End)
+    if "トップレバー" in ja or "元折れ" in ja or "ロッキングシステム" in ja or "トリップワイヤー" in ja or "鳥目" in ja:
+        return "军武机械机制与发丝陷阱近身搏杀", "修正枪械术语：‘トップレバー’（顶置扳把）、‘ロッキングシステムが元折れし銃身が開放’（转动顶置扳把使闭锁机构解锁、枪管折开呈装填状态，彻底纠偏机翻‘闭锁机构折断’）；刻画雄二拔下天音30根120cm长发做成发丝绊线（トリップワイヤー）、中指抠眼与反关节绞技瞬间制服坂下的特工反杀"
+    if "予備社員" in ja or "モッサリ女" in ja or "少尉" in ja or "防衛大学校" in ja or "屋上から飛び降り自殺" in ja or "ＣＩＲＳ" in ja:
+        return "特工善后灭口与军衔预备役晋升", "刻画JB与CIRS抹消痕迹、将坂下伪装为‘从医院天台跳楼自杀’的冷酷国家机器手段；纠正雄二吐槽JB‘モッサリ女’（土里土气的女人，纠正机翻‘大块头’）；明晰雄二考取少尉军衔、服满1年半剩余兵役及挂名5年防卫大学校以转为预备役职员的晋升契约"
+    if "プロポーズ" in ja or "求婚" in ja or "嫁にもらって" in ja or "頑固親父" in ja or "腰をいわした" in ja or "命を懸けて" in ja:
+        return "逆向下跪求婚与女婿试炼硬汉家训", "呈现雄二单膝跪地‘周防天音，请你嫁给我’的逆向求婚名场面；幽默讲述当年为赢取天音与顽固岳父大打出手致其闪腰躺了三天（腰をいわした）；确立对未来女婿的绝对硬汉考验：‘只要是个带把的真男人，就必须拿命护住自己的女人’"
+    if "ドイツ" in ja or "美術" in ja or "癌" in ja or "４０年" in ja or "鬼籍" in ja or "走馬灯" in ja:
+        return "四十载平淡相濡以沫与无憾长逝", "描写莳菜留德艺术深造远行、雄二退役解甲；刻画四十载岁月后雄二终不再夜半噩梦惊醒——属于这个男人的战争终于在温柔中落幕；确诊癌症五个月后如同精密行动计时般在家人守候下安然长逝"
+    if "天国行き" in ja or "５０年" in ja or "ワンちゃん" in ja or "幸運の犬っコロ" in ja or "チケット" in ja or "おばあちゃん" in ja:
+        return "半个世纪的终身救赎与天国通行证", "纠正机翻将‘“幸運の犬っコロ”をやるから’误译为‘演幸运之犬’的荒谬错误（实为雄二转赠当年天音送给他的缝补无数次的小狗护身符）；生动刻画外孙女铃音赠送蜡笔绘制的‘天国通行证’；天音一生罪罚在泪水中彻底被赦免，含笑奔向云端深处年轻的雄二"
     return "消除AI味/润色优化", "重构生硬日式倒装与机械直译，润色为符合Galgame演出的自然中文"
 
 def build_report():
@@ -3305,6 +3316,32 @@ def build_report():
                 "section": "灰色的果实·天音线第五章血染旧道与疯狂猎犬之散弹枪猎杀 (grisaia1/ama_006)"
             })
 
+    # ama_007 (Milestone 2 Chapter 28 - Amane Route Chapter 6 / True End)
+    for lno in range(4557, 5178):
+        ja_raw = ja_lines[lno - 1]
+        cn_raw = cn_lines[lno - 1]
+        sid = ja_raw.split("\t")[0] if "\t" in ja_raw else f"L{lno}"
+        ja_txt = ja_raw.split("\t")[1] if "\t" in ja_raw else ja_raw
+        cn_txt = cn_raw.split("\t")[1] if "\t" in cn_raw else cn_raw
+
+        old_txt = cn_txt
+        if git_base_cn and len(git_base_cn) >= lno:
+            head_raw = git_base_cn[lno - 1]
+            old_txt = head_raw.split("\t")[1] if "\t" in head_raw else head_raw
+
+        if cn_txt != old_txt:
+            cat, reason = classify_change(lno, sid, ja_txt, old_txt, cn_txt)
+            diffs.append({
+                "lno": lno,
+                "sid": sid,
+                "ja": ja_txt,
+                "old": old_txt,
+                "new": cn_txt,
+                "cat": cat,
+                "reason": reason,
+                "section": "灰色的果实·天音线最终章长夜黎明与半个世纪的终身救赎 (grisaia1/ama_007)"
+            })
+
     print(f"Total indexed modifications: {len(diffs)}")
 
     # Build Markdown
@@ -4070,6 +4107,15 @@ def build_report():
     md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
     md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
     for idx, d in enumerate(ama_006_diffs, 1):
+        md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
+    md.append("\n---\n")
+
+    # Section 85 - Milestone 2: Amane Route Chapter 6 / True End
+    ama_007_diffs = [d for d in diffs if d["section"].startswith("灰色的果实·天音线最终章长夜黎明与半个世纪的终身救赎")]
+    md.append(f"## 八十五、 灰色的果实·天音线最终章长夜黎明与半个世纪的终身救赎 (`grisaia1/ama_007`，共 {len(ama_007_diffs)} 条) —— 【里程碑二·个人线第二十八章】\n")
+    md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
+    md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
+    for idx, d in enumerate(ama_007_diffs, 1):
         md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
     md.append("\n---\n")
 
