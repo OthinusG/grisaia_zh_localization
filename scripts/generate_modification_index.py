@@ -14,6 +14,22 @@ def escape_md(text):
     return text.replace("|", "\\|").replace("\n", " ").replace("\r", "")
 
 def classify_change(line_no, sid, ja, old_cn, new_cn):
+    # ama_old_008 specific (Angelic Howl Day 8)
+    if sid.startswith("grisaia1/ama_old_008"):
+        if "ウェルニッケ" in ja or "脚気" in ja or "ビタミン" in ja or "伊吹" in ja or "総回診" in ja or "耐えろ" in ja or "向こう脛" in ja or "浮腫" in ja:
+            return "脚气病韦尼克脑病诊断与全员浮肿绝境", "硬核医学常识与求生惨状：伊吹春菜出现认知迟钝、下肢重度压痕性水肿与膝跳反射消失，一姬精准诊断为维生素B1严重匮乏引发的慢性韦尼克脑病与脚气病；绝境中毫无针剂与食疗条件，一姬无奈拍肩‘给我撑住’，靠年轻体质苦熬"
+        if "武士は食わねど高楊枝" in ja or "リーダー" in ja or "寝袋" in ja or "広岡" in ja or "差し入れ" in ja:
+            return "武士剔牙谚语与一姬无私让粮领袖觉悟", "一姬人物魅力高光：一姬遵照前日约定暗中将自身口粮全数匀给卧床的广冈学姐，面对天音担忧笑称‘武士纵无食亦挺胸高剔牙，没吃也要装作吃饱才是领袖’，展露冷酷表象下惊人的无私与担当"
+        if "越智" in ja and ("盗んだ" in ja or "サラミ" in ja or "リュック" in ja or "正直に" in ja or "処分" in ja or "教師" in ja or "荷物" in ja):
+            return "越智老师私藏萨拉米失窃暴怒与恶念种子", "人性崩塌关键转折：越智老师私藏的配酒零食迷你萨拉米干香肠离奇失窃，气急败坏高举背包当众咆哮逼供，遭金田学姐冷嘲‘大蠢货’；一姬此前拼命隐瞒胡萝卜失窃所维系的信任防线被其彻底砸烂，当众向全员播撒下‘肚子饿了便可偷食他人’的人性恶念之种"
+        if "三大原則" in ja or "盗むな" in ja or "壊すな" in ja or "殺すな" in ja or "嘘つきは泥棒" in ja or "全滅" in ja or "滅びる" in ja:
+            return "人性道德三大基石瓦解与全灭预警", "全章神级预言与伦理反思：天音深刻剖析维系人类社会性的三大法则（不可偷盗、不可破坏、不可杀戮），断言偷窃必将升级为武力强夺与血腥争端，预言全员终将因‘食物’自相残杀走向全灭，呼应一姬最初的高瞻远瞩"
+        if "下山" in ja or "単独" in ja or "女性が苦手" in ja or "緩衝材" in ja or "指導者" in ja or "１４回目" in ja:
+            return "越智老师弃队单兵下山与男性防线崩溃", "营地权力真空危机：一姬透露越智老师受够了本能毕露的失控女生，将于明晨独自涉险寻路下山求援；天音洞察越智老师虽能力平庸，但作为成年男性是营地防止道德滑坡的最后一道象征性刹车，其弃队离去将引爆不可逆的全面混乱"
+        if "愛してるわ天音" in ja or "守ってあげる" in ja or "全てを犠牲にしてでも" in ja or "強い子" in ja or "守られるだけの女" in ja:
+            return "一姬深情守护誓言与天音自立觉悟升华", "全章终极情感高潮与灵魂誓约：面对天音对未来的无助恐惧，一姬如慈姐般温柔许下震撼誓言‘哪怕牺牲全世界的一切我也必定会保你周全，我深爱着你哦天音’；天音深受触动暗自立誓绝不作寄生累赘，誓要成为配得上与一姬并肩作战的坚强女性"
+        return "消除AI味/润色优化", "重构生硬日式倒装与机械直译，润色为符合Galgame演出的自然中文"
+
     # ama_old_007 specific (Angelic Howl Day 7)
     if sid.startswith("grisaia1/ama_old_007"):
         if "春菜" in ja or "伊吹" in ja or "フィアット" in ja or "アルファロメオ" in ja or "お人好し" in ja or "下痢" in ja or "脱水症状" in ja or "水不足" in ja or "点滴" in ja:
@@ -3748,6 +3764,32 @@ def build_report():
                 "section": "灰色的果实·天音线天使之声篇第七日带棚油封厕所建造与口粮克扣危机 (grisaia1/ama_old_007)"
             })
 
+    # ama_old_008 (Milestone 2 Chapter 40 - Angelic Howl Day 8)
+    for lno in range(10461, 10701):
+        ja_raw = ja_lines[lno - 1]
+        cn_raw = cn_lines[lno - 1]
+        sid = ja_raw.split("\t")[0] if "\t" in ja_raw else f"L{lno}"
+        ja_txt = ja_raw.split("\t")[1] if "\t" in ja_raw else ja_raw
+        cn_txt = cn_raw.split("\t")[1] if "\t" in cn_raw else cn_raw
+
+        old_txt = cn_txt
+        if git_base_cn and len(git_base_cn) >= lno:
+            head_raw = git_base_cn[lno - 1]
+            old_txt = head_raw.split("\t")[1] if "\t" in head_raw else head_raw
+
+        if cn_txt != old_txt:
+            cat, reason = classify_change(lno, sid, ja_txt, old_txt, cn_txt)
+            diffs.append({
+                "lno": lno,
+                "sid": sid,
+                "ja": ja_txt,
+                "old": old_txt,
+                "new": cn_txt,
+                "cat": cat,
+                "reason": reason,
+                "section": "灰色的果实·天音线天使之声篇第八日脚气病绝境、萨拉米失窃风暴与守卫天音誓言 (grisaia1/ama_old_008)"
+            })
+
     print(f"Total indexed modifications: {len(diffs)}")
 
     # Build Markdown
@@ -4621,6 +4663,15 @@ def build_report():
     md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
     md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
     for idx, d in enumerate(ama_old_007_diffs, 1):
+        md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
+    md.append("\n---\n")
+
+    # Section 97 - Milestone 2: Angelic Howl Day 8
+    ama_old_008_diffs = [d for d in diffs if d["section"].startswith("灰色的果实·天音线天使之声篇第八日脚气病绝境、萨拉米失窃风暴与守卫天音誓言")]
+    md.append(f"## 九十七、 灰色的果实·天音线天使之声篇第八日脚气病绝境、萨拉米失窃风暴与守卫天音誓言 (`grisaia1/ama_old_008`，共 {len(ama_old_008_diffs)} 条) —— 【里程碑二·个人线第四十章】\n")
+    md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
+    md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
+    for idx, d in enumerate(ama_old_008_diffs, 1):
         md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
     md.append("\n---\n")
 
