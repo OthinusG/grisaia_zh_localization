@@ -32,6 +32,22 @@ def classify_change(line_no, sid, ja, old_cn, new_cn):
     if "嘘吐き" in ja or "嘘はき" in ja or "泥棒の始まり" in ja or "ブモー" in ja:
         return "日式谚语双关与傲娇口癖还原", "将满把'嘘つきは泥棒の始まり'（撒谎是当小偷的开端）读白字并强词夺理的俏皮双关自然汉化，精准呈现其被吻后瞬间切换回傲娇状态气急败坏的可爱反应"
 
+    # mak_007 specific
+    if "走るのが嫌いではない" in ja or "石を投げ" in ja or "母の勤め先" in ja or "ランニングシューズ" in ja or "何でも試してみなければ" in ja or "プロのスポーツ選手" in ja or "ランドセル" in ja:
+        return "河畔长跑童年回忆与长跑哲学启蒙", "深刻描摹雄二童年独自在河滩打水漂、受河畔奔跑男子启发开始背着书包长跑、直至赶超骑车下班的母亲并获赠崭新跑鞋的温暖回忆，奠定“不亲自尝试便无法看清事物真貌”的人生哲学"
+    if "アイソメトリクス" in ja or "防剣術" in ja or "縮地" in ja or "膝裏" in ja or "尺骨神経" in ja or "考えるな、感じろ" in ja or "ブルース先生" in ja or "反射" in ja or "ジュニアサイエンス" in ja:
+        return "近战格斗防身术与神经反射控制", "绝妙呈现雄二指导莳菜等长肌肉训练、白刃防卫术、借力打力反关节擒拿，纠正机翻将尺骨神经压痛点与“思考不如去感受”李小龙名梗粗暴直译，深入浅出讲解神经反射控制行动的实战原理"
+    if "ポンポコ" in ja or "重ＷＡＣ" in ja or "彩雲" in ja or "雷電" in ja or "イケメン医師" in ja or "聴診器" in ja or "あまり肉" in ja or "３５００キロカロリー" in ja or "烹炊" in ja:
+        return "重装女兵调侃与小肚腩就医黑历史", "彻底剔除机翻在莳菜台词中混杂英文‘/show off’的离谱硬伤，修正将自卫队女兵俚语‘重WAC’和彩云/雷电战机身材比喻误读的失误，生动还原莳菜自曝因圆滚肚皮被帅哥医生当场笑喷的童年黑历史与天音南瓜咖喱营养学"
+    if "モギタン" in ja or "模擬短" in ja or "銃剣道" in ja or "ジャングル" in ja or "竹槍" in ja or "腐ったクソ" in ja or "少年ゲリラ" in ja or "藪蛇" in ja or "８万円" in ja or "アマチィ" in ja:
+        return "模拟短与莫吉坦儿童剧竹签陷阱谎言", "纠正机翻将近战防暴训练道具‘模拟短刀（模擬短）’盲目音译为‘莫吉坦’的笑点断层，绝妙重现雄二为向天音隐瞒秘密操练而随口瞎编的少儿特摄剧《模拟弹君》及其在竹签陷阱涂抹腐烂粪便的越战黑幽默暴论"
+    if "９０２９" in ja or "１１２０３５" in ja or "エレベーション・ノブ" in ja or "パチンコ球" in ja or "ガク引き" in ja or "ポイント・ツー・バイオ" in ja or "ポイント・ツーファイブ" in ja or "ギソーモー" in ja or "ギリースーツ" in ja or "ホッピング" in ja:
+        return "9029高精气步枪授枪与狙击伏击操典", "彻底纠正机翻将‘0.2g生物降解弹’和‘0.25g弹’荒唐误译为‘达姆空尖弹’和‘五点六口径’的低级失误，准确复原9029特勤密码箱开箱、授枪唱号仪式、旋钮弹珠防猛扣等长训练、Hop-up上旋原理与战术伪装网隐蔽伏击规程"
+    if "赤旗" in ja or "先任軍曹" in ja or "胴間声" in ja or "サムライの右腕" in ja or "特小" in ja or "ＰＴＴ" in ja or "うるへーブス" in ja or "もめんらはい" in ja or "マキナでふ" in ja or "ド地味" in ja:
+        return "红旗靶场射界警示与由美子抓狂捏脸", "剔除‘贵方’机翻腔与将微功率对讲机（特小）误为‘特小开关’的失误，再现由美子抱书误入靶区被一级军士长式怒吼吓哭、莳菜三十米外肉眼识破书名《武士的右臂》、吐槽由美子土气惨遭捏脸颊大舌头疯狂求饶的相声名场面"
+    if "口鉄砲" in ja or "状況の人になれ" in ja or "ウインテージ" in ja or "ツー・ミル" in ja or "プリンキング" in ja or "プリン・キング" in ja or "出刃包丁" in ja or "トロッ" in ja or "なんでやねん" in ja:
+        return "口头报靶狙击满与战俘守则审问梦魇", "纠正机翻将空枪口头报靶（口鉄砲）误译为‘嘴炮’、密位（Mil）误译为‘毫米’、碎罐射击（Plinking）误译为‘布丁王国’的三重致命语病，生动复原雄二与莳菜口头报靶伏击吃冰淇淋的满、莳菜严格背诵日内瓦战俘守则对抗天音套话、以及天音梦见布丁王与切腹金枪鱼惊醒吐槽的爆笑收尾"
+
     # mak_006 specific
     if "牛柄パジャマ" in ja or "ヒステリー女" in ja or "子宮が固まる" in ja or "赤本" in ja:
         return "JB金发脾气规律与红宝书教范调侃", "纠正机翻将‘タダでさえ’误译为‘白给的’，以及将‘赤本’误作‘成人式教范’，生动还原雄二总结的金发女起床吃沙拉脾气恶劣规律、以及调侃子宫硬化的直男癌暴论"
@@ -2498,6 +2514,32 @@ def build_report():
                 "cat": cat,
                 "reason": reason,
                 "section": "灰色的果实·莳菜线第六章神社夏祭金鱼浴衣与狙击金枪鱼超人 (grisaia1/mak_006)"
+            })
+
+    # mak_007 (Milestone 2 Chapter 7)
+    for lno in range(29530, 30148):
+        ja_raw = ja_lines[lno - 1]
+        cn_raw = cn_lines[lno - 1]
+        sid = ja_raw.split("\t")[0] if "\t" in ja_raw else f"L{lno}"
+        ja_txt = ja_raw.split("\t")[1] if "\t" in ja_raw else ja_raw
+        cn_txt = cn_raw.split("\t")[1] if "\t" in cn_raw else cn_raw
+
+        old_txt = cn_txt
+        if git_base_cn and len(git_base_cn) >= lno:
+            head_raw = git_base_cn[lno - 1]
+            old_txt = head_raw.split("\t")[1] if "\t" in head_raw else head_raw
+
+        if cn_txt != old_txt:
+            cat, reason = classify_change(lno, sid, ja_txt, old_txt, cn_txt)
+            diffs.append({
+                "lno": lno,
+                "sid": sid,
+                "ja": ja_txt,
+                "old": old_txt,
+                "new": cn_txt,
+                "cat": cat,
+                "reason": reason,
+                "section": "灰色的果实·莳菜线第七章近战防身战术射击与模拟弹君布丁大王 (grisaia1/mak_007)"
             })
 
     print(f"Total indexed modifications: {len(diffs)}")

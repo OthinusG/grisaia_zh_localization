@@ -1,4 +1,5 @@
 import sys
+import importlib.util
 
 def verify_file(tsv_file, part_list, start_idx, end_idx):
     with open(tsv_file, 'r', encoding='utf-8') as f:
@@ -28,7 +29,21 @@ def verify_file(tsv_file, part_list, start_idx, end_idx):
         print(f"[PASS] All {len(part_list)} lines verified with 0 errors!")
     else:
         print(f"[FAIL] {errors} errors found!")
+        sys.exit(1)
 
 if __name__ == '__main__':
-    from mak_006_part1 import mak_006_part1
-    verify_file('scratch_mak_006.tsv', mak_006_part1, 0, 261)
+    if len(sys.argv) >= 6:
+        tsv_path = sys.argv[1]
+        script_path = sys.argv[2]
+        var_name = sys.argv[3]
+        start_idx = int(sys.argv[4])
+        end_idx = int(sys.argv[5])
+
+        spec = importlib.util.spec_from_file_location("module", script_path)
+        mod = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(mod)
+        part_list = getattr(mod, var_name)
+        verify_file(tsv_path, part_list, start_idx, end_idx)
+    else:
+        from mak_006_part1 import mak_006_part1
+        verify_file('scratch_mak_006.tsv', mak_006_part1, 0, 261)
