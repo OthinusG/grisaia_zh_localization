@@ -32,6 +32,18 @@ def classify_change(line_no, sid, ja, old_cn, new_cn):
     if "嘘吐き" in ja or "嘘はき" in ja or "泥棒の始まり" in ja or "ブモー" in ja:
         return "日式谚语双关与傲娇口癖还原", "将满把'嘘つきは泥棒の始まり'（撒谎是当小偷的开端）读白字并强词夺理的俏皮双关自然汉化，精准呈现其被吻后瞬间切换回傲娇状态气急败坏的可爱反应"
 
+    # mak_013 specific
+    if "ヒャッポダ" in ja or "ツーステップスネーク" in ja or "アメイジング・アニマル" in ja or "リアクション" in ja or "出血毒" in ja:
+        return "戴夫教授两步蛇百步蛇科普与受难真人秀", "精准还原戴夫教授越南探访两步蛇（百步蛇/尖吻蝮）的无厘头科普真人秀，纠正机翻将‘リアルな方’（真家伙中的真家伙）与出血毒反应死译生硬的缺陷，生动呈现戴夫主动挨咬惨叫打滚的滑稽受难综艺画面"
+    if "ジャガイモのモチモチ" in ja or "酢豚" in ja or "パイナップル" in ja or "膝枕" in ja or "手ぬぐい" in ja or "４つ折り" in ja:
+        return "土豆团子素咕咾肉与拧毛巾虐童过去", "精准还原莳菜因雄二不吃肉特意手捏油炸土豆丸子替代猪肉的无肉糖醋咕咾肉日常（炸12个偷吃4个），细腻刻画天音回忆莳菜初入美滨时连毛巾都不会拧（揉成球攥水而非折四折绞干）从而察觉其从未被当作正常人类对待的虐待身世"
+    if "入巣正孝" in ja or "偽装誘拐" in ja or "身代金" in ja or "１億２千万円" in ja or "２００万ドル" in ja or "無記名" in ja or "債券" in ja or "トカゲの尻尾" in ja:
+        return "正孝单刀赴会伪装绑架与宗族断尾谋杀", "纠正机翻中充斥的‘纸片’‘素材’死译缺陷，生动还原入巢一族借伪装绑架设局灭口清廉赘婿正孝、正孝倾尽家财筹措12万美元现钞与150万美元无记名债券却遭绑匪耻笑背叛、电视新闻上宗家携替身母女悠闲聆赏交响乐的残忍黑幕"
+    if "柱に縛り付け" in ja or "腐り始め" in ja or "ウソつき" in ja or "仔犬" in ja or "自転車の乗り方" in ja:
+        return "炎夏六日伴尸腐臭梦魇与大骗子泣诉", "精准还原NVL全屏诗意回忆排版与控制符`$A1`，细腻还原年幼莳菜被绑在柱子上与生父逐渐腐烂生蛆遗骸朝夕相对六天的绝望地狱梦魇，以及买小狗、去海边放烟花、教骑自行车的落空承诺化作心碎梦呓‘爸爸你这个大骗子’"
+    if "狼" in ja or "育児" in ja or "家族" in ja or "薄汚れた俺の手" in ja:
+        return "灰狼死守幼崽隐喻与握紧小手誓约", "生动呈现雄二看着电视里负伤仍一次次站起咆哮护崽的灰狼而重拾信念，深知自己双手染满污秽却毅然紧紧握住莳菜向空中无助伸出的求救小手，许下‘纵使跌落深渊也独自承担’的深沉誓言"
+
     # mak_012 specific
     if "部外指令" in ja or "１１８４７" in ja or "部外秘" in ja or "持ち出し・複写厳禁" in ja or "紙束" in ja:
         return "体制外秘密处决指令与内部绝密档案", "纠正机翻将‘部外指令・１１８４７号計画詳細’漏译尾数误作‘1184号’的离谱硬伤，纠正将‘部外秘’错译为‘外派机密’（实际为体制外秘密作战、对体制外保密的最高内部绝密），精准还原JB冒死私自盗出的国家机关最高黑幕全家桶档案"
@@ -2784,6 +2796,32 @@ def build_report():
                 "section": "灰色的果实·莳菜线第十三章诀别留信绝密指令与防谍反侦察 (grisaia1/mak_012)"
             })
 
+    # mak_013 (Milestone 2 Chapter 14)
+    for lno in range(33607, 34115):
+        ja_raw = ja_lines[lno - 1]
+        cn_raw = cn_lines[lno - 1]
+        sid = ja_raw.split("\t")[0] if "\t" in ja_raw else f"L{lno}"
+        ja_txt = ja_raw.split("\t")[1] if "\t" in ja_raw else ja_raw
+        cn_txt = cn_raw.split("\t")[1] if "\t" in cn_raw else cn_raw
+
+        old_txt = cn_txt
+        if git_base_cn and len(git_base_cn) >= lno:
+            head_raw = git_base_cn[lno - 1]
+            old_txt = head_raw.split("\t")[1] if "\t" in head_raw else head_raw
+
+        if cn_txt != old_txt:
+            cat, reason = classify_change(lno, sid, ja_txt, old_txt, cn_txt)
+            diffs.append({
+                "lno": lno,
+                "sid": sid,
+                "ja": ja_txt,
+                "old": old_txt,
+                "new": cn_txt,
+                "cat": cat,
+                "reason": reason,
+                "section": "灰色的果实·莳菜线第十四章伴尸地狱梦魇与灰狼守护誓约 (grisaia1/mak_013)"
+            })
+
     print(f"Total indexed modifications: {len(diffs)}")
 
     # Build Markdown
@@ -3423,6 +3461,15 @@ def build_report():
     md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
     md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
     for idx, d in enumerate(mak_012_diffs, 1):
+        md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
+    md.append("\n---\n")
+
+    # Section 71 - Milestone 2: Makina Route Chapter 14
+    mak_013_diffs = [d for d in diffs if d["section"].startswith("灰色的果实·莳菜线第十四章伴尸地狱梦魇与灰狼守护誓约")]
+    md.append(f"## 七十一、 灰色的果实·莳菜线第十四章伴尸地狱梦魇与灰狼守护誓约 (`grisaia1/mak_013`，共 {len(mak_013_diffs)} 条) —— 【里程碑二·个人线第十四章】\n")
+    md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
+    md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
+    for idx, d in enumerate(mak_013_diffs, 1):
         md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
     md.append("\n---\n")
 
