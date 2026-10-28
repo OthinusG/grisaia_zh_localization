@@ -1196,6 +1196,16 @@ def classify_change(line_no, sid, ja, old_cn, new_cn):
     if "高級スポーツカー" in ja or "軽自動車" in ja or "ナトリウム" in ja or "カレーコロッケ" in ja or "毒キノコ" in ja or "俗説" in ja or "犠牲" in ja:
         return "K-car超跑身材自嘲、电解质盐分危机与试毒蘑菇冷酷铁律", "一姬以‘豪华超跑旁被迫停靠微型K-car’自嘲胸围拒绝与天音共浴冲凉，天音化身老司机援引改装大师名言力挺轻量化；一姬科普体内钠离子不可再生严密私藏食盐；一姬辟谣‘菌柄纵裂无毒’民间伪科学，冰冷提议‘给讨厌的人试吃观察三天’，以骇人冰冷击碎全员盲目乐观幻想"
 
+    # ama_old_004 specific
+    if "アメ車" in ja or "玉ねぎの皮" in ja or "デトックス" in ja or "不退転" in ja or "牛乳は、よく噛んで" in ja:
+        return "美系油老虎自嘲、洋葱皮茶与一姬不退转博弈格言", "天音饥肠辘辘吮吸筷子被一姬戏谑为‘油耗惊人的美系肌肉车’；两人饮用洋葱皮煮水摄取抗氧化多酚排毒；一姬赞助半块黑巧克力当赌资并传授‘不退转、踏出绝不回头’心理战法则，天音重温笔记本中一姬关于‘背叛前先背叛’‘细嚼牛奶’的冷幽默箴言"
+    if "トランプ" in ja or "ジョーカー" in ja or "小沢" in ja or "ピエロ" in ja or "食欲魔人" in ja:
+        return "绝境零食抽鬼牌博弈与小泽学姐遗物惊悚疑云", "饥饿部员以私藏零食为筹码玩抽鬼牌，天音抽中小丑鬼牌惊觉其狞笑与一姬惊人重合；部员议论坂下部长独揽口粮特权，金田提及坠崖当场身亡的‘食欲魔人’小泽遗留大量零食，天音冷汗直流惊觉手头巧克力正是一姬搜刮小泽遗物私藏之物"
+    if "ア～ン" in ja or "ソフトキャンディー" in ja or "枕型" in ja or "熱糧食" in ja or "卑屈" in ja:
+        return "一姬草莓软糖投喂与幼弟雄二防御创伤溯源", "天音战胜私吞贪念将赢来的四颗软糖如数奉还，一姬欣慰并温柔‘啊――’将奶糖喂入天音口中，微小糖分引发生理战栗；一姬溯源幼弟雄二因惧怕被抢夺而习惯躲藏独食的卑屈创伤，展现对畸形家庭中孤僻幼弟的极度心疼"
+    if "泣き虫" in ja or "責任と責任感" in ja or "神様" in ja or "墓まで持っていく" in ja or "帰りたい" in ja:
+        return "崩溃痛哭的温暖腹部依靠与一姬神圣化绝对信仰", "天音因一颗糖果联想昔日优渥家庭生活心理彻底崩溃痛哭‘想回家’，一姬温柔将其头颅抱在小腹前轻抚安抚，以‘早知把弟弟塞包里偷渡’破涕为笑；一姬厘清‘责任与责任感’边界，天音彻底将思考权奉献给一姬，将其升华为心中无可动摇的唯一神明"
+
     return "消除AI味/润色优化", "重构生硬日式倒装与机械直译，润色为符合Galgame演出的自然中文"
 
 def build_report():
@@ -3599,6 +3609,32 @@ def build_report():
                 "section": "灰色的果实·天音线天使之声篇第三日绝世弟控育儿论与试毒蘑菇生存铁律 (grisaia1/ama_old_003)"
             })
 
+    # ama_old_004 (Milestone 2 Chapter 36 - Angelic Howl Day 4)
+    for lno in range(8973, 9451):
+        ja_raw = ja_lines[lno - 1]
+        cn_raw = cn_lines[lno - 1]
+        sid = ja_raw.split("\t")[0] if "\t" in ja_raw else f"L{lno}"
+        ja_txt = ja_raw.split("\t")[1] if "\t" in ja_raw else ja_raw
+        cn_txt = cn_raw.split("\t")[1] if "\t" in cn_raw else cn_raw
+
+        old_txt = cn_txt
+        if git_base_cn and len(git_base_cn) >= lno:
+            head_raw = git_base_cn[lno - 1]
+            old_txt = head_raw.split("\t")[1] if "\t" in head_raw else head_raw
+
+        if cn_txt != old_txt:
+            cat, reason = classify_change(lno, sid, ja_txt, old_txt, cn_txt)
+            diffs.append({
+                "lno": lno,
+                "sid": sid,
+                "ja": ja_txt,
+                "old": old_txt,
+                "new": cn_txt,
+                "cat": cat,
+                "reason": reason,
+                "section": "灰色的果实·天音线天使之声篇第四日绝境抽鬼牌博弈与神明风见一姬的诞生 (grisaia1/ama_old_004)"
+            })
+
     print(f"Total indexed modifications: {len(diffs)}")
 
     # Build Markdown
@@ -4436,6 +4472,15 @@ def build_report():
     md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
     md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
     for idx, d in enumerate(ama_old_003_diffs, 1):
+        md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
+    md.append("\n---\n")
+
+    # Section 93 - Milestone 2: Angelic Howl Day 4
+    ama_old_004_diffs = [d for d in diffs if d["section"].startswith("灰色的果实·天音线天使之声篇第四日绝境抽鬼牌博弈与神明风见一姬的诞生")]
+    md.append(f"## 九十三、 灰色的果实·天音线天使之声篇第四日绝境抽鬼牌博弈与神明风见一姬的诞生 (`grisaia1/ama_old_004`，共 {len(ama_old_004_diffs)} 条) —— 【里程碑二·个人线第三十六章】\n")
+    md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
+    md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
+    for idx, d in enumerate(ama_old_004_diffs, 1):
         md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
     md.append("\n---\n")
 
