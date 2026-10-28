@@ -32,6 +32,18 @@ def classify_change(line_no, sid, ja, old_cn, new_cn):
     if "嘘吐き" in ja or "嘘はき" in ja or "泥棒の始まり" in ja or "ブモー" in ja:
         return "日式谚语双关与傲娇口癖还原", "将满把'嘘つきは泥棒の始まり'（撒谎是当小偷的开端）读白字并强词夺理的俏皮双关自然汉化，精准呈现其被吻后瞬间切换回傲娇状态气急败坏的可爱反应"
 
+    # mak_004 specific
+    if "カッコウ" in ja or "ジャイロ効果" in ja or "砂場" in ja or "階段" in ja or "軽車両" in ja or "ＭＯＳ" in ja or "教導官" in ja:
+        return "布谷鸟伏击与硬核单车战术训练", "生动呈现雄二晨跑听闻布谷鸟啼鸣勾起的运兵车战术拉练回忆、陀螺效应暴力推车导致莳菜连环翻车、以及雄二天音分别担纲严父慈母的育儿分工"
+    if "通知表" in ja or "ケント紙" in ja or "ＧＩ" in ja or "甲・乙・丙・丁・戊" in ja or "女癖" in ja or "考科表" in ja or "ツーチヒョー" in ja:
+        return "期末成绩单与女癖恶劣考课评定", "精准汉化千鹤发放成绩单时美滨全员百态（战后GI发巧克力、商谈递名片、新兵领公文），纠正机翻将成绩单（通知表）误作‘第二名次’，还原千鹤红笔手书‘女癖堪忧’与CIRS女性上司考评"
+    if "悪い子ビネガー" in ja or "なまはげ" in ja or "アスタリスク" in ja or "モノマネ" in ja or "うどんで首吊" in ja or "ヘソ噛んで死ね" in ja:
+        return "坏孩子醋酸与全员声线神级模仿", "纠正机翻将生剥鬼（なまはげ）荒谬译为‘生爸爸’，传神重现莳菜泼洒苹果醋的秋田恶鬼名梗、蚊包米字星号暴击、对小幸/满/由美子声线台词的逆天模仿与关西腔黑话溯源"
+    if "ダブル・メロンパン" in ja or "片乳" in ja or "処女" in ja or "甲子園" in ja or "親指の爪" in ja or "拇印" in ja or "責任を負わない" in ja:
+        return "双层蜜瓜包野望与学园长处女暴击", "传神还原莳菜妄图以双层蜜瓜包从幕后统治世界的宏伟野望、天音半裸卖弄性感搞定兼职、莳菜拍桌痛斥千鹤老处女导致其甲子园惨败式破防长叹、以及雄二按手印签署免责公文"
+    if "クエン酸" in ja or "ドＳ" in ja or "馬乗り" in ja or "ジュビコ" in ja or "お墓参り" in ja or "キョート" in ja or "キセル" in ja or "タクアン" in ja or "寸胴" in ja or "ローション" in ja or "首輪に鎖" in ja:
+        return "小幸柠檬酸水刑逼供与京都外婆乌龙", "纠正机翻对抖S/抖M的颠倒错译与‘太好了’的极性反转，绝妙还原小幸骑乘压制灌满高纯度柠檬酸的水刑谍报风、由美子茱比子冷幽默、京都极道风外婆把莳菜认作缩水天音的大乌龙、浴衣润滑油调侃、以及雄二锁链看门犬的暑假序章"
+
     # mak_003 specific
     if "レンジャー" in ja or "ガスマスク" in ja or "空挺" in ja or "ミニヴェロ" in ja or "ミル・スペック" in ja or "トクチュー" in ja or "ジャイアン" in ja:
         return "自卫队特训与军规折叠单车", "生动还原雄二与莳菜清晨空挺特训中大雄胖虎水泥管歌唱梗、游骑兵怒吼、防毒面具操练与小幸七套战术女仆装的硬核军事幽默"
@@ -2384,6 +2396,32 @@ def build_report():
                 "section": "灰色的果实·莳菜线第三章晨练特训与莳菜身世档案 (grisaia1/mak_003)"
             })
 
+    # mak_004 (Milestone 2 Chapter 4)
+    for lno in range(27761, 28374):
+        ja_raw = ja_lines[lno - 1]
+        cn_raw = cn_lines[lno - 1]
+        sid = ja_raw.split("\t")[0] if "\t" in ja_raw else f"L{lno}"
+        ja_txt = ja_raw.split("\t")[1] if "\t" in ja_raw else ja_raw
+        cn_txt = cn_raw.split("\t")[1] if "\t" in cn_raw else cn_raw
+
+        old_txt = cn_txt
+        if git_base_cn and len(git_base_cn) >= lno:
+            head_raw = git_base_cn[lno - 1]
+            old_txt = head_raw.split("\t")[1] if "\t" in head_raw else head_raw
+
+        if cn_txt != old_txt:
+            cat, reason = classify_change(lno, sid, ja_txt, old_txt, cn_txt)
+            diffs.append({
+                "lno": lno,
+                "sid": sid,
+                "ja": ja_txt,
+                "old": old_txt,
+                "new": cn_txt,
+                "cat": cat,
+                "reason": reason,
+                "section": "灰色的果实·莳菜线第四章单车特训与双层蜜瓜包的夏假序幕 (grisaia1/mak_004)"
+            })
+
     print(f"Total indexed modifications: {len(diffs)}")
 
     # Build Markdown
@@ -2933,6 +2971,15 @@ def build_report():
     md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
     md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
     for idx, d in enumerate(mak_003_diffs, 1):
+        md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
+    md.append("\n---\n")
+
+    # Section 61 - Milestone 2: Makina Route Chapter 4
+    mak_004_diffs = [d for d in diffs if d["section"].startswith("灰色的果实·莳菜线第四章单车特训与双层蜜瓜包的夏假序幕")]
+    md.append(f"## 六十一、 灰色的果实·莳菜线第四章单车特训与双层蜜瓜包的夏假序幕 (`grisaia1/mak_004`，共 {len(mak_004_diffs)} 条) —— 【里程碑二·个人线第四章】\n")
+    md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
+    md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
+    for idx, d in enumerate(mak_004_diffs, 1):
         md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
     md.append("\n---\n")
 
