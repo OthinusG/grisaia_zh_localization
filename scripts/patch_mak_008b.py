@@ -9,7 +9,10 @@ from mak_008b_part2 import mak_008b_part2
 full_new_cn = mak_008b_part1 + mak_008b_part2
 assert len(full_new_cn) == 771, f"Expected 771 lines, got {len(full_new_cn)}"
 
-with open("scratch_mak_008b.tsv", "r", encoding="utf-8") as f:
+import os
+
+tsv_path = "scratch_mak_008b.tsv" if os.path.exists("scratch_mak_008b.tsv") else os.path.join("tsv", "scratch_mak_008b.tsv")
+with open(tsv_path, "r", encoding="utf-8") as f:
     tsv_lines = [l.strip("\r\n").split("\t") for l in f]
 assert len(tsv_lines) == 771
 

@@ -1,5 +1,6 @@
 # scripts/patch_mak_007.py
 import sys
+import os
 from mak_007_part1 import mak_007_part1
 from mak_007_part2 import mak_007_part2
 
@@ -11,7 +12,8 @@ with open("ALL_TEXT_cn.txt", "r", encoding="utf-8") as f:
 
 assert len(cn_lines) == 110622
 
-with open("scratch_mak_007.tsv", "r", encoding="utf-8") as f:
+tsv_path = "scratch_mak_007.tsv" if os.path.exists("scratch_mak_007.tsv") else os.path.join("tsv", "scratch_mak_007.tsv")
+with open(tsv_path, "r", encoding="utf-8") as f:
     tsv_lines = [line.strip("\r\n").split("\t") for line in f]
 
 assert len(tsv_lines) == 618

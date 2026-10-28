@@ -1,7 +1,10 @@
 import sys
+import os
 import importlib.util
 
 def verify_file(tsv_file, part_list, start_idx, end_idx):
+    if not os.path.exists(tsv_file) and os.path.exists(os.path.join('tsv', tsv_file)):
+        tsv_file = os.path.join('tsv', tsv_file)
     with open(tsv_file, 'r', encoding='utf-8') as f:
         tsv_lines = [line.strip('\r\n').split('\t') for line in f]
 

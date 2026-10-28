@@ -66,6 +66,7 @@
 - Git Remote: Tracked with `git@github.com:OthinusG/grisaia_zh_localization.git` on branch `main`.
 - Project Plan & Roadmap: Exhaustive checklist maintained in `grisaia_localization_project_plan.md`.
 - Operational Rules:
+  - TSV File Management: All scratch/extracted `.tsv` files are centralized in the `/tsv` folder (`tsv/`) to keep workspace root clean.
   - Granular task checklist with active checkoff (`[x]`) upon each subtask completion.
   - Strict Task Granularity: Every single subtask in the project plan is strictly controlled to <= 1000 lines (329 fine-grained subtasks total across all 110,622 lines).
   - Real-time Git commit and push (`origin main`) after each subtask.
