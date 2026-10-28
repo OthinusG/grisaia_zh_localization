@@ -58,6 +58,18 @@ def classify_change(line_no, sid, ja, old_cn, new_cn):
     if "巨乳" in ja or "ハートジャック" in ja or "トランプ" in ja or "シグナルロスト" in ja or "掃討" in ja or "烏森神社" in ja:
         return "特务追踪四将瞬杀全灭与红心J巨乳撤退指令", "精准刻画雄二于东口广场深夜瞬杀全歼三叶草12、红心9、黑桃6、方块A四名追踪特工却手下留情仅折断筋骨，JB得知留守的红心J系24岁88公分大胸新人后果断下令撤退‘9029对巨乳下不了狠手’的硬核幽默与老练情报博弈"
 
+    # mak_018 specific
+    if "Ｐ２２０ＪＰ" in ja or "ダブルタップ" in ja or "ストロングハンド" in ja or "ウィークハンド" in ja or "蜂の羽" in ja or "耳を抉り取られた" in ja or "鼻血" in ja:
+        return "执务室死斗搏杀与左耳重创负伤突围", "硬核还原雄二破门以标准双发快射（Double Tap）击倒前锋保镖、击碎副手手肘，遭遇副手强换弱手（Strong Hand -> Weak Hand）拼死盲射反击，左腿中弹、左耳被削去皮肉后于狭窄走廊零距离血腥肉搏重创对手突围的CQB残酷死斗"
+    if "トイレットペーパー" in ja or "某宗教団体" in ja or "教祖" in ja or "製紙会社" in ja or "兜町" in ja or "おっ死ぬ" in ja or "兆弾" in ja:
+        return "舆论公关粉饰与内阁造纸股票黑色幽默", "纠正将‘某宗教団体の信者’（影射奥姆真理教教祖麻原彰晃被捕）生硬死译、将‘兆弾’（跳弹/跳飞弹）错译的硬伤；生动展现JB与琪娅拉起草通稿甩锅某国间谍、嘲弄电视八卦节目散布‘经济崩溃抢购卫生纸’恐慌，以及JB提前买入中央区老牌造纸厂股票大赚特赚的机关黑色讽刺幽默"
+    if "悪魔の手" in ja or "恩赦" in ja or "犬小屋" in ja or "脱亡" in ja or "ケースオフィサー" in ja or "次代の９０２９" in ja:
+        return "特务猎犬悲歌与病房私奔破灭", "深刻剖析JB对国家非法秘匿组织CIRS‘恶魔利爪’的冷酷自白——以虚伪特赦为锁链驯化狂犬撕咬敌人，猎犬一旦咬断项圈也唯有饿毙或重返狗舍；敏锐交代莳菜从医院出逃、琪娅拉未来接任9029联络官的沉重伏笔"
+    if "ピストル" in ja or "７千万" in ja or "通帳" in ja or "９０２９" in ja or "目が見えない" in ja or "春寺" in ja or "大騙子" in ja or "ウソつき" in ja:
+        return "站台夕阳诀别与遗存七千万托孤", "极具张力地刻画雄二在暮色黄昏中失血力竭赴约，双目失明前将手枪托付莳菜丢弃，将存有莳菜七千万及毕生卖命钱的存折（密码9029）与JB名片亲手塞给莳菜；伴随着‘能做你的父亲是我此生最幸福的事’，雄二在莳菜恸哭声中于长椅上咽气离世的催泪极峰"
+    if "ハーキュリーズ" in ja or "パン屋" in ja or "アップルパイ" in ja or "お腹の赤ちゃん" in ja or "メッキーナスピーキン" in ja or "弾が外れる" in ja or "ナインオートゥーナイン" in ja:
+        return "海滨孤屋亡灵幻语与莳菜继承9029宿命", "纠正机翻将莳菜英文应答‘ディスイズメッキーナスピーキン’（This is Makina speaking）荒唐音译为‘这里是迪斯特·梅卡娜·斯皮金’的特大硬伤；极致还原莳菜身怀雄二遗腹子于异国海滨开设冷清面包店，每日与雄二亡灵幻象对话呵护苹果树苗，最终接起琪娅拉的暗杀指令电话，正式以‘9029’杀手代号继承雄二遗志与杀手宿命的震撼终章（Bad Ending）"
+
     # mak_017 specific
     if "バンかけ" in ja or "職質" in ja or "巡査長" in ja or "銀バッジ" in ja or "出動靴" in ja or "ハザードランプ" in ja:
         return "深夜公园盘查应对与冒用保安局证件诈夺货车", "纠正将警方盘查暗语‘バンかけ’（巡警对可疑分子的盘查盘问/职质）荒谬机翻为‘巴士犯’的特大硬伤；细腻还原雄二精神恍惚下遭遇银徽两杠老练巡查长盘查，凭借多年特工条件反射编造同事打鼾借口，并利用先前缴获的中央保安局COS019证件大摇大摆诈称反恐搜查、当着巡警面强势征用货车驾驶员车辆的教科书级心理防线突破"
@@ -2976,6 +2988,32 @@ def build_report():
                 "section": "灰色的果实·莳菜线第十八章血誓突袭爱丽丝总部与生母对峙抉择 (grisaia1/mak_017)"
             })
 
+    # mak_018 (Milestone 2 Chapter 19 - Bad Ending)
+    for lno in range(36487, 36714):
+        ja_raw = ja_lines[lno - 1]
+        cn_raw = cn_lines[lno - 1]
+        sid = ja_raw.split("\t")[0] if "\t" in ja_raw else f"L{lno}"
+        ja_txt = ja_raw.split("\t")[1] if "\t" in ja_raw else ja_raw
+        cn_txt = cn_raw.split("\t")[1] if "\t" in cn_raw else cn_raw
+
+        old_txt = cn_txt
+        if git_base_cn and len(git_base_cn) >= lno:
+            head_raw = git_base_cn[lno - 1]
+            old_txt = head_raw.split("\t")[1] if "\t" in head_raw else head_raw
+
+        if cn_txt != old_txt:
+            cat, reason = classify_change(lno, sid, ja_txt, old_txt, cn_txt)
+            diffs.append({
+                "lno": lno,
+                "sid": sid,
+                "ja": ja_txt,
+                "old": old_txt,
+                "new": cn_txt,
+                "cat": cat,
+                "reason": reason,
+                "section": "灰色的果实·莳菜线第十九章绝路夕阳托孤诀别与继承9029杀手宿命 (grisaia1/mak_018)"
+            })
+
     print(f"Total indexed modifications: {len(diffs)}")
 
     # Build Markdown
@@ -3660,6 +3698,15 @@ def build_report():
     md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
     md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
     for idx, d in enumerate(mak_017_diffs, 1):
+        md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
+    md.append("\n---\n")
+
+    # Section 76 - Milestone 2: Makina Route Chapter 19 (Bad Ending)
+    mak_018_diffs = [d for d in diffs if d["section"].startswith("灰色的果实·莳菜线第十九章绝路夕阳托孤诀别与继承9029杀手宿命")]
+    md.append(f"## 七十六、 灰色的果实·莳菜线第十九章绝路夕阳托孤诀别与继承9029杀手宿命 (`grisaia1/mak_018`，共 {len(mak_018_diffs)} 条) —— 【里程碑二·个人线第十九章·Bad Ending】\n")
+    md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
+    md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
+    for idx, d in enumerate(mak_018_diffs, 1):
         md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
     md.append("\n---\n")
 
