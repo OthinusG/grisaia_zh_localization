@@ -32,6 +32,24 @@ def classify_change(line_no, sid, ja, old_cn, new_cn):
     if "嘘吐き" in ja or "嘘はき" in ja or "泥棒の始まり" in ja or "ブモー" in ja:
         return "日式谚语双关与傲娇口癖还原", "将满把'嘘つきは泥棒の始まり'（撒谎是当小偷的开端）读白字并强词夺理的俏皮双关自然汉化，精准呈现其被吻后瞬间切换回傲娇状态气急败坏的可爱反应"
 
+    # mak_008a specific
+    if "ボバ太郎" in ja or "貧乏性" in ja or "ビンボーショー" in ja or "ヤンキー" in ja or "ザリガニ" in ja or "京都" in ja or "都" in ja or "玉入れ" in ja or "お馬" in ja or "お船" in ja or "自転車" in ja or "オートバイ" in ja:
+        return "穷酸体质改装鲍巴太郎与暴走混混钓螯虾", "纠正机翻将‘貧乏性’荒唐误译为‘省钱展示会’（Binbou show）的大离谱硬伤，修正将暴走混混‘ヤンキー’颠倒为‘雅痞’、小龙虾‘ザリガニ’误译为‘螃蟹’、古都京都误译为‘东京’的系列硬伤，传神展现天音母亲自制鲍巴太郎的魔改穷酸命、以及天音在京都和混混捕捞小龙虾烤着吃的野丫头黑历史"
+    if "セルモーター" in ja or "グロメット" in ja or "穴なし" in ja or "キック" in ja or "上死点" in ja or "ミッドコントロール" in ja or "フォワードコントロール" in ja or "ワイヤー引き" in ja or "ＣＤＩ" in ja or "樹脂盛り" in ja or "ニュートラル" in ja or "型式" in ja or "トレール" in ja:
+        return "鲍巴太郎越野底盘魔改与脚踢打火树脂捏合", "纠正机翻将打死堵头的橡胶盲栓误译为‘无孔套’、脚踩踩发杆踏空误译为‘脚踢空了’的机械常识错误，专业呈现越野林道底盘移设锁孔、拆除启动马达、压缩冲程上死点死踹脚启动、前置中置混搭脚踏、钢索鼓刹与死马当活马医反复揉捏CDI点火器树脂灌封模块的硬核老饕修车细节"
+    if "タペット音" in ja or "１５度" in ja or "２６度" in ja or "３０度" in ja or "シャコタン" in ja or "ガレた" in ja or "南京錠" in ja or "林道" in ja or "急斜面" in ja or "腹がつかえ" in ja:
+        return "气门挺杆敲击声极低趴地与国有林场碎石险坡", "严格保留[$]等游戏控制代码，纠正机翻将气门挺杆敲击声（タペット音）误为‘咔嗒爬行’、极低趴地底盘改装（シャコタン）机翻腔与乱石坡托底机匣报废的专业术语，生动还原鲍巴太郎顶着气门异响爬二十六度极陡坡托底寸步难行、雄二下车徒步负重的硬核跋涉"
+    if "弱装砲弾" in ja or "野戦特科" in ja or "高機動車" in ja or "中トラ" in ja or "キューロク式" in ja or "キューポラ" in ja:
+        return "富士演训场弱装药炮响与96式装轮装甲车错车", "纠正机翻将自卫队‘野战特科’陆炮部队减装药训练误译为‘乒乒乓乓射击’、96式装轮装甲车（キューロク式）车顶车长指挥塔舱口（Cupola）错车敬礼场景的机翻生硬感，精准再现富士演习场特有的军旅浓烈硝烟气息"
+    if "お蚕さん" in ja or "カイコガ" in ja or "バイオリンの弓" in ja or "クワ" in ja or "桑の木" in ja or "ほうとう" in ja or "信げん餅" in ja or "キャラかぶってん" in ja or "シナモンロール" in ja or "カボチャパン" in ja or "パン屋" in ja:
+        return "桑田蚕桑大叔脑回路与山梨冈山特产撞车", "纠正机翻将桑树蚕宝宝‘お蚕さん’荒谬音译为‘欧阳蚕先生’的断头笑点，修正将山梨名吃‘馎饦宽面’误为‘馒头’的常识错误，传神还原雄二与莳菜关于山梨只产葡萄、被甲州人暴打、信玄饼、冈山人设撞车、以及把蚕宝宝抽丝联想到鲸鱼须做小提琴弓的无厘头天才对话"
+    if "日下部麻子" in ja or "餓鬼" in ja or "モッサリとした金髪" in ja or "クズ人間" in ja or "８割の人格" in ja or "生きることを" in ja:
+        return "恩师日下部麻子救赎回忆与金发女羁绊", "绝妙描摹雄二凝视莳菜奔向桑田的娇小背影时泛起的心潮，追忆童年犹如字面‘饿鬼’般沉沦绝望深渊时被日下部麻子拯救、以及与金发女JB（春寺由梨亚）结下的深厚羁绊，深刻阐述‘活着的意义’这一灰色系列核心哲学命题"
+    if "ずら" in ja or "じゃんけ" in ja or "わにわにしとらんで" in ja or "ちゃっちゃと行けし" in ja or "スイカ" in ja or "農婦" in ja:
+        return "甲州方言极速同化与老奶奶分食西瓜", "纠正机翻将甲州方言口癖‘ずら’、‘じゃんけ’、‘わにわにしとらんで’（别磨磨蹭蹭毛毛躁躁）、‘ちゃっちゃと行けし’（麻溜点快走）完全抹杀的失误，生动呈现莳菜与农妇老妪闲聊数分钟即被甲州方言彻底带偏的惊人同化力与雄二无力吐槽"
+    if "好々爺" in ja or "老害" in ja or "栗ぜんざい" in ja or "傘張り浪人" in ja or "人見知り" in ja or "６年も病院" in ja:
+        return "蹭吃栗子善哉鉴老达人与糊伞浪人老成之风", "修正机翻对好爷爷与老害分类的死板直译，精彩再现莳菜因住院六年练就一眼辨别老头优劣的独门绝学、商店街蹭吃老夫妇栗子红豆善哉的厚脸皮狡辩、评价雄二老气横秋若年轻武士、以及JB曾吐槽雄二细心保养装备宛如‘落魄糊伞浪人’的经典名梗"
+
     # mak_007 specific
     if "走るのが嫌いではない" in ja or "石を投げ" in ja or "母の勤め先" in ja or "ランニングシューズ" in ja or "何でも試してみなければ" in ja or "プロのスポーツ選手" in ja or "ランドセル" in ja:
         return "河畔长跑童年回忆与长跑哲学启蒙", "深刻描摹雄二童年独自在河滩打水漂、受河畔奔跑男子启发开始背着书包长跑、直至赶超骑车下班的母亲并获赠崭新跑鞋的温暖回忆，奠定“不亲自尝试便无法看清事物真貌”的人生哲学"
@@ -891,7 +909,7 @@ def build_report():
     pattern1 = re.compile(r"L(\d+)\s+(grisaia1/ama_001#\d+)\t.*?\n-->\s+(grisaia1/ama_001#\d+)\t(.*)")
     pattern2 = re.compile(r"L(\d+)\s+JA:\s*(grisaia1/ama_001#\d+)\t.*?\nL\1\s+CN:\s*(grisaia1/ama_001#\d+)\t(.*)")
 
-    for path in glob.glob("/Users/wqin/.gemini/antigravity-cli/brain/58bc9ea3-8e40-4e4b-af2d-7c0dbd91401e/.system_generated/steps/**/output.txt", recursive=True):
+    for path in glob.glob("/Users/wqin/.gemini/antigravity-cli/brain/a088b6ec-1fa3-4cdc-baba-1df09660d90a/.system_generated/steps/**/output.txt", recursive=True):
         with open(path, "r", encoding="utf-8", errors="ignore") as f:
             content = f.read()
             for m in pattern1.finditer(content):
@@ -2542,6 +2560,32 @@ def build_report():
                 "section": "灰色的果实·莳菜线第七章近战防身战术射击与模拟弹君布丁大王 (grisaia1/mak_007)"
             })
 
+    # mak_008a (Milestone 2 Chapter 8)
+    for lno in range(30148, 30696):
+        ja_raw = ja_lines[lno - 1]
+        cn_raw = cn_lines[lno - 1]
+        sid = ja_raw.split("	")[0] if "	" in ja_raw else f"L{lno}"
+        ja_txt = ja_raw.split("	")[1] if "	" in ja_raw else ja_raw
+        cn_txt = cn_raw.split("	")[1] if "	" in cn_raw else cn_raw
+
+        old_txt = cn_txt
+        if git_base_cn and len(git_base_cn) >= lno:
+            head_raw = git_base_cn[lno - 1]
+            old_txt = head_raw.split("	")[1] if "	" in head_raw else head_raw
+
+        if cn_txt != old_txt:
+            cat, reason = classify_change(lno, sid, ja_txt, old_txt, cn_txt)
+            diffs.append({
+                "lno": lno,
+                "sid": sid,
+                "ja": ja_txt,
+                "old": old_txt,
+                "new": cn_txt,
+                "cat": cat,
+                "reason": reason,
+                "section": "灰色的果实·莳菜线第八章鲍巴太郎山梨进击与日下部麻子回忆 (grisaia1/mak_008a)"
+            })
+
     print(f"Total indexed modifications: {len(diffs)}")
 
     # Build Markdown
@@ -3121,6 +3165,24 @@ def build_report():
         md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
     md.append("\n---\n")
 
+    # Section 64 - Milestone 2: Makina Route Chapter 7
+    mak_007_diffs = [d for d in diffs if d["section"].startswith("灰色的果实·莳菜线第七章近战防身战术射击与模拟弹君布丁大王")]
+    md.append(f"## 六十四、 灰色的果实·莳菜线第七章近战防身战术射击与模拟弹君布丁大王 (`grisaia1/mak_007`，共 {len(mak_007_diffs)} 条) —— 【里程碑二·个人线第七章】\n")
+    md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
+    md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
+    for idx, d in enumerate(mak_007_diffs, 1):
+        md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
+    md.append("\n---\n")
+
+    # Section 65 - Milestone 2: Makina Route Chapter 8
+    mak_008a_diffs = [d for d in diffs if d["section"].startswith("灰色的果实·莳菜线第八章鲍巴太郎山梨进击与日下部麻子回忆")]
+    md.append(f"## 六十五、 灰色的果实·莳菜线第八章鲍巴太郎山梨进击与日下部麻子回忆 (`grisaia1/mak_008a`，共 {len(mak_008a_diffs)} 条) —— 【里程碑二·个人线第八章】\n")
+    md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
+    md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
+    for idx, d in enumerate(mak_008a_diffs, 1):
+        md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
+    md.append("\n---\n")
+
     md_content = "\n".join(md)
 
     # Write to root & analysis/
@@ -3132,7 +3194,7 @@ def build_report():
     print(f"Report written to root and analysis: {workspace_path}")
 
     # Write to artifacts directory
-    artifact_dir = "/Users/wqin/.gemini/antigravity-cli/brain/58bc9ea3-8e40-4e4b-af2d-7c0dbd91401e"
+    artifact_dir = "/Users/wqin/.gemini/antigravity-cli/brain/a088b6ec-1fa3-4cdc-baba-1df09660d90a"
     os.makedirs(artifact_dir, exist_ok=True)
     artifact_path = os.path.join(artifact_dir, "grisaia_modification_index.md")
     with open(artifact_path, "w", encoding="utf-8") as f:
