@@ -1175,6 +1175,17 @@ def classify_change(line_no, sid, ja, old_cn, new_cn):
         return "头脑风暴四大法则与风筝手机空投破局", "精准还原亚历克斯·奥斯本头脑风暴四大法则：不做预判、全盘接纳、数量至上（$[$b三、とにかく数を出す。$]）、自由组合；纠正机翻‘ググりなさい’去搜一下为‘去谷歌一下’；展现天音在一姬循循善诱启发下将风筝与手机结合的灵光乍现"
     if "クラクション" in ja or "警笛" in ja or "バッテリー" in ja or "キーシリンダー" in ja or "デジタル通信" in ja:
         return "车载喇叭测试与机械二进制通信奇想", "专业展现天音凭借儿时随父跟车经验排查侧翻巴士机械电气线路：确认干式免维护蓄电池幸存、轻触方向盘鸣响高分贝气笛；探讨200米垂直落差声波局限；一姬提出极富极客浪漫与脑洞的‘超长木杆机械二进制数字通信’奇想"
+
+    # ama_old_002 Part 2 specific
+    if "吊り橋効果" in ja or "同性愛" in ja or "図星" in ja or "か～ずき" in ja or "素っ頓狂" in ja or "わぶっ" in ja:
+        return "天音百合告白调戏与一姬吊桥效应惊叫失足", "天音借佐久间学姐传授的恋爱秘籍反撩一姬，一姬害羞慌乱失措，天音从背后亲昵蹭后脑勺致一姬惊叫失足跌坐溪水中；一姬惊慌失措以‘吊桥效应’做理性自卫，天音反客为主欲脱其衣，一姬惊恐呼救逗得天音捧腹大笑"
+    if "シーズー" in ja or "アリオン" in ja or "ＡＬＩＯＮＥ" in ja or "マルチーズ" in ja or "ドッグショー" in ja or "ダイアナ" in ja:
+        return "西施犬阿里昂名门血统与犬种辨识纠偏", "纠正机翻将‘シーズー’（Shih Tzu / 西施犬）错翻为‘雪达犬’、将‘アリオン’错翻为‘阿里昂’的重大失误；精准还原古森瞒着部长偷渡上车的小狗名门血统（母犬为全国名犬赛亚军‘黛安娜’），以及一姬凭项圈铭牌‘ALIONE’冷静辨识出神话神马之名的细致观察"
+    if "お局様" in ja or "ただいまでちゅ" in ja or "キャリアウーマン" in ja or "赤ちゃん言葉" in ja or "リアルな未来" in ja:
+        return "一姬独居女高管反差萌妄想与首领动物本能", "天音生动脑补风见一姬未来沦为大龄剩女叱咤职场、下班回到独居公寓对小狗用夹子音‘妈咪回来啦～啾☆’狂撒娇的凄凉反差萌；小狗视一姬为绝对领袖而对天音龇牙低吼，一姬毒舌吐槽天音神经大条像猛兽"
+    if "タンデムローター" in ja or "ＣＨ−４７" in ja or "投石器" in ja or "スパルタ式ジョーク" in ja or "撃墜" in ja or "ＴＥ２７" in ja or "５１０ブル" in ja:
+        return "支奴干重型直升机过境与斯巴达式投石击落论", "展现搜救直升机飞跃峡谷时众人点燃湿木生烟、天音拼命鸣响车载喇叭的绝境求生；一姬专业辨识出纵列双旋翼机CH-47支奴干多为驻日美军或自卫队路过机，并幽默提出砍树造巨型投石机‘击落直升机引来自卫队大军搜救’的硬核斯巴达式黑色幽默"
+
     return "消除AI味/润色优化", "重构生硬日式倒装与机械直译，润色为符合Galgame演出的自然中文"
 
 def build_report():
@@ -3526,6 +3537,32 @@ def build_report():
                 "section": "灰色的果实·天音线天使之声篇第二日头脑风暴与车载警笛鸣响 (grisaia1/ama_old_002 Part 1)"
             })
 
+    # ama_old_002 Part 2 (Milestone 2 Chapter 34 - Angelic Howl Day 2 Part 2)
+    for lno in range(7779, 8528):
+        ja_raw = ja_lines[lno - 1]
+        cn_raw = cn_lines[lno - 1]
+        sid = ja_raw.split("\t")[0] if "\t" in ja_raw else f"L{lno}"
+        ja_txt = ja_raw.split("\t")[1] if "\t" in ja_raw else ja_raw
+        cn_txt = cn_raw.split("\t")[1] if "\t" in cn_raw else cn_raw
+
+        old_txt = cn_txt
+        if git_base_cn and len(git_base_cn) >= lno:
+            head_raw = git_base_cn[lno - 1]
+            old_txt = head_raw.split("\t")[1] if "\t" in head_raw else head_raw
+
+        if cn_txt != old_txt:
+            cat, reason = classify_change(lno, sid, ja_txt, old_txt, cn_txt)
+            diffs.append({
+                "lno": lno,
+                "sid": sid,
+                "ja": ja_txt,
+                "old": old_txt,
+                "new": cn_txt,
+                "cat": cat,
+                "reason": reason,
+                "section": "灰色的果实·天音线天使之声篇第二日西施犬阿里昂与斯巴达式幽默 (grisaia1/ama_old_002 Part 2)"
+            })
+
     print(f"Total indexed modifications: {len(diffs)}")
 
     # Build Markdown
@@ -4345,6 +4382,15 @@ def build_report():
     md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
     md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
     for idx, d in enumerate(ama_old_002_p1_diffs, 1):
+        md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
+    md.append("\n---\n")
+
+    # Section 91 - Milestone 2: Angelic Howl Day 2 Part 2
+    ama_old_002_p2_diffs = [d for d in diffs if d["section"].startswith("灰色的果实·天音线天使之声篇第二日西施犬阿里昂与斯巴达式幽默")]
+    md.append(f"## 九十一、 灰色的果实·天音线天使之声篇第二日西施犬阿里昂与斯巴达式幽默 (`grisaia1/ama_old_002 Part 2`，共 {len(ama_old_002_p2_diffs)} 条) —— 【里程碑二·个人线第三十四章】\n")
+    md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
+    md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
+    for idx, d in enumerate(ama_old_002_p2_diffs, 1):
         md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
     md.append("\n---\n")
 
