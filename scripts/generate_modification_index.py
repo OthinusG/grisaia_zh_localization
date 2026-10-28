@@ -14,6 +14,20 @@ def escape_md(text):
     return text.replace("|", "\\|").replace("\n", " ").replace("\r", "")
 
 def classify_change(line_no, sid, ja, old_cn, new_cn):
+    # mic_003 specific (Michiru Route: Morning Bedroom Visit, Memory Blackout & Head-Cat Miracle)
+    if (37939 <= line_no <= 38272) or sid.startswith("grisaia1/mic_003"):
+        if "ラッピングされた" in ja or "柔軟剤" in ja or "駄菓子" in ja or "アンモニア" in ja or "ロンメル" in ja or "布団の妖怪" in ja:
+            return "晨曦破晓礼物盒隐喻与隆美尔被窝妖怪", "雄二清晨探访寝室：经典哲理开门见山‘没有不破晓的夜晚，礼物盒交到孩子手中必被撕碎’；寝室弥漫外国柔顺剂、廉价零食糖香与染发剂氨水气味；黑猫被雄二起名‘沙漠之狐隆美尔’，满在被窝里赌气抗议"
+        if "トンネル" in ja or "雪国" in ja or "氷柱" in ja or "病気の小鳥" in ja or "ギュッってしていい" in ja or "倒れそうな大木" in ja:
+            return "川端康成雪国记忆断片隐喻与紧紧相拥脆弱依托", "满的情感与心理创伤核心披露：满倾诉记忆频繁断片跳跃，宛如电车穿入漆黑隧道‘穿过去若是川端康成的雪国倒还好，现实往往是一无所知迎来第二天’；满极度恐惧手心湿冷如病鸟，怯生生请求紧扣十指并‘紧紧抱住’雄二；樵夫支撑大树般倾听心声"
+        if "二重人格" in ja or "解離性" in ja or "自分が自分でなくなる" in ja or "嫌悪感" in ja or "朝の来ない夜はない" in ja:
+            return "多重人格解离恐惧坦白与雄二包容接纳", "灵魂救赎时刻：雄二向满坦陈其拥有第二人格，并宽慰‘就凭这点小事产生厌恶根本不可理喻，我自己也绝非正常人’；满痛陈最恐惧的是‘在不知情的地方另一个自己在擅自做各种事，世界越来越小，最终自己不再是自己’；雄二无言陪伴给予坚实依靠"
+        if "嘘ですからね" in ja or "ビッシー" in ja or "ホウキ" in ja or "魔女" in ja or "黒は女を美しく" in ja or "残酷超人ザンコック" in ja:
+            return "全都是骗你的傲娇大爆发与魔女宅急便黑猫名梗", "神级傲娇变脸与吉卜力名梗：满前一秒眼红抽泣，后一秒骤变粗喘鼻息咆哮‘全都是骗你的啦’；雄二调侃‘把扫帚和收音机带上’（致敬《魔女宅急便》琪琪）；满回怼‘说什么黑色让女人更美是公然挑衅金发吗’；雄二科普记者被拔指甲恐怖酷刑，满吐槽‘残酷超人赞柯克3号’"
+        if "猫が降ってきた" in ja or "ツンデレブレイン" in ja or "雨、じゃない" in ja or "マボロシ" in ja or "猫の呪い" in ja or "病原体のデパート" in ja:
+            return "天降黑猫头顶生草名场面与猫之诅咒掩耳盗铃", "全剧爆笑高潮与重大机翻纠偏：由美子惊呼‘天降黑猫’；满动用‘傲娇大脑’竟推断天上掉下的是‘下雨’；黑猫稳稳趴在满金发双马尾正顶，满疯狂抵赖称‘那是幻觉（纠正机翻将マボロシ音译为马博罗西）、听觉幻象、最新巴黎黑猫假发’；黑猫连喵两声后满硬拗成‘猫之诅咒让人头重’；由美子母爱泛滥发誓以后对满好点；雄二未雨绸缪防备‘病原体百货商场’"
+        return "消除AI味/润色优化", "重构生硬日式倒装与机械直译，润色为符合Galgame演出的自然中文"
+
     # mic_002 specific (Michiru Route: Kiss Aftermath, Minicar Uprising & Wonderland Classroom)
     if (37470 <= line_no <= 37938) or sid.startswith("grisaia1/mic_002"):
         if "ヘクサロビュラ" in ja or "ルーブ・ゴールドバーグ" in ja or "蝶の羽ばたき" in ja or "婚前交渉" in ja or "処女崇拝" in ja:
@@ -4186,6 +4200,32 @@ def build_report():
                 "section": "灰色的果实·松岛满线接吻余波盘问、小汽车起义大暴走与仙境教室对质 (grisaia1/mic_002)"
             })
 
+    # mic_003 (Milestone 2 Chapter 51 - Michiru Route: Morning Bedroom Visit, Memory Blackout & Head-Cat Miracle)
+    for lno in range(37939, 38273):
+        ja_raw = ja_lines[lno - 1]
+        cn_raw = cn_lines[lno - 1]
+        sid = ja_raw.split("\t")[0] if "\t" in ja_raw else f"L{lno}"
+        ja_txt = ja_raw.split("\t")[1] if "\t" in ja_raw else ja_raw
+        cn_txt = cn_raw.split("\t")[1] if "\t" in cn_raw else cn_raw
+
+        old_txt = cn_txt
+        if git_base_cn and len(git_base_cn) >= lno:
+            head_raw = git_base_cn[lno - 1]
+            old_txt = head_raw.split("\t")[1] if "\t" in head_raw else head_raw
+
+        if cn_txt != old_txt:
+            cat, reason = classify_change(lno, sid, ja_txt, old_txt, cn_txt)
+            diffs.append({
+                "lno": lno,
+                "sid": sid,
+                "ja": ja_txt,
+                "old": old_txt,
+                "new": cn_txt,
+                "cat": cat,
+                "reason": reason,
+                "section": "灰色的果实·松岛满线晨曦礼物盒隐喻、记忆断片雪国恐惧与头顶黑猫奇迹 (grisaia1/mic_003)"
+            })
+
     print(f"Total indexed modifications: {len(diffs)}")
 
     # Build Markdown
@@ -5158,6 +5198,15 @@ def build_report():
     md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
     md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
     for idx, d in enumerate(mic_002_diffs, 1):
+        md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
+    md.append("\n---\n")
+
+    # Section 108 - Milestone 2: Michiru Route Chapter 3
+    mic_003_diffs = [d for d in diffs if d["section"].startswith("灰色的果实·松岛满线晨曦礼物盒隐喻、记忆断片雪国恐惧与头顶黑猫奇迹")]
+    md.append(f"## 一百〇八、 灰色的果实·松岛满线晨曦礼物盒隐喻、记忆断片雪国恐惧与头顶黑猫奇迹 (`grisaia1/mic_003`，共 {len(mic_003_diffs)} 条) —— 【里程碑二·个人线第五十一章】\n")
+    md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
+    md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
+    for idx, d in enumerate(mic_003_diffs, 1):
         md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
     md.append("\n---\n")
 
