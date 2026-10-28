@@ -32,6 +32,18 @@ def classify_change(line_no, sid, ja, old_cn, new_cn):
     if "嘘吐き" in ja or "嘘はき" in ja or "泥棒の始まり" in ja or "ブモー" in ja:
         return "日式谚语双关与傲娇口癖还原", "将满把'嘘つきは泥棒の始まり'（撒谎是当小偷的开端）读白字并强词夺理的俏皮双关自然汉化，精准呈现其被吻后瞬间切换回傲娇状态气急败坏的可爱反应"
 
+    # mak_012 specific
+    if "部外指令" in ja or "１１８４７" in ja or "部外秘" in ja or "持ち出し・複写厳禁" in ja or "紙束" in ja:
+        return "体制外秘密处决指令与内部绝密档案", "纠正机翻将‘部外指令・１１８４７号計画詳細’漏译尾数误作‘1184号’的离谱硬伤，纠正将‘部外秘’错译为‘外派机密’（实际为体制外秘密作战、对体制外保密的最高内部绝密），精准还原JB冒死私自盗出的国家机关最高黑幕全家桶档案"
+    if "スニーカーネット" in ja or "ユートク" in ja or "有特殊技能勤務者" in ja or "オフィサー" in ja:
+        return "专人肉身护送与特技勤务兵术语还原", "纠正机翻将‘スニーカーネット’（Sneakernet，离线物理人肉传递）荒唐错译为‘飞毛腿快递’、将CIRS缩略黑话‘ユートク’（有特殊技能勤务者/特技员）死译的缺陷，精准还原其军警特工物理介质隔离保密规程与身份术语"
+    if "生理が止まりそう" in ja or "ゴム代" in ja or "避妊" in ja or "女を孕ませる" in ja:
+        return "闭经与避孕套省钱荤段子机智交锋", "纠正机翻将JB被气到抓狂‘生理が止まりそう’误译为‘生理性不适’、将雄二恶毒反唇相讥‘ゴム代の節約になる’（正好省下买避孕套的钱）误译为‘省了橡胶钱’的离谱硬伤，精准还原二人老夫老妻般的黑色荤段子互损日常"
+    if "ハンバーガー" in ja or "サラリーマン" in ja or "バイク" in ja or "尾行" in ja or "新人バイト" in ja or "黒いオートバイ" in ja:
+        return "汉堡店试探甩梢与反向识破机车监视", "纠正机翻将特工在快餐店门口装模作样‘对着电话道歉连连’反向错译为‘道谢’的极性颠倒，生动呈现雄二利用电车车厢反向锁定跟踪自己的菜鸟工薪族特工，以及回到宿舍后从小岭幸手中截获机车特工送达牛皮纸袋的精彩反侦察博弈"
+    if "決別" in ja or "父親" in ja or "背負い込む" in ja or "寝台" in ja:
+        return "决别决意父女羁绊与独自奔赴战场", "纠正机翻中充斥的生硬句式，细腻刻画莳菜与雄二温存之后选择决别离去、不愿连累挚爱之人而独自奔赴复仇决战的凄美决意，以及雄二面对空荡床榻、痛恨自己未能承担起‘父亲’誓言的深沉自责"
+
     # mak_011 specific
     if "赤いウインナー" in ja or "カニ風味カマボコ" in ja or "スケトウダラ" in ja or "単三電池" in ja or "守護霊" in ja or "ナマモノ" in ja:
         return "守护灵红香肠鱼糕狭鳕与五号电池爆笑相声", "精准还原莳菜自创无厘头通灵占卜，将满的守护灵从红香肠反转为蟹味鱼糕，幸死板考据其原料黄线狭鳕（纠正机翻误为鲭鱼），莳菜更爆料由美子守护灵是五号电池（单三电池），满反驳‘五号电池最实用了’的宿舍清晨欢脱群口相声"
@@ -2746,6 +2758,32 @@ def build_report():
                 "section": "灰色的果实·莳菜线第十二章独闯入巢总社与面包店焦黑纵火余波 (grisaia1/mak_011)"
             })
 
+    # mak_012 (Milestone 2 Chapter 13)
+    for lno in range(33176, 33607):
+        ja_raw = ja_lines[lno - 1]
+        cn_raw = cn_lines[lno - 1]
+        sid = ja_raw.split("\t")[0] if "\t" in ja_raw else f"L{lno}"
+        ja_txt = ja_raw.split("\t")[1] if "\t" in ja_raw else ja_raw
+        cn_txt = cn_raw.split("\t")[1] if "\t" in cn_raw else cn_raw
+
+        old_txt = cn_txt
+        if git_base_cn and len(git_base_cn) >= lno:
+            head_raw = git_base_cn[lno - 1]
+            old_txt = head_raw.split("\t")[1] if "\t" in head_raw else head_raw
+
+        if cn_txt != old_txt:
+            cat, reason = classify_change(lno, sid, ja_txt, old_txt, cn_txt)
+            diffs.append({
+                "lno": lno,
+                "sid": sid,
+                "ja": ja_txt,
+                "old": old_txt,
+                "new": cn_txt,
+                "cat": cat,
+                "reason": reason,
+                "section": "灰色的果实·莳菜线第十三章诀别留信绝密指令与防谍反侦察 (grisaia1/mak_012)"
+            })
+
     print(f"Total indexed modifications: {len(diffs)}")
 
     # Build Markdown
@@ -3376,6 +3414,15 @@ def build_report():
     md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
     md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
     for idx, d in enumerate(mak_011_diffs, 1):
+        md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
+    md.append("\n---\n")
+
+    # Section 70 - Milestone 2: Makina Route Chapter 13
+    mak_012_diffs = [d for d in diffs if d["section"].startswith("灰色的果实·莳菜线第十三章诀别留信绝密指令与防谍反侦察")]
+    md.append(f"## 七十、 灰色的果实·莳菜线第十三章诀别留信绝密指令与防谍反侦察 (`grisaia1/mak_012`，共 {len(mak_012_diffs)} 条) —— 【里程碑二·个人线第十三章】\n")
+    md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
+    md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
+    for idx, d in enumerate(mak_012_diffs, 1):
         md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
     md.append("\n---\n")
 
