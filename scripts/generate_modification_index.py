@@ -14,6 +14,24 @@ def escape_md(text):
     return text.replace("|", "\\|").replace("\n", " ").replace("\r", "")
 
 def classify_change(line_no, sid, ja, old_cn, new_cn):
+    # mic_006 specific (Michiru Route: Wall-Crawling Michiru, Obscene Slip of Tongue & Sweet Military Fashion)
+    if (38543 <= line_no <= 38677) or sid.startswith("grisaia1/mic_006"):
+        if "ゴキブリ" in ja or "魔女狩り" in ja or "猫ニャ" in ja or "三人目のみちる" in ja:
+            return "壁角蟑螂潜行黑猫顶头与第三人格猜想", "满贴墙鬼祟潜行并头顶黑猫，雄二由衷庆幸并非猎巫时代并怀疑第三人格出现"
+        if "朝五時ゼミナール" in ja or "ゴゼミ" in ja or "アサナール" in ja or "水分神" in ja or "ノー挨拶" in ja:
+            return "晨研补习班胡扯与唾液水分神神道典故", "满胡诌朝研早课借口被拆穿，羞愤吐唾沫被雄二引用神道教水分配之神严肃训斥"
+        if "第一匍匐" in ja or "第五匍匐" in ja or "スナイパー" in ja or "調達屋" in ja:
+            return "第一至第五匍匐侦察与监狱倒爷采买人脑补", "雄二特种兵职业病大爆发，第一至第五匍匐潜行监视并脑补监狱倒爷违禁品接头"
+        if "もろちん" in ja or "卑猥" in ja or "京子" in ja or "榊さん" in ja:
+            return "当然口误下流谐音梗与白领京子博客书签", "满紧张口误将『当然』说成下流谐音，小幸吐槽宛如由美子收藏之欲求不满OL京子博客"
+        if "譲渡承諾書" in ja or "鉄砲" in ja or "闇取引" in ja or "テストカード" in ja:
+            return "私下军火毒品交易突击搜查与双手抱头下跪", "雄二端掉黑市交易现场大喝双手抱头跪下，小幸乖巧就范，雄二疑神疑鬼搜查尿检试纸"
+        if "愛されベレー帽" in ja or "ラブラブミリタリー" in ja or "手で" in ja or "会社を手で倒し" in ja:
+            return "人见人爱贝雷帽甜美军旅风与徒手拆杂志社", "揭秘代购军旅风恋爱时尚穿搭刊物，雄二与小幸誓死徒手踏平把军事当儿戏之出版社"
+        if "意識したら" in ja or "女の子の服" in ja or "軍事を舐め腐った" in ja:
+            return "恋爱意识害羞难为情与军事亵渎出版社地址备忘", "纠正机翻，满为迎合雄二喜好羞怯代购，雄二记下亵渎轻蔑军事之出版社地址草稿"
+        return "文本自然度与对话韵味润色优化", "重构生硬日式倒装与机械直译，润色为符合Galgame演出的自然中文"
+
     # mic_005 specific (Michiru Route: Summer Exodus, Dorm Evacuation & Two-Week Isolation Panic)
     if (38434 <= line_no <= 38542) or sid.startswith("grisaia1/mic_005"):
         if "劇作家" in ja or "手荷物" in ja or "大切な物は箱に入れて" in ja or "最初からそんなもの" in ja:
@@ -4302,6 +4320,32 @@ def build_report():
                 "section": "灰色的果实·松岛满线暑假全员退场离巢、巨型行李箱暴击与孤男寡女两周独处恐慌 (grisaia1/mic_005)"
             })
 
+    # mic_006 (Milestone 2 Chapter 54 - Michiru Route: Wall-Crawling Michiru, Obscene Slip of Tongue & Sweet Military Fashion)
+    for lno in range(38543, 38678):
+        ja_raw = ja_lines[lno - 1]
+        cn_raw = cn_lines[lno - 1]
+        sid = ja_raw.split("\t")[0] if "\t" in ja_raw else f"L{lno}"
+        ja_txt = ja_raw.split("\t")[1] if "\t" in ja_raw else ja_raw
+        cn_txt = cn_raw.split("\t")[1] if "\t" in cn_raw else cn_raw
+
+        old_txt = cn_txt
+        if git_base_cn and len(git_base_cn) >= lno:
+            head_raw = git_base_cn[lno - 1]
+            old_txt = head_raw.split("\t")[1] if "\t" in head_raw else head_raw
+
+        if cn_txt != old_txt:
+            cat, reason = classify_change(lno, sid, ja_txt, old_txt, cn_txt)
+            diffs.append({
+                "lno": lno,
+                "sid": sid,
+                "ja": ja_txt,
+                "old": old_txt,
+                "new": cn_txt,
+                "cat": cat,
+                "reason": reason,
+                "section": "灰色的果实·松岛满线壁角蟑螂潜行、下流口误白领京子与徒手拆平军事时尚出版社 (grisaia1/mic_006)"
+            })
+
     print(f"Total indexed modifications: {len(diffs)}")
 
     # Build Markdown
@@ -5301,6 +5345,15 @@ def build_report():
     md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
     md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
     for idx, d in enumerate(mic_005_diffs, 1):
+        md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
+    md.append("\n---\n")
+
+    # Section 111 - Milestone 2: Michiru Route Chapter 6
+    mic_006_diffs = [d for d in diffs if d["section"].startswith("灰色的果实·松岛满线壁角蟑螂潜行、下流口误白领京子与徒手拆平军事时尚出版社")]
+    md.append(f"## 一百一十一、 灰色的果实·松岛满线壁角蟑螂潜行、下流口误白领京子与徒手拆平军事时尚出版社 (`grisaia1/mic_006`，共 {len(mic_006_diffs)} 条) —— 【里程碑二·个人线第五十四章】\n")
+    md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
+    md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
+    for idx, d in enumerate(mic_006_diffs, 1):
         md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
     md.append("\n---\n")
 
