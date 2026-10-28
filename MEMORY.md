@@ -59,6 +59,7 @@
 - Project Plan & Roadmap: Exhaustive checklist maintained in `grisaia_localization_project_plan.md`.
 - Operational Rules:
   - Granular task checklist with active checkoff (`[x]`) upon each subtask completion.
+  - Strict Task Granularity: Every single subtask in the project plan is strictly controlled to <= 1000 lines (329 fine-grained subtasks total across all 110,622 lines).
   - Real-time Git commit and push (`origin main`) after each subtask.
   - Strict adherence to milestone gates: stop and pause upon completing user-specified milestone boundary (e.g. Milestone 1 completion).
 
