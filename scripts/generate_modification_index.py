@@ -65,7 +65,7 @@ def classify_change(line_no, sid, ja, old_cn, new_cn):
         return "新闻公关粉饰推诿与入巢宗家阎魔账博弈", "纠正将‘某Ｃ国’（讽刺日本右翼评论家口头禅‘自尊心世界第二高之某C国’）和法相政治丑闻生硬直译的语病；生动刻画JB彻夜撰写国籍不明恐怖分子通稿、电视早间八卦秀经济分析师与过激军评家对喷，以及JB凭莳菜默写之入巢宗家洗钱暗账（阎魔账）逼迫入巢家全面封口‘暗中处理’（沙汰闇）的顶级机关政治博弈"
     if "電車に揺られる" in ja or "フロリダ" in ja or "シーフードとセックス" in ja or "痛くない怪我" in ja or "寝たら死んじゃう" in ja or "仔犬" in ja:
         return "暮色车站重逢私奔与电车站台血染长椅", "极具张力地刻画莳菜识破母亲弃子真相后私奔逃出医院，于站台重逢浴血赶来的雄二；两人在电车上相依为命畅想前往佛罗里达海边买房开面包店、放烟花买小狗的温馨未来；莳菜发现雄二失血重伤瘫软，哭求‘不要睡着、睡着就会死掉’的揪心转折"
-    if "ガムテープ" in ja or "右腕" in ja or "義手" in ja or "レウポルド" in ja or "Ｌ９６Ａ１" in ja or "９０２９…現着" or "確認した" in ja or "目薬" in ja:
+    if "ガムテープ" in ja or "右腕" in ja or "義手" in ja or "レウポルド" in ja or "Ｌ９６Ａ１" in ja or "９０２９…現着" in ja or "確認した" in ja or "目薬" in ja:
         return "佛罗里达海滨面包坊与莳菜继承9029王牌", "纠正机翻将莳菜英文应答‘ディスイズメッキーナスピーキン’荒唐音译的特大硬伤；极致呈现一年后佛罗里达海滨小镇，雄二右臂粉碎截肢安装义手调养身体，与莳菜温馨经营面包坊；莳菜接过9029杀手名号与琪娅拉电话交接，借用雄二刘波尔德战术瞄具（Leupold）出勤狙击，以‘9029抵达阵位’守护两人和平生活的圆满终章（Good Ending）"
 
     # mak_018 specific
@@ -87,6 +87,16 @@ def classify_change(line_no, sid, ja, old_cn, new_cn):
         return "膝盖领土安全条约与头部摸头统治权", "生动再现美滨学园女生黑暗审判决议：莳菜以‘不惜本土决战’强行索要大哥哥膝盖领土自由使用权并签署安全保障条约，小岭幸将雄二摸头定性为‘对头部的武装侵略’并正式申请由雄二的手掌继续行使合法统治权甚至要求按血手印的绝顶爆笑日常"
     if "ＩＲＡ" in ja or "モサド" in ja or "中野学校" in ja or "飯炊き女" in ja or "クーデレ" in ja or "赤紙" in ja or "青紙" in ja or "石粉粘土" in ja or "２コマ前" in ja or "一銭五厘" in ja:
         return "间谍脑洞质问与战马千金军旅哲学", "纠正机翻将美满嘲讽天音‘召之即来的做饭老妈子’颠倒为主客的语病；细腻呈现美满怀疑雄二系IRA恐怖分子、摩萨德杀手或中野学校间谍残党的疯狂脑洞与傲娇泪奔，以及松山大先生雕塑课上以‘前两帧决定跃动感’指点雄二联想狙击扳机瞬间、莳菜恶搞高达第一话雕刻《冷傲娇羞由美子屹立于大地》与战时红纸五厘人命不如千金军马的冷峻历史对比"
+
+    # ama_002_p2 specific
+    if "フグ提灯" in ja or "ロック・ハンド" in ja or "ヒラメマン" in ja or "魔獣" in ja or "絵描き歌" in ja or "１９８０円" in ja or "専門外" in ja or "もげちゃった" in ja or "キメラ" in ja:
+        return "粘土魔兽克苏鲁合成与由美子画歌爆笑追杀", "纠正将满的石粉粘土狗被幸与莳菜拧断狗头插屁股、扯断尾巴插狗头合成的克苏鲁怪异造物错译为‘魔犬’的语病；生动还原松山大先生口头禅‘那不在我专业范围内’，以及莳菜现编‘由美子画歌’（大鸡蛋中间画圈戳戳戳、售价1980日元）引发由美子暴怒追杀的极品爆笑日常"
+    if "肉食系女子" in ja or "タイガー・ガール" in ja or "フェラ" in ja or "バナナ" in ja or "千切っては吸い" in ja or "朝這い" in ja or "写メ" in ja or "予備社員" in ja or "朝起こし" in ja or "係長待遇" in ja:
+        return "猛虎女孩口交秘籍与晨间突击CIRS婚姻账簿", "纠正将肉食系少女时尚杂志《猛虎女孩》误译以及将天音研读‘男人三天厌美女，早晨起来吃牛牛’誓言‘千刀万剐猛吸’（千切っては吸い）引发由美子冷汗直冒的绝妙黄腔；细腻刻画天音清晨潜入被窝‘夜袭变晨袭’口交突击并自拍绝顶香艳照片，以及雄二测算CIRS特工两年半履历、‘系长级待遇主任’、退役后终身‘预备社员’集训羁绊并萌生结婚念头的硬派独白"
+    if "サッカー" in ja or "鬼教官" in ja or "タマ数" in ja or "ボールは友達" in ja or "財布を落とした" in ja or "シメリング" in ja or "絶句" in ja or "ストッキング" in ja or "佐々木さん" in ja or "訓示" in ja:
+        return "少儿足球麻子铁血信条与小岭幸湿热大腿反差", "纠正机翻将雄二足球训导‘比赛就是比弹药量’（タマ数）、‘今天就去把朋友（足球）往死里踹’死译；传神还原雄二祭出麻子棍棒教育将少儿足球打造成铁血训练营，对哭泣小球员训诫‘男人一生只为丢钱包和母亲去世流泪，为他人流泪为自己只流汗’，反差魅力点燃幸的极度兴奋（‘黑丝都湿透了，差点发推湿热中’），以及天音发来口交自拍照邮件引发雄二与幸面红耳赤真正绝句的爆笑场面"
+    if "フランクフルト" in ja or "ウルシー環礁" in ja or "うるしゃ" in ja or "鬼の子" in ja or "処女" in ja or "乳" in ja or "戦場はセックスより安全" in ja or "エグッ" in ja or "グロッ" in ja or "恋愛上級者" in ja:
+        return "法兰克福香肠乌利西环礁与少女初夜立场大辩论", "纠正机翻将满的口癖悲鸣‘吵死人啦’（うるしゃー）与二战盟军前线锚地‘乌利西环礁’冷知识谐音梗丢失、将法兰克福香肠私下练习口交粗暴直译的硬伤；生动展现莳菜偷窥天音口交自拍惊呼重口猎奇，以及天音质问少女们‘若雄二索要初夜’时幸表示‘风见先生执意如此便愿意献上’、莳菜表示‘瞒着天姐悄悄献身’并揭露雄二‘战场比做爱安全’的胆小鬼忠诚守则，天音顿悟唯有自身‘大波巨乳’是压倒性王牌的精彩群像戏"
     if "悪魔の手" in ja or "恩赦" in ja or "犬小屋" in ja or "脱亡" in ja or "ケースオフィサー" in ja or "次代の９０２９" in ja:
         return "特务猎犬悲歌与病房私奔破灭", "深刻剖析JB对国家非法秘匿组织CIRS‘恶魔利爪’的冷酷自白——以虚伪特赦为锁链驯化狂犬撕咬敌人，猎犬一旦咬断项圈也唯有饿毙或重返狗舍；敏锐交代莳菜从医院出逃、琪娅拉未来接任9029联络官的沉重伏笔"
     if "ピストル" in ja or "７千万" in ja or "通帳" in ja or "９０２９" in ja or "目が見えない" in ja or "春寺" in ja or "大騙子" in ja or "ウソつき" in ja:
@@ -3116,6 +3126,32 @@ def build_report():
                 "section": "灰色的果实·天音线第一章晨间契约与学园全员黑暗审判Part1 (grisaia1/ama_002_p1)"
             })
 
+    # ama_002_p2 (Milestone 2 Chapter 23 - Amane Route Chapter 1 Part 2)
+    for lno in range(1666, 2167):
+        ja_raw = ja_lines[lno - 1]
+        cn_raw = cn_lines[lno - 1]
+        sid = ja_raw.split("\t")[0] if "\t" in ja_raw else f"L{lno}"
+        ja_txt = ja_raw.split("\t")[1] if "\t" in ja_raw else ja_raw
+        cn_txt = cn_raw.split("\t")[1] if "\t" in cn_raw else cn_raw
+
+        old_txt = cn_txt
+        if git_base_cn and len(git_base_cn) >= lno:
+            head_raw = git_base_cn[lno - 1]
+            old_txt = head_raw.split("\t")[1] if "\t" in head_raw else head_raw
+
+        if cn_txt != old_txt:
+            cat, reason = classify_change(lno, sid, ja_txt, old_txt, cn_txt)
+            diffs.append({
+                "lno": lno,
+                "sid": sid,
+                "ja": ja_txt,
+                "old": old_txt,
+                "new": cn_txt,
+                "cat": cat,
+                "reason": reason,
+                "section": "灰色的果实·天音线第一章晨间契约与学园全员黑暗审判Part2 (grisaia1/ama_002_p2)"
+            })
+
     print(f"Total indexed modifications: {len(diffs)}")
 
     # Build Markdown
@@ -3836,6 +3872,15 @@ def build_report():
     md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
     md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
     for idx, d in enumerate(ama_002_p1_diffs, 1):
+        md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
+    md.append("\n---\n")
+
+    # Section 80 - Milestone 2: Amane Route Chapter 1 Part 2
+    ama_002_p2_diffs = [d for d in diffs if d["section"].startswith("灰色的果实·天音线第一章晨间契约与学园全员黑暗审判Part2")]
+    md.append(f"## 八十、 灰色的果实·天音线第一章晨间契约与学园全员黑暗审判Part2 (`grisaia1/ama_002_p2`，共 {len(ama_002_p2_diffs)} 条) —— 【里程碑二·个人线第二十三章】\n")
+    md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
+    md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
+    for idx, d in enumerate(ama_002_p2_diffs, 1):
         md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
     md.append("\n---\n")
 
