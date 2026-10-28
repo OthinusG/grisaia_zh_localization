@@ -14,6 +14,12 @@ def escape_md(text):
     return text.replace("|", "\\|").replace("\n", " ").replace("\r", "")
 
 def classify_change(line_no, sid, ja, old_cn, new_cn):
+    # com49 specific
+    if "アサヒクリーン" in ja or "ＯＨＰ" in ja or "狙撃" in ja or "紙オムツ" in ja or "眼筋" in ja or "紙おむつ" in ja or "名刺" in ja or "生保レディ" in ja or "アストンマーチン" in ja or "１８００万" in ja or "Ｈｏｗｄｙ" in ja or "ハウディー" in ja or "ただれた関係" in ja or "ツンデレ" in ja or "飯炊き女" in ja or "バーバラ" in ja or "イボンヌ" in ja or "ノンフライ" in ja:
+        return "B级特勤出动与美滨宿舍门前红唇封口相声", "全章神级出警与日常相声：雄二协助天音搬运OHP投影仪；JB以日出保洁公司为掩护紧急征召雄二执行地下下水道歼敌狙击特勤，雄二传授纸尿裤与眼肌特训秘诀；食堂油炸鱿鱼圈调料引发激辩，由美子被莳菜冠以‘非油炸’、‘芭芭拉’、‘伊冯娜’绰号；JB驾驶千万豪车阿斯顿马丁送雄二回宿舍并在校门前贴脸亲吻吻别，小幸目睹全过程并以平胸起誓保守‘糜烂男女关系’秘密甚至提出以接吻封口自证"
+    if "アイロン" in ja or "一姫" in ja or "麻子" in ja or "ボタン" in ja or "家族" in ja or "ネズミ" in ja or "キス" in ja or "唇を奪う" in ja or "彼女" in ja or "条件" in ja or "泣くな" in ja or "１年以内" in ja or "おんぶ" in ja or "守るべき人がいる" in ja or "デコピン" in ja:
+        return "天音熨衣温情一姬既视感与初吻契约女友确立", "全章神级情感高潮：雄二深夜归来，见天音守候并精心上浆熨烫校服、缝补纽扣，手法与已故亲姐一姬如出一辙，雄二初悟超越利害的‘家人’真谛；小幸发邮件自称‘什么都没看到’却附带校门亲吻照片揭穿修罗场；雄二以‘下水道捕鼠’喻特勤，面对天音调侃强吻夺走天音初吻；天音瘫软号啕大哭，雄二定下‘若我战死绝不可哭泣、一年内必须将我忘却’之残酷铁律，天音破涕为笑许下誓约并正式确立为女友，雄二背其回房"
+
     # com48 specific
     if "赤外線" in ja or "ケータイ原始人" in ja or "クロマニョン" in ja or "ハノイ・ハンナ" in ja or "京子" in ja or "迷惑メール" in ja or "アドレス" in ja or "目玉をくり" in ja or "皮を剥" in ja or "誘拐" in ja or "身代金" in ja or "石橋" in ja or "テスト" in ja or "鬼ラブリー" in ja or "ハイムリック" in ja or "飴" in ja or "キャンディ" in ja or "窒息" in ja:
         return "手机原始人红外交换与糖果窒息急救", "雄二老古董手机遭调侃克罗马农手机原始人；幸以挖眼剥皮温柔施压交换邮箱；满图谋截胡红外线绑架未来女儿索要赎金；由美子'测试'邮件脑补大戏；中庭莳菜蜜柑糖果卡喉命悬一线，雄二雷霆施展海姆立克急救击背法救命"
@@ -2128,6 +2134,32 @@ def build_report():
                 "section": "灰色的果实·共通线第四十八章红外通信穴居人与莳菜七千万契约买父誓言 (grisaia1/com48)"
             })
 
+    # com49
+    for lno in range(24378, 25243):
+        ja_raw = ja_lines[lno - 1]
+        cn_raw = cn_lines[lno - 1]
+        sid = ja_raw.split("\t")[0] if "\t" in ja_raw else f"L{lno}"
+        ja_txt = ja_raw.split("\t")[1] if "\t" in ja_raw else ja_raw
+        cn_txt = cn_raw.split("\t")[1] if "\t" in cn_raw else cn_raw
+
+        old_txt = cn_txt
+        if git_base_cn and len(git_base_cn) >= lno:
+            head_raw = git_base_cn[lno - 1]
+            old_txt = head_raw.split("\t")[1] if "\t" in head_raw else head_raw
+
+        if cn_txt != old_txt:
+            cat, reason = classify_change(lno, sid, ja_txt, old_txt, cn_txt)
+            diffs.append({
+                "lno": lno,
+                "sid": sid,
+                "ja": ja_txt,
+                "old": old_txt,
+                "new": cn_txt,
+                "cat": cat,
+                "reason": reason,
+                "section": "灰色的果实·共通线第四十九章B级特勤出动与天音初吻誓约 (grisaia1/com49)"
+            })
+
     print(f"Total indexed modifications: {len(diffs)}")
 
     # Build Markdown
@@ -2614,6 +2646,15 @@ def build_report():
     md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
     md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
     for idx, d in enumerate(com48_diffs, 1):
+        md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
+    md.append("\n---\n")
+
+    # Section 54
+    com49_diffs = [d for d in diffs if d["section"].startswith("灰色的果实·共通线第四十九章B级特勤出动与天音初吻誓约")]
+    md.append(f"## 五十四、 灰色的果实·共通线第四十九章B级特勤出动与天音初吻誓约 (`grisaia1/com49`，共 {len(com49_diffs)} 条)\n")
+    md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
+    md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
+    for idx, d in enumerate(com49_diffs, 1):
         md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
     md.append("\n---\n")
 
