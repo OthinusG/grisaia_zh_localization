@@ -32,6 +32,16 @@ def classify_change(line_no, sid, ja, old_cn, new_cn):
     if "嘘吐き" in ja or "嘘はき" in ja or "泥棒の始まり" in ja or "ブモー" in ja:
         return "日式谚语双关与傲娇口癖还原", "将满把'嘘つきは泥棒の始まり'（撒谎是当小偷的开端）读白字并强词夺理的俏皮双关自然汉化，精准呈现其被吻后瞬间切换回傲娇状态气急败坏的可爱反应"
 
+    # mak_001 specific
+    if "テルミット" in ja or "缶コーヒー" in ja or "縮地" in ja or "膝カックン" in ja or "ディープキス" in ja or "茶芯" in ja or "珍獣" in ja:
+        return "铝热剂咖啡罐炸门与晨吻修罗场", "修正机翻对小幸自制铝热剂咖啡罐炸弹炸毁门锁、莳菜膝顶缩地飞扑与深吻闹剧的生硬处理，精准还原雄二俳句与天音红翼茶芯靴吐槽"
+    if "パパ" in ja and ("男" in ja or "ポテチ" in ja or "犬" in ja or "ワン" in ja or "ツンデレ" in ja or "役職" in ja):
+        return "全班宣布父女契约与家庭角色相声", "修正莳菜在班级公开宣称雄二为‘我的男人’、小幸担任拆薯片女仆并逼迫满扮演看门宠物犬‘汪汪’叫的绝妙互动喜剧"
+    if "入巣正孝" in ja or "防衛省" in ja or "監査官" in ja or "暗殺" in ja or "市谷" in ja or "本家" in ja:
+        return "JB天台密谈与入巢宗家特务暗杀背景", "细腻翻译雄二与JB天台密谈，梳理入巢正孝防卫省审计官暗杀事件、CIRS防谍特务关联与莳菜与宗家决裂的沉重身世"
+    if "メロンパン" in ja or "小魚" in ja or "死ぬな" in ja or "父親" in ja or "カビ" in ja or "鯛焼き" in ja or "ハムチーズ" in ja or "斟酌" in ja:
+        return "天台哈密瓜面包午餐与放学鲷鱼烧约会", "生动润色莳菜自制哈密瓜面包三明治与小鱼沙拉、与雄二做出的生死之约，生物课全班团团围坐的发霉菌落比喻，以及放学后邪道火腿芝士鲷鱼烧约会"
+
     # com52 specific
     if "女体盛り" in ja:
         return "成人文化术语纠偏", "纠正原机翻将'女体盛り'（女体盛/人体盛）荒唐错翻为'胸部加垫'的离谱失误，精准传达天音等人的荤段子黄腔幽默"
@@ -2270,6 +2280,32 @@ def build_report():
                 "section": "灰色的果实·共通线第五十二章可丽饼店跟踪大作战与由美子吃相反差萌 (grisaia1/com52)"
             })
 
+    # mak_001 (Milestone 2 Chapter 1)
+    for lno in range(26257, 26808):
+        ja_raw = ja_lines[lno - 1]
+        cn_raw = cn_lines[lno - 1]
+        sid = ja_raw.split("\t")[0] if "\t" in ja_raw else f"L{lno}"
+        ja_txt = ja_raw.split("\t")[1] if "\t" in ja_raw else ja_raw
+        cn_txt = cn_raw.split("\t")[1] if "\t" in cn_raw else cn_raw
+
+        old_txt = cn_txt
+        if git_base_cn and len(git_base_cn) >= lno:
+            head_raw = git_base_cn[lno - 1]
+            old_txt = head_raw.split("\t")[1] if "\t" in head_raw else head_raw
+
+        if cn_txt != old_txt:
+            cat, reason = classify_change(lno, sid, ja_txt, old_txt, cn_txt)
+            diffs.append({
+                "lno": lno,
+                "sid": sid,
+                "ja": ja_txt,
+                "old": old_txt,
+                "new": cn_txt,
+                "cat": cat,
+                "reason": reason,
+                "section": "灰色的果实·莳菜线第一章父女契约与铝热剂炸门晨吻修罗场 (grisaia1/mak_001)"
+            })
+
     print(f"Total indexed modifications: {len(diffs)}")
 
     # Build Markdown
@@ -2792,6 +2828,15 @@ def build_report():
     md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
     md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
     for idx, d in enumerate(com52_diffs, 1):
+        md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
+    md.append("\n---\n")
+
+    # Section 58 - Milestone 2: Makina Route Chapter 1
+    mak_001_diffs = [d for d in diffs if d["section"].startswith("灰色的果实·莳菜线第一章父女契约与铝热剂炸门晨吻修罗场")]
+    md.append(f"## 五十八、 灰色的果实·莳菜线第一章父女契约与铝热剂炸门晨吻修罗场 (`grisaia1/mak_001`，共 {len(mak_001_diffs)} 条) —— 【里程碑二·个人线开篇】\n")
+    md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
+    md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
+    for idx, d in enumerate(mak_001_diffs, 1):
         md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
     md.append("\n---\n")
 
