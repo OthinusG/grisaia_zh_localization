@@ -14,6 +14,20 @@ def escape_md(text):
     return text.replace("|", "\\|").replace("\n", " ").replace("\r", "")
 
 def classify_change(line_no, sid, ja, old_cn, new_cn):
+    # mic_002 specific (Michiru Route: Kiss Aftermath, Minicar Uprising & Wonderland Classroom)
+    if (37470 <= line_no <= 37938) or sid.startswith("grisaia1/mic_002"):
+        if "ヘクサロビュラ" in ja or "ルーブ・ゴールドバーグ" in ja or "蝶の羽ばたき" in ja or "婚前交渉" in ja or "処女崇拝" in ja:
+            return "梅花螺丝鲁布戈德堡与由美子婚前性行为问罪", "雄二硬核开场白：纠正机翻将梅花槽螺栓误译为‘十字形’、鲁布戈德堡机械误译；由美子就接吻严肃质询，雄二辛辣回敬‘满脸通红举牌抗议婚前性行为与处女崇拜’"
+        if "フローズンアップルミント" in ja or "ガムはガムー" in ja or "飛脚の真似" in ja or "サイボーグ" in ja or "コーヤドーフ" in ja or "トーコジョーズ" in ja:
+            return "薄荷口香糖一次性情缘与高野豆腐生化人妄想", "神级日常电波：雄二与冰霜苹果薄荷味口香糖依依惜别（纠正机翻误将オマエ译为‘欧梅’）；莳菜与幸展开‘口香糖是糖’千次计数；满顺拐僵硬走路被误认为‘江户飞脚信差’与‘半机械生化人’；纠正机翻将高野豆腐译为‘考亚多夫’、东光大白鲨误译"
+        if "ミニカー一揆" in ja or "耳掻き" in ja or "みみ…か…き" in ja or "カツレツ" in ja or "滑舌" in ja or "冷やしミニカー" in ja:
+            return "迷你车起义听岔暴走与满编造冰镇迷你车救场", "经典名场面：天音欲掏耳勺（耳掻き），幸空耳听成‘迷你车起义（ミニカー一揆）’豪掷十一万搜购三百辆塞爆洗衣机；幸痛哭将天音‘咬字不清（滑舌）’听成‘炸猪排（カツレツ）’；满急中生智编造‘急需三百辆冰镇迷你车办祭典’拿耳勺换车拯救幸"
+        if "ドッキリ" in ja or "ディスソリューショーンヌ" in ja or "キングオブツンデレ" in ja or "演技" in ja or "過呼吸" in ja or "解散" in ja:
+            return "傲娇女王假装整蛊大暴走与解散法语口令", "满的情感崩溃与掩饰：天音追问导致满创伤应激暴走抱头抽泣，随后强行仰天狂笑声称‘全都是好莱坞级整蛊演技’，自诩傲娇女王并用法语口令‘Dissolution’驱散众人，强颜欢笑背后掩盖极度动摇"
+        if "アリス" in ja or "カラスみたいに" in ja or "不思議の国" in ja or "好きになったのよ" in ja or "四角張らないで" in ja:
+            return "爱丽丝仙境乌鸦写字台隐喻与这孩子喜欢上你了真意", "核心剧情升华与重大机翻纠偏：雄二与满的第二人格在无人教室对质，引用《爱丽丝梦游仙境》‘乌鸦为何像写字台’谜题与‘二进制YESNO太土’；重大机翻纠偏：纠正机翻将第二人格所说‘这孩子（满）喜欢上你了啊’颠倒逆转误译为‘我喜欢上你了’；第二人格指引雄二明日清晨以绅士温柔抚慰满"
+        return "消除AI味/润色优化", "重构生硬日式倒装与机械直译，润色为符合Galgame演出的自然中文"
+
     # mic_001 specific (Michiru Route Prologue: World in a Box, Dekopin, Kiss Re-enactment & Ramune)
     if (37185 <= line_no <= 37469) or sid.startswith("grisaia1/mic_001"):
         if "箱である" in ja or "白い翼" in ja or "約束の地" in ja or "空気穴" in ja or "君臨する" in ja:
@@ -4146,6 +4160,32 @@ def build_report():
                 "section": "灰色的果实·松岛满线序章世界箱子隐喻、额头弹指脑崩儿、切腹接吻再现与汽水糖喷射 (grisaia1/mic_001)"
             })
 
+    # mic_002 (Milestone 2 Chapter 50 - Michiru Route: Kiss Aftermath, Minicar Uprising & Wonderland Classroom)
+    for lno in range(37470, 37939):
+        ja_raw = ja_lines[lno - 1]
+        cn_raw = cn_lines[lno - 1]
+        sid = ja_raw.split("\t")[0] if "\t" in ja_raw else f"L{lno}"
+        ja_txt = ja_raw.split("\t")[1] if "\t" in ja_raw else ja_raw
+        cn_txt = cn_raw.split("\t")[1] if "\t" in cn_raw else cn_raw
+
+        old_txt = cn_txt
+        if git_base_cn and len(git_base_cn) >= lno:
+            head_raw = git_base_cn[lno - 1]
+            old_txt = head_raw.split("\t")[1] if "\t" in head_raw else head_raw
+
+        if cn_txt != old_txt:
+            cat, reason = classify_change(lno, sid, ja_txt, old_txt, cn_txt)
+            diffs.append({
+                "lno": lno,
+                "sid": sid,
+                "ja": ja_txt,
+                "old": old_txt,
+                "new": cn_txt,
+                "cat": cat,
+                "reason": reason,
+                "section": "灰色的果实·松岛满线接吻余波盘问、小汽车起义大暴走与仙境教室对质 (grisaia1/mic_002)"
+            })
+
     print(f"Total indexed modifications: {len(diffs)}")
 
     # Build Markdown
@@ -5109,6 +5149,15 @@ def build_report():
     md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
     md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
     for idx, d in enumerate(mic_001_diffs, 1):
+        md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
+    md.append("\n---\n")
+
+    # Section 107 - Milestone 2: Michiru Route Chapter 2
+    mic_002_diffs = [d for d in diffs if d["section"].startswith("灰色的果实·松岛满线接吻余波盘问、小汽车起义大暴走与仙境教室对质")]
+    md.append(f"## 一百〇七、 灰色的果实·松岛满线接吻余波盘问、小汽车起义大暴走与仙境教室对质 (`grisaia1/mic_002`，共 {len(mic_002_diffs)} 条) —— 【里程碑二·个人线第五十章】\n")
+    md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
+    md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
+    for idx, d in enumerate(mic_002_diffs, 1):
         md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
     md.append("\n---\n")
 
