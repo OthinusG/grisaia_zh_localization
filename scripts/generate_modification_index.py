@@ -14,6 +14,20 @@ def escape_md(text):
     return text.replace("|", "\\|").replace("\n", " ").replace("\r", "")
 
 def classify_change(line_no, sid, ja, old_cn, new_cn):
+    # ama_old_012 specific (Angelic Howl Day 12)
+    if (11220 <= line_no <= 11422) or sid.startswith("grisaia1/ama_old_012"):
+        if "夢" in ja and ("リアカー" in ja or "缶詰" in ja or "大和煮" in ja or "味噌煮" in ja or "パイナップル" in ja or "白桃" in ja or "隠す" in ja):
+            return "美食梦境与罐头私藏自私群像", "饥饿心理刻画：天音梦见深山手推车装满大和煮牛肉与多汁白桃罐头，梦醒胃痉挛反遭部员们冷笑‘换作我们肯定全偷偷藏起来自己吃’；展现绝境下生存本能对纯真人性的彻底侵蚀"
+        if "シーズー" in ja or "アリオン" in ja or "アー君" in ja and ("息を引き取った" in ja or "首輪" in ja or "亡骸" in ja or "手首" in ja or "食べないの" in ja or "この子に助けてもらう" in ja or "最後の奉公" in ja):
+            return "西施犬阿君病逝与一姬冷酷提议食肉", "全章神级转折与伦理破壁：古森学姐守护的高烧西施犬阿里昂断气（纠正机翻误译为‘柴犬’），古森解下项圈缠在腕间绝望咽泣；全员因常识束缚不敢言语之际，一姬轻描淡写提议‘吃掉它救大家’；坂下部长痛苦决断，部员们暗自长舒一口气展露自私本性"
+        if "罰直棒" in ja or "目" in ja and ("潰す" in ja or "頭目掛け" in ja or "ショットガン" in ja or "小出" in ja or "ジャンケン" in ja or "強い者が弱い者を食べる" in ja or "包丁" in ja):
+            return "铁棒爆头碎眼与弱肉强食暴论统治", "一姬统治力至暗高光：小出猜拳输掉负责宰狗却因不敢对视死狗双眼吓哭；一姬抄起惩戒铁棒使出全力轰然砸烂狗头‘这下就分不清哪里是眼睛了’；牙疼轰下巴暴论；一姬换上菜刀冷酷告诫‘自顾不暇的世界里弱者最先被淘汰’，以领袖气魄与绝对恐惧君临营地"
+        if "ベッドで同じことを言われた" in ja or "彼氏" in ja or "買いかぶり" in ja or "自覚はあるわ" in ja or "モテない" in ja or "キョロリ～ン" in ja or "蛆が這い回る" in ja:
+            return "床笫嘲讽绝杀部长与装嗲恶心脑补", "一姬神级毒舌与人性操控：坂下部长反讽一姬，一姬以‘你男朋友在床上也是这么夸我的’神级毒舌绝杀；一姬向天音冷静拆解操纵全员同情心的舆论布局；天音脑补一姬捏嗓装嗲卖萌恶心到浑身如蛆爬，预言敢把一姬当女友的男人"
+        if "バーベキューソース" in ja or "肉" in ja and ("焼けた" in ja or "脂" in ja or "分配" in ja or "後ろ足" in ja or "クラクラ" in ja or "骨まで" in ja or "齧りついた" in ja):
+            return "秘藏烧烤酱烤狗肉与全员含泪吞骨地狱", "全章终极惨烈求生高潮：一姬麻利解体狗肉，坂下与小出拿出私藏储备的烧烤酱烤得焦香四溢；绝境中的女孩们疯狂哄抢分食，连古森学姐也泪流满面咬碎骨头吞咽，所有人依靠这仅有一口肉的救命滋养在绝望深渊中多苟活一天"
+        return "消除AI味/润色优化", "重构生硬日式倒装与机械直译，润色为符合Galgame演出的自然中文"
+
     # ama_old_011 specific (Angelic Howl Day 11)
     if (11072 <= line_no <= 11219) or sid.startswith("grisaia1/ama_old_011"):
         if "伊吹" in ja and ("歌" in ja or "石" in ja or "イカレ" in ja or "ブッキー" in ja or "老けた" in ja or "ダイエット" in ja or "脳の機能" in ja):
@@ -3902,6 +3916,32 @@ def build_report():
                 "section": "灰色的果实·天音线天使之声篇第十一日伊吹失常嗅石、古森舍命饲犬与一姬哈欠祈雨神迹 (grisaia1/ama_old_011)"
             })
 
+    # ama_old_012 (Milestone 2 Chapter 44 - Angelic Howl Day 12)
+    for lno in range(11220, 11423):
+        ja_raw = ja_lines[lno - 1]
+        cn_raw = cn_lines[lno - 1]
+        sid = ja_raw.split("\t")[0] if "\t" in ja_raw else f"L{lno}"
+        ja_txt = ja_raw.split("\t")[1] if "\t" in ja_raw else ja_raw
+        cn_txt = cn_raw.split("\t")[1] if "\t" in cn_raw else cn_raw
+
+        old_txt = cn_txt
+        if git_base_cn and len(git_base_cn) >= lno:
+            head_raw = git_base_cn[lno - 1]
+            old_txt = head_raw.split("\t")[1] if "\t" in head_raw else head_raw
+
+        if cn_txt != old_txt:
+            cat, reason = classify_change(lno, sid, ja_txt, old_txt, cn_txt)
+            diffs.append({
+                "lno": lno,
+                "sid": sid,
+                "ja": ja_txt,
+                "old": old_txt,
+                "new": cn_txt,
+                "cat": cat,
+                "reason": reason,
+                "section": "灰色的果实·天音线天使之声篇第十二日西施犬病逝、铁棒爆头碎眼与全员含泪吞食烤狗肉 (grisaia1/ama_old_012)"
+            })
+
     print(f"Total indexed modifications: {len(diffs)}")
 
     # Build Markdown
@@ -4811,6 +4851,15 @@ def build_report():
     md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
     md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
     for idx, d in enumerate(ama_old_011_diffs, 1):
+        md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
+    md.append("\n---\n")
+
+    # Section 101 - Milestone 2: Angelic Howl Day 12
+    ama_old_012_diffs = [d for d in diffs if d["section"].startswith("灰色的果实·天音线天使之声篇第十二日西施犬病逝、铁棒爆头碎眼与全员含泪吞食烤狗肉")]
+    md.append(f"## 一百〇一、 灰色的果实·天音线天使之声篇第十二日西施犬病逝、铁棒爆头碎眼与全员含泪吞食烤狗肉 (`grisaia1/ama_old_012`，共 {len(ama_old_012_diffs)} 条) —— 【里程碑二·个人线第四十四章】\n")
+    md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
+    md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
+    for idx, d in enumerate(ama_old_012_diffs, 1):
         md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
     md.append("\n---\n")
 
