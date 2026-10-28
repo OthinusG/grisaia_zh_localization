@@ -14,6 +14,18 @@ def escape_md(text):
     return text.replace("|", "\\|").replace("\n", " ").replace("\r", "")
 
 def classify_change(line_no, sid, ja, old_cn, new_cn):
+    # mic_004 specific (Michiru Route: Feline Vaccine Operation, Laundry Net Lingerie & Male Bra Misunderstanding)
+    if (38273 <= line_no <= 38433) or sid.startswith("grisaia1/mic_004"):
+        if "戦勝国" in ja or "夢の中で見ている" in ja or "プライベート" in ja or "混合ワクチン" in ja or "飼われている立場" in ja or "居酒屋" in ja:
+            return "千鹤校长索要猫咪五联疫苗与居酒屋春宵调侃", "雄二战略筹措物资：战胜国书写历史哲理开篇，向千鹤索要猫用五联混合疫苗与驱虫药；千鹤索要居酒屋陪酒约会与公寓过夜报酬；重大机翻纠偏：纠正机翻将雄二所说‘作为被包养雇佣一方的我’颠倒逆转误译为‘我可是养猫的一方’"
+        if "洗濯用のネット" in ja or "フラッシュ" in ja or "サンダー" in ja or "下着洗ったり" in ja or "男性用ブラジャー" in ja or "ダメージ" in ja:
+            return "洗衣网兜保定妙计与天音男士文胸脑补", "爆笑日常误会名场面：雄二借用兽医经典保定法借洗衣网兜装猫；对口号‘闪光/雷鸣’；天音误以为雄二要洗男士内裤甚至‘日常穿戴男用胸罩’，追问罩杯大小与聚拢效果"
+        if "マタタビ" in ja or "捕獲" in ja or "一生の不覚" in ja or "殺せ" in ja or "動物虐待" in ja or "ポーチ" in ja:
+            return "木天蓼诱捕注射与满当场抓包一生奇耻大辱", "黑猫强制防疫大作战：木天蓼引诱黑猫钻入网袋实施皮下注射；满半路杀出痛斥‘虐待动物’；雄二上演俘虏认栽神级反差‘被你这种人绕后真是一生奇耻大辱，来吧开枪杀了我吧’（纠正机翻误译杀了他）"
+        if "小嶺幸" in ja or "アンダー" in ja or "トップバスト" in ja or "尊敬しております" in ja or "厚い胸板" in ja or "触って確認" in ja:
+            return "小幸死忠宣誓甘当文胸采购与天音摸胸验明正身", "神级生草高潮：小幸撞见粉红收纳包与撕烂内衣网袋，极度震惊却视死如归宣誓‘无论风见先生演变出何种女装癖好都誓死崇敬’，热情要量上下胸围代购内衣；雄二拽天音玉手强按结实胸肌自证清白，天音惊叹厚实胸板；雄二感叹好心招来奇耻大辱"
+        return "消除AI味/润色优化", "重构生硬日式倒装与机械直译，润色为符合Galgame演出的自然中文"
+
     # mic_003 specific (Michiru Route: Morning Bedroom Visit, Memory Blackout & Head-Cat Miracle)
     if (37939 <= line_no <= 38272) or sid.startswith("grisaia1/mic_003"):
         if "ラッピングされた" in ja or "柔軟剤" in ja or "駄菓子" in ja or "アンモニア" in ja or "ロンメル" in ja or "布団の妖怪" in ja:
@@ -4226,6 +4238,32 @@ def build_report():
                 "section": "灰色的果实·松岛满线晨曦礼物盒隐喻、记忆断片雪国恐惧与头顶黑猫奇迹 (grisaia1/mic_003)"
             })
 
+    # mic_004 (Milestone 2 Chapter 52 - Michiru Route: Feline Vaccine Operation, Laundry Net Lingerie & Male Bra Misunderstanding)
+    for lno in range(38273, 38434):
+        ja_raw = ja_lines[lno - 1]
+        cn_raw = cn_lines[lno - 1]
+        sid = ja_raw.split("\t")[0] if "\t" in ja_raw else f"L{lno}"
+        ja_txt = ja_raw.split("\t")[1] if "\t" in ja_raw else ja_raw
+        cn_txt = cn_raw.split("\t")[1] if "\t" in cn_raw else cn_raw
+
+        old_txt = cn_txt
+        if git_base_cn and len(git_base_cn) >= lno:
+            head_raw = git_base_cn[lno - 1]
+            old_txt = head_raw.split("\t")[1] if "\t" in head_raw else head_raw
+
+        if cn_txt != old_txt:
+            cat, reason = classify_change(lno, sid, ja_txt, old_txt, cn_txt)
+            diffs.append({
+                "lno": lno,
+                "sid": sid,
+                "ja": ja_txt,
+                "old": old_txt,
+                "new": cn_txt,
+                "cat": cat,
+                "reason": reason,
+                "section": "灰色的果实·松岛满线黑猫防疫大作战、洗衣网兜内衣风波与男士文胸世纪误会 (grisaia1/mic_004)"
+            })
+
     print(f"Total indexed modifications: {len(diffs)}")
 
     # Build Markdown
@@ -5207,6 +5245,15 @@ def build_report():
     md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
     md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
     for idx, d in enumerate(mic_003_diffs, 1):
+        md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
+    md.append("\n---\n")
+
+    # Section 109 - Milestone 2: Michiru Route Chapter 4
+    mic_004_diffs = [d for d in diffs if d["section"].startswith("灰色的果实·松岛满线黑猫防疫大作战、洗衣网兜内衣风波与男士文胸世纪误会")]
+    md.append(f"## 一百〇九、 灰色的果实·松岛满线黑猫防疫大作战、洗衣网兜内衣风波与男士文胸世纪误会 (`grisaia1/mic_004`，共 {len(mic_004_diffs)} 条) —— 【里程碑二·个人线第五十二章】\n")
+    md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
+    md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
+    for idx, d in enumerate(mic_004_diffs, 1):
         md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
     md.append("\n---\n")
 
