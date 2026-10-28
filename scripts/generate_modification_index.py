@@ -14,6 +14,18 @@ def escape_md(text):
     return text.replace("|", "\\|").replace("\n", " ").replace("\r", "")
 
 def classify_change(line_no, sid, ja, old_cn, new_cn):
+    # ama_old_011 specific (Angelic Howl Day 11)
+    if (11072 <= line_no <= 11219) or sid.startswith("grisaia1/ama_old_011"):
+        if "伊吹" in ja and ("歌" in ja or "石" in ja or "イカレ" in ja or "ブッキー" in ja or "老けた" in ja or "ダイエット" in ja or "脳の機能" in ja):
+            return "伊吹精神失常嗅石与金田冷眼石击", "绝境精神崩解：伊吹因重度节食与严重营养不良导致大脑机能障碍，狂躁唱歌遭金田冷嘲‘终于疯了’并扔石头砸击；伊吹神志不清抓起石头凑鼻猛嗅确认不能吃随手扔掉继续唱歌；金田以‘阿吹’称呼道出其忽好忽坏的悲惨病态"
+        if "古森" in ja or "犬" in ja and ("和菓子屋" in ja or "兄弟" in ja or "熱を出した" in ja or "憎憎しげ" in ja or "みんな死ぬんだ" in ja):
+            return "古森断粮舍命饲犬与金田绝望全灭叹息", "人性冷暖交织：古森学姐为照顾发高烧的猎犬阿君将自身口粮全数相让，金田道出其和菓子日式点心铺独生女将犬视作亲弟的孤寂身世；金田毫不掩饰对累赘生命的极端厌恶，沉痛预言‘再这样耗下去全员都得死’"
+        if "雨よ～…止めぇ" in ja or "雨を止ませて" in ja or "魔女" in ja or "神様じゃない" in ja or "全員は無理" in ja or "未来が変わる" in ja or "ぐぅ" in ja or "ピタリと雨が止んだ" in ja:
+            return "一姬哈欠祈雨神迹与魔女全员生还悖论", "全章神级高光反差：天音走投无路求一姬让雨停下，一姬打着大哈欠举手毫无干劲地呢喃‘雨啊停下吧’，一小时后漫天暴雨竟真奇迹骤停，若无其事感叹‘凡事都得试一试’；一姬看透天音心思冷酷断言‘全员生还绝不可能’，直言未来知晓即变，天音反驳‘哪怕未来是全灭也无所谓吗’遭当场噎死"
+        if "越智" in ja or "野垂れ死に" in ja or "見捨てた" in ja or "竹炭" in ja or "下痢" in ja or "生水" in ja or "寝たふり" in ja or "救助" in ja:
+            return "越智失联流言四起与生水腹泻吞炭地狱", "营地崩溃终局蔓延：越智老师下山逾两日音讯皆无，部员在‘老师暴尸荒野’与‘独自逃生见死不救’的恶毒猜疑中苟延残喘；全员痛饮生水杂草致肠胃剧烈瘫痪，满嘴漆黑吞服竹炭止泻，靠抱腹装睡熬过饥饿酷刑"
+        return "消除AI味/润色优化", "重构生硬日式倒装与机械直译，润色为符合Galgame演出的自然中文"
+
     # ama_old_009 specific (Angelic Howl Day 9)
     if (10701 <= line_no <= 10903) or sid.startswith("grisaia1/ama_old_009"):
         if "千人針" in ja or "ポンチョ" in ja or "ゴミ袋" in ja or "青年将校" in ja or "日の丸" in ja or "越智" in ja and ("下山" in ja or "出発" in ja or "助けを呼んでくる" in ja):
@@ -3864,6 +3876,32 @@ def build_report():
                 "section": "灰色的果实·天音线天使之声篇第十日梅雨山蛭侵袭、创口生蛆白霉覆体与广冈求死悲鸣 (grisaia1/ama_old_010)"
             })
 
+    # ama_old_011 (Milestone 2 Chapter 43 - Angelic Howl Day 11)
+    for lno in range(11072, 11220):
+        ja_raw = ja_lines[lno - 1]
+        cn_raw = cn_lines[lno - 1]
+        sid = ja_raw.split("\t")[0] if "\t" in ja_raw else f"L{lno}"
+        ja_txt = ja_raw.split("\t")[1] if "\t" in ja_raw else ja_raw
+        cn_txt = cn_raw.split("\t")[1] if "\t" in cn_raw else cn_raw
+
+        old_txt = cn_txt
+        if git_base_cn and len(git_base_cn) >= lno:
+            head_raw = git_base_cn[lno - 1]
+            old_txt = head_raw.split("\t")[1] if "\t" in head_raw else head_raw
+
+        if cn_txt != old_txt:
+            cat, reason = classify_change(lno, sid, ja_txt, old_txt, cn_txt)
+            diffs.append({
+                "lno": lno,
+                "sid": sid,
+                "ja": ja_txt,
+                "old": old_txt,
+                "new": cn_txt,
+                "cat": cat,
+                "reason": reason,
+                "section": "灰色的果实·天音线天使之声篇第十一日伊吹失常嗅石、古森舍命饲犬与一姬哈欠祈雨神迹 (grisaia1/ama_old_011)"
+            })
+
     print(f"Total indexed modifications: {len(diffs)}")
 
     # Build Markdown
@@ -4764,6 +4802,15 @@ def build_report():
     md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
     md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
     for idx, d in enumerate(ama_old_010_diffs, 1):
+        md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
+    md.append("\n---\n")
+
+    # Section 100 - Milestone 2: Angelic Howl Day 11
+    ama_old_011_diffs = [d for d in diffs if d["section"].startswith("灰色的果实·天音线天使之声篇第十一日伊吹失常嗅石、古森舍命饲犬与一姬哈欠祈雨神迹")]
+    md.append(f"## 一百、 灰色的果实·天音线天使之声篇第十一日伊吹失常嗅石、古森舍命饲犬与一姬哈欠祈雨神迹 (`grisaia1/ama_old_011`，共 {len(ama_old_011_diffs)} 条) —— 【里程碑二·个人线第四十三章】\n")
+    md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
+    md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
+    for idx, d in enumerate(ama_old_011_diffs, 1):
         md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
     md.append("\n---\n")
 
