@@ -14,6 +14,20 @@ def escape_md(text):
     return text.replace("|", "\\|").replace("\n", " ").replace("\r", "")
 
 def classify_change(line_no, sid, ja, old_cn, new_cn):
+    # ama_old_016 specific (Angelic Howl Conclusion: Amane's Lone Survival & Cabbage Field)
+    if (12189 <= line_no <= 12336) or sid.startswith("grisaia1/ama_old_016"):
+        if "蛭" in ja or "小沢先輩" in ja or "スナック菓子" in ja or "意地汚く" in ja or "餓鬼" in ja:
+            return "咬碎噬血山蛭与绝拒私吞口粮", "求生本能与尊严坚守：天音昼伏夜出循便签北行，每日醒来剥离浑身山蛭并咬碎回血吸收养分；纵使背包暗藏小泽学姐生前零食点心亦誓死不动分毫，深拒沦为贪婪饿鬼并矢志归还一姬"
+        if "２０歩先" in ja or "追いつけない" in ja or "風見一姫" in ja or "天文測量" in ja or "稜線" in ja:
+            return "二十步开外静立与唯一渴求一姬", "全剧灵魂图腾具象化：杂木遮天难辨星辰，跋涉整夜仅推进一道山脊；梦中一姬静立二十步外回头凝视却无法接近；彻底告别美食之梦，灵魂深处唯独痛切渴望风见一姬"
+        if "背中が重なって" in ja or "広岡さん" in ja or "桜井先輩" in ja or "アー君" in ja or "基準参照波" in ja or "天国" in ja:
+            return "亡友虚幻引路与濒死基准参考波", "走马灯绝境幻视：极度营养衰竭中浮现广冈、樱井、鹿内、小泽、冈部及小狗阿里昂亡魂引路走向天国幻觉；天音体力彻底崩溃摔倒泥潭，耳鸣剧烈感知大脑濒危基准参考波绝响"
+        if "軽トラ" in ja or "３気筒" in ja or "天使って奴" in ja or "キャベツ" in ja or "笑いながら" in ja or "ハグッ" in ja:
+            return "轻卡轰鸣天使玩笑与卷心菜狂喜", "神级生死反转名场面：濒危之际骤闻三缸小轻卡路面砂砾疾驰声，天音自嘲‘难道最近天使改开轻卡接人’；惊醒后顺斜坡滑入公路，撞见一望无际卷心菜田，发疯般狂啃甘甜生菜，悲喜交加癫狂大笑痛哭"
+        if "不気味な生き物" in ja or "猟銃" in ja or "救急車" in ja or "マイクロバス" in ja or "惨めに生き残って" in ja:
+            return "农夫猎枪惊魂与天音苟活终身负罪", "天使之声终章定格：农妇惊呼‘怪物啃食庄稼’，农夫持猎枪辨认救下；救护车急救坦白失踪中巴唯一幸存者身份；全车死绝天音独活，背负一世滔天自责走入长夜，开启长达数年的赎罪羁绊"
+        return "消除AI味/润色优化", "重构生硬日式倒装与机械直译，润色为符合Galgame演出的自然中文"
+
     # ama_old_015 specific (Angelic Howl Day 15: Cannibalism Discovered, Kazuki Decoy, Amane Escape)
     if (11677 <= line_no <= 12188) or sid.startswith("grisaia1/ama_old_015"):
         if "食べてね" in ja or "首を吊って" in ja or "桜井先輩" in ja or "携帯電話" in ja or "愛犬と会話" in ja:
@@ -4064,6 +4078,32 @@ def build_report():
                 "section": "灰色的果实·天音线天使之声篇第十五日食人惨剧撞破、一姬诱饵掩护与天音血泪奔逃 (grisaia1/ama_old_015)"
             })
 
+    # ama_old_016 (Milestone 2 Chapter 48 - Angelic Howl Conclusion: Amane's Lone Survival & Cabbage Field)
+    for lno in range(12189, 12337):
+        ja_raw = ja_lines[lno - 1]
+        cn_raw = cn_lines[lno - 1]
+        sid = ja_raw.split("\t")[0] if "\t" in ja_raw else f"L{lno}"
+        ja_txt = ja_raw.split("\t")[1] if "\t" in ja_raw else ja_raw
+        cn_txt = cn_raw.split("\t")[1] if "\t" in cn_raw else cn_raw
+
+        old_txt = cn_txt
+        if git_base_cn and len(git_base_cn) >= lno:
+            head_raw = git_base_cn[lno - 1]
+            old_txt = head_raw.split("\t")[1] if "\t" in head_raw else head_raw
+
+        if cn_txt != old_txt:
+            cat, reason = classify_change(lno, sid, ja_txt, old_txt, cn_txt)
+            diffs.append({
+                "lno": lno,
+                "sid": sid,
+                "ja": ja_txt,
+                "old": old_txt,
+                "new": cn_txt,
+                "cat": cat,
+                "reason": reason,
+                "section": "灰色的果实·天音线天使之声篇终章咬碎山蛭、卷心菜狂喜大嚼与天音唯一幸存 (grisaia1/ama_old_016)"
+            })
+
     print(f"Total indexed modifications: {len(diffs)}")
 
     # Build Markdown
@@ -5009,6 +5049,15 @@ def build_report():
     md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
     md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
     for idx, d in enumerate(ama_old_015_diffs, 1):
+        md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
+    md.append("\n---\n")
+
+    # Section 105 - Milestone 2: Angelic Howl Conclusion / Epilogue
+    ama_old_016_diffs = [d for d in diffs if d["section"].startswith("灰色的果实·天音线天使之声篇终章咬碎山蛭、卷心菜狂喜大嚼与天音唯一幸存")]
+    md.append(f"## 一百〇五、 灰色的果实·天音线天使之声篇终章咬碎山蛭、卷心菜狂喜大嚼与天音唯一幸存 (`grisaia1/ama_old_016`，共 {len(ama_old_016_diffs)} 条) —— 【里程碑二·个人线第四十八章】\n")
+    md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
+    md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
+    for idx, d in enumerate(ama_old_016_diffs, 1):
         md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
     md.append("\n---\n")
 
