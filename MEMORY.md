@@ -46,12 +46,19 @@
 ## Completed Milestones & Current State
 - `_varstr` (Lines 1 - 629): 71 systematic errors corrected via `scripts/patch_varstr.py` (Angelic Howl days 1-16 "天使之咆哮", "瑞士军刀", "步频号子", "白给女主的品格", etc.).
 - `grisaia1/ama_001` (Lines 630 - 1163, 534 lines): 100% polished and humanized via `scripts/apply_ama_001.py`. Completely eliminates AI taste, restores character voices, military/slang humor, and comedic timing.
-- `grisaia1/com01` (Lines 12337 - 12575, 239 lines): 100% polished and humanized via `scripts/patch_com01.py`. Eradicated "欧马埃", "优一君", "在肚子被抓住之前", raw English "student life", restored box cutter ratchet clicking details, Yuuji & Chizuru banter, and mutual surname agreement with Yumiko.
-- `grisaia1/com02` (Lines 12576 - 12812, 237 lines): 100% polished and humanized via `scripts/patch_com02.py`. Eradicated "欧巴桑" (reversed from オヤジ), "柴鱼" (mistranslated from しらたき), "大演欢乐.job" (slang), "含铅量为零的汽油", "很熟女" (mistranslated from 女慣れ), restored military mess tin, Asako's master teachings, and Kazuki sister mentions.
-- `grisaia1/com03` (Lines 12813 - 12941, 129 lines): 100% polished and humanized via `scripts/patch_com03.py`. Eradicated "铜锣烧" (grotesquely mistranslated from みたらしだんご "见死团子" pun), raw English "needless", fixed "优一君", restored pedometer pet tech nuances, Makina's cat-like behavior, and Yuuji's phantom vanishing act on Amane.
-- `grisaia1/com04` (Lines 12942 - 13261, 320 lines): 100% polished and humanized via `scripts/patch_com04.py`. Eradicated 14 occurrences of "蟑螂" (grotesque mistranslation of ザリガニ/鳌虾/小龙虾), fixed "风见优一" -> "风见雄二", fixed "送给别人" -> "琪尔琪尔 (Michiru)", inverted polarity "倒是没有" -> "有带棉线", restored Marimite meme "贵安，姐姐大人", and captured the deeply touching brother-sister mentoring dialogue.
-- Total indexed modifications: 1,451 entries documented in `grisaia_modification_index.md`.
+- **Milestone 1 Completed**: `grisaia1/com01` to `grisaia1/com52` (Lines 12337 - 26256, 13,920 lines):
+  - All 52 common route chapters 100% polished, corrected, and verified.
+  - Eradicated pervasive machine translation bugs: "欧巴桑" (オヤジ), "柴鱼" (しらたき), "铜锣烧" (みたらしだんご), "蟑螂" (ザリガニ), "菜式数量" (場数), "怪气味" (気味が悪い), "献身于" (身をやつす), "泡澡水的火候" (オヤングの湯切り), "傲娇少女" (チョロイン), "吃瘪太容易" (詰めが甘い), "手机支付" (モバイル・エリコン), "女体盛/胸部加垫" (女体盛り), "小动物般的眼睛" (チンピラのような目), "鸡蛋卷" (けつね乌冬), "这个故事是树枝" (魔太郎漫画名梗此恨怎能不雪), "空尖弹" (ホローポイント), "牛气管软骨" (ウルテ).
+  - Preserved all character voice nuances: Yuuji's dry deadpan humor and military slang, Yumiko's razor-sharp tsundere banter, Amane's Osaka dialect teasing and motherly devotion, Makina's unfiltered childish slang, Sachi's literal-minded maid etiquette, and Michiru's pseudo-tsundere slapstick.
+  - Retained all control tokens (`$[...$]`, `[$b...$]`, `$d`, `$S(...)`) with zero tag loss.
+- **Milestone 2 Initiated**: `grisaia1/mak_001` (Lines 26257 - 26807, 551 lines):
+  - Thermite door lock breach, morning kiss slapstick, class announcement of father-daughter contract, Sachi maid chip-opening service, JB rooftop briefing, and ham-cheese taiyaki date 100% polished and indexed.
+- Total indexed modifications: 14,517 entries documented in `grisaia_modification_index.md`.
 - Alignment: Full 110,622-line structural verification (`python3 scripts/verify_alignment.py`) passes 100% with zero line drift, tab drift, or tag corruption.
-- Git Remote: Tracked with `git@github.com:OthinusG/grisaia_zh_localization.git`.
-- Project Plan & Roadmap: Formulated comprehensive 6-milestone project plan at `analysis/grisaia_localization_project_plan.md` covering all 110,622 lines (Fruit common route -> Heroines -> Labyrinth -> Eden -> Side stories).
+- Git Remote: Tracked with `git@github.com:OthinusG/grisaia_zh_localization.git` on branch `main`.
+- Project Plan & Roadmap: Exhaustive checklist maintained in `grisaia_localization_project_plan.md`.
+- Operational Rules:
+  - Granular task checklist with active checkoff (`[x]`) upon each subtask completion.
+  - Real-time Git commit and push (`origin main`) after each subtask.
+  - Strict adherence to milestone gates: stop and pause upon completing user-specified milestone boundary (e.g. Milestone 1 completion).
 
