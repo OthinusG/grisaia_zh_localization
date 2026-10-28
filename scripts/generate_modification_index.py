@@ -1121,6 +1121,15 @@ def classify_change(line_no, sid, ja, old_cn, new_cn):
         return "四十载平淡相濡以沫与无憾长逝", "描写莳菜留德艺术深造远行、雄二退役解甲；刻画四十载岁月后雄二终不再夜半噩梦惊醒——属于这个男人的战争终于在温柔中落幕；确诊癌症五个月后如同精密行动计时般在家人守候下安然长逝"
     if "天国行き" in ja or "５０年" in ja or "ワンちゃん" in ja or "幸運の犬っコロ" in ja or "チケット" in ja or "おばあちゃん" in ja:
         return "半个世纪的终身救赎与天国通行证", "纠正机翻将‘“幸運の犬っコロ”をやるから’误译为‘演幸运之犬’的荒谬错误（实为雄二转赠当年天音送给他的缝补无数次的小狗护身符）；生动刻画外孙女铃音赠送蜡笔绘制的‘天国通行证’；天音一生罪罚在泪水中彻底被赦免，含笑奔向云端深处年轻的雄二"
+    # ama_008 specific (Milestone 2 Chapter 29 - Amane Route Bad End)
+    if "全員病死です" in ja or "急性内臓疾患" in ja or "不浄な雑菌" in ja or "タッパー" in ja or "手紙" in ja:
+        return "一姬遗物冷藏箱与全员病死绝密信", "生动呈现风见一姬遗留信件的冷酷真相：事故幸存同伴因不卫生生食动物肉感染不洁杂菌、急性内脏衰竭脱水暴毙（‘全員病死です’）；精确保留带注音标签的保鲜盒（タッパー$[$b盒体$]）及一姬将雄二托付给天音的深情托孤"
+    if "同梱の包丁" in ja or "玉砕" in ja or "文化包丁" in ja or "ドブス" in ja or "ゼロ距離" in ja:
+        return "绝境自裁菜刀反击与天音玉碎突刺", "描绘一姬在信尾指示天音‘以同梱包丁扫除威胁’，当年天音意图自尽被一姬夺下的厨刀成为殊死反杀兵刃；极具震撼力地刻画天音如恶鬼般发起玉碎冲锋、刺穿坂下肋下旋转刀刃，腹部零距离承受散弹轰击开膛破肚的惨烈壮举"
+    if "スラッグ弾" in ja or "左耳" in ja or "燃焼ガス" in ja or "左目を焦がす" in ja or "タイマン" in ja:
+        return "独头重弹撕耳炙眼与特工肉搏残局", "修正枪械弹药专业术语：散弹枪下层枪管射出的单头实心重弹‘スラッグ弾’（独头鹿弹/Slug重弹）将雄二左耳生生撕裂、狂暴高压燃气灼焦左眼球致盲；纠正单挑用语‘タイマン’，真实体现特工在重度颅脑震荡下的濒死极限纠缠"
+    if "噛み付き" in ja or "食い千切" in ja or "歯を引き抜き" in ja or "死神" in ja or "足首" in ja or "硝煙" in ja:
+        return "恶兽撕咬断齿与死后尸僵绝境同归", "震撼呈现天音濒死化作恶兽死死咬入坂下手臂生撕下一大块血肉、牙齿折断嵌进伤口；天音气绝后右手爆发超常握力如铁钳般死扣坂下脚踝尸僵不放（‘死んでるのに、離れない’）；坂下极度恐惧发狂踢蹬失足撞岩碎颅暴毙；雄二抱尸长空悲鸣、唯余一缕孤独硝烟"
     return "消除AI味/润色优化", "重构生硬日式倒装与机械直译，润色为符合Galgame演出的自然中文"
 
 def build_report():
@@ -3342,6 +3351,32 @@ def build_report():
                 "section": "灰色的果实·天音线最终章长夜黎明与半个世纪的终身救赎 (grisaia1/ama_007)"
             })
 
+    # ama_008 (Milestone 2 Chapter 29 - Amane Route Bad End)
+    for lno in range(5178, 5522):
+        ja_raw = ja_lines[lno - 1]
+        cn_raw = cn_lines[lno - 1]
+        sid = ja_raw.split("\t")[0] if "\t" in ja_raw else f"L{lno}"
+        ja_txt = ja_raw.split("\t")[1] if "\t" in ja_raw else ja_raw
+        cn_txt = cn_raw.split("\t")[1] if "\t" in cn_raw else cn_raw
+
+        old_txt = cn_txt
+        if git_base_cn and len(git_base_cn) >= lno:
+            head_raw = git_base_cn[lno - 1]
+            old_txt = head_raw.split("\t")[1] if "\t" in head_raw else head_raw
+
+        if cn_txt != old_txt:
+            cat, reason = classify_change(lno, sid, ja_txt, old_txt, cn_txt)
+            diffs.append({
+                "lno": lno,
+                "sid": sid,
+                "ja": ja_txt,
+                "old": old_txt,
+                "new": cn_txt,
+                "cat": cat,
+                "reason": reason,
+                "section": "灰色的果实·天音线分歧终局染血玉碎与一缕硝烟之死斗 (grisaia1/ama_008)"
+            })
+
     print(f"Total indexed modifications: {len(diffs)}")
 
     # Build Markdown
@@ -4116,6 +4151,15 @@ def build_report():
     md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
     md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
     for idx, d in enumerate(ama_007_diffs, 1):
+        md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
+    md.append("\n---\n")
+
+    # Section 86 - Milestone 2: Amane Route Bad End
+    ama_008_diffs = [d for d in diffs if d["section"].startswith("灰色的果实·天音线分歧终局染血玉碎与一缕硝烟之死斗")]
+    md.append(f"## 八十六、 灰色的果实·天音线分歧终局染血玉碎与一缕硝烟之死斗 (`grisaia1/ama_008`，共 {len(ama_008_diffs)} 条) —— 【里程碑二·个人线第二十九章】\n")
+    md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
+    md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
+    for idx, d in enumerate(ama_008_diffs, 1):
         md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
     md.append("\n---\n")
 
