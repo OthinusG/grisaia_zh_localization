@@ -14,6 +14,18 @@ def escape_md(text):
     return text.replace("|", "\\|").replace("\n", " ").replace("\r", "")
 
 def classify_change(line_no, sid, ja, old_cn, new_cn):
+    # ama_old_014 specific (Angelic Howl Day 14)
+    if (11576 <= line_no <= 11676) or sid.startswith("grisaia1/ama_old_014"):
+        if "ウミイグアナ" in ja or "体温" in ja or "日光" in ja or "カロリー" in ja or "鍋底" in ja or "関節が悲鳴" in ja or "覚醒したまま" in ja:
+            return "海鬣蜥晒热与极低代谢消耗自保", "生理机能极限：敲锅起床全员因衰弱无法起身，关节剧痛骨肉哀鸣；部员如加拉帕戈斯海鬣蜥般爬出帐篷晒日头回温，深刻剖析睡眠与横卧失温之害，全员保持清醒静坐维持极低热量代谢苦熬"
+        if "ユージ" in ja or "弟" in ja or "約束" in ja or "紹介してあげる" in ja or "気に入るはず" in ja or "まだ、地獄ではない" in ja:
+            return "一姬念叨雄二之名与战后相识誓约", "全剧至深羁绊起点：一姬低语‘这里还不是地狱、依然是值得活下去的世界’，全员目露油光濒临尊严坍塌；极度虚弱间一姬失神呢喃亲弟‘雄二’之名，向天音深情许下‘若能活着回去必定介绍你们相识、你一定会中意他’的宿命拉钩之誓"
+        if "越智" in ja and ("戻って来た" in ja or "失敗" in ja or "狂喜" in ja or "食い扶持" in ja or "男手" in ja):
+            return "越智狼狈归队与余粮分食危机加剧", "荒谬绝境现实：越智老师瘦骨嶙峋、眼眶如兽般凹陷狼狈逃回，比起失败更为捡回一条命狂喜；成年男性回归虽带来微弱心理慰藉，却增加一张成年分食口粮，令断粮死局雪上加霜"
+        if "広岡" in ja or "死んだら、食べる" in ja or "墓を掘る" in ja or "卑しい女" in ja or "恥の重さ" in ja or "すすり泣いた" in ja or "４人目" in ja:
+            return "广冈遗体瞑目、同类相食恶念与自责悲泣", "全章神级伦理震撼与灵魂剖白：广冈学姐在大帐篷半睁眼静默咽气沦为第4名牺牲者；全员神经麻木，脑中闪过‘动物死了吃肉，那广冈是不是也该吃’的禁忌恶念；越智老师合掌抱尸入林埋葬，部员松一口气之余饥肠辘辘；天音因萌生食人邪念深感耻辱自责，抱膝瘫地失声痛哭"
+        return "消除AI味/润色优化", "重构生硬日式倒装与机械直译，润色为符合Galgame演出的自然中文"
+
     # ama_old_013 specific (Angelic Howl Day 13)
     if (11423 <= line_no <= 11575) or sid.startswith("grisaia1/ama_old_013"):
         if "古森" in ja and ("痙攣" in ja or "てんかん" in ja or "花" in ja or "ジギタリス" in ja or "トリカブト" in ja or "毒" in ja or "寄生虫" in ja):
@@ -3980,6 +3992,32 @@ def build_report():
                 "section": "灰色的果实·天音线天使之声篇第十三日毛地黄中毒惊魂、断片失智循环与舔舐大巴铁锈嗜盐 (grisaia1/ama_old_013)"
             })
 
+    # ama_old_014 (Milestone 2 Chapter 46 - Angelic Howl Day 14)
+    for lno in range(11576, 11677):
+        ja_raw = ja_lines[lno - 1]
+        cn_raw = cn_lines[lno - 1]
+        sid = ja_raw.split("\t")[0] if "\t" in ja_raw else f"L{lno}"
+        ja_txt = ja_raw.split("\t")[1] if "\t" in ja_raw else ja_raw
+        cn_txt = cn_raw.split("\t")[1] if "\t" in cn_raw else cn_raw
+
+        old_txt = cn_txt
+        if git_base_cn and len(git_base_cn) >= lno:
+            head_raw = git_base_cn[lno - 1]
+            old_txt = head_raw.split("\t")[1] if "\t" in head_raw else head_raw
+
+        if cn_txt != old_txt:
+            cat, reason = classify_change(lno, sid, ja_txt, old_txt, cn_txt)
+            diffs.append({
+                "lno": lno,
+                "sid": sid,
+                "ja": ja_txt,
+                "old": old_txt,
+                "new": cn_txt,
+                "cat": cat,
+                "reason": reason,
+                "section": "灰色的果实·天音线天使之声篇第十四日海鬣蜥晒热、雄二相识誓约与广冈遗体同类相食恶念 (grisaia1/ama_old_014)"
+            })
+
     print(f"Total indexed modifications: {len(diffs)}")
 
     # Build Markdown
@@ -4907,6 +4945,15 @@ def build_report():
     md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
     md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
     for idx, d in enumerate(ama_old_013_diffs, 1):
+        md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
+    md.append("\n---\n")
+
+    # Section 103 - Milestone 2: Angelic Howl Day 14
+    ama_old_014_diffs = [d for d in diffs if d["section"].startswith("灰色的果实·天音线天使之声篇第十四日海鬣蜥晒热、雄二相识誓约与广冈遗体同类相食恶念")]
+    md.append(f"## 一百〇三、 灰色的果实·天音线天使之声篇第十四日海鬣蜥晒热、雄二相识誓约与广冈遗体同类相食恶念 (`grisaia1/ama_old_014`，共 {len(ama_old_014_diffs)} 条) —— 【里程碑二·个人线第四十六章】\n")
+    md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
+    md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
+    for idx, d in enumerate(ama_old_014_diffs, 1):
         md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
     md.append("\n---\n")
 
