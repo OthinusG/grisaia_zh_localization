@@ -32,6 +32,18 @@ def classify_change(line_no, sid, ja, old_cn, new_cn):
     if "嘘吐き" in ja or "嘘はき" in ja or "泥棒の始まり" in ja or "ブモー" in ja:
         return "日式谚语双关与傲娇口癖还原", "将满把'嘘つきは泥棒の始まり'（撒谎是当小偷的开端）读白字并强词夺理的俏皮双关自然汉化，精准呈现其被吻后瞬间切换回傲娇状态气急败坏的可爱反应"
 
+    # mak_003 specific
+    if "レンジャー" in ja or "ガスマスク" in ja or "空挺" in ja or "ミニヴェロ" in ja or "ミル・スペック" in ja or "トクチュー" in ja or "ジャイアン" in ja:
+        return "自卫队特训与军规折叠单车", "生动还原雄二与莳菜清晨空挺特训中大雄胖虎水泥管歌唱梗、游骑兵怒吼、防毒面具操练与小幸七套战术女仆装的硬核军事幽默"
+    if "合鍵" in ja or "金庫" in ja or "指紋" in ja or "エロス" in ja or "鴬" in ja or "持ち出し厳禁" in ja or "キャビネット" in ja:
+        return "偷闯理事长室与逼供档案安全箱", "精准重现雄二如进情人公寓般踹门闯入千鹤办公室、声称动用师父传授肉刑逼问金库密码的男女调情拉扯与黄莺鸣板戒备走廊"
+    if "神童" in ja or "裏帳簿" in ja or "営利誘拐" in ja or "６日間" in ja or "腐っていく父親" in ja or "絶縁" in ja or "日下部" in ja or "生きる事は稼ぐ事" in ja:
+        return "莳菜身世档案与六日腐尸惨剧", "肃穆翻译莳菜豪门宗家洗钱黑账、生父惨遭灭口并与幼女莳菜同困囚室六日致其精神崩溃的惨烈身世，以及麻生、麻子师父生存哲学的深沉回忆"
+    if "トラクター" in ja or "エンピ" in ja or "側溝" in ja or "木酢液" in ja or "ヒトロクゴーナナ" in ja or "国旗掲揚" in ja or "散水" in ja:
+        return "拖拉机狂飙与园艺课翻车名场面", "传神刻画天音驾驶红色拖拉机扬尘狂飙、满跌入排水渠、小幸洗手发出销魂喘息（木醋液臭味）以及雄二1657降旗军旅条件反射的爆笑日常"
+    if "ドロンコ" in ja or "ゴリゴリ" in ja or "んほぉ" in ja or "ツンデレ" in ja or "撫で" in ja or "榊" in ja:
+        return "泥巴玩乐摸头杀与由美子攻陷预谋", "细腻呈现莳菜玩泥巴虎狼之词、小幸与天音争宠讨要摸头杀抓挠头皮、以及少女们密谋最后攻陷傲娇榊由美子的温馨羁绊"
+
     # mak_002 specific
     if "第２会議室" in ja or "議長" in ja or "様式美" in ja or "建前" in ja or "Ｓ防" in ja or "Ｃ鶴" in ja or "Ｋ嶺" in ja or "Ｍちる" in ja or "Ｓカキ" in ja:
         return "第二会议室蒙面匿名公审大会", "还原美滨学园全员蒙面隐姓埋名、煞有介事召开紧急审判会议的喜剧反差与仪式感，修正对代号、程序正义与掩耳盗铃场面话的生硬翻译"
@@ -2346,6 +2358,32 @@ def build_report():
                 "section": "灰色的果实·莳菜线第二章第二会议室蒙面审判大会与军用犬文学隐喻 (grisaia1/mak_002)"
             })
 
+    # mak_003 (Milestone 2 Chapter 3)
+    for lno in range(27297, 27761):
+        ja_raw = ja_lines[lno - 1]
+        cn_raw = cn_lines[lno - 1]
+        sid = ja_raw.split("\t")[0] if "\t" in ja_raw else f"L{lno}"
+        ja_txt = ja_raw.split("\t")[1] if "\t" in ja_raw else ja_raw
+        cn_txt = cn_raw.split("\t")[1] if "\t" in cn_raw else cn_raw
+
+        old_txt = cn_txt
+        if git_base_cn and len(git_base_cn) >= lno:
+            head_raw = git_base_cn[lno - 1]
+            old_txt = head_raw.split("\t")[1] if "\t" in head_raw else head_raw
+
+        if cn_txt != old_txt:
+            cat, reason = classify_change(lno, sid, ja_txt, old_txt, cn_txt)
+            diffs.append({
+                "lno": lno,
+                "sid": sid,
+                "ja": ja_txt,
+                "old": old_txt,
+                "new": cn_txt,
+                "cat": cat,
+                "reason": reason,
+                "section": "灰色的果实·莳菜线第三章晨练特训与莳菜身世档案 (grisaia1/mak_003)"
+            })
+
     print(f"Total indexed modifications: {len(diffs)}")
 
     # Build Markdown
@@ -2886,6 +2924,15 @@ def build_report():
     md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
     md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
     for idx, d in enumerate(mak_002_diffs, 1):
+        md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
+    md.append("\n---\n")
+
+    # Section 60 - Milestone 2: Makina Route Chapter 3
+    mak_003_diffs = [d for d in diffs if d["section"].startswith("灰色的果实·莳菜线第三章晨练特训与莳菜身世档案")]
+    md.append(f"## 六十、 灰色的果实·莳菜线第三章晨练特训与莳菜身世档案 (`grisaia1/mak_003`，共 {len(mak_003_diffs)} 条) —— 【里程碑二·个人线第三章】\n")
+    md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
+    md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
+    for idx, d in enumerate(mak_003_diffs, 1):
         md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
     md.append("\n---\n")
 
