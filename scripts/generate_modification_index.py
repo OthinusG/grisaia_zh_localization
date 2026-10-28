@@ -1090,6 +1090,17 @@ def classify_change(line_no, sid, ja, old_cn, new_cn):
         return "太鼓独角仙空袭与乌龟摊卖唱满", "纠正机翻将‘ビッチ’（碧池/骚货）误译为‘变态’的错误；爆笑刻画满得意忘形敲太鼓被飞来的巨大独角仙狠命扎进侧头部，惨叫跌入篝火背部着火如《喀嗤喀嗤山》狸猫跳入钓龟摊水槽，随后以身抵债在摊位前扯开嗓门叫卖乌龟（‘能养能吃能撸它’双关梗），天音被当成碧池娇羞抗议"
     if "毒虫" in ja or "滝園学園" in ja or "マイクロバス" in ja or "風見一姫" in ja or "生き残り" in ja or "生還" in ja or "遺族" in ja or "日記帳" in ja or "１８ページ" in ja or "引越し先" in ja:
         return "毒虫蔑称旧识与风见一姬绝密真相", "全剧核心转折震撼降临：祭典上昔日泷园学园旧识窃窃私语天音为‘毒虫’（纠正机翻将‘毒虫’弱化误译为普通‘害虫’、将‘引越し先’误译为‘搬家公司’的严重硬伤）；天音向雄二坦白自身是泷园学园中巴客车坠崖惨案唯一幸存者，是风见一姬的同班好友，并拿出第18页开始记录惨剧的泛黄遇难日记本，悬念推向全剧巅峰《Angelic Howl》"
+    # ama_005 specific (Milestone 2 Chapter 26 - Amane Route Chapter 4)
+    if "クルクルパー" in ja or "サブマシンガン" in ja or "犬っころ" in ja or "ウージィ" in ja or "５分だけ泣いてよし" in ja or "ワンと鳴け" in ja:
+        return "以罚代赎主仆契约与乌兹冲锋枪梗", "纠正机翻将‘クルクルパー’（脑子短路/大笨蛋）荒唐误译为‘卷卷帕’的滑稽机翻硬伤；纠正将天音哭腔喊‘雄二’被吐槽像‘サブマシンガン’（乌兹冲锋枪/UZI）严重误译为‘重机枪’的军武常识错误；生动展现雄二用‘做我一辈子的狗奴隶’的毒舌温柔全盘接纳天音过往罪孽"
+    if "ニンジン" in ja or "１万円札" in ja or "手品" in ja or "首" in ja or "死体" in ja or "切断" in ja or "１１人分" in ja:
+        return "胡萝卜变戏法与风见一姬拼尸假死伏笔", "纠正机翻将切拼钞票骗局生硬直译的语病；生动再现雄二向天音剖析一姬‘10根胡萝卜变成11根’的魔术思维，推导事故现场多出一具无头女尸拼凑假死以瞒过警方的惊人真相"
+    if "バチ当たり" in ja or "心霊スポット" in ja or "定食屋" in ja or "ゴルフ場" in ja:
+        return "灵异探险圣地与遭天谴之人误译修正", "彻底纠正机翻将‘バチ当たり’（遭天谴之人/作死亵渎神明者）荒谬误译为‘看中了什么大奖’的严重反义错误！还原当地餐馆老板打量以为两人是跑去事故废墟猎奇探险的作死大学生的鄙夷神情"
+    if "トルクスプリッター" in ja or "面圧" in ja or "グリーン・アウト" in ja or "Ｍ２コンパス" in ja or "ハンディＧＰＳ" in ja or "４気筒" in ja:
+        return "人体扭矩分配器与丛林绿盲症术语", "修正军事行军与汽车工学专业术语：天音展现卓越车技自嘲是‘人体扭矩分配器（人间トルクスプリッター）’；雄二解释暴风雪‘白化天（Whiteout）’对应的密林‘绿盲症（Greenout）’及火山岩强磁场对M2指南针的剧烈干扰"
+    if "坂下" in ja or "慰霊碑" in ja or "広岡たまき" in ja or "古森めぐみ" in ja or "金田沙彩" in ja or "石碑" in ja or "１３人" in ja:
+        return "十三罹难者慰灵碑与坂下千秋伏笔回收", "补全原版中文遗漏的遇难队友‘广冈环’（広岡たまき）姓名；精准呼应车站前搭话的诡异IT董事‘坂下’与石碑上最后一名罹难者‘坂下千秋’的血亲复仇伏笔，烘托骤然降临的疯狂杀意"
     return "消除AI味/润色优化", "重构生硬日式倒装与机械直译，润色为符合Galgame演出的自然中文"
 
 def build_report():
@@ -3233,6 +3244,32 @@ def build_report():
                 "section": "灰色的果实·天音线第三章夏祭狂欢浴衣骚乱与风见一姬真相揭晓 (grisaia1/ama_004)"
             })
 
+    # ama_005 (Milestone 2 Chapter 26 - Amane Route Chapter 4)
+    for lno in range(3576, 4355):
+        ja_raw = ja_lines[lno - 1]
+        cn_raw = cn_lines[lno - 1]
+        sid = ja_raw.split("\t")[0] if "\t" in ja_raw else f"L{lno}"
+        ja_txt = ja_raw.split("\t")[1] if "\t" in ja_raw else ja_raw
+        cn_txt = cn_raw.split("\t")[1] if "\t" in cn_raw else cn_raw
+
+        old_txt = cn_txt
+        if git_base_cn and len(git_base_cn) >= lno:
+            head_raw = git_base_cn[lno - 1]
+            old_txt = head_raw.split("\t")[1] if "\t" in head_raw else head_raw
+
+        if cn_txt != old_txt:
+            cat, reason = classify_change(lno, sid, ja_txt, old_txt, cn_txt)
+            diffs.append({
+                "lno": lno,
+                "sid": sid,
+                "ja": ja_txt,
+                "old": old_txt,
+                "new": cn_txt,
+                "cat": cat,
+                "reason": reason,
+                "section": "灰色的果实·天音线第四章赎罪之罚与重返惨剧现场之慰灵 (grisaia1/ama_005)"
+            })
+
     print(f"Total indexed modifications: {len(diffs)}")
 
     # Build Markdown
@@ -3980,6 +4017,15 @@ def build_report():
     md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
     md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
     for idx, d in enumerate(ama_004_diffs, 1):
+        md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
+    md.append("\n---\n")
+
+    # Section 83 - Milestone 2: Amane Route Chapter 4
+    ama_005_diffs = [d for d in diffs if d["section"].startswith("灰色的果实·天音线第四章赎罪之罚与重返惨剧现场之慰灵")]
+    md.append(f"## 八十三、 灰色的果实·天音线第四章赎罪之罚与重返惨剧现场之慰灵 (`grisaia1/ama_005`，共 {len(ama_005_diffs)} 条) —— 【里程碑二·个人线第二十六章】\n")
+    md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
+    md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
+    for idx, d in enumerate(ama_005_diffs, 1):
         md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
     md.append("\n---\n")
 
