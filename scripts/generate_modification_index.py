@@ -1206,6 +1206,14 @@ def classify_change(line_no, sid, ja, old_cn, new_cn):
     if "泣き虫" in ja or "責任と責任感" in ja or "神様" in ja or "墓まで持っていく" in ja or "帰りたい" in ja:
         return "崩溃痛哭的温暖腹部依靠与一姬神圣化绝对信仰", "天音因一颗糖果联想昔日优渥家庭生活心理彻底崩溃痛哭‘想回家’，一姬温柔将其头颅抱在小腹前轻抚安抚，以‘早知把弟弟塞包里偷渡’破涕为笑；一姬厘清‘责任与责任感’边界，天音彻底将思考权奉献给一姬，将其升华为心中无可动摇的唯一神明"
 
+    # ama_old_005 specific
+    if "玉ねぎ茶" in ja or "土砂降り" in ja or "痺れるような頭痛" in ja or "捨て犬" in ja or "黄色いお湯" in ja or "体温" in ja:
+        return "暴雨湿冷侵袭、失温头痛与一姬雨中煮洋葱茶", "天音在地面雨水浸透与剧烈头痛中惊醒，一姬冒着暴雨生火煮出仅剩微黄色泽的洋葱皮茶为其驱寒；天音见一姬浑身湿透如落水小狗心疼不已"
+    if "睡眠" in ja or "看護師" in ja or "闇医者" in ja or "セルフサービス" in ja or "スイッチ" in ja or "昼寝" in ja:
+        return "睡眠戒备机制、一姬钟表级精准小憩与黑医邪教梦境对谈", "一姬科普恶劣环境下睡眠警戒机制，展现入睡10秒的钟表级自律作息；两人探讨做梦机制，一姬故意装普通小女生向往护士花店，遭天音内心疯狂吐槽‘只配当黑医和邪教教祖’"
+    if "落ちる夢" in ja or "不安なのよ" in ja or "トイレ" in ja or "尿意" in ja or "屋根付き" in ja:
+        return "坠落噩梦心理映射、帐篷漫水与极度憋尿建厕所提议", "天音常年梦见悬崖坠落被一姬一针见血点破为‘内心不安’；手机确认已过午后两点，因洋葱茶利尿在浸水帐篷中饱受极限憋尿煎熬，手抖记录日记誓要提议修建带顶棚厕所"
+
     return "消除AI味/润色优化", "重构生硬日式倒装与机械直译，润色为符合Galgame演出的自然中文"
 
 def build_report():
@@ -3635,6 +3643,32 @@ def build_report():
                 "section": "灰色的果实·天音线天使之声篇第四日绝境抽鬼牌博弈与神明风见一姬的诞生 (grisaia1/ama_old_004)"
             })
 
+    # ama_old_005 (Milestone 2 Chapter 37 - Angelic Howl Day 5)
+    for lno in range(9451, 9587):
+        ja_raw = ja_lines[lno - 1]
+        cn_raw = cn_lines[lno - 1]
+        sid = ja_raw.split("\t")[0] if "\t" in ja_raw else f"L{lno}"
+        ja_txt = ja_raw.split("\t")[1] if "\t" in ja_raw else ja_raw
+        cn_txt = cn_raw.split("\t")[1] if "\t" in cn_raw else cn_raw
+
+        old_txt = cn_txt
+        if git_base_cn and len(git_base_cn) >= lno:
+            head_raw = git_base_cn[lno - 1]
+            old_txt = head_raw.split("\t")[1] if "\t" in head_raw else head_raw
+
+        if cn_txt != old_txt:
+            cat, reason = classify_change(lno, sid, ja_txt, old_txt, cn_txt)
+            diffs.append({
+                "lno": lno,
+                "sid": sid,
+                "ja": ja_txt,
+                "old": old_txt,
+                "new": cn_txt,
+                "cat": cat,
+                "reason": reason,
+                "section": "灰色的果实·天音线天使之声篇第五日暴雨湿冷侵袭与一姬钟表级作息 (grisaia1/ama_old_005)"
+            })
+
     print(f"Total indexed modifications: {len(diffs)}")
 
     # Build Markdown
@@ -4481,6 +4515,15 @@ def build_report():
     md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
     md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
     for idx, d in enumerate(ama_old_004_diffs, 1):
+        md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
+    md.append("\n---\n")
+
+    # Section 94 - Milestone 2: Angelic Howl Day 5
+    ama_old_005_diffs = [d for d in diffs if d["section"].startswith("灰色的果实·天音线天使之声篇第五日暴雨湿冷侵袭与一姬钟表级作息")]
+    md.append(f"## 九十四、 灰色的果实·天音线天使之声篇第五日暴雨湿冷侵袭与一姬钟表级作息 (`grisaia1/ama_old_005`，共 {len(ama_old_005_diffs)} 条) —— 【里程碑二·个人线第三十七章】\n")
+    md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
+    md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
+    for idx, d in enumerate(ama_old_005_diffs, 1):
         md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
     md.append("\n---\n")
 
