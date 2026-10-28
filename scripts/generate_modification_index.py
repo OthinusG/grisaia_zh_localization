@@ -32,6 +32,20 @@ def classify_change(line_no, sid, ja, old_cn, new_cn):
     if "嘘吐き" in ja or "嘘はき" in ja or "泥棒の始まり" in ja or "ブモー" in ja:
         return "日式谚语双关与傲娇口癖还原", "将满把'嘘つきは泥棒の始まり'（撒谎是当小偷的开端）读白字并强词夺理的俏皮双关自然汉化，精准呈现其被吻后瞬间切换回傲娇状态气急败坏的可爱反应"
 
+    # mak_009 specific
+    if "エムロクナナ" in ja or "破片手榴弾" in ja or "手榴弾" in ja or "飢点" in ja or "爆風" in ja or "防爆" in ja or "耳珠" in ja:
+        return "破片手榴弹防御姿态与饥点耳屏闭塞", "纠正机翻将M67手榴弹‘エムロクナナ’荒诞错译为数字‘十六――’的致命术语硬伤，专业还原抱头压腹张嘴、以耳屏压闭耳道（饥点防爆）抵御冲击波超压撕裂耳膜的标准特种防爆防御操练"
+    if "レンジャー" in ja or "スクワット" in ja or "跳躍" in ja or "腕立て" in ja or "抱頭" in ja:
+        return "游骑兵体能惩戒与抱头深蹲换腿跳", "纠正机翻将特种作战‘レンジャー’（Ranger，游骑兵）可笑直译为‘森林管理员/护林员’的离谱硬伤，精准还原美军及自卫队经典的游骑兵抱头下蹲跳体罚操典与师徒欢脱互损"
+    if "春親" in ja or "入巣" in ja or "健在" in ja or "権力争い" in ja or "道具" in ja or "復讐" in ja:
+        return "入巢先代春亲通牒与家族权力漩涡", "精准还原入巢宗族先代春亲获悉莳菜尚存后的冰冷通牒、暗中利用其作为复仇祭品或彻底抹杀的阴谋算计，以及雄二为护莳菜哪怕与全世界为敌的决死意志"
+    if "インテグラルタンク" in ja or "二式大艇" in ja or "一式陸攻" in ja or "ワンバイトオーバーフロー" in ja or "Ｍ８Ｉ２" in ja or "Ｍ８Ｉ３" in ja or "メロンパン" in ja:
+        return "二式大艇空力机翼蜜瓜包与湿翼油箱单口爆浆", "纠正机翻将一体化湿翼油箱（Integral Tank）误译为‘一体式夹心’、将单口过载爆浆（One Bite Overflow）死译为‘一口咬爆溢’的术语问题，传神还原莳菜将战机机翼波浪蒙皮隔板与湿翼油箱构造移植至自制菠萝蜜瓜包的硬核军武脑洞"
+    if "サンライズ" in ja or "関西" in ja or "丸い" in ja or "関東" in ja:
+        return "关西旭日东升甜面包与关东地域文化鸿沟", "精准再现天音以关西腔提出‘为什么圆滚滚的要叫蜜瓜包、在关西分明叫旭日东升（Sunrise）才对吧’引发的关东关西面包名物地域文化论战"
+    if "同衾" in ja or "性的な行為" in ja or "スルー" in ja or "ツンデレ" in ja or "リアクション芸人" in ja or "押すな" in ja:
+        return "同室过夜纯情乌龙与搞笑艺人傲娇理论", "纠正机翻将男女同宿审查直白死译的语境生硬，生动还原天音送套性教育、幸严肃盘问‘是否发生实质性男女苟且交合’并将满的‘说不要就是推’犀利吐槽为‘搞笑艺人热汤落水梗’的经典群口相声"
+
     # mak_008b specific
     if "サッちん" in ja or "沙里菜" in ja or "宗家" in ja or "分家" in ja or "家督" in ja or "福ダヌキ" in ja or "腹違い" in ja or "お姉ちゃん" in ja:
         return "姐妹羁绊溯源与宗家弃子身份揭露", "纠正机翻将莳菜对同母异父妹妹入巢沙里菜的昵称‘サッちん’（小沙）错乱误译为‘幸酱’（小岭幸）的严重人物混淆硬伤，精准还原入巢宗家与分家继承权替换、莳菜自幼暗中凝望妹妹的单向守护情结与愧疚之意"
@@ -2624,6 +2638,32 @@ def build_report():
                 "section": "灰色的果实·莳菜线第九章站前豪车定向爆破与暗流涌动的獠牙 (grisaia1/mak_008b)"
             })
 
+    # mak_009 (Milestone 2 Chapter 10)
+    for lno in range(31467, 32011):
+        ja_raw = ja_lines[lno - 1]
+        cn_raw = cn_lines[lno - 1]
+        sid = ja_raw.split("\t")[0] if "\t" in ja_raw else f"L{lno}"
+        ja_txt = ja_raw.split("\t")[1] if "\t" in ja_raw else ja_raw
+        cn_txt = cn_raw.split("\t")[1] if "\t" in cn_raw else cn_raw
+
+        old_txt = cn_txt
+        if git_base_cn and len(git_base_cn) >= lno:
+            head_raw = git_base_cn[lno - 1]
+            old_txt = head_raw.split("\t")[1] if "\t" in head_raw else head_raw
+
+        if cn_txt != old_txt:
+            cat, reason = classify_change(lno, sid, ja_txt, old_txt, cn_txt)
+            diffs.append({
+                "lno": lno,
+                "sid": sid,
+                "ja": ja_txt,
+                "old": old_txt,
+                "new": cn_txt,
+                "cat": cat,
+                "reason": reason,
+                "section": "灰色的果实·莳菜线第十章防爆姿态战机菠萝包与同衾乌龙 (grisaia1/mak_009)"
+            })
+
     print(f"Total indexed modifications: {len(diffs)}")
 
     # Build Markdown
@@ -3227,6 +3267,15 @@ def build_report():
     md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
     md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
     for idx, d in enumerate(mak_008b_diffs, 1):
+        md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
+    md.append("\n---\n")
+
+    # Section 67 - Milestone 2: Makina Route Chapter 10
+    mak_009_diffs = [d for d in diffs if d["section"].startswith("灰色的果实·莳菜线第十章防爆姿态战机菠萝包与同衾乌龙")]
+    md.append(f"## 六十七、 灰色的果实·莳菜线第十章防爆姿态战机菠萝包与同衾乌龙 (`grisaia1/mak_009`，共 {len(mak_009_diffs)} 条) —— 【里程碑二·个人线第十章】\n")
+    md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
+    md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
+    for idx, d in enumerate(mak_009_diffs, 1):
         md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
     md.append("\n---\n")
 

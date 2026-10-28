@@ -1,3 +1,6 @@
+# Antigravity agent files
+.agent/
+
 # OS generated files
 .DS_Store
 .DS_Store?
@@ -10,6 +13,10 @@ Thumbs.db
 # Backup files
 *.bak
 *.tmp
+
+# Temporary scratch directory
+tmp/
+!tmp/.gitkeep
 
 # Python cache
 __pycache__/

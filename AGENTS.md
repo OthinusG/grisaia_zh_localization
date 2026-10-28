@@ -14,6 +14,7 @@ This workspace contains extracted script text (`ALL_TEXT.txt`) and corresponding
 - Line Count & Structural Invariance: Total lines (110,622) and line-by-line IDs must strictly match.
 - Code & Python Scripts: Standard library Python preferred for deterministic checking, diffing, and control token verification.
 - TSV 文件管理 (TSV File Management)：所有提取、校验、草稿等产生的 `.tsv` 文件统一存放到 `/tsv` 文件夹（`tsv/`）下集中管理，严禁直接堆放在项目根目录，以保持工作区整洁。
+- 临时与草稿文件管理 (Temporary & Scratch Files Management)：所有过程中产生的临时中间草稿、dump JSON、碎片文本（如 `scratch_*`、`*dump*.json` 等）统一存放到 `/tmp` 文件夹（`tmp/`）下单独存放，严禁散落堆放在项目根目录。
 
 ## Task Checklist & Granular Execution Protocol (细粒度任务拆解与实时打钩推送规则)
 1. **详尽任务清单 (Fine-Grained Task List)**：工程计划书（`grisaia_localization_project_plan.md`）必须维护全景详尽的任务清单，细化到每一个具体章节；**每个小目标的体量必须严格控制在 1000 行以内**（超过 1000 行的长章节必须拆分为 Part 1、Part 2 等独立子任务）。
