@@ -14,6 +14,22 @@ def escape_md(text):
     return text.replace("|", "\\|").replace("\n", " ").replace("\r", "")
 
 def classify_change(line_no, sid, ja, old_cn, new_cn):
+    # mic_001 specific (Michiru Route Prologue: World in a Box, Dekopin, Kiss Re-enactment & Ramune)
+    if (37185 <= line_no <= 37469) or sid.startswith("grisaia1/mic_001"):
+        if "箱である" in ja or "白い翼" in ja or "約束の地" in ja or "空気穴" in ja or "君臨する" in ja:
+            return "世界箱子隐喻与苍穹牢笼哲学", "满线开篇灵魂独白：孩提时代深信后背生有白翼，青春期无力感与等待拯救之梦，醒悟后世界庄严合上盖子仅留呼吸孔，天空化为剥夺自由之翼的君王森严君临"
+        if "ギンヤンマ" in ja or "蜻蛉" in ja or "寸止め" in ja or "デコピン" in ja or "スウェーバック" in ja or "鼻水" in ja or "敗れたり" in ja:
+            return "由美子神速脑崩儿与满嘴硬败北", "经典日常笑料：雄二读完《追逐蜻蜓》，纠正机翻将碧伟蜓误译为‘银燕’、后仰闪避误译为‘瑞典式制服’；由美子施展超音速脑崩儿额头弹指，满两度中招鼻涕横流，嘴硬称被下诅咒后光速道歉认输"
+        if "プンスカ" in ja or "西郷どん" in ja or "薩摩" in ja or "ジューシーユージー" in ja or "ユジユジ" in ja or "もう一人のみちる" in ja:
+            return "气煞本殿西乡隆盛与生人勿近调侃", "谐音名梗考据：满自创‘普恩斯卡咚’，雄二一本正经考据‘萨摩藩豪杰普恩斯卡殿’；天音忍俊不禁连呼‘难以接近之人先生’‘Juicy雄二’（纠正机翻误译雄二为‘优治’）；雄二忆及高台接吻与第二人格陷入沉思"
+        if "ジュネーブ条約" in ja or "ワシントン条約" in ja or "亀" in ja or "髭が生えている" in ja or "産毛" in ja or "牛乳" in ja or "白くなった" in ja:
+            return "日内瓦公约第六条与少女汗毛实测", "满线神级直男互动：满质问注视女生触犯日内瓦公约第六条海龟保护法（实为华盛顿条约）；雄二近距离凝视体检，直言‘肌肤光洁但鼻下长汗毛’，承诺喝牛奶黏白胡子一定帮擦，满羞愤欲绝誓言背刺复仇"
+        if "接吻" in ja or "せっぷん" in ja or "切腹" in ja or "グサ、オエー" in ja or "顎を指先で固定し" in ja or "唇と唇を重ねた" in ja:
+            return "接吻切腹认知错乱与二度初吻现场再现", "经典名场面：雄二挑明接吻疑问，满将‘接吻（せっぷん）’完全误解为‘武士切腹（せっぷく）’，以为要捅肚子大吐血，叫嚣现场演示再现；雄二托下巴实测接吻印唇，满瞬间阿巴阿巴陷入心神丧失宕机"
+        if "万引き" in ja or "バケツ" in ja or "サメのポーチ" in ja or "ラムネ" in ja or "砂を食ってるよう" in ja or "雑巾" in ja or "過ぎたるは及ばざるが如し" in ja:
+            return "顺手牵羊脑回路与汽水糖豆腐喷射", "爆笑收尾：满失魂落魄屡撞同一水桶，幸大惊失色脑补‘风见同学顺手牵羊扒窃’；雄二言明接吻，满受刺激抓狂狂嚼数十颗波子汽水糖如生嚼泥沙，当场喷射豆腐渣糖糊并用抹布擦脸，雄二深感过犹不及"
+        return "消除AI味/润色优化", "重构生硬日式倒装与机械直译，润色为符合Galgame演出的自然中文"
+
     # ama_old_016 specific (Angelic Howl Conclusion: Amane's Lone Survival & Cabbage Field)
     if (12189 <= line_no <= 12336) or sid.startswith("grisaia1/ama_old_016"):
         if "蛭" in ja or "小沢先輩" in ja or "スナック菓子" in ja or "意地汚く" in ja or "餓鬼" in ja:
@@ -4104,6 +4120,32 @@ def build_report():
                 "section": "灰色的果实·天音线天使之声篇终章咬碎山蛭、卷心菜狂喜大嚼与天音唯一幸存 (grisaia1/ama_old_016)"
             })
 
+    # mic_001 (Milestone 2 Chapter 49 - Michiru Route Prologue: World in a Box, Dekopin, Kiss Re-enactment & Ramune)
+    for lno in range(37185, 37470):
+        ja_raw = ja_lines[lno - 1]
+        cn_raw = cn_lines[lno - 1]
+        sid = ja_raw.split("\t")[0] if "\t" in ja_raw else f"L{lno}"
+        ja_txt = ja_raw.split("\t")[1] if "\t" in ja_raw else ja_raw
+        cn_txt = cn_raw.split("\t")[1] if "\t" in cn_raw else cn_raw
+
+        old_txt = cn_txt
+        if git_base_cn and len(git_base_cn) >= lno:
+            head_raw = git_base_cn[lno - 1]
+            old_txt = head_raw.split("\t")[1] if "\t" in head_raw else head_raw
+
+        if cn_txt != old_txt:
+            cat, reason = classify_change(lno, sid, ja_txt, old_txt, cn_txt)
+            diffs.append({
+                "lno": lno,
+                "sid": sid,
+                "ja": ja_txt,
+                "old": old_txt,
+                "new": cn_txt,
+                "cat": cat,
+                "reason": reason,
+                "section": "灰色的果实·松岛满线序章世界箱子隐喻、额头弹指脑崩儿、切腹接吻再现与汽水糖喷射 (grisaia1/mic_001)"
+            })
+
     print(f"Total indexed modifications: {len(diffs)}")
 
     # Build Markdown
@@ -5058,6 +5100,15 @@ def build_report():
     md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
     md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
     for idx, d in enumerate(ama_old_016_diffs, 1):
+        md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
+    md.append("\n---\n")
+
+    # Section 106 - Milestone 2: Michiru Route Chapter 1
+    mic_001_diffs = [d for d in diffs if d["section"].startswith("灰色的果实·松岛满线序章世界箱子隐喻、额头弹指脑崩儿、切腹接吻再现与汽水糖喷射")]
+    md.append(f"## 一百〇六、 灰色的果实·松岛满线序章世界箱子隐喻、额头弹指脑崩儿、切腹接吻再现与汽水糖喷射 (`grisaia1/mic_001`，共 {len(mic_001_diffs)} 条) —— 【里程碑二·个人线第四十九章】\n")
+    md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
+    md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
+    for idx, d in enumerate(mic_001_diffs, 1):
         md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
     md.append("\n---\n")
 
