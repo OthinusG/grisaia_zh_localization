@@ -1139,6 +1139,18 @@ def classify_change(line_no, sid, ja, old_cn, new_cn):
         return "豪华超跑设问与性能涡轮四驱心愿", "呈现雄二以‘宿舍门口放超跑’为比喻引导天音，天音极速专业对答‘2000cc日系原厂涡轮增压全时四驱、悉心呵护离合器与变速箱’的汽车极客本色；雄二直言‘身为男人自然要摸清自己所爱女人的心愿’"
     if "お姉ちゃんゴッコ" in ja or "シャンプー" in ja or "頭を洗う" in ja or "マキナ" in ja or "ドＭ" in ja:
         return "大姐姐过家家温存共浴与莳菜纠错", "彻底纠正机翻将‘マキナ’（莳菜）荒唐误译为‘真琴’的严重角色名错乱！刻画天音因身为独生女而渴望体验‘为年下弟弟洗头的温存大姐姐过家家’，洗发露呛进雄二口中的搞笑互动，以及莳菜敲门引发天音慌乱掩饰的青春日常"
+
+    # ama_old_001 Part 1 specific (Milestone 2 Chapter 31 - Angelic Howl Day 1 Part 1)
+    if "暗闇" in ja or "横転" in ja or "バスごと崖下に転落" in ja or "１４人" in ja or "即死" in ja:
+        return "中巴坠崖天地倾覆与惨烈生还清点", "深刻展现泷园篮球部合宿归途巴士坠落深渊绝壁的惨烈开局；纠正机翻将‘横転’机械直译为‘横过’，生动刻画车厢反转、顶棚化作墙壁、浓烟弥漫、14人中3人当场惨死的炼狱现场；精确保留‘１１人と小型犬１匹’脱险清点"
+    if "風見一姫" in ja or "首席入学者" in ja or "特別賞" in ja or "住む世界が違う" in ja or "毒気" in ja:
+        return "首席天才风见一姬初遇与毒舌本色", "描绘全校首席天才少女风见一姬的初登场：彻底纠正机翻将‘貴女’屡次生硬直译为‘贵女’的严重AI腔，自然修正‘カズキ’男孩名与‘哼地笑了一下鼻子’；展现其外表迷糊困倦、内在却如利刃般冰冷锐利的神级气场"
+    if "心理テスト" in ja or "嫌いな子" in ja or "坂下部長" in ja or "小出葎" in ja or "他者依存" in ja:
+        return "恶意心理测试与坂下部长狐假虎威真相", "刻画一姬抛出‘先救老师、好友还是伤员’的选择题考验天音，并特立独行选择第4项‘先救讨厌的部长’；一针见血剖析坂下部长依附特权、逢迎上位者、奴役小出葎的自私狐假虎威嘴脸；精确保留行尾选项分支控制符$d"
+    if "デビエーション" in ja or "ガラス化" in ja or "非晶質" in ja or "アモルファス" in ja or "マス・コンセントレーション" in ja or "隕石" in ja:
+        return "地磁紊乱玻璃化岩壁与陨石空爆推演", "极其严谨精准地还原一姬运用物理与天文学对绝境的冷彻推演：岩壁高温急冷玻璃化转化为‘$[非晶质$/非晶态$]’、指南针因地磁偏差（Deviation）彻底失效、重金属碎片引发多处局部质量集中（Mass concentration）磁场异常；精确保留强调注音标签$[$b１日$]与$[非晶質$/アモルファス$]"
+    if "生食" in ja or "生理食塩水" in ja or "釣り針" in ja or "瞬間接着剤" in ja or "内斜視" in ja or "金田沙彩" in ja:
+        return "战地外科鱼钩缝合与金田沙彩斜视确诊", "展现一姬在无麻醉无专业器械下展现的超凡急救才智：指导调配9‰生理盐水（生食）、提议用鱼钩与钓鱼线缝合结扎、调侃用502瞬干胶粘合创口；专业排查感觉神经与左右反射，敏锐识破金田沙彩左眼内斜视并毒舌调侃‘适合当狗的名字’"
     return "消除AI味/润色优化", "重构生硬日式倒装与机械直译，润色为符合Galgame演出的自然中文"
 
 def build_report():
@@ -3412,6 +3424,32 @@ def build_report():
                 "section": "灰色的果实·天音线幕间书籍乱读与温存鸳鸯浴之欢愉 (grisaia1/ama_h)"
             })
 
+    # ama_old_001 Part 1 (Milestone 2 Chapter 31 - Angelic Howl Day 1 Part 1)
+    for lno in range(5720, 6375):
+        ja_raw = ja_lines[lno - 1]
+        cn_raw = cn_lines[lno - 1]
+        sid = ja_raw.split("\t")[0] if "\t" in ja_raw else f"L{lno}"
+        ja_txt = ja_raw.split("\t")[1] if "\t" in ja_raw else ja_raw
+        cn_txt = cn_raw.split("\t")[1] if "\t" in cn_raw else cn_raw
+
+        old_txt = cn_txt
+        if git_base_cn and len(git_base_cn) >= lno:
+            head_raw = git_base_cn[lno - 1]
+            old_txt = head_raw.split("\t")[1] if "\t" in head_raw else head_raw
+
+        if cn_txt != old_txt:
+            cat, reason = classify_change(lno, sid, ja_txt, old_txt, cn_txt)
+            diffs.append({
+                "lno": lno,
+                "sid": sid,
+                "ja": ja_txt,
+                "old": old_txt,
+                "new": cn_txt,
+                "cat": cat,
+                "reason": reason,
+                "section": "灰色的果实·天音线天使之声篇第一日天崩坠崖与天才风见一姬的冷彻初遇 (grisaia1/ama_old_001 Part 1)"
+            })
+
     print(f"Total indexed modifications: {len(diffs)}")
 
     # Build Markdown
@@ -4204,6 +4242,15 @@ def build_report():
     md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
     md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
     for idx, d in enumerate(ama_h_diffs, 1):
+        md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
+    md.append("\n---\n")
+
+    # Section 88 - Milestone 2: Angelic Howl Day 1 Part 1
+    ama_old_001_p1_diffs = [d for d in diffs if d["section"].startswith("灰色的果实·天音线天使之声篇第一日天崩坠崖与天才风见一姬的冷彻初遇")]
+    md.append(f"## 八十八、 灰色的果实·天音线天使之声篇第一日天崩坠崖与天才风见一姬的冷彻初遇 (`grisaia1/ama_old_001 Part 1`，共 {len(ama_old_001_p1_diffs)} 条) —— 【里程碑二·个人线第三十一章】\n")
+    md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
+    md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
+    for idx, d in enumerate(ama_old_001_p1_diffs, 1):
         md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
     md.append("\n---\n")
 
