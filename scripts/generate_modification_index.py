@@ -32,6 +32,18 @@ def classify_change(line_no, sid, ja, old_cn, new_cn):
     if "嘘吐き" in ja or "嘘はき" in ja or "泥棒の始まり" in ja or "ブモー" in ja:
         return "日式谚语双关与傲娇口癖还原", "将满把'嘘つきは泥棒の始まり'（撒谎是当小偷的开端）读白字并强词夺理的俏皮双关自然汉化，精准呈现其被吻后瞬间切换回傲娇状态气急败坏的可爱反应"
 
+    # mak_005 specific
+    if "チャリンコババァ" in ja or "ペルシア軍" in ja or "サー！　イエス！　サー！" in ja or "軽快車" in ja or "運行者" in ja:
+        return "公路骑行战术拉练与国防部新兵操典", "纠正机翻将骑车大妈（チャリンコババァ）荒诞误译为‘小鸟肥婆’，生动再现雄二公路骑行视野、避险逻辑与‘国防部不是为了给新兵父母寄讣告才设立’的全金属狂潮式长官训导"
+    if "托卵" in ja or "レウポルド" in ja or "オモチャ" in ja or "ジーズ" in ja or "片利片害" in ja or "片利共生" in ja or "オオヨシキリ" in ja:
+        return "布谷鸟托卵寓意与刘波尔德狙击镜观察", "纠正机翻破坏托卵与Jeez双关ruby标签（将‘ジーズ’误译为‘好可怕’），深刻描摹莳菜见识布谷鸟雀占鸠巢后对自身寄生雄二的自卑与动摇、雄二以刘波尔德MK4瞄准镜观鸟引导以及麻子‘只有不擅长没有不可能’的生死启蒙"
+    if "カボチャ" in ja or "カロリー" in ja or "片乳" in ja or "ストア・オークション" in ja or "値切" in ja or "スチームオーブン" in ja:
+        return "南瓜神教减肥经与天音色诱砍价日常", "生动呈现天音严格计算莳菜早饭620千卡热量、疯狂安利南瓜再战十年的高达麦格贝名梗、由美子精明网购查价、以及天音纠结网购还是去实体店掏出一只欧派色诱砍价的无节操日常"
+    if "メロンパン" in ja or "タイガー・スリッパ" in ja or "一番風呂" in ja or "お姫様抱っこ" in ja or "指定席" in ja or "マルタイ" in ja:
+        return "面包店首战告捷与全员分发菠萝包温情", "纠正机翻将凯尔必思（ケルペソ）误译为开胃酒，细腻描摹莳菜在街头长椅累瘫深睡、雄二夕阳背负归宿、全员大厅守候迎接、莳菜将亲手劳作换得的菠萝包分发全员传达谢意的成长泪点"
+    if "デイブ" in ja or "ホオジロザメ" in ja or "ロレンチニ瓶" in ja or "小鹿" in ja or "男はみんな狼" in ja or "レイプゴッコ" in ja:
+        return "戴夫教授鲨鱼铁拳与男人都是大灰狼游戏", "绝妙还原戴夫教授拳轰鲨鱼罗伦氏壶腹的疯狂科普、小鹿丧亲唤醒莳菜杀父创伤泪崩、雄二轻咬头顶发誓永生不灭、满误入被指‘强暴过家家’瞬间傲娇破防、以及天音二楼索吻调侃"
+
     # mak_004 specific
     if "カッコウ" in ja or "ジャイロ効果" in ja or "砂場" in ja or "階段" in ja or "軽車両" in ja or "ＭＯＳ" in ja or "教導官" in ja:
         return "布谷鸟伏击与硬核单车战术训练", "生动呈现雄二晨跑听闻布谷鸟啼鸣勾起的运兵车战术拉练回忆、陀螺效应暴力推车导致莳菜连环翻车、以及雄二天音分别担纲严父慈母的育儿分工"
@@ -2422,6 +2434,32 @@ def build_report():
                 "section": "灰色的果实·莳菜线第四章单车特训与双层蜜瓜包的夏假序幕 (grisaia1/mak_004)"
             })
 
+    # mak_005 (Milestone 2 Chapter 5)
+    for lno in range(28374, 29009):
+        ja_raw = ja_lines[lno - 1]
+        cn_raw = cn_lines[lno - 1]
+        sid = ja_raw.split("\t")[0] if "\t" in ja_raw else f"L{lno}"
+        ja_txt = ja_raw.split("\t")[1] if "\t" in ja_raw else ja_raw
+        cn_txt = cn_raw.split("\t")[1] if "\t" in cn_raw else cn_raw
+
+        old_txt = cn_txt
+        if git_base_cn and len(git_base_cn) >= lno:
+            head_raw = git_base_cn[lno - 1]
+            old_txt = head_raw.split("\t")[1] if "\t" in head_raw else head_raw
+
+        if cn_txt != old_txt:
+            cat, reason = classify_change(lno, sid, ja_txt, old_txt, cn_txt)
+            diffs.append({
+                "lno": lno,
+                "sid": sid,
+                "ja": ja_txt,
+                "old": old_txt,
+                "new": cn_txt,
+                "cat": cat,
+                "reason": reason,
+                "section": "灰色的果实·莳菜线第五章布谷鸟托卵寓意与面包店初战的菠萝包报恩 (grisaia1/mak_005)"
+            })
+
     print(f"Total indexed modifications: {len(diffs)}")
 
     # Build Markdown
@@ -2980,6 +3018,15 @@ def build_report():
     md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
     md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
     for idx, d in enumerate(mak_004_diffs, 1):
+        md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
+    md.append("\n---\n")
+
+    # Section 62 - Milestone 2: Makina Route Chapter 5
+    mak_005_diffs = [d for d in diffs if d["section"].startswith("灰色的果实·莳菜线第五章布谷鸟托卵寓意与面包店初战的菠萝包报恩")]
+    md.append(f"## 六十二、 灰色的果实·莳菜线第五章布谷鸟托卵寓意与面包店初战的菠萝包报恩 (`grisaia1/mak_005`，共 {len(mak_005_diffs)} 条) —— 【里程碑二·个人线第五章】\n")
+    md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
+    md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
+    for idx, d in enumerate(mak_005_diffs, 1):
         md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
     md.append("\n---\n")
 
