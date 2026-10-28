@@ -44,6 +44,20 @@ def classify_change(line_no, sid, ja, old_cn, new_cn):
     if "狼" in ja or "育児" in ja or "家族" in ja or "薄汚れた俺の手" in ja:
         return "灰狼死守幼崽隐喻与握紧小手誓约", "生动呈现雄二看着电视里负伤仍一次次站起咆哮护崽的灰狼而重拾信念，深知自己双手染满污秽却毅然紧紧握住莳菜向空中无助伸出的求救小手，许下‘纵使跌落深渊也独自承担’的深沉誓言"
 
+    # mak_014 specific
+    if "除籍" in ja or "榊から“木”をとれば“神”" in ja or "お賽銭" in ja or "ゴッドゴッド" in ja or "小銭" in ja:
+        return "去木留神拆字谐音祈愿与由美子除籍断绝", "精准汉化‘从榊字里去掉木就是神’的拆字日文谐音梗与莳菜怒砸零钱硬币高呼GodGod求神谕的无厘头桥段，生动展现由美子以经营者之女身份决断将两人‘除籍’彻底抹杀档案以阻断入巢宗家牵连学园的深沉挚友担当"
+    if "ガッツリ" in ja or "濃厚な口づけ" in ja or "ギブアップ" in ja or "縮地" in ja or "鈍器" in ja:
+        return "莳菜缩地缠抱深吻致谢与由美子飞掷钝器", "生动刻画莳菜以格斗技缩地封锁退路、对由美子施展霸道法式深吻致谢并调侃‘特别售后服务’，由美子如同擂台认输格斗家狂拍其后背娇喘求饶、随后羞愤暴走飞掷钝器追杀二人逃出学园的爆笑日常"
+    if "長い物には巻かれる" in ja or "足のつき難い" in ja or "ヌー" in ja or "又一" in ja or "オジロ又一" in ja or "ブモー" in ja:
+        return "顺应权贵成语误译纠正与薄板隔音隔壁牛鸣", "纠正机翻将‘長い物には巻かれる’（胳膊拧不过大腿/顺应强权）荒唐误译为‘长线钓鱼者占便宜’以及将‘足のつき難い’误译为‘伸不直脚’的严重笑话；生动展现廉价客栈薄板隔壁情侣怪叫被雄二戏称为角马纪录片、莳菜隔墙飞踹怒骂尾白又一的滑稽逃亡"
+    if "オッパイ" in ja or "服を買いなさい" in ja or "ジュリア" in ja or "便利な女" in ja or "泣かして" in ja:
+        return "JB献胸挽留调侃与赠金买衣挥泪诀别", "纠正机翻将JB‘让你摸摸我的胸你能放弃吗’完全颠倒主客误译为‘我说要摸一摸您的奶子’的严重语病；细腻呈现JB私驾赴约塞现金责令‘去买身便服，别穿着制服去杀人’、雄二深情呼唤茱莉亚惹其落泪‘别拿我当方便女人’的动人离情"
+    if "右腕に取り憑いた悪魔" in ja or "自己暗示" in ja or "日下部麻子" in ja or "セイフティー・ピン" in ja or "手榴弾" in ja or "挽肉" in ja or "６万ドル" in ja:
+        return "麻子右臂恶魔心理封印与拔除手榴弹保险销失控", "深层剖析麻子为雄二施加‘父母之死全系右臂恶魔肆虐’的潜意识封印以及‘雄二是一枚手榴弹，麻子是唯一能安全拔出保险销的战士’的核心军旅心理隐喻，刻画大冢本部长傲慢自负与JB警告失去限制器的9029将化身不灭绞肉狂犬的悚然氛围"
+    if "巨乳" in ja or "ハートジャック" in ja or "トランプ" in ja or "シグナルロスト" in ja or "掃討" in ja or "烏森神社" in ja:
+        return "特务追踪四将瞬杀全灭与红心J巨乳撤退指令", "精准刻画雄二于东口广场深夜瞬杀全歼三叶草12、红心9、黑桃6、方块A四名追踪特工却手下留情仅折断筋骨，JB得知留守的红心J系24岁88公分大胸新人后果断下令撤退‘9029对巨乳下不了狠手’的硬核幽默与老练情报博弈"
+
     # mak_012 specific
     if "部外指令" in ja or "１１８４７" in ja or "部外秘" in ja or "持ち出し・複写厳禁" in ja or "紙束" in ja:
         return "体制外秘密处决指令与内部绝密档案", "纠正机翻将‘部外指令・１１８４７号計画詳細’漏译尾数误作‘1184号’的离谱硬伤，纠正将‘部外秘’错译为‘外派机密’（实际为体制外秘密作战、对体制外保密的最高内部绝密），精准还原JB冒死私自盗出的国家机关最高黑幕全家桶档案"
@@ -2822,6 +2836,32 @@ def build_report():
                 "section": "灰色的果实·莳菜线第十四章伴尸地狱梦魇与灰狼守护誓约 (grisaia1/mak_013)"
             })
 
+    # mak_014 (Milestone 2 Chapter 15)
+    for lno in range(34115, 34889):
+        ja_raw = ja_lines[lno - 1]
+        cn_raw = cn_lines[lno - 1]
+        sid = ja_raw.split("\t")[0] if "\t" in ja_raw else f"L{lno}"
+        ja_txt = ja_raw.split("\t")[1] if "\t" in ja_raw else ja_raw
+        cn_txt = cn_raw.split("\t")[1] if "\t" in cn_raw else cn_raw
+
+        old_txt = cn_txt
+        if git_base_cn and len(git_base_cn) >= lno:
+            head_raw = git_base_cn[lno - 1]
+            old_txt = head_raw.split("\t")[1] if "\t" in head_raw else head_raw
+
+        if cn_txt != old_txt:
+            cat, reason = classify_change(lno, sid, ja_txt, old_txt, cn_txt)
+            diffs.append({
+                "lno": lno,
+                "sid": sid,
+                "ja": ja_txt,
+                "old": old_txt,
+                "new": cn_txt,
+                "cat": cat,
+                "reason": reason,
+                "section": "灰色的果实·莳菜线第十五章学园除籍诀别与特务机关交锋 (grisaia1/mak_014)"
+            })
+
     print(f"Total indexed modifications: {len(diffs)}")
 
     # Build Markdown
@@ -3470,6 +3510,15 @@ def build_report():
     md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
     md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
     for idx, d in enumerate(mak_013_diffs, 1):
+        md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
+    md.append("\n---\n")
+
+    # Section 72 - Milestone 2: Makina Route Chapter 15
+    mak_014_diffs = [d for d in diffs if d["section"].startswith("灰色的果实·莳菜线第十五章学园除籍诀别与特务机关交锋")]
+    md.append(f"## 七十二、 灰色的果实·莳菜线第十五章学园除籍诀别与特务机关交锋 (`grisaia1/mak_014`，共 {len(mak_014_diffs)} 条) —— 【里程碑二·个人线第十五章】\n")
+    md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
+    md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
+    for idx, d in enumerate(mak_014_diffs, 1):
         md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
     md.append("\n---\n")
 
