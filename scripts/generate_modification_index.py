@@ -32,6 +32,20 @@ def classify_change(line_no, sid, ja, old_cn, new_cn):
     if "嘘吐き" in ja or "嘘はき" in ja or "泥棒の始まり" in ja or "ブモー" in ja:
         return "日式谚语双关与傲娇口癖还原", "将满把'嘘つきは泥棒の始まり'（撒谎是当小偷的开端）读白字并强词夺理的俏皮双关自然汉化，精准呈现其被吻后瞬间切换回傲娇状态气急败坏的可爱反应"
 
+    # mak_011 specific
+    if "赤いウインナー" in ja or "カニ風味カマボコ" in ja or "スケトウダラ" in ja or "単三電池" in ja or "守護霊" in ja or "ナマモノ" in ja:
+        return "守护灵红香肠鱼糕狭鳕与五号电池爆笑相声", "精准还原莳菜自创无厘头通灵占卜，将满的守护灵从红香肠反转为蟹味鱼糕，幸死板考据其原料黄线狭鳕（纠正机翻误为鲭鱼），莳菜更爆料由美子守护灵是五号电池（单三电池），满反驳‘五号电池最实用了’的宿舍清晨欢脱群口相声"
+    if "棘" in ja or "指の先" in ja or "白血球" in ja or "雑菌" in ja or ("春親" in ja and "組織" in ja):
+        return "指尖之刺白血球微观交锋组织论哲学", "纠正机翻中充斥的‘贵方’生硬日式汉字与主谓错位，精准呈现由美子以‘指尖扎刺引发白血球微观交战而大脑浑然不觉’的精妙比喻，深刻剖析入巢春亲身为总裁与母系实际掌权者清夏、初音之间的组织权力断层"
+    if "アイリス・グローバル" in ja or "沢田" in ja or "射撃点" in ja or "休め" in ja or "気をつけ" in ja or "ローファー" in ja or "靴磨き" in ja or "直通" in ja or "絨毯" in ja:
+        return "直捣入巢总社大楼与退役特工职业病习惯", "纠正机翻将稍息步距、立正踵击、专用直梯及长绒地毯死译生硬的缺陷，生动再现雄二单枪匹马深入入巢总社大楼，习惯性勘验狙击阵地与紧急通道的特工职业病，以及凭借部队硬功将学园乐福皮鞋擦拭得光可鉴人的利落风姿"
+    if "コンニャクゼリー" in ja or "遊馬" in ja or "犬の匂い" in ja or "七千万円" in ja or "示談書" in ja or "代理人" in ja or "凶暴な犬" in ja or "お風呂" in ja or "泥舟" in ja:
+        return "魔芋果冻广告洗脑与恶犬狂暴之嗅反唇相讥", "纠正机翻将清夏‘身上有一股凶犬般特有的气味’与‘浸透骨髓洗不掉’直译失真的缺陷，传神呈现入巢清夏以魔芋果冻广告与全包企业大厦居高临下施压，而雄二以七千万雇佣契约与和解书周旋对峙、被一眼看穿骨子里凶暴狂犬本性的特工交锋"
+    if "火事" in ja or "放火" in ja or "バケツリレー" in ja or "延焼" in ja or "看板" in ja or "炭化" in ja or "警告" in ja or "情動" in ja or "八つ当たり" in ja:
+        return "面包店恶毒纵火焦黑弹孔与宗分家权力余波", "纠正机翻将雄二心头怒火‘情動の熱’荒唐误译为‘欲望之火’的严重离谱硬伤，生动展现面包店遭遇报复性纵火、天音街坊合力传桶灭火、焦黑碳化木招牌上残存枪击弹孔以及雄二内心情感剧震的沉痛场景"
+    if "カレイの煮付け" in ja or "おかえり" in ja or "実家に帰れない女" in ja or "サッちん" in ja or "小幸" in ja or "いつも通り" in ja or "チヅチヅ" in ja or "チルチル" in ja:
+        return "梦想焚毁绝望抽泣与美滨全员深夜温柔相守", "纠正机翻将莳菜迎接雄二回家‘おかえり’反向误译为‘我回来啦’的极性颠倒，纠正将小岭幸自称‘サッちん’错译为‘萨恰’的失误，细腻刻画莳菜独立自主的面包店梦想被粉碎后的悲鸣抽泣，以及美滨全员以‘一如既往’默默温柔守护的深厚羁绊"
+
     # mak_010 specific
     if "ハードでタフ" in ja or "脾肉の嘆" in ja or "パッポンストリートシャワー" in ja or "バスキー" in ja:
         return "硬派侦探幻想破灭与脾肉之叹成语典故", "纠正机翻将'ハードでタフ'荒唐错译为'又硬又艹的工作'的离谱硬伤，修正将'脾肉の嘆'误译为'皮肉单行本'的文化典故翻译失误，精准传达新手侦探幻想破灭后蹲点偷窥的无聊感与雄二在三十一冰淇淋点单跳跳糖狂欢（Popping Shower）的俏皮反差"
@@ -2706,6 +2720,32 @@ def build_report():
                 "section": "灰色的果实·莳菜线第十一章面包店枪击袭扰与智斗黑道若头补佐 (grisaia1/mak_010)"
             })
 
+    # mak_011 (Milestone 2 Chapter 12)
+    for lno in range(32741, 33176):
+        ja_raw = ja_lines[lno - 1]
+        cn_raw = cn_lines[lno - 1]
+        sid = ja_raw.split("\t")[0] if "\t" in ja_raw else f"L{lno}"
+        ja_txt = ja_raw.split("\t")[1] if "\t" in ja_raw else ja_raw
+        cn_txt = cn_raw.split("\t")[1] if "\t" in cn_raw else cn_raw
+
+        old_txt = cn_txt
+        if git_base_cn and len(git_base_cn) >= lno:
+            head_raw = git_base_cn[lno - 1]
+            old_txt = head_raw.split("\t")[1] if "\t" in head_raw else head_raw
+
+        if cn_txt != old_txt:
+            cat, reason = classify_change(lno, sid, ja_txt, old_txt, cn_txt)
+            diffs.append({
+                "lno": lno,
+                "sid": sid,
+                "ja": ja_txt,
+                "old": old_txt,
+                "new": cn_txt,
+                "cat": cat,
+                "reason": reason,
+                "section": "灰色的果实·莳菜线第十二章独闯入巢总社与面包店焦黑纵火余波 (grisaia1/mak_011)"
+            })
+
     print(f"Total indexed modifications: {len(diffs)}")
 
     # Build Markdown
@@ -3330,23 +3370,26 @@ def build_report():
         md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
     md.append("\n---\n")
 
+    # Section 69 - Milestone 2: Makina Route Chapter 12
+    mak_011_diffs = [d for d in diffs if d["section"].startswith("灰色的果实·莳菜线第十二章独闯入巢总社与面包店焦黑纵火余波")]
+    md.append(f"## 六十九、 灰色的果实·莳菜线第十二章独闯入巢总社与面包店焦黑纵火余波 (`grisaia1/mak_011`，共 {len(mak_011_diffs)} 条) —— 【里程碑二·个人线第十二章】\n")
+    md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
+    md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
+    for idx, d in enumerate(mak_011_diffs, 1):
+        md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
+    md.append("\n---\n")
+
     md_content = "\n".join(md)
 
     # Write to root & analysis/
     with open("grisaia_modification_index.md", "w", encoding="utf-8") as f:
         f.write(md_content)
-    workspace_path = "/Users/wqin/workplace/agy/analysis/grisaia_modification_index.md"
-    with open(workspace_path, "w", encoding="utf-8") as f:
-        f.write(md_content)
-    print(f"Report written to root and analysis: {workspace_path}")
-
-    # Write to artifacts directory
-    artifact_dir = "/Users/wqin/.gemini/antigravity-cli/brain/a088b6ec-1fa3-4cdc-baba-1df09660d90a"
-    os.makedirs(artifact_dir, exist_ok=True)
-    artifact_path = os.path.join(artifact_dir, "grisaia_modification_index.md")
-    with open(artifact_path, "w", encoding="utf-8") as f:
-        f.write(md_content)
-    print(f"Report written to artifact: {artifact_path}")
+    if os.path.exists("analysis"):
+        analysis_path = os.path.join("analysis", "grisaia_modification_index.md")
+        with open(analysis_path, "w", encoding="utf-8") as f:
+            f.write(md_content)
+        print(f"Report written to {analysis_path}")
+    print("Report written to root: grisaia_modification_index.md")
 
 if __name__ == "__main__":
     build_report()
