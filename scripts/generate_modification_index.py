@@ -32,6 +32,22 @@ def classify_change(line_no, sid, ja, old_cn, new_cn):
     if "嘘吐き" in ja or "嘘はき" in ja or "泥棒の始まり" in ja or "ブモー" in ja:
         return "日式谚语双关与傲娇口癖还原", "将满把'嘘つきは泥棒の始まり'（撒谎是当小偷的开端）读白字并强词夺理的俏皮双关自然汉化，精准呈现其被吻后瞬间切换回傲娇状态气急败坏的可爱反应"
 
+    # mak_010 specific
+    if "ハードでタフ" in ja or "脾肉の嘆" in ja or "パッポンストリートシャワー" in ja or "バスキー" in ja:
+        return "硬派侦探幻想破灭与脾肉之叹成语典故", "纠正机翻将'ハードでタフ'荒唐错译为'又硬又艹的工作'的离谱硬伤，修正将'脾肉の嘆'误译为'皮肉单行本'的文化典故翻译失误，精准传达新手侦探幻想破灭后蹲点偷窥的无聊感与雄二在三十一冰淇淋点单跳跳糖狂欢（Popping Shower）的俏皮反差"
+    if "錯乱暴" in ja or "チェリー" in ja or "暴走族" in ja or "セダン" in ja or "スモークフィルム" in ja:
+        return "错乱暴樱桃暴走族与低趴贴膜黑轿车袭扰", "纠正机翻将'錯乱暴'（さくらんぼう，樱桃双关谐音）与'CHERRY'生硬误译的语境偏差，精准还原改装切短弹簧低趴底盘、全车贴黑膜的暴走族黑车蛇形突袭射击面包店的惊险枪击骚扰"
+    if "トーラス" in ja or "マル暴" in ja or "プルブレイク" in ja or "ディスアセンブリ" in ja or "遊底" in ja or "薬室" in ja or "リコイルスプリング" in ja:
+        return "陶鲁斯手枪快拔套拆解与指纹栽赃陷害", "纠正机翻将黑道组织犯罪分子'マル暴'误译为'暴走族'、将半自动陶鲁斯手枪错译为'转轮枪'、将枪套与枪械拆解术语死译错译的军事硬伤，专业展现雄二徒手格斗反手截击、行云流水野战分解陶鲁斯、强按黑道头目指纹拓印全枪零件并夜袭警署栽赃借刀杀人的特工特质"
+    if "家督" in ja or "当主" in ja or "十年" in ja or "影武者" in ja or "宗家" in ja or "分家" in ja:
+        return "十年家督继承期限与分家暗度陈仓替身阴谋", "纠正机翻将'入巣さん'误译为'入巢先生'的性别称谓错乱，精准梳理入巢分家利用学园三年隔离剥夺家督继承权、在医院布置替身瞒天过海、以及妹妹被炸死后局势失衡的残酷豪门内幕"
+    if "パッケージ投下" in ja or "ウォッチャー" in ja or "ドライバー" in ja or "テンプラナンバー" in ja or "偽造" in ja:
+        return "专业侦察投送组合包与假车牌摸底追踪", "纠正机翻将战术侦察'パッケージ投下'（Package Drop，投送组合包）直白死译的术语缺陷，生动还原观察员与司机双人分工监控、伪造车牌排查及雄二通过职业习惯洞悉探侦监控漏洞的特战素养"
+    if "ＪＵＬＩＡ" in ja or "パスワード" in ja or "広域通信網" in ja or "太った" in ja or "１７２" in ja:
+        return "JB三围密码破译越权入侵与发福斗嘴", "传神展现雄二擅自黑入情报系统时凭借对JB身材三围数据的精准记忆试探破解密码、以及两人日常拌嘴中'你发福了'与'我才没胖只是定期改大密码'的爆笑温情互动"
+    if "杯" in ja or "チャカ" in ja or "真鶴" in ja or "芋づる" in ja or "鷲宝会" in ja or "阿藤" in ja:
+        return "极道结杯仪式黑话与顺藤摸瓜成语口误", "纠正机翻将黑帮黑话'チャカ'（手枪）荒唐误译为'雪茄'、将结义受杯'杯をやる'误译为'给机会/给钱'的严重黑道文化硬伤，生动传神再现黑帮头目阿藤将顺藤摸瓜（芋づる式）口误说成真鹤（真鶴）、暴揍吹嘘手枪的小弟等江湖众生相"
+
     # mak_009 specific
     if "エムロクナナ" in ja or "破片手榴弾" in ja or "手榴弾" in ja or "飢点" in ja or "爆風" in ja or "防爆" in ja or "耳珠" in ja:
         return "破片手榴弹防御姿态与饥点耳屏闭塞", "纠正机翻将M67手榴弹‘エムロクナナ’荒诞错译为数字‘十六――’的致命术语硬伤，专业还原抱头压腹张嘴、以耳屏压闭耳道（饥点防爆）抵御冲击波超压撕裂耳膜的标准特种防爆防御操练"
@@ -2664,6 +2680,32 @@ def build_report():
                 "section": "灰色的果实·莳菜线第十章防爆姿态战机菠萝包与同衾乌龙 (grisaia1/mak_009)"
             })
 
+    # mak_010 (Milestone 2 Chapter 11)
+    for lno in range(32011, 32741):
+        ja_raw = ja_lines[lno - 1]
+        cn_raw = cn_lines[lno - 1]
+        sid = ja_raw.split("\t")[0] if "\t" in ja_raw else f"L{lno}"
+        ja_txt = ja_raw.split("\t")[1] if "\t" in ja_raw else ja_raw
+        cn_txt = cn_raw.split("\t")[1] if "\t" in cn_raw else cn_raw
+
+        old_txt = cn_txt
+        if git_base_cn and len(git_base_cn) >= lno:
+            head_raw = git_base_cn[lno - 1]
+            old_txt = head_raw.split("\t")[1] if "\t" in head_raw else head_raw
+
+        if cn_txt != old_txt:
+            cat, reason = classify_change(lno, sid, ja_txt, old_txt, cn_txt)
+            diffs.append({
+                "lno": lno,
+                "sid": sid,
+                "ja": ja_txt,
+                "old": old_txt,
+                "new": cn_txt,
+                "cat": cat,
+                "reason": reason,
+                "section": "灰色的果实·莳菜线第十一章面包店枪击袭扰与智斗黑道若头补佐 (grisaia1/mak_010)"
+            })
+
     print(f"Total indexed modifications: {len(diffs)}")
 
     # Build Markdown
@@ -3276,6 +3318,15 @@ def build_report():
     md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
     md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
     for idx, d in enumerate(mak_009_diffs, 1):
+        md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
+    md.append("\n---\n")
+
+    # Section 68 - Milestone 2: Makina Route Chapter 11
+    mak_010_diffs = [d for d in diffs if d["section"].startswith("灰色的果实·莳菜线第十一章面包店枪击袭扰与智斗黑道若头补佐")]
+    md.append(f"## 六十八、 灰色的果实·莳菜线第十一章面包店枪击袭扰与智斗黑道若头补佐 (`grisaia1/mak_010`，共 {len(mak_010_diffs)} 条) —— 【里程碑二·个人线第十一章】\n")
+    md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
+    md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
+    for idx, d in enumerate(mak_010_diffs, 1):
         md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
     md.append("\n---\n")
 
