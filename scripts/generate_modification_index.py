@@ -32,6 +32,20 @@ def classify_change(line_no, sid, ja, old_cn, new_cn):
     if "嘘吐き" in ja or "嘘はき" in ja or "泥棒の始まり" in ja or "ブモー" in ja:
         return "日式谚语双关与傲娇口癖还原", "将满把'嘘つきは泥棒の始まり'（撒谎是当小偷的开端）读白字并强词夺理的俏皮双关自然汉化，精准呈现其被吻后瞬间切换回傲娇状态气急败坏的可爱反应"
 
+    # mak_002 specific
+    if "第２会議室" in ja or "議長" in ja or "様式美" in ja or "建前" in ja or "Ｓ防" in ja or "Ｃ鶴" in ja or "Ｋ嶺" in ja or "Ｍちる" in ja or "Ｓカキ" in ja:
+        return "第二会议室蒙面匿名公审大会", "还原美滨学园全员蒙面隐姓埋名、煞有介事召开紧急审判会议的喜剧反差与仪式感，修正对代号、程序正义与掩耳盗铃场面话的生硬翻译"
+    if "バニティミラー" in ja or "香水" in ja or "タヌキ寝入り" in ja or "乾く暇" in ja or "処女" in ja:
+        return "千鹤理事长芳心暗许与处女学园暴论", "修正机翻对千鹤晨间补妆喷高档香水偶遇雄二、装睡等吻、以及被当众逼问性经验时慌乱宣称‘当年激战频繁到底下都来不及风干’等爆笑荤段子的失真机翻"
+    if "ポエム" in ja or "ポケット" in ja or "エプロン" in ja or "界面活性剤" in ja or "洗剤" in ja or "柔軟剤" in ja:
+        return "日记情诗公开处刑与围裙洗衣粉搜查", "生动呈现小幸当众朗读满日记本里四季怀春情诗的致命公开处刑，以及小幸把脸埋在雄二围裙上闻肥皂与界面活性剂洗衣粉清香的细腻互动"
+    if "アイアンクロー" in ja or "オバハン" in ja or "更年期" in ja or "ロリコン" in ja or "ナイスバデー" in ja or "初老" in ja:
+        return "毒舌连环暴击与雄二萝莉控嫌疑分析", "传神翻译小幸用‘中年女性/更年期综合征’连环扎心千鹤导致其当场崩溃大哭，以及天音对雄二无视自己前凸后翘傲人身材而涉嫌萝莉控的自信心受挫吐槽"
+    if "ライエット" in ja or "散弾銃" in ja or "インナーマッスル" in ja or "使用人" in ja or "旦那様" in ja or "お嬢様" in ja or "良いではないか" in ja or "べべ" in ja or "天井のシミ" in ja or "デードリッヒ" in ja:
+        return "防暴霰弹枪误解、恶代官扒内裤闹剧与摸头杀", "纠正雄二把莳菜脸颊捏住说的‘该减肥了’误听为西方新型防暴霰弹枪的军事宅思维，传神还原莳菜扮演恶代官‘数天花板斑点’强扒小幸内裤被雄二动真格制止的相声闹剧，以及雄二摸头杀导致满脸红冒烟暴走"
+    if "ＢＬ" in ja or "逆ハーレム" in ja or "怪奇小説" in ja or "軍用犬" in ja or "飢え" in ja or "タヌキフェチ" in ja or "生温かく" in ja or "国益" in ja or "勲章" in ja:
+        return "逆后宫怪奇小说、军用犬勋章隐喻与豚汁温馨晚餐", "精妙汉化由美子与莳菜关于‘平平无奇凡妇张嘴躺平等帅哥送上门’的怪奇逆后宫小说吐槽，深刻还原军用犬饥饿退役小说与雄二国家豢养走狗身份的深层文学隐喻，以及天音收拾剩菜残羹的温馨晚餐"
+
     # mak_001 specific
     if "テルミット" in ja or "缶コーヒー" in ja or "縮地" in ja or "膝カックン" in ja or "ディープキス" in ja or "茶芯" in ja or "珍獣" in ja:
         return "铝热剂咖啡罐炸门与晨吻修罗场", "修正机翻对小幸自制铝热剂咖啡罐炸弹炸毁门锁、莳菜膝顶缩地飞扑与深吻闹剧的生硬处理，精准还原雄二俳句与天音红翼茶芯靴吐槽"
@@ -2306,6 +2320,32 @@ def build_report():
                 "section": "灰色的果实·莳菜线第一章父女契约与铝热剂炸门晨吻修罗场 (grisaia1/mak_001)"
             })
 
+    # mak_002 (Milestone 2 Chapter 2)
+    for lno in range(26808, 27297):
+        ja_raw = ja_lines[lno - 1]
+        cn_raw = cn_lines[lno - 1]
+        sid = ja_raw.split("\t")[0] if "\t" in ja_raw else f"L{lno}"
+        ja_txt = ja_raw.split("\t")[1] if "\t" in ja_raw else ja_raw
+        cn_txt = cn_raw.split("\t")[1] if "\t" in cn_raw else cn_raw
+
+        old_txt = cn_txt
+        if git_base_cn and len(git_base_cn) >= lno:
+            head_raw = git_base_cn[lno - 1]
+            old_txt = head_raw.split("\t")[1] if "\t" in head_raw else head_raw
+
+        if cn_txt != old_txt:
+            cat, reason = classify_change(lno, sid, ja_txt, old_txt, cn_txt)
+            diffs.append({
+                "lno": lno,
+                "sid": sid,
+                "ja": ja_txt,
+                "old": old_txt,
+                "new": cn_txt,
+                "cat": cat,
+                "reason": reason,
+                "section": "灰色的果实·莳菜线第二章第二会议室蒙面审判大会与军用犬文学隐喻 (grisaia1/mak_002)"
+            })
+
     print(f"Total indexed modifications: {len(diffs)}")
 
     # Build Markdown
@@ -2837,6 +2877,15 @@ def build_report():
     md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
     md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
     for idx, d in enumerate(mak_001_diffs, 1):
+        md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
+    md.append("\n---\n")
+
+    # Section 59 - Milestone 2: Makina Route Chapter 2
+    mak_002_diffs = [d for d in diffs if d["section"].startswith("灰色的果实·莳菜线第二章第二会议室蒙面审判大会与军用犬文学隐喻")]
+    md.append(f"## 五十九、 灰色的果实·莳菜线第二章第二会议室蒙面审判大会与军用犬文学隐喻 (`grisaia1/mak_002`，共 {len(mak_002_diffs)} 条) —— 【里程碑二·个人线第二章】\n")
+    md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
+    md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
+    for idx, d in enumerate(mak_002_diffs, 1):
         md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
     md.append("\n---\n")
 
