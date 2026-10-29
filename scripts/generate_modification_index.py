@@ -14,6 +14,20 @@ def escape_md(text):
     return text.replace("|", "\\|").replace("\n", " ").replace("\r", "")
 
 def classify_change(line_no, sid, ja, old_cn, new_cn):
+    # mic_009 specific (Michiru Route: Commando Date Plan, Han Solo Carbonite Sand Sculpture & Reversi Stone Sunscreen)
+    if (39047 <= line_no <= 39415) or sid.startswith("grisaia1/mic_009"):
+        if "決死のロープ渡り" in ja or "かがみ跳躍" in ja or "青写真" in ja:
+            return "约会蓝图特种兵障碍拉练术语纠偏", "雄二提议屈身跳跃决死渡绳战术特训，纠正机翻『跳神轿』严重错译"
+        if "夢枕に立つ" in ja or "海に落ちちゃえば" in ja or "報いが重すぎる" in ja:
+            return "恶毒诅咒因果报应与湿透托梦鬼故事幽默", "满逞口舌之快咒雄二落海，雄二正色以湿身夜半托梦反制，纠偏机翻主谓倒置"
+        if "トップとボトムの札" in ja or "戦場カメラマン" in ja or "新聞紙" in ja:
+            return "战地随军记者纪实文学与上下真钞夹报纸", "雄二床头捧读战地记者报道，纷争区首尾真钞夹废纸骗术盲区（纠偏机翻『最大最小面额』）"
+        if "五分前行動" in ja or "タイム…パラドクサー" in ja or "サンドアート" in ja or "何ニアムファルコン" in ja:
+            return "提前五分钟出勤条令与千年隼碳化汉索罗沙雕巨城", "严格提前五分条令与时间悖论者吐槽，幸超巨型沙雕艺术坍塌活埋千年隼船长（纠偏机翻『三明治』『尼姆法尔康』）"
+        if "リバーシの石" in ja or "オセロ" in ja or "よーそろー" in ja or "サメ吉" in ja or "秋の新色" in ja:
+            return "双面黑白棋防晒霜涂抹与全速出击飞身擒抱", "沙滩路边石当季限定联名款荒诞戏谑，航向正前方飞身擒抱，纠正机翻『反面硬币』为黑白棋棋子"
+        return "文本自然度与对话韵味润色优化", "重构生硬日式倒装与机械直译，润色为符合Galgame演出的自然中文"
+
     # mic_008 specific (Michiru Route: Cereal Killer Beans, Yosaku Marathon & Hollow Bread Bento)
     if (38836 <= line_no <= 39046) or sid.startswith("grisaia1/mic_008"):
         if "豆脳" in ja or "シリアルキラー" in ja or "木の実" in ja:
@@ -4424,6 +4438,32 @@ def build_report():
                 "section": "灰色的果实·松岛满线豆脑麦片杀手、提前三小时傻等与掏空吐司约会过家家 (grisaia1/mic_008)"
             })
 
+    # mic_009 (Milestone 2 Chapter 57 - Michiru Route: Commando Date Plan, Han Solo Carbonite Sand Sculpture & Reversi Stone Sunscreen)
+    for lno in range(39047, 39416):
+        ja_raw = ja_lines[lno - 1]
+        cn_raw = cn_lines[lno - 1]
+        sid = ja_raw.split("\t")[0] if "\t" in ja_raw else f"L{lno}"
+        ja_txt = ja_raw.split("\t")[1] if "\t" in ja_raw else ja_raw
+        cn_txt = cn_raw.split("\t")[1] if "\t" in cn_raw else cn_raw
+
+        old_txt = cn_txt
+        if git_base_cn and len(git_base_cn) >= lno:
+            head_raw = git_base_cn[lno - 1]
+            old_txt = head_raw.split("\t")[1] if "\t" in head_raw else head_raw
+
+        if cn_txt != old_txt:
+            cat, reason = classify_change(lno, sid, ja_txt, old_txt, cn_txt)
+            diffs.append({
+                "lno": lno,
+                "sid": sid,
+                "ja": ja_txt,
+                "old": old_txt,
+                "new": cn_txt,
+                "cat": cat,
+                "reason": reason,
+                "section": "灰色的果实·松岛满线特种兵约会蓝图、千年隼碳化沙雕与黑白棋防晒霜 (grisaia1/mic_009)"
+            })
+
     print(f"Total indexed modifications: {len(diffs)}")
 
     # Build Markdown
@@ -5450,6 +5490,15 @@ def build_report():
     md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
     md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
     for idx, d in enumerate(mic_008_diffs, 1):
+        md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
+    md.append("\n---\n")
+
+    # Section 114 - Milestone 2: Michiru Route Chapter 9
+    mic_009_diffs = [d for d in diffs if d["section"].startswith("灰色的果实·松岛满线特种兵约会蓝图、千年隼碳化沙雕与黑白棋防晒霜")]
+    md.append(f"## 一百一十四、 灰色的果实·松岛满线特种兵约会蓝图、千年隼碳化沙雕与黑白棋防晒霜 (`grisaia1/mic_009`，共 {len(mic_009_diffs)} 条) —— 【里程碑二·个人线第五十七章】\n")
+    md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
+    md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
+    for idx, d in enumerate(mic_009_diffs, 1):
         md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
     md.append("\n---\n")
 
