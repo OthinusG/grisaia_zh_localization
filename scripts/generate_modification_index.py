@@ -14,6 +14,20 @@ def escape_md(text):
     return text.replace("|", "\\|").replace("\n", " ").replace("\r", "")
 
 def classify_change(line_no, sid, ja, old_cn, new_cn):
+    # mic_011 specific (Michiru Route: Pet Chicken Tenderloin, Nyanmel Nobel Prize & Aggressive Deep Kiss Playing House)
+    if (39680 <= line_no <= 39826) or sid.startswith("grisaia1/mic_011"):
+        if "ササミ" in ja or "ペット用" in ja or "ほぐして" in ja:
+            return "宠物鸡里脊与细心撕碎投喂误译纠偏", "雄二备妥宠物专用鸡里脊肉并仔细撕碎喂猫，纠偏机翻将里脊肉错译为剪毛剪、撕碎错译为梳开"
+        if "お飯事" in ja or "ニャンメル賞" in ja or "発明した子供" in ja:
+            return "过家家发明者表彰与诺贝尔喵美尔奖", "满提议给发明过家家游戏的小孩颁发诺贝尔奖，雄二顺势提议设立喵美尔奖（纠正机翻『发明吃饭事业』）"
+        if "性行為" in ja or "部屋で２人きり" in ja or "恋人同士" in ja:
+            return "孤男寡女独处雄二耿直直球神反问", "满询问恋人独处房间做什么，雄二冷峻直球反问是不是性行为，满当场抓狂羞愤"
+        if "激しすぎる" in ja or "ちゅって" in ja or "ディープ" in ja or "唇" in ja:
+            return "突袭霸道深吻过家家暴击与窒息失控", "满以为只是轻啄一下却被雄二霸道深吻夺走全部呼吸与意识，心跳过速陷入恋爱恐慌"
+        if "ネコスケ" in ja or "残り香" in ja or "フレグランス" in ja:
+            return "羞愤落荒喊错猫名与指尖余香缭绕", "满羞愤落荒而逃连猫名都错喊成猫介，雄二空荡宿舍独处细品指尖残留的少女清甜香气"
+        return "文本自然度与对话韵味润色优化", "重构生硬日式倒装与机械直译，润色为符合Galgame演出的自然中文"
+
     # mic_010 specific (Michiru Route: Co-conspiracy Playing House, Other Michiru Identity Crisis & Naming Nyanmel)
     if (39416 <= line_no <= 39679) or sid.startswith("grisaia1/mic_010"):
         if "共同犯罪" in ja or "堂々と偽れる" in ja or "ウエストゆるく" in ja:
@@ -4504,6 +4518,32 @@ def build_report():
                 "section": "灰色的果实·松岛满线共同犯罪过家家、第二人格残酷拷问与喵美尔赐名 (grisaia1/mic_010)"
             })
 
+    # mic_011 (Milestone 2 Chapter 59 - Michiru Route: Pet Chicken Tenderloin, Nyanmel Nobel Prize & Aggressive Deep Kiss Playing House)
+    for lno in range(39680, 39827):
+        ja_raw = ja_lines[lno - 1]
+        cn_raw = cn_lines[lno - 1]
+        sid = ja_raw.split("\t")[0] if "\t" in ja_raw else f"L{lno}"
+        ja_txt = ja_raw.split("\t")[1] if "\t" in ja_raw else ja_raw
+        cn_txt = cn_raw.split("\t")[1] if "\t" in cn_raw else cn_raw
+
+        old_txt = cn_txt
+        if git_base_cn and len(git_base_cn) >= lno:
+            head_raw = git_base_cn[lno - 1]
+            old_txt = head_raw.split("\t")[1] if "\t" in head_raw else head_raw
+
+        if cn_txt != old_txt:
+            cat, reason = classify_change(lno, sid, ja_txt, old_txt, cn_txt)
+            diffs.append({
+                "lno": lno,
+                "sid": sid,
+                "ja": ja_txt,
+                "old": old_txt,
+                "new": cn_txt,
+                "cat": cat,
+                "reason": reason,
+                "section": "灰色的果实·松岛满线宠物鸡胸肉误译、诺贝尔喵美尔奖、强硬深吻过家家与余香缭绕 (grisaia1/mic_011)"
+            })
+
     print(f"Total indexed modifications: {len(diffs)}")
 
     # Build Markdown
@@ -5548,6 +5588,15 @@ def build_report():
     md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
     md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
     for idx, d in enumerate(mic_010_diffs, 1):
+        md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
+    md.append("\n---\n")
+
+    # Section 116 - Milestone 2: Michiru Route Chapter 11
+    mic_011_diffs = [d for d in diffs if d["section"].startswith("灰色的果实·松岛满线宠物鸡胸肉误译、诺贝尔喵美尔奖、强硬深吻过家家与余香缭绕")]
+    md.append(f"## 一百一十六、 灰色的果实·松岛满线宠物鸡胸肉误译、诺贝尔喵美尔奖、强硬深吻过家家与余香缭绕 (`grisaia1/mic_011`，共 {len(mic_011_diffs)} 条) —— 【里程碑二·个人线第五十九章】\n")
+    md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
+    md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
+    for idx, d in enumerate(mic_011_diffs, 1):
         md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
     md.append("\n---\n")
 
