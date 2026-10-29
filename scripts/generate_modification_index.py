@@ -14,6 +14,20 @@ def escape_md(text):
     return text.replace("|", "\\|").replace("\n", " ").replace("\r", "")
 
 def classify_change(line_no, sid, ja, old_cn, new_cn):
+    # mic_013 specific (Michiru Route: Skip-page Metaphor, First Kiss Truth Stolen, Playing House Mistranslation & Cat in Rain)
+    if (40046 <= line_no <= 40190) or sid.startswith("grisaia1/mic_013"):
+        if "ページを飛ばして" in ja or "物語を読み解く" in ja or "受け入れなくて" in ja:
+            return "读懂故事循序渐进跳页隐喻与预知文字残酷", "雄二独白读书翻页窥探结局隐喻，一旦预知未来文字便无法装空退回，唯有直面残酷"
+        if "アイツ" in ja or "もう一人のオマエ" in ja or "ネジが切れて" in ja or "夢遊病" in ja:
+            return "失言说漏嘴与双重人格真相暴露失魂发条人偶", "雄二失言说漏嘴暴露第二人格与带满就医建议，满惊骇注视掌心如发条断裂的洗脸人偶"
+        if "二人の王" in ja or "キス" in ja or "ファーストキス" in ja or "鳥の足跡" in ja:
+            return "一国不容二主、被夺走的初吻真相与雪地鸟爪印", "雄二回想一国难容二君；满追问发现雄二曾被第二人格强吻，得知自以为的初吻回忆其实早已被夺走，眉宇深锁如雪地鸟爪印"
+        if "飯事" in ja or "デートごっこ" in ja or "好き" in ja or "存在の意味" in ja:
+            return "约会过家家机翻吃饭纠偏与真挚告白自卑崩溃", "纠正机翻将过家家『飯事』错译为『一起吃饭』；雄二澄清约会绝非受托而是自身意志；满告白真心喜欢雄二却因比不过第二人格陷入自我否定与存在价值危机"
+        if "ニャンメル" in ja or "冷たい雨" in ja or "意志を持った影" in ja or "錆び付いた" in ja:
+            return "黑猫逃离如意志之影剥离与冰冷雨夜失声", "喵美尔撒娇被拒如意志之影剥离逃入冰雨，雄二喉头干涩如生锈在雨中失声呼唤"
+        return "文本自然度与对话韵味润色优化", "重构生硬日式倒装与机械直译，润色为符合Galgame演出的自然中文"
+
     # mic_012 specific (Michiru Route: Green Skeleton Keychain, Dien Bien Phu Joke, Other Michiru Clinic Advice & Box Garden Collapse)
     if (39827 <= line_no <= 40045) or sid.startswith("grisaia1/mic_012"):
         if "ガイコツ" in ja or "ディエンビエンフー" in ja or "ヤクザ医師" in ja or "ペナント" in ja:
@@ -4584,6 +4598,32 @@ def build_report():
                 "section": "灰色的果实·松岛满线荧光绿骷髅钥匙扣、奠边府冷笑话、第二人格深度预警与箱庭平衡崩塌 (grisaia1/mic_012)"
             })
 
+    # mic_013 (Milestone 2 Chapter 61 - Michiru Route: Skip-page Metaphor, First Kiss Truth Stolen, Playing House Mistranslation & Cat in Rain)
+    for lno in range(40046, 40191):
+        ja_raw = ja_lines[lno - 1]
+        cn_raw = cn_lines[lno - 1]
+        sid = ja_raw.split("\t")[0] if "\t" in ja_raw else f"L{lno}"
+        ja_txt = ja_raw.split("\t")[1] if "\t" in ja_raw else ja_raw
+        cn_txt = cn_raw.split("\t")[1] if "\t" in cn_raw else cn_raw
+
+        old_txt = cn_txt
+        if git_base_cn and len(git_base_cn) >= lno:
+            head_raw = git_base_cn[lno - 1]
+            old_txt = head_raw.split("\t")[1] if "\t" in head_raw else head_raw
+
+        if cn_txt != old_txt:
+            cat, reason = classify_change(lno, sid, ja_txt, old_txt, cn_txt)
+            diffs.append({
+                "lno": lno,
+                "sid": sid,
+                "ja": ja_txt,
+                "old": old_txt,
+                "new": cn_txt,
+                "cat": cat,
+                "reason": reason,
+                "section": "灰色的果实·松岛满线跳页隐喻、另一重人格初吻真相、过家家误译与冰雨中的黑猫 (grisaia1/mic_013)"
+            })
+
     print(f"Total indexed modifications: {len(diffs)}")
 
     # Build Markdown
@@ -5646,6 +5686,15 @@ def build_report():
     md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
     md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
     for idx, d in enumerate(mic_012_diffs, 1):
+        md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
+    md.append("\n---\n")
+
+    # Section 118 - Milestone 2: Michiru Route Chapter 13
+    mic_013_diffs = [d for d in diffs if d["section"].startswith("灰色的果实·松岛满线跳页隐喻、另一重人格初吻真相、过家家误译与冰雨中的黑猫")]
+    md.append(f"## 一百一十八、 灰色的果实·松岛满线跳页隐喻、另一重人格初吻真相、过家家误译与冰雨中的黑猫 (`grisaia1/mic_013`，共 {len(mic_013_diffs)} 条) —— 【里程碑二·个人线第六十一章】\n")
+    md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
+    md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
+    for idx, d in enumerate(mic_013_diffs, 1):
         md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
     md.append("\n---\n")
 
