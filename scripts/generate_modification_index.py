@@ -14,6 +14,20 @@ def escape_md(text):
     return text.replace("|", "\\|").replace("\n", " ").replace("\r", "")
 
 def classify_change(line_no, sid, ja, old_cn, new_cn):
+    # mic_014 specific (Michiru Route: S&R Mission, Nyanmel Hit-and-Run Death, Overdose & Throat Clearing Rescue)
+    if (40191 <= line_no <= 40433) or sid.startswith("grisaia1/mic_014"):
+        if "捜索救難" in ja or "水溜り" in ja or "猫用に作られてる" in ja:
+            return "寻猫搜救行动与积水倒影纯真祈愿", "满眼眶红肿携特制猫饼干求救，雄二定义为搜救行动牵手同行，绕开雨后积水如护珍宝"
+        if "アスファルト" in ja or "黒色の塊" in ja or "血溜り" in ja or "友人がすまなかった" in ja or "タクシー" in ja:
+            return "沿海公路车祸惨剧、指尖血饼干与肉身拦出租", "公路血痕黑影，喵美尔粉碎性骨折内脏震裂，满肉身冲撞公路拦车，指尖染血饼干最后舐食绝望咽气；纠偏机翻『我朋友失礼了』错译为『我朋友受伤了』"
+        if "高台" in ja or "シャベル" in ja or "墓" in ja or "理不尽" in ja or "抱きしめ" in ja:
+            return "高台掘冢安葬、理不尽残酷悲剧与紧拥痛哭", "雄二工兵铲掘冢安葬，满质疑所爱之物皆被夺走、不配幸福自责崩溃，雄二动情用力紧拥分担剧痛"
+        if "過剰摂取" in ja or "口を開けろ" in ja or "洗顔" in ja or "ラムネ" in ja or "ゆう……じ" in ja:
+            return "波子汽水伪装镇静药过量服毒自杀与徒手抠喉急救", "雄二破门目睹满口吐白沫吞服大量伪装成汽水糖的镇静药物，手指强行撬齿抠掏食道药糊抢救；纠偏机翻将呼唤雄二『ゆう……じ』错译为『幽静』"
+        if "学園長" in ja or "夢を見ていた" in ja or "怖かった" in ja:
+            return "千鹤医务室违规施救掩护与宁静美梦恐惧独白", "千鹤破例施救警告事态严重，满心境独白贪恋宁静美梦害怕回到现实"
+        return "文本自然度与对话韵味润色优化", "重构生硬日式倒装与机械直译，润色为符合Galgame演出的自然中文"
+
     # mic_013 specific (Michiru Route: Skip-page Metaphor, First Kiss Truth Stolen, Playing House Mistranslation & Cat in Rain)
     if (40046 <= line_no <= 40190) or sid.startswith("grisaia1/mic_013"):
         if "ページを飛ばして" in ja or "物語を読み解く" in ja or "受け入れなくて" in ja:
@@ -4624,6 +4638,32 @@ def build_report():
                 "section": "灰色的果实·松岛满线跳页隐喻、另一重人格初吻真相、过家家误译与冰雨中的黑猫 (grisaia1/mic_013)"
             })
 
+    # mic_014 (Milestone 2 Chapter 62 - Michiru Route: S&R Mission, Nyanmel Hit-and-Run Death, Overdose & Throat Clearing Rescue)
+    for lno in range(40191, 40434):
+        ja_raw = ja_lines[lno - 1]
+        cn_raw = cn_lines[lno - 1]
+        sid = ja_raw.split("\t")[0] if "\t" in ja_raw else f"L{lno}"
+        ja_txt = ja_raw.split("\t")[1] if "\t" in ja_raw else ja_raw
+        cn_txt = cn_raw.split("\t")[1] if "\t" in cn_raw else cn_raw
+
+        old_txt = cn_txt
+        if git_base_cn and len(git_base_cn) >= lno:
+            head_raw = git_base_cn[lno - 1]
+            old_txt = head_raw.split("\t")[1] if "\t" in head_raw else head_raw
+
+        if cn_txt != old_txt:
+            cat, reason = classify_change(lno, sid, ja_txt, old_txt, cn_txt)
+            diffs.append({
+                "lno": lno,
+                "sid": sid,
+                "ja": ja_txt,
+                "old": old_txt,
+                "new": cn_txt,
+                "cat": cat,
+                "reason": reason,
+                "section": "灰色的果实·松岛满线雨后搜救行动、喵美尔车祸断魂、夺命过量服药与抠喉急救 (grisaia1/mic_014)"
+            })
+
     print(f"Total indexed modifications: {len(diffs)}")
 
     # Build Markdown
@@ -5695,6 +5735,15 @@ def build_report():
     md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
     md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
     for idx, d in enumerate(mic_013_diffs, 1):
+        md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
+    md.append("\n---\n")
+
+    # Section 119 - Milestone 2: Michiru Route Chapter 14
+    mic_014_diffs = [d for d in diffs if d["section"].startswith("灰色的果实·松岛满线雨后搜救行动、喵美尔车祸断魂、夺命过量服药与抠喉急救")]
+    md.append(f"## 一百一十九、 灰色的果实·松岛满线雨后搜救行动、喵美尔车祸断魂、夺命过量服药与抠喉急救 (`grisaia1/mic_014`，共 {len(mic_014_diffs)} 条) —— 【里程碑二·个人线第六十二章】\n")
+    md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
+    md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
+    for idx, d in enumerate(mic_014_diffs, 1):
         md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
     md.append("\n---\n")
 
