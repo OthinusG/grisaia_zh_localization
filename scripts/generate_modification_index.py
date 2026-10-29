@@ -14,6 +14,20 @@ def escape_md(text):
     return text.replace("|", "\\|").replace("\n", " ").replace("\r", "")
 
 def classify_change(line_no, sid, ja, old_cn, new_cn):
+    # mic_010 specific (Michiru Route: Co-conspiracy Playing House, Other Michiru Identity Crisis & Naming Nyanmel)
+    if (39416 <= line_no <= 39679) or sid.startswith("grisaia1/mic_010"):
+        if "共同犯罪" in ja or "堂々と偽れる" in ja or "ウエストゆるく" in ja:
+            return "共同犯罪约会过家家与腰围变松误译纠偏", "雄二独白戴上面具伪装与共同犯罪，纠偏满走路『裙子腰围变松』反向误译为『腰都胖了一圈』"
+        if "あたしは、あたし？" in ja or "大事な友達" in ja or "年老いた音楽家" in ja:
+            return "重要朋友回忆存在危机与老音乐家抚琴轻抚黑猫", "高台吐露存在危机与朋友回忆，害怕从一开始便空无一物，老音乐家爱抚乐器般轻抚黑猫"
+        if "雄二くん" in ja or "媚びすぎ" in ja or "永遠など存在しない" in ja or "守ることができる" in ja:
+            return "第二人格现身质问现实残酷与拥抱回魂", "第二人格现身嘲弄献媚与质问谁能永远守护，雄二紧抱满唤回本体，真切实话打破心防"
+        if "ネーミングセンス" in ja or "酷い" in ja or "タイミング" in ja:
+            return "死寂悲伤下灾难级取名品味神级反差破涕为笑", "气氛压抑之际雄二毒舌死寂吐槽猫咪小喵取名品味灾难，满大惊破涕为笑重获生机"
+        if "ロンメル" in ja or "砂漠の狐" in ja or "ニャンメル" in ja or "パヴリチェンコ" in ja:
+            return "沙漠之狐隆美尔、喵美尔赐名与苏联女狙击手", "隆美尔德军沙漠之狐争论，喵美尔折中赐名，雄二临走高呼苏联女狙击手柳德米拉帕夫利琴科"
+        return "文本自然度与对话韵味润色优化", "重构生硬日式倒装与机械直译，润色为符合Galgame演出的自然中文"
+
     # mic_009 specific (Michiru Route: Commando Date Plan, Han Solo Carbonite Sand Sculpture & Reversi Stone Sunscreen)
     if (39047 <= line_no <= 39415) or sid.startswith("grisaia1/mic_009"):
         if "決死のロープ渡り" in ja or "かがみ跳躍" in ja or "青写真" in ja:
@@ -4464,6 +4478,32 @@ def build_report():
                 "section": "灰色的果实·松岛满线特种兵约会蓝图、千年隼碳化沙雕与黑白棋防晒霜 (grisaia1/mic_009)"
             })
 
+    # mic_010 (Milestone 2 Chapter 58 - Michiru Route: Co-conspiracy Playing House, Other Michiru Identity Crisis & Naming Nyanmel)
+    for lno in range(39416, 39680):
+        ja_raw = ja_lines[lno - 1]
+        cn_raw = cn_lines[lno - 1]
+        sid = ja_raw.split("\t")[0] if "\t" in ja_raw else f"L{lno}"
+        ja_txt = ja_raw.split("\t")[1] if "\t" in ja_raw else ja_raw
+        cn_txt = cn_raw.split("\t")[1] if "\t" in cn_raw else cn_raw
+
+        old_txt = cn_txt
+        if git_base_cn and len(git_base_cn) >= lno:
+            head_raw = git_base_cn[lno - 1]
+            old_txt = head_raw.split("\t")[1] if "\t" in head_raw else head_raw
+
+        if cn_txt != old_txt:
+            cat, reason = classify_change(lno, sid, ja_txt, old_txt, cn_txt)
+            diffs.append({
+                "lno": lno,
+                "sid": sid,
+                "ja": ja_txt,
+                "old": old_txt,
+                "new": cn_txt,
+                "cat": cat,
+                "reason": reason,
+                "section": "灰色的果实·松岛满线共同犯罪过家家、第二人格残酷拷问与喵美尔赐名 (grisaia1/mic_010)"
+            })
+
     print(f"Total indexed modifications: {len(diffs)}")
 
     # Build Markdown
@@ -5499,6 +5539,15 @@ def build_report():
     md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
     md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
     for idx, d in enumerate(mic_009_diffs, 1):
+        md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
+    md.append("\n---\n")
+
+    # Section 115 - Milestone 2: Michiru Route Chapter 10
+    mic_010_diffs = [d for d in diffs if d["section"].startswith("灰色的果实·松岛满线共同犯罪过家家、第二人格残酷拷问与喵美尔赐名")]
+    md.append(f"## 一百一十五、 灰色的果实·松岛满线共同犯罪过家家、第二人格残酷拷问与喵美尔赐名 (`grisaia1/mic_010`，共 {len(mic_010_diffs)} 条) —— 【里程碑二·个人线第五十八章】\n")
+    md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
+    md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
+    for idx, d in enumerate(mic_010_diffs, 1):
         md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
     md.append("\n---\n")
 
