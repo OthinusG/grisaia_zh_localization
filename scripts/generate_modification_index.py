@@ -14,6 +14,20 @@ def escape_md(text):
     return text.replace("|", "\\|").replace("\n", " ").replace("\r", "")
 
 def classify_change(line_no, sid, ja, old_cn, new_cn):
+    # mic_012 specific (Michiru Route: Green Skeleton Keychain, Dien Bien Phu Joke, Other Michiru Clinic Advice & Box Garden Collapse)
+    if (39827 <= line_no <= 40045) or sid.startswith("grisaia1/mic_012"):
+        if "ガイコツ" in ja or "ディエンビエンフー" in ja or "ヤクザ医師" in ja or "ペナント" in ja:
+            return "夜光骷髅钥匙扣、奠边府冷笑话与复古三角旗", "由美子信守承诺赠送关节可活动的夜光骷髅钥匙扣与同款三角旗，纠偏奠边府军旅冷笑话大受好评（机翻错译为冷场）"
+        if "酢漬けイカ" in ja or "んまかった" in ja or "知らぬが仏" in ja:
+            return "不知者不心慌与烤鱿鱼美味赞赏误译纠偏", "满豪迈大嚼特嚼烤鱿鱼连连称赞美味，纠正机翻将『真好吃』反向误译为『不好吃』"
+        if "もう一人" in ja or "精密検査" in ja or "精神科医" in ja or "永遠の愛" in ja:
+            return "第二人格理性现身预警与带满就医精密检查", "第二人格冷静现身指出满害怕依赖而自我封闭，劝告雄二带满就医接受精神与全身精密检查，誓言永远不如医学诊断"
+        if "キス、だけでも" in ja or "ジョーク" in ja or "切実な顔" in ja or "恋人ごっこ" in ja:
+            return "满绝望恳求哪怕亲吻也好与假装玩笑心碎掩饰", "满内心极度缺乏安全感颤抖恳求能否只接吻，被雄二反问后心碎强颜欢笑假装开玩笑打圆场"
+        if "他の女の子" in ja or "箱庭のバランス" in ja or "雨雲" in ja:
+            return "离去低语不要与其他女生要好与箱庭平衡瓦解", "满离去之际郑重低语不要和其他女生太要好，窗外暴雨欲来，雄二清晰预感箱庭平衡走向崩解"
+        return "文本自然度与对话韵味润色优化", "重构生硬日式倒装与机械直译，润色为符合Galgame演出的自然中文"
+
     # mic_011 specific (Michiru Route: Pet Chicken Tenderloin, Nyanmel Nobel Prize & Aggressive Deep Kiss Playing House)
     if (39680 <= line_no <= 39826) or sid.startswith("grisaia1/mic_011"):
         if "ササミ" in ja or "ペット用" in ja or "ほぐして" in ja:
@@ -4544,6 +4558,32 @@ def build_report():
                 "section": "灰色的果实·松岛满线宠物鸡胸肉误译、诺贝尔喵美尔奖、强硬深吻过家家与余香缭绕 (grisaia1/mic_011)"
             })
 
+    # mic_012 (Milestone 2 Chapter 60 - Michiru Route: Green Skeleton Keychain, Dien Bien Phu Joke, Other Michiru Clinic Advice & Box Garden Collapse)
+    for lno in range(39827, 40046):
+        ja_raw = ja_lines[lno - 1]
+        cn_raw = cn_lines[lno - 1]
+        sid = ja_raw.split("\t")[0] if "\t" in ja_raw else f"L{lno}"
+        ja_txt = ja_raw.split("\t")[1] if "\t" in ja_raw else ja_raw
+        cn_txt = cn_raw.split("\t")[1] if "\t" in cn_raw else cn_raw
+
+        old_txt = cn_txt
+        if git_base_cn and len(git_base_cn) >= lno:
+            head_raw = git_base_cn[lno - 1]
+            old_txt = head_raw.split("\t")[1] if "\t" in head_raw else head_raw
+
+        if cn_txt != old_txt:
+            cat, reason = classify_change(lno, sid, ja_txt, old_txt, cn_txt)
+            diffs.append({
+                "lno": lno,
+                "sid": sid,
+                "ja": ja_txt,
+                "old": old_txt,
+                "new": cn_txt,
+                "cat": cat,
+                "reason": reason,
+                "section": "灰色的果实·松岛满线荧光绿骷髅钥匙扣、奠边府冷笑话、第二人格深度预警与箱庭平衡崩塌 (grisaia1/mic_012)"
+            })
+
     print(f"Total indexed modifications: {len(diffs)}")
 
     # Build Markdown
@@ -5597,6 +5637,15 @@ def build_report():
     md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
     md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
     for idx, d in enumerate(mic_011_diffs, 1):
+        md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
+    md.append("\n---\n")
+
+    # Section 117 - Milestone 2: Michiru Route Chapter 12
+    mic_012_diffs = [d for d in diffs if d["section"].startswith("灰色的果实·松岛满线荧光绿骷髅钥匙扣、奠边府冷笑话、第二人格深度预警与箱庭平衡崩塌")]
+    md.append(f"## 一百一十七、 灰色的果实·松岛满线荧光绿骷髅钥匙扣、奠边府冷笑话、第二人格深度预警与箱庭平衡崩塌 (`grisaia1/mic_012`，共 {len(mic_012_diffs)} 条) —— 【里程碑二·个人线第六十章】\n")
+    md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
+    md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
+    for idx, d in enumerate(mic_012_diffs, 1):
         md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
     md.append("\n---\n")
 
