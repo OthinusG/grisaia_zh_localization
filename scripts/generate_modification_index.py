@@ -14,6 +14,20 @@ def escape_md(text):
     return text.replace("|", "\\|").replace("\n", " ").replace("\r", "")
 
 def classify_change(line_no, sid, ja, old_cn, new_cn):
+    # mic_008 specific (Michiru Route: Cereal Killer Beans, Yosaku Marathon & Hollow Bread Bento)
+    if (38836 <= line_no <= 39046) or sid.startswith("grisaia1/mic_008"):
+        if "豆脳" in ja or "シリアルキラー" in ja or "木の実" in ja:
+            return "豆脑哲学思辨与麦片连环杀手双关谐音", "雄二开篇独白：豆子沉思豆脑脑力哲学，向倾倒牛奶之麦片杀手连环杀手发起悬赏"
+        if "三時間前" in ja or "待った？" in ja or "トレーニング用の……豆" in ja or "四葉のエンブレム" in ja:
+            return "提前三小时傻等接头与美军敌我识别绳索帽子", "满提前三小时盛装等候被拎大豆的雄二撞见，头顶黑猫敌我识别与美军四叶草军徽调侃"
+        if "デイ・トレーニング" in ja or "与作" in ja or "三時間も休憩なし" in ja or "ピクニック" in ja:
+            return "白天特训口误伐木工与作与三小时铁血拉练", "满口误欲盖弥彰，雄二铁血拉练调侃其为演歌伐木工与作，野餐地垫笨拙展开与流浪汉大师戏谑"
+        if "クリヌキー" in ja or "ビンタ" in ja or "そまつに" in ja or "ポウポウ茶" in ja or "ぬんでます" in ja:
+            return "整条掏空吐司沙拉大耳刮子与魔性泡泡茶", "满自创先锋掏空吐司沙拉，雄二纠偏大耳刮子（纠正机翻『脑袋槌』）揪双马尾训斥，魔性广告泡泡茶"
+        if "デートごっこ" in ja or "実戦ではなく、演習" in ja or "えいえいおー" in ja:
+            return "约会演习过家家承诺与二十公里长跑约定", "满卸下傲娇坦露心声，雄二应允往后多进行约会过家家演习，海边微风吹拂携手相视而笑"
+        return "文本自然度与对话韵味润色优化", "重构生硬日式倒装与机械直译，润色为符合Galgame演出的自然中文"
+
     # mic_007 specific (Michiru Route: Kyoto Yatsuhashi, Giant Squid & Date Proposal)
     if (38678 <= line_no <= 38835) or sid.startswith("grisaia1/mic_007"):
         if "八ツ橋" in ja or "ニッキ" in ja or "速く" in ja or "ガイコツ" in ja or "ペナント" in ja:
@@ -4384,6 +4398,32 @@ def build_report():
                 "section": "灰色的果实·松岛满线肉桂八桥骷髅钥匙扣、大王乌贼第二人格与空气计算器约会狂喜 (grisaia1/mic_007)"
             })
 
+    # mic_008 (Milestone 2 Chapter 56 - Michiru Route: Cereal Killer Beans, Yosaku Marathon & Hollow Bread Bento)
+    for lno in range(38836, 39047):
+        ja_raw = ja_lines[lno - 1]
+        cn_raw = cn_lines[lno - 1]
+        sid = ja_raw.split("\t")[0] if "\t" in ja_raw else f"L{lno}"
+        ja_txt = ja_raw.split("\t")[1] if "\t" in ja_raw else ja_raw
+        cn_txt = cn_raw.split("\t")[1] if "\t" in cn_raw else cn_raw
+
+        old_txt = cn_txt
+        if git_base_cn and len(git_base_cn) >= lno:
+            head_raw = git_base_cn[lno - 1]
+            old_txt = head_raw.split("\t")[1] if "\t" in head_raw else head_raw
+
+        if cn_txt != old_txt:
+            cat, reason = classify_change(lno, sid, ja_txt, old_txt, cn_txt)
+            diffs.append({
+                "lno": lno,
+                "sid": sid,
+                "ja": ja_txt,
+                "old": old_txt,
+                "new": cn_txt,
+                "cat": cat,
+                "reason": reason,
+                "section": "灰色的果实·松岛满线豆脑麦片杀手、提前三小时傻等与掏空吐司约会过家家 (grisaia1/mic_008)"
+            })
+
     print(f"Total indexed modifications: {len(diffs)}")
 
     # Build Markdown
@@ -5401,6 +5441,15 @@ def build_report():
     md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
     md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
     for idx, d in enumerate(mic_007_diffs, 1):
+        md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
+    md.append("\n---\n")
+
+    # Section 113 - Milestone 2: Michiru Route Chapter 8
+    mic_008_diffs = [d for d in diffs if d["section"].startswith("灰色的果实·松岛满线豆脑麦片杀手、提前三小时傻等与掏空吐司约会过家家")]
+    md.append(f"## 一百一十三、 灰色的果实·松岛满线豆脑麦片杀手、提前三小时傻等与掏空吐司约会过家家 (`grisaia1/mic_008`，共 {len(mic_008_diffs)} 条) —— 【里程碑二·个人线第五十六章】\n")
+    md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
+    md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
+    for idx, d in enumerate(mic_008_diffs, 1):
         md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
     md.append("\n---\n")
 
