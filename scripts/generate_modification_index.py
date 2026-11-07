@@ -14,6 +14,18 @@ def escape_md(text):
     return text.replace("|", "\\|").replace("\n", " ").replace("\r", "")
 
 def classify_change(line_no, sid, ja, old_cn, new_cn):
+    # mic_018 specific (Michiru Route: Sachi's Electric Saw, Cutout Photos, Diary of Despair & The Other Michiru, Date Stones, Empty Box Lie)
+    if (41872 <= line_no <= 42152) or sid.startswith("grisaia1/mic_018#"):
+        if "電動ノコギリ" in ja or "電ノコ" in ja or "モーター音" in ja:
+            return "小幸电锯破坏公物纠结与呆萌任务执念", "小幸欲用电锯锯开上锁木箱在门外监听，雄二接手处置保护隐私"
+        if "切り取" in ja or "切り抜" in ja or "顔" in ja or "不釣合い" in ja or "演出" in ja:
+            return "合影挖空面孔创伤自卑与滑稽小丑演出备忘", "满将与同伴合影中自己的面孔全部细致剪去，备忘录密记全员喜恶以滑稽小丑维系平衡"
+        if "はじめまして" in ja or "暗闇" in ja or "キミの親友" in ja or "さようなら" in ja or "失い続ける" in ja or "心臓が痛い" in ja or "記憶" in ja:
+            return "第二人格笔友交换日记与破晓绝命托付", "满与第二人格在日记中感人对话，第二人格誓言守护，满决意在黑暗中不再睁眼将人生托付并向雄二诀别"
+        if "石" in ja or "空っぽ" in ja or "宝物" in ja or "ニャンメル" in ja:
+            return "约会鹅卵石宝物守护与雄二空箱谎言", "发现满珍藏约会假戏鹅卵石，雄二向小幸谎称空箱守护满最后的秘密与尊严"
+        return "文本自然度与对话韵味润色优化", "重构生硬日式倒装与机械直译，润色为符合Galgame演出的自然中文"
+
     # mic_017 specific (Michiru Route: Michiru's Absence, Dorm Balance Collapse, Sachi Overworking, Pennant Souvenirs)
     if (41771 <= line_no <= 41871) or sid.startswith("grisaia1/mic_017#"):
         if "千鶴からではなく俺から" in ja:
@@ -4862,6 +4874,32 @@ def build_report():
                 "section": "灰色的果实·松岛满线满不在场宿舍平衡崩塌、小幸过劳与由美子六面三角旗相托 (grisaia1/mic_017)"
             })
 
+    # mic_018 (Milestone 2 Chapter 68 - Michiru Route: Sachi's Electric Saw, Cutout Photos, Diary of Despair & The Other Michiru, Date Stones, Empty Box Lie)
+    for lno in range(41872, 42153):
+        ja_raw = ja_lines[lno - 1]
+        cn_raw = cn_lines[lno - 1]
+        sid = ja_raw.split("\t")[0] if "\t" in ja_raw else f"L{lno}"
+        ja_txt = ja_raw.split("\t")[1] if "\t" in ja_raw else ja_raw
+        cn_txt = cn_raw.split("\t")[1] if "\t" in cn_raw else cn_raw
+
+        old_txt = cn_txt
+        if git_base_cn and len(git_base_cn) >= lno:
+            head_raw = git_base_cn[lno - 1]
+            old_txt = head_raw.split("\t")[1] if "\t" in head_raw else head_raw
+
+        if cn_txt != old_txt:
+            cat, reason = classify_change(lno, sid, ja_txt, old_txt, cn_txt)
+            diffs.append({
+                "lno": lno,
+                "sid": sid,
+                "ja": ja_txt,
+                "old": old_txt,
+                "new": cn_txt,
+                "cat": cat,
+                "reason": reason,
+                "section": "灰色的果实·松岛满线上锁秘宝木箱、挖空脸颊合影与第二人格笔友诀别日记 (grisaia1/mic_018)"
+            })
+
     print(f"Total indexed modifications: {len(diffs)}")
 
     # Build Markdown
@@ -5987,6 +6025,15 @@ def build_report():
     md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
     md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
     for idx, d in enumerate(mic_017_diffs, 1):
+        md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
+    md.append("\n---\n")
+
+    # Section 125 - Milestone 2: Michiru Route Chapter 18
+    mic_018_diffs = [d for d in diffs if d["section"].startswith("灰色的果实·松岛满线上锁秘宝木箱、挖空脸颊合影与第二人格笔友诀别日记")]
+    md.append(f"## 一百二十五、 灰色的果实·松岛满线上锁秘宝木箱、挖空脸颊合影与第二人格笔友诀别日记 (`grisaia1/mic_018`，共 {len(mic_018_diffs)} 条) —— 【里程碑二·个人线第六十八章】\n")
+    md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
+    md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
+    for idx, d in enumerate(mic_018_diffs, 1):
         md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
     md.append("\n---\n")
 
