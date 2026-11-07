@@ -14,6 +14,16 @@ def escape_md(text):
     return text.replace("|", "\\|").replace("\n", " ").replace("\r", "")
 
 def classify_change(line_no, sid, ja, old_cn, new_cn):
+    # mic_016 specific (Michiru Route: 5AM Departure, Cute Clothes, Branch Choice Kiss, Sachi White-Fluid Floor Wax & Farewell Key)
+    if (41539 <= line_no <= 41661) or sid.startswith("grisaia1/mic_016#"):
+        if "白濁液" in ja or "ワックス" in ja:
+            return "小幸白浊液体地板蜡与清晨黄段子暴走", "小幸清晨走廊打蜡声称反复泼洒白浊液体再擦净，满极度尴尬制止小幸恶趣味表达"
+        if "キス" in ja or "最後にキスしてやろうか" in ja or "唇" in ja or "ジ――ッ" in ja or "尿" in ja:
+            return "清晨临别之吻、小幸门外死死凝视与深情相拥", "雄二提出临别之吻，小幸门外呆萌直勾勾凝视，满命令其背对后跌入雄二怀中深吻"
+        if "鍵" in ja or "掃除" in ja or "今までありがとう" in ja or "最後のお別れ" in ja:
+            return "寝室钥匙相托、深鞠躬感恩与诀别永别预感", "满将房间钥匙托付小幸打扫，深鞠躬感谢雄二照顾，小幸与雄二强烈预感此去如同永别"
+        return "文本自然度与对话韵味润色优化", "重构生硬日式倒装与机械直译，润色为符合Galgame演出的自然中文"
+
     # mic_015 Part 2 specific (Michiru Route: DomDom Burger, Red-Infrared Contact Swap, Ghost Moniker, Purikura Photos, Friend's Tragic Fall, Organ Memory Split, Cutter Knife Self-Harm, Mental Ward Clown & Morning 5AM Departure Vow)
     if (40987 <= line_no <= 41538):
         if "ドム" in ja or "赤外線" in ja or "幽霊" in ja or "初プリ" in ja or "ペタンコ" in ja:
@@ -4750,6 +4760,32 @@ def build_report():
                 "section": "灰色的果实·松岛满线DomDom汉堡、天台舍命诀别、心脏移植记忆与滑稽小丑觉醒 (grisaia1/mic_015 Part 2)"
             })
 
+    # mic_016 (Milestone 2 Chapter 65 - Michiru Route: 5AM Departure, Cute Clothes, Branch Choice Kiss, Sachi White-Fluid Floor Wax & Farewell Key)
+    for lno in range(41539, 41662):
+        ja_raw = ja_lines[lno - 1]
+        cn_raw = cn_lines[lno - 1]
+        sid = ja_raw.split("\t")[0] if "\t" in ja_raw else f"L{lno}"
+        ja_txt = ja_raw.split("\t")[1] if "\t" in ja_raw else ja_raw
+        cn_txt = cn_raw.split("\t")[1] if "\t" in cn_raw else cn_raw
+
+        old_txt = cn_txt
+        if git_base_cn and len(git_base_cn) >= lno:
+            head_raw = git_base_cn[lno - 1]
+            old_txt = head_raw.split("\t")[1] if "\t" in head_raw else head_raw
+
+        if cn_txt != old_txt:
+            cat, reason = classify_change(lno, sid, ja_txt, old_txt, cn_txt)
+            diffs.append({
+                "lno": lno,
+                "sid": sid,
+                "ja": ja_txt,
+                "old": old_txt,
+                "new": cn_txt,
+                "cat": cat,
+                "reason": reason,
+                "section": "灰色的果实·松岛满线清晨临别之吻、白浊液体地板蜡与钥匙相托 (grisaia1/mic_016)"
+            })
+
     print(f"Total indexed modifications: {len(diffs)}")
 
     # Build Markdown
@@ -5848,6 +5884,15 @@ def build_report():
     md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
     md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
     for idx, d in enumerate(mic_015_p2_diffs, 1):
+        md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
+    md.append("\n---\n")
+
+    # Section 122 - Milestone 2: Michiru Route Chapter 16
+    mic_016_diffs = [d for d in diffs if d["section"].startswith("灰色的果实·松岛满线清晨临别之吻、白浊液体地板蜡与钥匙相托")]
+    md.append(f"## 一百二十二、 灰色的果实·松岛满线清晨临别之吻、白浊液体地板蜡与钥匙相托 (`grisaia1/mic_016`，共 {len(mic_016_diffs)} 条) —— 【里程碑二·个人线第六十五章】\n")
+    md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
+    md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
+    for idx, d in enumerate(mic_016_diffs, 1):
         md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
     md.append("\n---\n")
 
