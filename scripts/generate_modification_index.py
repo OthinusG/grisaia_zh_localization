@@ -14,6 +14,18 @@ def escape_md(text):
     return text.replace("|", "\\|").replace("\n", " ").replace("\r", "")
 
 def classify_change(line_no, sid, ja, old_cn, new_cn):
+    # mic_017 specific (Michiru Route: Michiru's Absence, Dorm Balance Collapse, Sachi Overworking, Pennant Souvenirs)
+    if (41771 <= line_no <= 41871) or sid.startswith("grisaia1/mic_017#"):
+        if "千鶴からではなく俺から" in ja:
+            return "纠正否定后置倒装与说明主体极性颠倒", "纠正机翻否定主体颠倒，将'不是我而是千鹤'纠正为'并非千鹤而是由我向全班说明'"
+        if "ペナント" in ja:
+            return "由美子六面旅行纪念三角旗托付误译纠偏", "修复机翻将旅游纪念三角旗（ペナント）错译为球衣，由美子害羞托付雄二转交六面三角旗"
+        if "ユージ" in ja or "由美" in old_cn:
+            return "天音机翻人名错乱与由美子人名混淆纠偏", "修复机翻将男主雄二（ユージ）错译为由美，理清角色对话归属"
+        if "邪魔" in ja or "グイグイ" in ja or "バランス" in ja or "ツンデレ" in ja:
+            return "满不在场箱庭动态失衡与傲娇暗中周全真相", "满离校导致箱庭平衡瓦解：莳菜缠上由美子、小幸跑腿过劳，全员领悟满暗中维系和谐"
+        return "文本自然度与对话韵味润色优化", "重构生硬日式倒装与机械直译，润色为符合Galgame演出的自然中文"
+
     # mic_016_bad specific (Michiru Route: Bad End Suicide Attempt, Brain Damage, Plastic Bag Nyammel & Coastal Cliff Coexistence)
     if (41662 <= line_no <= 41770) or sid.startswith("grisaia1/mic_016_bad#"):
         if "ユージ" in ja or "由美" in old_cn or "敵" in ja or "チルチル" in ja:
@@ -4824,6 +4836,32 @@ def build_report():
                 "section": "灰色的果实·松岛满线BadEnd自杀未遂脑损伤、塑料袋幻视黑猫与海岸高台残喘 (grisaia1/mic_016_bad)"
             })
 
+    # mic_017 (Milestone 2 Chapter 67 - Michiru Route: Michiru's Absence, Dorm Balance Collapse, Sachi Overworking, Pennant Souvenirs)
+    for lno in range(41771, 41872):
+        ja_raw = ja_lines[lno - 1]
+        cn_raw = cn_lines[lno - 1]
+        sid = ja_raw.split("\t")[0] if "\t" in ja_raw else f"L{lno}"
+        ja_txt = ja_raw.split("\t")[1] if "\t" in ja_raw else ja_raw
+        cn_txt = cn_raw.split("\t")[1] if "\t" in cn_raw else cn_raw
+
+        old_txt = cn_txt
+        if git_base_cn and len(git_base_cn) >= lno:
+            head_raw = git_base_cn[lno - 1]
+            old_txt = head_raw.split("\t")[1] if "\t" in head_raw else head_raw
+
+        if cn_txt != old_txt:
+            cat, reason = classify_change(lno, sid, ja_txt, old_txt, cn_txt)
+            diffs.append({
+                "lno": lno,
+                "sid": sid,
+                "ja": ja_txt,
+                "old": old_txt,
+                "new": cn_txt,
+                "cat": cat,
+                "reason": reason,
+                "section": "灰色的果实·松岛满线满不在场宿舍平衡崩塌、小幸过劳与由美子六面三角旗相托 (grisaia1/mic_017)"
+            })
+
     print(f"Total indexed modifications: {len(diffs)}")
 
     # Build Markdown
@@ -5940,6 +5978,15 @@ def build_report():
     md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
     md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
     for idx, d in enumerate(mic_016_bad_diffs, 1):
+        md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
+    md.append("\n---\n")
+
+    # Section 124 - Milestone 2: Michiru Route Chapter 17
+    mic_017_diffs = [d for d in diffs if d["section"].startswith("灰色的果实·松岛满线满不在场宿舍平衡崩塌、小幸过劳与由美子六面三角旗相托")]
+    md.append(f"## 一百二十四、 灰色的果实·松岛满线满不在场宿舍平衡崩塌、小幸过劳与由美子六面三角旗相托 (`grisaia1/mic_017`，共 {len(mic_017_diffs)} 条) —— 【里程碑二·个人线第六十七章】\n")
+    md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
+    md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
+    for idx, d in enumerate(mic_017_diffs, 1):
         md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
     md.append("\n---\n")
 
