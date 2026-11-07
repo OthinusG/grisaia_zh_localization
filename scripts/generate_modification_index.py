@@ -14,6 +14,18 @@ def escape_md(text):
     return text.replace("|", "\\|").replace("\n", " ").replace("\r", "")
 
 def classify_change(line_no, sid, ja, old_cn, new_cn):
+    # mic_016_bad specific (Michiru Route: Bad End Suicide Attempt, Brain Damage, Plastic Bag Nyammel & Coastal Cliff Coexistence)
+    if (41662 <= line_no <= 41770) or sid.startswith("grisaia1/mic_016_bad#"):
+        if "ユージ" in ja or "由美" in old_cn or "敵" in ja or "チルチル" in ja:
+            return "天音机翻人名错乱与莳菜假想敌纠偏", "修复机翻将男主雄二（ユージ）错译为由美、纠正莳菜昵称与对空咆哮假想敌对峙"
+        if "ビニール袋" in ja or "にゃんめる" in ja or "黒猫" in ja:
+            return "便利店白色塑料袋幻视喵美尔幼态悲鸣", "因自杀缺氧脑损伤退行至幼儿状态，紧抱被风吹滚的白塑料袋抚摸错认黑猫"
+        if "自殺" in ja or "心肺停止" in ja or "酸素欠乏" in ja or "脳に障害" in ja or "押し付け" in ja:
+            return "自杀未遂重度脑损伤与冷血家庭甩锅遗弃", "住院首日割腕自杀致使心跳骤停脑缺氧退行幼态，名流父母弃如敝履推卸给学园"
+        if "おごり" in ja or "文字" in ja or "世界の果て" in ja or "一匹の猫" in ja:
+            return "救赎傲慢痛悔、晦涩物语终章与海岸孤绝相伴", "痛悔自负傲慢未能拯救少女，在看得见世界尽头的断崖高台与满和一纸塑料袋终老"
+        return "文本自然度与对话韵味润色优化", "重构生硬日式倒装与机械直译，润色为符合Galgame演出的自然中文"
+
     # mic_016 specific (Michiru Route: 5AM Departure, Cute Clothes, Branch Choice Kiss, Sachi White-Fluid Floor Wax & Farewell Key)
     if (41539 <= line_no <= 41661) or sid.startswith("grisaia1/mic_016#"):
         if "白濁液" in ja or "ワックス" in ja:
@@ -4786,6 +4798,32 @@ def build_report():
                 "section": "灰色的果实·松岛满线清晨临别之吻、白浊液体地板蜡与钥匙相托 (grisaia1/mic_016)"
             })
 
+    # mic_016_bad (Milestone 2 Chapter 66 - Michiru Route Bad End: Suicide Attempt, Brain Damage, Plastic Bag Nyammel & Coastal Cliff Coexistence)
+    for lno in range(41662, 41771):
+        ja_raw = ja_lines[lno - 1]
+        cn_raw = cn_lines[lno - 1]
+        sid = ja_raw.split("\t")[0] if "\t" in ja_raw else f"L{lno}"
+        ja_txt = ja_raw.split("\t")[1] if "\t" in ja_raw else ja_raw
+        cn_txt = cn_raw.split("\t")[1] if "\t" in cn_raw else cn_raw
+
+        old_txt = cn_txt
+        if git_base_cn and len(git_base_cn) >= lno:
+            head_raw = git_base_cn[lno - 1]
+            old_txt = head_raw.split("\t")[1] if "\t" in head_raw else head_raw
+
+        if cn_txt != old_txt:
+            cat, reason = classify_change(lno, sid, ja_txt, old_txt, cn_txt)
+            diffs.append({
+                "lno": lno,
+                "sid": sid,
+                "ja": ja_txt,
+                "old": old_txt,
+                "new": cn_txt,
+                "cat": cat,
+                "reason": reason,
+                "section": "灰色的果实·松岛满线BadEnd自杀未遂脑损伤、塑料袋幻视黑猫与海岸高台残喘 (grisaia1/mic_016_bad)"
+            })
+
     print(f"Total indexed modifications: {len(diffs)}")
 
     # Build Markdown
@@ -5893,6 +5931,15 @@ def build_report():
     md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
     md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
     for idx, d in enumerate(mic_016_diffs, 1):
+        md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
+    md.append("\n---\n")
+
+    # Section 123 - Milestone 2: Michiru Route Chapter 16 Bad End
+    mic_016_bad_diffs = [d for d in diffs if d["section"].startswith("灰色的果实·松岛满线BadEnd自杀未遂脑损伤、塑料袋幻视黑猫与海岸高台残喘")]
+    md.append(f"## 一百二十三、 灰色的果实·松岛满线BadEnd自杀未遂脑损伤、塑料袋幻视黑猫与海岸高台残喘 (`grisaia1/mic_016_bad`，共 {len(mic_016_bad_diffs)} 条) —— 【里程碑二·个人线第六十六章】\n")
+    md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
+    md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
+    for idx, d in enumerate(mic_016_bad_diffs, 1):
         md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
     md.append("\n---\n")
 
