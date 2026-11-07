@@ -14,6 +14,22 @@ def escape_md(text):
     return text.replace("|", "\\|").replace("\n", " ").replace("\r", "")
 
 def classify_change(line_no, sid, ja, old_cn, new_cn):
+    # mic_015 Part 2 specific (Michiru Route: DomDom Burger, Red-Infrared Contact Swap, Ghost Moniker, Purikura Photos, Friend's Tragic Fall, Organ Memory Split, Cutter Knife Self-Harm, Mental Ward Clown & Morning 5AM Departure Vow)
+    if (40987 <= line_no <= 41538):
+        if "ドム" in ja or "赤外線" in ja or "幽霊" in ja or "初プリ" in ja or "ペタンコ" in ja:
+            return "DomDom汉堡店误译、红外传名片与初次大头贴", "纠偏日本快餐DomDom俚语（ドムる）错译为巨无霸、红外线通信误译；班级幽灵外号与扁塌汉堡感动大哭、初次大头贴（初プリ）"
+        if "傷" in ja or "痣" in ja or "非通知" in ja or "幸せになろう" in ja or "愛人" in ja:
+            return "惨遭凌虐包养真相、未知非通知来电与幸福祈愿", "挚友遭年长已婚男包养施虐拍不雅照，满接听无言深沉喘息非通知电话，倾诉不要孤单一人相伴幸福"
+        if "境界線" in ja or "先に行くね" in ja or "飛び越え" in ja or "コンクリート" in ja or "さよなら、みちる" in ja:
+            return "天台绝决一跃、水泥僵死无声与未能同赴黄泉痛悔", "挚友决意赴死翻越栏杆一跃而下，满身体如水泥凝固无法动弹未能同死，痛悔未能挽留世界绚烂之光"
+        if "移植" in ja or "ドナー" in ja or "脳死" in ja or "カッター" in ja or "壊れちゃった" in ja or "心臓を取り出" in ja:
+            return "美国跨国心脏移植手术、第二人格异化入侵与美工刀剜心自残", "重金赴美移植同龄脑死少女心脏，挚友遗留人格侵入；满恐惧自身被夺走用美工刀割腕刺心欲挖心脏，绝望哭问父亲自己是否彻底坏掉"
+        if "道化" in ja or "転ぶ" in ja or "コップ" in ja or "美浜" in ja or "蟻地獄" in ja:
+            return "精神病院滑稽小丑觉醒、美滨假面与流沙蚁穴绝望", "为换取笑容故意摔跤泼水扮演小丑，转入美滨继续戴假面苟活，深陷流沙蚁地狱害怕失去与虚假窒息"
+        if "検査" in ja or "エッチ" in ja or "好き" in ja or "五時" in ja or "最初のページ" in ja:
+            return "雄二立誓拯救担责、五点出发约定与伤痕物语第一页", "雄二宣誓面对当下与未来绝不困于过去，深吻承诺相伴；约定清晨五点动身就医，决心穷尽一生翻开读完满的伤痕物语"
+        return "文本自然度与对话韵味润色优化", "重构生硬日式倒装与机械直译，润色为符合Galgame演出的自然中文"
+
     # mic_015 Part 1 specific (Michiru Route: Box Metaphor, Atonement & Resignation, Rubber Puns, Air Sex/First Intimacy, Child Abuse Flashback, Cardiac Disease, Shellfish Days & Rooftop Suicide Girl)
     if (40434 <= line_no <= 40986) or sid.startswith("grisaia1/mic_015"):
         if "箱庭" in ja or "自暴自棄" in ja or "貧血" in ja or "折り合い" in ja or "自由" in ja:
@@ -4708,6 +4724,32 @@ def build_report():
                 "section": "灰色的果实·松岛满线自杀未遂认命、避孕套误读、初夜温存与家庭教师虐待地狱 (grisaia1/mic_015 Part 1)"
             })
 
+    # mic_015 Part 2 (Milestone 2 Chapter 64 - Michiru Route: DomDom Burger, Red-Infrared Contact Swap, Ghost Moniker, Purikura Photos, Friend's Tragic Fall, Organ Memory Split, Cutter Knife Self-Harm, Mental Ward Clown & Morning 5AM Departure Vow)
+    for lno in range(40987, 41539):
+        ja_raw = ja_lines[lno - 1]
+        cn_raw = cn_lines[lno - 1]
+        sid = ja_raw.split("\t")[0] if "\t" in ja_raw else f"L{lno}"
+        ja_txt = ja_raw.split("\t")[1] if "\t" in ja_raw else ja_raw
+        cn_txt = cn_raw.split("\t")[1] if "\t" in cn_raw else cn_raw
+
+        old_txt = cn_txt
+        if git_base_cn and len(git_base_cn) >= lno:
+            head_raw = git_base_cn[lno - 1]
+            old_txt = head_raw.split("\t")[1] if "\t" in head_raw else head_raw
+
+        if cn_txt != old_txt:
+            cat, reason = classify_change(lno, sid, ja_txt, old_txt, cn_txt)
+            diffs.append({
+                "lno": lno,
+                "sid": sid,
+                "ja": ja_txt,
+                "old": old_txt,
+                "new": cn_txt,
+                "cat": cat,
+                "reason": reason,
+                "section": "灰色的果实·松岛满线DomDom汉堡、天台舍命诀别、心脏移植记忆与滑稽小丑觉醒 (grisaia1/mic_015 Part 2)"
+            })
+
     print(f"Total indexed modifications: {len(diffs)}")
 
     # Build Markdown
@@ -5797,6 +5839,15 @@ def build_report():
     md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
     md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
     for idx, d in enumerate(mic_015_p1_diffs, 1):
+        md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
+    md.append("\n---\n")
+
+    # Section 121 - Milestone 2: Michiru Route Chapter 15 Part 2
+    mic_015_p2_diffs = [d for d in diffs if d["section"].startswith("灰色的果实·松岛满线DomDom汉堡、天台舍命诀别、心脏移植记忆与滑稽小丑觉醒")]
+    md.append(f"## 一百二十一、 灰色的果实·松岛满线DomDom汉堡、天台舍命诀别、心脏移植记忆与滑稽小丑觉醒 (`grisaia1/mic_015` Part 2，共 {len(mic_015_p2_diffs)} 条) —— 【里程碑二·个人线第六十四章】\n")
+    md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
+    md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
+    for idx, d in enumerate(mic_015_p2_diffs, 1):
         md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
     md.append("\n---\n")
 
