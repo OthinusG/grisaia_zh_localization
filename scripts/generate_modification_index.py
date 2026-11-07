@@ -14,6 +14,24 @@ def escape_md(text):
     return text.replace("|", "\\|").replace("\n", " ").replace("\r", "")
 
 def classify_change(line_no, sid, ja, old_cn, new_cn):
+    # mic_015 Part 1 specific (Michiru Route: Box Metaphor, Atonement & Resignation, Rubber Puns, Air Sex/First Intimacy, Child Abuse Flashback, Cardiac Disease, Shellfish Days & Rooftop Suicide Girl)
+    if (40434 <= line_no <= 40986) or sid.startswith("grisaia1/mic_015"):
+        if "箱庭" in ja or "自暴自棄" in ja or "貧血" in ja or "折り合い" in ja or "自由" in ja:
+            return "箱庭生机丧失、妥协认命宣言与自由放手劝告", "满大病初愈如虚构人偶，自暴自弃宣布不再需要任何快乐，劝告雄二无需再被自己所累自由生活"
+        if "ツンデレ" in ja or "唇が紫" in ja or "レバー" in ja or "トライアスロン" in ja or "影踏み" in ja or "シャドー" in ja:
+            return "对空踩影子、嘴唇发紫贫血与铁人拉力赛掩饰", "幸指出嘴唇如冷天泳池小孩发紫，满谎称铁人拉力赛刷存在感；莳菜模仿空击拳击对空踩影子，满偷看吃醋"
+        if "ゴム用" in ja or "六枚" in ja or "くすん" in ja:
+            return "担心纯属避孕套谐音梗与由美子委屈啜泣", "满将不用担心口误说成避孕套（御无用->ゴム用）引发天音惊呼；由美子六面三角旗未送出委屈啜泣"
+        if "キスしたい" in ja or "恋人ごっこ" in ja or "最後まで" in ja or "痛い" in ja or "寝たこと" in ja or "唇" in ja:
+            return "绝望索吻求抱、空室肌肤之亲与初夜温存释怀", "满精神濒临崩溃拉雄二进空房间索求恋人过家家与身体结合，初夜后害羞喊疼露出释怀真容"
+        if "ピアノ" in ja or "家庭教師" in ja or "落ちこぼれ" in ja or "指導" in ja or "無能" in ja or "叩" in ja:
+            return "精英家庭教师虐待地狱、以指导为名的暴力与自语垃圾", "富豪父亲暴怒咆哮无能，家庭教师关门以木棍抽打虐待逼满自认无可救药垃圾并恐吓灭口"
+        if "心臓" in ja or "貝" in ja or "人魚姫" in ja or "携帯" in ja or "死にたい" in ja or "死んで" in ja:
+            return "重大心脏器质病变宣告、深海之贝与雪白手机自杀执念", "重度心脏疾患剥夺运动与常人可能，满封闭化身深海之贝；空白手机轻如鸿毛，天台凝望云海等待死亡召命"
+        if "柵" in ja or "ずるい" in ja or "アコーディオン" in ja or "松嶋みちるです" in ja or "あははは" in ja or "親友" in ja or "ミルク" in ja:
+            return "天台舍命自杀少女、手风琴微弱呼喊与相约挚友", "目击少女翻栏跳楼，满嫉妒哭喊太狡猾，破损手风琴微弱呼唤惊退死志；尴尬自报家门换来捧腹狂笑与相伴挚友"
+        return "文本自然度与对话韵味润色优化", "重构生硬日式倒装与机械直译，润色为符合Galgame演出的自然中文"
+
     # mic_014 specific (Michiru Route: S&R Mission, Nyanmel Hit-and-Run Death, Overdose & Throat Clearing Rescue)
     if (40191 <= line_no <= 40433) or sid.startswith("grisaia1/mic_014"):
         if "捜索救難" in ja or "水溜り" in ja or "猫用に作られてる" in ja:
@@ -4664,6 +4682,32 @@ def build_report():
                 "section": "灰色的果实·松岛满线雨后搜救行动、喵美尔车祸断魂、夺命过量服药与抠喉急救 (grisaia1/mic_014)"
             })
 
+    # mic_015 Part 1 (Milestone 2 Chapter 63 - Michiru Route: Box Metaphor, Atonement & Resignation, Rubber Puns, Air Sex/First Intimacy, Child Abuse Flashback, Cardiac Disease, Shellfish Days & Rooftop Suicide Girl)
+    for lno in range(40434, 40987):
+        ja_raw = ja_lines[lno - 1]
+        cn_raw = cn_lines[lno - 1]
+        sid = ja_raw.split("\t")[0] if "\t" in ja_raw else f"L{lno}"
+        ja_txt = ja_raw.split("\t")[1] if "\t" in ja_raw else ja_raw
+        cn_txt = cn_raw.split("\t")[1] if "\t" in cn_raw else cn_raw
+
+        old_txt = cn_txt
+        if git_base_cn and len(git_base_cn) >= lno:
+            head_raw = git_base_cn[lno - 1]
+            old_txt = head_raw.split("\t")[1] if "\t" in head_raw else head_raw
+
+        if cn_txt != old_txt:
+            cat, reason = classify_change(lno, sid, ja_txt, old_txt, cn_txt)
+            diffs.append({
+                "lno": lno,
+                "sid": sid,
+                "ja": ja_txt,
+                "old": old_txt,
+                "new": cn_txt,
+                "cat": cat,
+                "reason": reason,
+                "section": "灰色的果实·松岛满线自杀未遂认命、避孕套误读、初夜温存与家庭教师虐待地狱 (grisaia1/mic_015 Part 1)"
+            })
+
     print(f"Total indexed modifications: {len(diffs)}")
 
     # Build Markdown
@@ -5744,6 +5788,15 @@ def build_report():
     md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
     md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
     for idx, d in enumerate(mic_014_diffs, 1):
+        md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
+    md.append("\n---\n")
+
+    # Section 120 - Milestone 2: Michiru Route Chapter 15 Part 1
+    mic_015_p1_diffs = [d for d in diffs if d["section"].startswith("灰色的果实·松岛满线自杀未遂认命、避孕套误读、初夜温存与家庭教师虐待地狱")]
+    md.append(f"## 一百二十、 灰色的果实·松岛满线自杀未遂认命、避孕套误读、初夜温存与家庭教师虐待地狱 (`grisaia1/mic_015` Part 1，共 {len(mic_015_p1_diffs)} 条) —— 【里程碑二·个人线第六十三章】\n")
+    md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
+    md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
+    for idx, d in enumerate(mic_015_p1_diffs, 1):
         md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
     md.append("\n---\n")
 
