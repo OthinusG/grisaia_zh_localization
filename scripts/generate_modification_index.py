@@ -14,6 +14,18 @@ def escape_md(text):
     return text.replace("|", "\\|").replace("\n", " ").replace("\r", "")
 
 def classify_change(line_no, sid, ja, old_cn, new_cn):
+    # mic_019 specific (Michiru Route: Dawn Return, Second Persona Clown Masquerade, "Yuuji-kun" Slip, Sinking into Deep Darkness, Uniform Sprint)
+    if (42153 <= line_no <= 42237) or sid.startswith("grisaia1/mic_019#"):
+        if "雄二くん" in ja or "二度と浮き上がってこない" in ja or "深い闇" in ja:
+            return "第二人格'雄二君'敬称口癖暴露与本体深渊永沉宣告", "第二人格模仿满的傲娇小丑，口误喊出'雄二君'暴露身份，宣告本体已沉入无底黑暗永不复苏"
+        if "永遠の別れ" in ja or "大切なもの" in ja or "愚か者" in ja:
+            return "永诀预感与被遗留者痛彻反思", "雄二领悟满的诀别乃是寻死永别，痛斥自绝抛下同伴乃愚者懦夫之举"
+        if "三時から" in ja or "せかせか" in ja or "お出迎え" in ja or "撫で" in ja:
+            return "小幸凌晨三点洒扫庭院翘首以盼与摸头奖励", "小幸凌晨三点冒寒洒扫庭院翘首以盼满归来，第二人格给予摸头奖励极度忠诚纯真"
+        if "トランプタワー" in ja or "制服のまま" in ja or "冷やして" in ja or "アクション" in ja:
+            return "扑克牌宝塔崩塌危机与身着制服破晓狂奔", "第二人格完美接管如触碰即碎的扑克牌塔，雄二制服冲入晨光狂奔决意粉碎假象拯救满"
+        return "文本自然度与对话韵味润色优化", "重构生硬日式倒装与机械直译，润色为符合Galgame演出的自然中文"
+
     # mic_018 specific (Michiru Route: Sachi's Electric Saw, Cutout Photos, Diary of Despair & The Other Michiru, Date Stones, Empty Box Lie)
     if (41872 <= line_no <= 42152) or sid.startswith("grisaia1/mic_018#"):
         if "電動ノコギリ" in ja or "電ノコ" in ja or "モーター音" in ja:
@@ -4900,6 +4912,32 @@ def build_report():
                 "section": "灰色的果实·松岛满线上锁秘宝木箱、挖空脸颊合影与第二人格笔友诀别日记 (grisaia1/mic_018)"
             })
 
+    # mic_019 (Milestone 2 Chapter 69 - Michiru Route: Dawn Return, Second Persona Clown Masquerade, "Yuuji-kun" Slip, Sinking into Deep Darkness, Uniform Sprint)
+    for lno in range(42153, 42238):
+        ja_raw = ja_lines[lno - 1]
+        cn_raw = cn_lines[lno - 1]
+        sid = ja_raw.split("\t")[0] if "\t" in ja_raw else f"L{lno}"
+        ja_txt = ja_raw.split("\t")[1] if "\t" in ja_raw else ja_raw
+        cn_txt = cn_raw.split("\t")[1] if "\t" in cn_raw else cn_raw
+
+        old_txt = cn_txt
+        if git_base_cn and len(git_base_cn) >= lno:
+            head_raw = git_base_cn[lno - 1]
+            old_txt = head_raw.split("\t")[1] if "\t" in head_raw else head_raw
+
+        if cn_txt != old_txt:
+            cat, reason = classify_change(lno, sid, ja_txt, old_txt, cn_txt)
+            diffs.append({
+                "lno": lno,
+                "sid": sid,
+                "ja": ja_txt,
+                "old": old_txt,
+                "new": cn_txt,
+                "cat": cat,
+                "reason": reason,
+                "section": "灰色的果实·松岛满线清晨五点第二人格伪装归校、深渊永眠宣判与制服狂奔 (grisaia1/mic_019)"
+            })
+
     print(f"Total indexed modifications: {len(diffs)}")
 
     # Build Markdown
@@ -6034,6 +6072,15 @@ def build_report():
     md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
     md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
     for idx, d in enumerate(mic_018_diffs, 1):
+        md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
+    md.append("\n---\n")
+
+    # Section 126 - Milestone 2: Michiru Route Chapter 19
+    mic_019_diffs = [d for d in diffs if d["section"].startswith("灰色的果实·松岛满线清晨五点第二人格伪装归校、深渊永眠宣判与制服狂奔")]
+    md.append(f"## 一百二十六、 灰色的果实·松岛满线清晨五点第二人格伪装归校、深渊永眠宣判与制服狂奔 (`grisaia1/mic_019`，共 {len(mic_019_diffs)} 条) —— 【里程碑二·个人线第六十九章】\n")
+    md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
+    md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
+    for idx, d in enumerate(mic_019_diffs, 1):
         md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
     md.append("\n---\n")
 
