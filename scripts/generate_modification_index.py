@@ -14,6 +14,18 @@ def escape_md(text):
     return text.replace("|", "\\|").replace("\n", " ").replace("\r", "")
 
 def classify_change(line_no, sid, ja, old_cn, new_cn):
+    # sac_018 specific (Fruit of Grisaia Sachi Route Chapter 18: civilian beach date, whale shark float, and pivotal sunset refusal)
+    if (52476 <= line_no <= 52985) or sid.startswith("grisaia1/sac_018#"):
+        if any(k in ja for k in ["雄二に目覚まし", "１６キロ", "ジョギング", "防空壕", "空襲警報", "ピッキング", "アンドレ"]):
+            return "傲娇晨唤未遂、晨跑16公里与宿舍防空警报突击", "幸尝试对雄二执行傲娇轻小说式起床闹钟遭反杀，晨跑16公里后以空袭警报式元气问候震撼全宿舍，开锁突入莳菜美满安德烈梦境，展现温馨治愈的学园清晨日常"
+        if any(k in ja for k in ["オシャレ発信基地", "牛乳", "私服", "コーディネート", "納豆"]):
+            return "时尚发信基地莳菜、便服精心搭配与惊艳纳豆拌嘴", "美满辟谣牛奶丰胸，幸虚心向莳菜由美子请教便服穿搭，莳菜倾力相助挑选可爱洋装；雄二被惊艳到装傻问'妳是谁'，纳豆调料拌嘴与童年回忆重叠，温情点赞"
+        if any(k in ja for k in ["ジンベエザメ", "赤兎馬", "鉄の三角地帯", "トンネル", "サンドアート", "塹壕"]):
+            return "鲸鲨泳圈吕布跨赤兔、越共坑道水战与沙雕城堡大作战", "幸挑选鲸鲨浮圈宛如吕布跨赤兔威风凛凛，回忆父母赠予首件鲨鱼玩偶的温馨往事；雄二化身越共坑道潜行奇袭水战，与邻家孩子齐心协力堆砌专业级沙雕城堡"
+        if any(k in ja for k in ["まだ、帰りたくありません", "人形", "学園の屋上", "わたしが…わたしじゃない", "良い子", "ワガママ"]):
+            return "黄昏海滩任性挽留、人偶面具揭示与屋上誓言践行", "幸第一次揪住雄二衣袖说出'我还不想回去'，陷入自我惩罚危机；雄二直击她为赎罪沦为听话人偶的核心创伤，重申屋顶誓约并颁布正式委托让她找回真正的自我"
+        return "幸线便服海边约会、鲸鲨浮圈与夕阳任性挽留深度润色", "消除机翻生硬语病，精确刻画幸初次表露自私心迹的剧烈心理动荡与雄二坚定温柔的心理救赎，完美衔接后续剧情"
+
     # sac_017 specific (Fruit of Grisaia Sachi Route Chapter 17: Cyber-Yumiko sex consultation, bathhouse back washing, beach date invitation)
     if (52119 <= line_no <= 52475) or sid.startswith("grisaia1/sac_017#"):
         if any(k in ja for k in ["行ってきますのチュウ", "軍用犬", "シェパード", "約束"]):
@@ -5982,6 +5994,32 @@ def build_report():
                 "section": "灰色的果实·小岭幸线赛博由美子军师智囊、大浴场搓背与海边约会邀请 (`grisaia1/sac_017`)"
             })
 
+    # sac_018 (Milestone 2 Chapter 96 - Fruit of Grisaia Sachi Route Chapter 18: civilian beach date, whale shark float, and pivotal sunset refusal)
+    for lno in range(52476, 52986):
+        ja_raw = ja_lines[lno - 1]
+        cn_raw = cn_lines[lno - 1]
+        sid = ja_raw.split("\t")[0] if "\t" in ja_raw else f"L{lno}"
+        ja_txt = ja_raw.split("\t")[1] if "\t" in ja_raw else ja_raw
+        cn_txt = cn_raw.split("\t")[1] if "\t" in cn_raw else cn_raw
+
+        old_txt = cn_txt
+        if git_base_cn and len(git_base_cn) >= lno:
+            head_raw = git_base_cn[lno - 1]
+            old_txt = head_raw.split("\t")[1] if "\t" in head_raw else head_raw
+
+        if cn_txt != old_txt:
+            cat, reason = classify_change(lno, sid, ja_txt, old_txt, cn_txt)
+            diffs.append({
+                "lno": lno,
+                "sid": sid,
+                "ja": ja_txt,
+                "old": old_txt,
+                "new": cn_txt,
+                "cat": cat,
+                "reason": reason,
+                "section": "灰色的果实·小岭幸线便服海边约会、鲸鲨浮圈与夕阳任性挽留 (`grisaia1/sac_018`)"
+            })
+
     print(f"Total indexed modifications: {len(diffs)}")
 
     # Build Markdown
@@ -7359,6 +7397,15 @@ def build_report():
     md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
     md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
     for idx, d in enumerate(sac_017_diffs, 1):
+        md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
+    md.append("\n---\n")
+
+    # Section 153 - Milestone 2: Fruit of Grisaia Sachi Route Chapter 18
+    sac_018_diffs = [d for d in diffs if d["section"].startswith("灰色的果实·小岭幸线便服海边约会、鲸鲨浮圈与夕阳任性挽留")]
+    md.append(f"## 一百五十三、 灰色的果实·小岭幸线便服海边约会、鲸鲨浮圈与夕阳任性挽留 (`grisaia1/sac_018`，共 {len(sac_018_diffs)} 条) —— 【里程碑二·个人线第九十五章】\n")
+    md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
+    md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
+    for idx, d in enumerate(sac_018_diffs, 1):
         md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
     md.append("\n---\n")
 
