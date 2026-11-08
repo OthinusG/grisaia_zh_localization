@@ -14,6 +14,18 @@ def escape_md(text):
     return text.replace("|", "\\|").replace("\n", " ").replace("\r", "")
 
 def classify_change(line_no, sid, ja, old_cn, new_cn):
+    # yum_005 specific (Fruit of Grisaia Yumiko Route Chapter 5: rainy night fever nursing, riverbank thugs ambush, stabbed arm & painful dismissal)
+    if (61282 <= line_no <= 61720):
+        if any(k in ja for k in ["立方体", "球体", "いびつ", "角が取れ", "傷つけて", "人形"]):
+            return "人格立方体隐喻、畸形扭曲创伤与睡美人人偶之怜", "精妙刻画人格受挫扭曲难再复圆的立方体哲思隐喻，以及雄二凝视由美子熟睡如精致人偶时的深切怜惜与誓言"
+        if any(k in ja for k in ["ホットオレンジ", "知恵熱", "脳内グラフ", "ヤッちゃダメ", "チョップ", "コノハズク"]):
+            return "雨夜高烧归寮、热橙汁偏方、天音色情脑内暴走与手刀搞笑互动", "诙谐生动再现雄二背由美子冒雨归宿、热橙汁民间疗法、天音防范夜袭歪脑筋与雄二一本正经逗弄天音遭手刀暴击的温馨日常"
+        if any(k in ja for k in ["河川敷", "チームワーク", "ハンマー", "チョークスリーパー", "石", "ナイフ", "鳩尾"]):
+            return "河堤五人合围险境、职业格斗团队包抄、飞石绊腿与血战短刃刺臂", "高燃而惊险地呈现退伍职业打手合围、雄二果断撕开突破口让由美子逃跑、飞刀反击轰击心窝制服强敌但左臂不幸中刀浴血的激烈战斗"
+        if any(k in ja for k in ["解雇", "包帯", "手を取り", "泣きじゃく", "血で赤く", "雨音", "終幕"]):
+            return "深夜床前执手痛哭、自责愧疚撕心裂肺与绝望解雇契约终幕", "极具催泪感染力地刻画由美子握着雄二流血手掌泣不成声、恐惧牵连众人而忍痛单方面撕毁护卫委托解除契约的至暗绝望落幕"
+        return "由美子线雨夜护卫与解雇落幕篇全景深度润色", "全面清除机翻语病，淋漓尽致地刻画雄二浴血守护与由美子悲痛绝望解雇之沉痛终幕"
+
     # yum_004b_p2 specific (Fruit of Grisaia Yumiko Route Chapter 4b Part 2: deception revealed, classroom blood slash & exile to Mihama)
     if (60635 <= line_no <= 61281):
         if any(k in ja for k in ["遊園地", "海外旅行", "謝罪", "許して", "日記", "色が入って"]):
@@ -6854,6 +6866,32 @@ def build_report():
                 "section": "灰色的果实·榊由美子线洗脑剧本暴光、腐烂果实坠地、教室血溅美工刀与放逐美滨起点 (`grisaia1/yum_004b` Part 2)"
             })
 
+    # yum_005 (Milestone 2 Chapter 119 - Fruit of Grisaia Yumiko Route Chapter 5: rainy night fever nursing, riverbank thugs ambush & painful dismissal)
+    for lno in range(61282, 61721):
+        ja_raw = ja_lines[lno - 1]
+        cn_raw = cn_lines[lno - 1]
+        sid = ja_raw.split("\t")[0] if "\t" in ja_raw else f"L{lno}"
+        ja_txt = ja_raw.split("\t")[1] if "\t" in ja_raw else ja_raw
+        cn_txt = cn_raw.split("\t")[1] if "\t" in cn_raw else cn_raw
+
+        old_txt = cn_txt
+        if git_base_cn and len(git_base_cn) >= lno:
+            head_raw = git_base_cn[lno - 1]
+            old_txt = head_raw.split("\t")[1] if "\t" in head_raw else head_raw
+
+        if cn_txt != old_txt and cn_txt.strip() != "":
+            cat, reason = classify_change(lno, sid, ja_txt, old_txt, cn_txt)
+            diffs.append({
+                "lno": lno,
+                "sid": sid,
+                "ja": ja_txt,
+                "old": old_txt,
+                "new": cn_txt,
+                "cat": cat,
+                "reason": reason,
+                "section": "灰色的果实·榊由美子线雨夜高烧照护、河堤伏击浴血、短刃刺臂与解雇绝望落幕 (`grisaia1/yum_005`)"
+            })
+
     print(f"Total indexed modifications: {len(diffs)}")
 
     # Build Markdown
@@ -8438,6 +8476,15 @@ def build_report():
     md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
     md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
     for idx, d in enumerate(yum_004b_p2_diffs, 1):
+        md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
+    md.append("\n---\n")
+
+    # Section 176 - Milestone 2: Fruit of Grisaia Yumiko Route Chapter 5
+    yum_005_diffs = [d for d in diffs if d["section"].startswith("灰色的果实·榊由美子线雨夜高烧照护")]
+    md.append(f"## 一百七十六、 灰色的果实·榊由美子线雨夜高烧照护、河堤伏击浴血、短刃刺臂与解雇绝望落幕 (`grisaia1/yum_005`，共 {len(yum_005_diffs)} 条) —— 【里程碑二·个人线第一百一十八章】\n")
+    md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
+    md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
+    for idx, d in enumerate(yum_005_diffs, 1):
         md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
     md.append("\n---\n")
 
