@@ -14,6 +14,18 @@ def escape_md(text):
     return text.replace("|", "\\|").replace("\n", " ").replace("\r", "")
 
 def classify_change(line_no, sid, ja, old_cn, new_cn):
+    # yum_004b_p1 specific (Fruit of Grisaia Yumiko Route Chapter 4b Part 1: return to Tokyo, fake father trap & thawing guilt)
+    if (59987 <= line_no <= 60634):
+        if any(k in ja for k in ["四季", "忘れよう", "夕立", "雷鳴", "記憶障害", "北関東"]):
+            return "四季怨尤伤痕、母亲失智北关东隔离与彻底沦为局外人", "深刻描摹由美子对四季与雷雨的深重PTSD、母亲失智北关东转院，以及由美子在冷酷祖父母家退化为无声家具的绝望空壳"
+        if any(k in ja for k in ["高級車", "黒いスーツ", "由美子様", "お迎え", "支援", "切り刻んで"]):
+            return "黑车豪门使者、祖父母变脸卖孙女与美工刀疯狂碎衣诀别", "生动讽刺祖父母为恢复援助急不可耐将由美子打包送走、由美子持美工刀疯狂将寄居衣服尽数划得粉碎的决绝仪式"
+        if any(k in ja for k in ["洋館", "豪奢", "道昭", "ファンシー", "女子校", "空気扱い"]):
+            return "西东京洋馆大宅、刻意粉嫩闺房与名媛女校冷暴力孤立", "精细刻画道昭虚伪反常的热情、由美子重返东京豪宅的麻木反胃，以及名门千金女校看似礼貌实则彻底排挤的窒息氛围"
+        if any(k in ja for k in ["小鴨", "吐き出した", "髪", "会話", "体温", "申し訳ない"]):
+            return "餐桌香煎乳鸭催吐、剪发创伤闪回与慈父陷阱心防消融", "极具心理张力地再现餐桌上食不知味剧烈呕吐、道昭夸赞秀发引发的断发创伤，以及数月来道昭无微不至的慈父伪装让由美子产生自责与动摇的悲剧陷阱"
+        return "由美子线重返豪门篇前篇全景深度润色", "全面清除机翻语病，淋漓尽致地刻画由美子身陷虚伪豪门慈父陷阱与内心挣扎"
+
     # yum_004a_p2 specific (Fruit of Grisaia Yumiko Route Chapter 4a Part 2: mother breakdown, tabloid scandal & rooftop thunderstorm trauma)
     if (59194 <= line_no <= 59986):
         if any(k in ja for k in ["退院", "カーテン", "青空", "屋上", "空を見", "快復"]):
@@ -6778,6 +6790,32 @@ def build_report():
                 "section": "灰色的果实·榊由美子线母亲康复希望破灭、狗仔私生子丑闻暴击、顾问律师逼门与雷雨天台崩溃 (`grisaia1/yum_004a` Part 2)"
             })
 
+    # yum_004b_p1 (Milestone 2 Chapter 117 - Fruit of Grisaia Yumiko Route Chapter 4b Part 1: return to Tokyo, fake father trap & thawing guilt)
+    for lno in range(59987, 60635):
+        ja_raw = ja_lines[lno - 1]
+        cn_raw = cn_lines[lno - 1]
+        sid = ja_raw.split("\t")[0] if "\t" in ja_raw else f"L{lno}"
+        ja_txt = ja_raw.split("\t")[1] if "\t" in ja_raw else ja_raw
+        cn_txt = cn_raw.split("\t")[1] if "\t" in cn_raw else cn_raw
+
+        old_txt = cn_txt
+        if git_base_cn and len(git_base_cn) >= lno:
+            head_raw = git_base_cn[lno - 1]
+            old_txt = head_raw.split("\t")[1] if "\t" in head_raw else head_raw
+
+        if cn_txt != old_txt and cn_txt.strip() != "":
+            cat, reason = classify_change(lno, sid, ja_txt, old_txt, cn_txt)
+            diffs.append({
+                "lno": lno,
+                "sid": sid,
+                "ja": ja_txt,
+                "old": old_txt,
+                "new": cn_txt,
+                "cat": cat,
+                "reason": reason,
+                "section": "灰色的果实·榊由美子线四季怨尤伤痕、黑车豪门使者、洋馆慈父陷阱与心防消融愧疚 (`grisaia1/yum_004b` Part 1)"
+            })
+
     print(f"Total indexed modifications: {len(diffs)}")
 
     # Build Markdown
@@ -8344,6 +8382,15 @@ def build_report():
     md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
     md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
     for idx, d in enumerate(yum_004a_p2_diffs, 1):
+        md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
+    md.append("\n---\n")
+
+    # Section 174 - Milestone 2: Fruit of Grisaia Yumiko Route Chapter 4b Part 1
+    yum_004b_p1_diffs = [d for d in diffs if d["section"].startswith("灰色的果实·榊由美子线四季怨尤伤痕")]
+    md.append(f"## 一百七十四、 灰色的果实·榊由美子线四季怨尤伤痕、黑车豪门使者、洋馆慈父陷阱与心防消融愧疚 (`grisaia1/yum_004b` Part 1，共 {len(yum_004b_p1_diffs)} 条) —— 【里程碑二·个人线第一百一十六章】\n")
+    md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
+    md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
+    for idx, d in enumerate(yum_004b_p1_diffs, 1):
         md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
     md.append("\n---\n")
 
