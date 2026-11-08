@@ -14,6 +14,18 @@ def escape_md(text):
     return text.replace("|", "\\|").replace("\n", " ").replace("\r", "")
 
 def classify_change(line_no, sid, ja, old_cn, new_cn):
+    # sac_023b specific (Fruit of Grisaia Sachi Route Chapter 23b: school implosion, 7-year flood of tears, true good child & confession under the stars)
+    if (54350 <= line_no <= 54692) or sid.startswith("grisaia1/sac_023b#"):
+        if any(k in ja for k in ["爆破解体", "沈み込んでいく", "Ｃ４", "瓦礫の山", "素麺", "ファッションショー"]):
+            return "校舍内向坍塌爆破、美滨回忆如烟与亲手毁灭学园之问", "精确校正爆破解体与C4聚能炸药军事用语；深刻刻画雄二质问由幸亲手摧毁学园，以及回想暴雨、流水素面与时装秀等无可替代的美滨日常"
+        if any(k in ja for k in ["姉が事故で死んだ", "褒めてほしい", "よく頑張ったな", "抱きしめ", "ボロボロ", "うわああ"]):
+            return "姐姐车祸真相袒露、温柔抚头肯定与七年创伤决堤痛哭", "精细传达雄二首次向幸敞开心扉透露姐姐死于车祸的孤独隐痛；雄二温柔抚头肯定其七年来的咬牙硬撑与无助；幸十岁生日创伤锁链彻底粉碎、号啕大哭"
+        if any(k in ja for k in ["腹を切る", "介錯", "ＪＢ", "理事長", "借金", "良い子"]):
+            return "剖腹玩笑与介错调侃、善后巨债与破除好孩子诅咒", "生动还原雄二陪幸剖腹当介错人的黑色幽默；向千鹤与JB欠下巨额善后负债；深切剖析好孩子真正含义在于活出自我而非自我惩罚"
+        if any(k in ja for k in ["課題", "袖を引っ張った", "好き", "彼女でいさせて", "初恋", "キス"]):
+            return "海边拉袖课题求解、真挚告白求做女友与星空初吻相依", "极其细腻动人地刻画幸解开海边拉袖谜底系出对雄二的恋心；幸真挚告白请求成为雄二的女朋友；二人互通心意、温柔长吻与星空下的相依体温"
+        return "小岭幸线美滨爆破、解开心结与告白定情深层润色", "全面润色小岭幸线校舍内向坍塌爆破、七年创伤释怀号啕痛哭与互通心意真挚告白，消除机翻生硬语病与人称错位"
+
     # sac_023a specific (Fruit of Grisaia Sachi Route Chapter 23a: summer vacation end, helicopter night cruise handoff, sprinkler deluge, crying inner child & C4 shaped-charge placement)
     if (53887 <= line_no <= 54349) or sid.startswith("grisaia1/sac_023a#"):
         if any(k in ja for k in ["風物詩", "宿題", "獅子舞", "ヂルヂル", "ツインテール"]):
@@ -6206,6 +6218,32 @@ def build_report():
                 "section": "灰色的果实·小岭幸线夏末风物诗、好孩子创伤决裂与C4定向爆破 (`grisaia1/sac_023a`)"
             })
 
+    # sac_023b (Milestone 2 Chapter 102 - Fruit of Grisaia Sachi Route Chapter 23b: school implosion, 7-year flood of tears, true good child & confession under the stars)
+    for lno in range(54350, 54693):
+        ja_raw = ja_lines[lno - 1]
+        cn_raw = cn_lines[lno - 1]
+        sid = ja_raw.split("\t")[0] if "\t" in ja_raw else f"L{lno}"
+        ja_txt = ja_raw.split("\t")[1] if "\t" in ja_raw else ja_raw
+        cn_txt = cn_raw.split("\t")[1] if "\t" in cn_raw else cn_raw
+
+        old_txt = cn_txt
+        if git_base_cn and len(git_base_cn) >= lno:
+            head_raw = git_base_cn[lno - 1]
+            old_txt = head_raw.split("\t")[1] if "\t" in head_raw else head_raw
+
+        if cn_txt != old_txt and cn_txt.strip() != "":
+            cat, reason = classify_change(lno, sid, ja_txt, old_txt, cn_txt)
+            diffs.append({
+                "lno": lno,
+                "sid": sid,
+                "ja": ja_txt,
+                "old": old_txt,
+                "new": cn_txt,
+                "cat": cat,
+                "reason": reason,
+                "section": "灰色的果实·小岭幸线校舍爆破瓦解、七年创伤释怀号啕与星空初吻定情 (`grisaia1/sac_023b`)"
+            })
+
     print(f"Total indexed modifications: {len(diffs)}")
 
     # Build Markdown
@@ -7637,6 +7675,15 @@ def build_report():
     md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
     md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
     for idx, d in enumerate(sac_023a_diffs, 1):
+        md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
+    md.append("\n---\n")
+
+    # Section 159 - Milestone 2: Fruit of Grisaia Sachi Route Chapter 23b
+    sac_023b_diffs = [d for d in diffs if d["section"].startswith("灰色的果实·小岭幸线校舍爆破瓦解、七年创伤释怀号啕与星空初吻定情")]
+    md.append(f"## 一百五十九、 灰色的果实·小岭幸线校舍爆破瓦解、七年创伤释怀号啕与星空初吻定情 (`grisaia1/sac_023b`，共 {len(sac_023b_diffs)} 条) —— 【里程碑二·个人线第一百零一章】\n")
+    md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
+    md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
+    for idx, d in enumerate(sac_023b_diffs, 1):
         md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
     md.append("\n---\n")
 
