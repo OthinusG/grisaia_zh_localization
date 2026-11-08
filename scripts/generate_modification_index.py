@@ -14,6 +14,20 @@ def escape_md(text):
     return text.replace("|", "\\|").replace("\n", " ").replace("\r", "")
 
 def classify_change(line_no, sid, ja, old_cn, new_cn):
+    # sac_015 specific (Fruit of Grisaia Sachi Route Chapter 15: civilian clothes shopping, JB visit, park bench nap, Tuna-man sleep-talking)
+    if (51459 <= line_no <= 51905) or sid.startswith("grisaia1/sac_015#"):
+        if any(k in ja for k in ["あずき洗い", "ツインテール", "そばつゆ", "麦茶", "休め", "ハニートースト"]):
+            return "洗豆妖梳发调侃与蜂蜜吐司早餐", "雄二替美智留梳理双马尾调侃其为怪叫洗豆妖，美智留惊愕雄二巧手复刻幸，幸稍息姿势啃豆乳甜甜圈，纠正机翻'红豆洗的绑带'与'休息姿势'"
+        if any(k in ja for k in ["跳ね馬", "せいあーつ", "甘噛み", "ガオー", "ガラス玉", "手品師"]):
+            return "JB法拉利突袭盘问与清白交往调侃", "JB开法拉利顺路八卦，幸耿直汇报一起流汗特训，回忆初遇幸手持竹枪高喊制压，JB打趣接吻轻咬与嗷呜扑倒，纠正机翻'去死'与'舔舐'"
+        if any(k in ja for k in ["ウインドウショッピング", "マリーン", "嫉妬", "短刀", "トロピカル", "マラリア", "コガタハマダラカ"]):
+            return "逛橱窗便服采购与幸天然呆吃醋开导", "幸误解橱窗购物为买窗户，雄二海军陆战队黑幽默，幸内心萌生嫉妒短刀鲠喉，雄二通俗开导放空脑海，采购便服纠正微小按蚊与热带型野战"
+        if any(k in ja for k in ["雑巾", "腹巻き", "イタチザメ", "ホオジロザメ", "膝枕", "借りてきた猫"]):
+            return "肚兜反驳、虎鲨发带与中庭长椅膝枕", "幸誓言宁当肚兜也不作抹布，考究虎鲨心形牙齿发带，雄二拉幸在中庭长椅体验膝枕，幸拘谨如借来的猫，纠正机翻'尖吻鲨'"
+        if any(k in ja for k in ["寝言", "マグロマン", "ビーム", "邪魔者", "市ヶ谷", "バチ"]):
+            return "金枪鱼超人说梦话与由美子识趣退场", "幸在雄二膝上甜美安睡，由美子惊叹幸首次打盹，被雄二调侃试枕吓得幸睡梦怒吼绝对不行，金枪鱼超人梦话笑翻全场，由美子识趣退场"
+        return "幸线便服逛街约会与膝枕温馨互动深度润色", "消除机翻僵硬感，统一'悠君'称谓，生动展现幸的纯真天然呆、雄二的温柔守护与由美子的冷面吐槽"
+
     # sac_014 specific (Fruit of Grisaia Sachi Route Chapter 14: Assam milk tea service, strip Old Maid card game, Ranger Komine broom drill, Amane intervention & friendship vow)
     if (51105 <= line_no <= 51458) or sid.startswith("grisaia1/sac_014#"):
         if any(k in ja for k in ["アッサム", "ミルクティー", "コップ", "メイド服", "脱衣ババ抜き", "ババ"]):
@@ -5862,6 +5876,32 @@ def build_report():
                 "section": "灰色的果实·小岭幸线阿萨姆奶茶、游骑兵扫帚特训、脱衣抽鬼牌与天音闺蜜托付 (`grisaia1/sac_014`)"
             })
 
+    # sac_015 (Milestone 2 Chapter 93 - Fruit of Grisaia Sachi Route Chapter 15: civilian clothes shopping, JB visit, park bench nap, Tuna-man sleep-talking)
+    for lno in range(51459, 51906):
+        ja_raw = ja_lines[lno - 1]
+        cn_raw = cn_lines[lno - 1]
+        sid = ja_raw.split("\t")[0] if "\t" in ja_raw else f"L{lno}"
+        ja_txt = ja_raw.split("\t")[1] if "\t" in ja_raw else ja_raw
+        cn_txt = cn_raw.split("\t")[1] if "\t" in cn_raw else cn_raw
+
+        old_txt = cn_txt
+        if git_base_cn and len(git_base_cn) >= lno:
+            head_raw = git_base_cn[lno - 1]
+            old_txt = head_raw.split("\t")[1] if "\t" in head_raw else head_raw
+
+        if cn_txt != old_txt:
+            cat, reason = classify_change(lno, sid, ja_txt, old_txt, cn_txt)
+            diffs.append({
+                "lno": lno,
+                "sid": sid,
+                "ja": ja_txt,
+                "old": old_txt,
+                "new": cn_txt,
+                "cat": cat,
+                "reason": reason,
+                "section": "灰色的果实·小岭幸线便服逛街约会、中庭长椅膝枕与金枪鱼超人梦话 (`grisaia1/sac_015`)"
+            })
+
     print(f"Total indexed modifications: {len(diffs)}")
 
     # Build Markdown
@@ -7212,6 +7252,15 @@ def build_report():
     md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
     md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
     for idx, d in enumerate(sac_014_diffs, 1):
+        md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
+    md.append("\n---\n")
+
+    # Section 150 - Milestone 2: Fruit of Grisaia Sachi Route Chapter 15
+    sac_015_diffs = [d for d in diffs if d["section"].startswith("灰色的果实·小岭幸线便服逛街约会、中庭长椅膝枕与金枪鱼超人梦话")]
+    md.append(f"## 一百五十、 灰色的果实·小岭幸线便服逛街约会、中庭长椅膝枕与金枪鱼超人梦话 (`grisaia1/sac_015`，共 {len(sac_015_diffs)} 条) —— 【里程碑二·个人线第九十二章】\n")
+    md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
+    md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
+    for idx, d in enumerate(sac_015_diffs, 1):
         md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
     md.append("\n---\n")
 
