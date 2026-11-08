@@ -14,6 +14,16 @@ def escape_md(text):
     return text.replace("|", "\\|").replace("\n", " ").replace("\r", "")
 
 def classify_change(line_no, sid, ja, old_cn, new_cn):
+    # sac_022 specific (Fruit of Grisaia Sachi Route Chapter 22: school ghost rumor, Chizuru chainsaw noise, good spirit banter & Sachi desperate lie)
+    if (53761 <= line_no <= 53886) or sid.startswith("grisaia1/sac_022#"):
+        if any(k in ja for k in ["幽霊", "チェンソー", "黒い人影", "オバケ", "良い霊", "悪戯"]):
+            return "美滨学园幽灵怪谈、深夜电锯暗影误会与由美子善灵调侃", "消除机翻生硬语病，精确刻画满将雄二凌晨施工声响误作电锯幽灵、由美子暗中会意调侃'熟人善灵'与雄二顺水推舟的生动宿舍互动"
+        if any(k in ja for k in ["部屋に籠る", "視野が狭く", "彼氏", "参考書", "睨めっこ"]):
+            return "闭门苦思深陷绝境、众人担忧与满脸憔悴的伏案苦读", "消除机翻生硬语病，生动刻画众人对幸闭门反常的担忧、雄二替扫中庭后的探视，以及幸与厚厚参考书大眼瞪小眼的憔悴神态"
+        if any(k in ja for k in ["嘘をつくのは悪い子", "任せてもらっても", "窮地", "八方塞がり", "歪んだ未来", "準備が無駄に"]):
+            return "绝境盲信眼神认同、好孩子谎言背负与破坏行动预备", "深刻刻画雄二看穿幸身陷绝境走投无路却仍盲目逞强的眼神，幸宁可违背戒律撒谎也不求助的悲剧宿命，以及雄二坚决启动爆破倒计时的冷峻决意"
+        return "幸线幽灵怪谈勘测、好孩子谎言绝境与雄二决意深度润色", "消除机翻生硬语病，精确传达幽灵搞笑与绝境悲凉交织的戏剧张力与人物心理暗流"
+
     # sac_021 specific (Fruit of Grisaia Sachi Route Chapter 21: fertilizer explosive delivery, Yumiko gardening banter & 4AM classroom vigil)
     if (53642 <= line_no <= 53760) or sid.startswith("grisaia1/sac_021#"):
         if any(k in ja for k in ["東浜電鉄", "藤見運送", "チワーッス", "肥料", "トラクター", "花壇"]):
@@ -6130,6 +6140,32 @@ def build_report():
                 "section": "灰色的果实·小岭幸线化肥爆药伪装、由美子暗中默契与四点孤灯应援 (`grisaia1/sac_021`)"
             })
 
+    # sac_022 (Milestone 2 Chapter 100 - Fruit of Grisaia Sachi Route Chapter 22: school ghost rumor, Chizuru chainsaw noise, good spirit banter & Sachi desperate lie)
+    for lno in range(53761, 53887):
+        ja_raw = ja_lines[lno - 1]
+        cn_raw = cn_lines[lno - 1]
+        sid = ja_raw.split("\t")[0] if "\t" in ja_raw else f"L{lno}"
+        ja_txt = ja_raw.split("\t")[1] if "\t" in ja_raw else ja_raw
+        cn_txt = cn_raw.split("\t")[1] if "\t" in cn_raw else cn_raw
+
+        old_txt = cn_txt
+        if git_base_cn and len(git_base_cn) >= lno:
+            head_raw = git_base_cn[lno - 1]
+            old_txt = head_raw.split("\t")[1] if "\t" in head_raw else head_raw
+
+        if cn_txt != old_txt:
+            cat, reason = classify_change(lno, sid, ja_txt, old_txt, cn_txt)
+            diffs.append({
+                "lno": lno,
+                "sid": sid,
+                "ja": ja_txt,
+                "old": old_txt,
+                "new": cn_txt,
+                "cat": cat,
+                "reason": reason,
+                "section": "灰色的果实·小岭幸线幽灵怪谈暗影、好孩子谎言绝境与爆破行动预备 (`grisaia1/sac_022`)"
+            })
+
     print(f"Total indexed modifications: {len(diffs)}")
 
     # Build Markdown
@@ -7543,6 +7579,15 @@ def build_report():
     md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
     md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
     for idx, d in enumerate(sac_021_diffs, 1):
+        md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
+    md.append("\n---\n")
+
+    # Section 157 - Milestone 2: Fruit of Grisaia Sachi Route Chapter 22
+    sac_022_diffs = [d for d in diffs if d["section"].startswith("灰色的果实·小岭幸线幽灵怪谈暗影、好孩子谎言绝境与爆破行动预备")]
+    md.append(f"## 一百五十七、 灰色的果实·小岭幸线幽灵怪谈暗影、好孩子谎言绝境与爆破行动预备 (`grisaia1/sac_022`，共 {len(sac_022_diffs)} 条) —— 【里程碑二·个人线第九十九章】\n")
+    md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
+    md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
+    for idx, d in enumerate(sac_022_diffs, 1):
         md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
     md.append("\n---\n")
 
