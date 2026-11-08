@@ -14,6 +14,20 @@ def escape_md(text):
     return text.replace("|", "\\|").replace("\n", " ").replace("\r", "")
 
 def classify_change(line_no, sid, ja, old_cn, new_cn):
+    # sac_023a specific (Fruit of Grisaia Sachi Route Chapter 23a: summer vacation end, helicopter night cruise handoff, sprinkler deluge, crying inner child & C4 shaped-charge placement)
+    if (53887 <= line_no <= 54349) or sid.startswith("grisaia1/sac_023a#"):
+        if any(k in ja for k in ["風物詩", "宿題", "獅子舞", "ヂルヂル", "ツインテール"]):
+            return "夏末风物诗作业惨叫、废柴金发调侃与由美子三楼密谈", "消除机翻生硬语病，生动刻画满夏假最后一天被作业逼疯、莳菜调侃与幸结婚会沦为邋遢废柴烂泥、以及由美子借一步探问胜算的宿舍日常"
+        if any(k in ja for k in ["ヘリクルーズ", "招待券", "ビンタ", "商店街", "オマケ"]):
+            return "东京湾直升机夜航观光券移交、由美子暗中默契与商店街人情", "精确刻画雄二移交四人份直升机夜航券支开女生护航兼不在场证明、由美子心照不宣包揽中华街晚宴，以及天音莳菜满载商店街赠品的情节"
+        if any(k in ja for k in ["国防装置", "闇", "スプリンクラー", "灯油", "火が消えた"]):
+            return "国防装置天台战栗沉思、煤油纵火旧法失效与喷淋灭火绝望", "深刻刻画雄二对黑夜创伤的沉思与守护幸的铁血誓言；幸潜入校舍纵火遭遇雄二白天重启的喷淋系统兜头浇灭、疯狂按动打火机的无助崩溃"
+        if any(k in ja for k in ["失敗は許されない", "良い子", "いなくなってしまう", "慟哭", "９０２９号"]):
+            return "好孩子神话崩溃恸哭、失去恐惧深层病根与9029号必胜誓言", "极为深刻地刻画幸袒露怕被讨厌遗弃、归咎父母惨剧的深层创伤与绝望嚎啕；雄二看穿其哭泣小女孩求救本质，以9029号特工不败之名许下誓言"
+        if any(k in ja for k in ["学園長室", "ジュラルミンケース", "粘土", "高台", "スイッチ", "フカヒレスープ"]):
+            return "校长室C4定向爆破布设、高台起爆绝决与东京湾直升机海景强光", "消除机翻生硬语病，精确刻画校长室铝箱C4塑胶炸药与定向爆破预埋、高台雄二最后拷问后幸决然按下起爆器、与直升机上众女饱餐鱼翅仰望夜景形成震撼对冲"
+        return "幸线夏末风物诗、好孩子创伤决裂与C4定向爆破深度润色", "消除机翻生硬语病，精确传达幽默日常、深沉心理悲剧与特工级爆破对冲的强烈剧情张力"
+
     # sac_022 specific (Fruit of Grisaia Sachi Route Chapter 22: school ghost rumor, Chizuru chainsaw noise, good spirit banter & Sachi desperate lie)
     if (53761 <= line_no <= 53886) or sid.startswith("grisaia1/sac_022#"):
         if any(k in ja for k in ["幽霊", "チェンソー", "黒い人影", "オバケ", "良い霊", "悪戯"]):
@@ -6166,6 +6180,32 @@ def build_report():
                 "section": "灰色的果实·小岭幸线幽灵怪谈暗影、好孩子谎言绝境与爆破行动预备 (`grisaia1/sac_022`)"
             })
 
+    # sac_023a (Milestone 2 Chapter 101 - Fruit of Grisaia Sachi Route Chapter 23a: summer vacation end, helicopter night cruise handoff, sprinkler deluge, crying inner child & C4 shaped-charge placement)
+    for lno in range(53887, 54350):
+        ja_raw = ja_lines[lno - 1]
+        cn_raw = cn_lines[lno - 1]
+        sid = ja_raw.split("\t")[0] if "\t" in ja_raw else f"L{lno}"
+        ja_txt = ja_raw.split("\t")[1] if "\t" in ja_raw else ja_raw
+        cn_txt = cn_raw.split("\t")[1] if "\t" in cn_raw else cn_raw
+
+        old_txt = cn_txt
+        if git_base_cn and len(git_base_cn) >= lno:
+            head_raw = git_base_cn[lno - 1]
+            old_txt = head_raw.split("\t")[1] if "\t" in head_raw else head_raw
+
+        if cn_txt != old_txt and cn_txt.strip() != "":
+            cat, reason = classify_change(lno, sid, ja_txt, old_txt, cn_txt)
+            diffs.append({
+                "lno": lno,
+                "sid": sid,
+                "ja": ja_txt,
+                "old": old_txt,
+                "new": cn_txt,
+                "cat": cat,
+                "reason": reason,
+                "section": "灰色的果实·小岭幸线夏末风物诗、好孩子创伤决裂与C4定向爆破 (`grisaia1/sac_023a`)"
+            })
+
     print(f"Total indexed modifications: {len(diffs)}")
 
     # Build Markdown
@@ -7588,6 +7628,15 @@ def build_report():
     md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
     md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
     for idx, d in enumerate(sac_022_diffs, 1):
+        md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
+    md.append("\n---\n")
+
+    # Section 158 - Milestone 2: Fruit of Grisaia Sachi Route Chapter 23a
+    sac_023a_diffs = [d for d in diffs if d["section"].startswith("灰色的果实·小岭幸线夏末风物诗、好孩子创伤决裂与C4定向爆破")]
+    md.append(f"## 一百五十八、 灰色的果实·小岭幸线夏末风物诗、好孩子创伤决裂与C4定向爆破 (`grisaia1/sac_023a`，共 {len(sac_023a_diffs)} 条) —— 【里程碑二·个人线第一百章】\n")
+    md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
+    md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
+    for idx, d in enumerate(sac_023a_diffs, 1):
         md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
     md.append("\n---\n")
 
