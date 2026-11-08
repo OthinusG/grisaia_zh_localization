@@ -14,6 +14,20 @@ def escape_md(text):
     return text.replace("|", "\\|").replace("\n", " ").replace("\r", "")
 
 def classify_change(line_no, sid, ja, old_cn, new_cn):
+    # sac_009 specific (Fruit of Grisaia Sachi Route: childhood parting memory, rooftop talk with Chizuru, Sachi life saver, JB yellow Ferrari file handover, Sachi dark room PTSD seizure)
+    if (47457 <= line_no <= 47700) or sid.startswith("grisaia1/sac_009#"):
+        if "突然の別れ" in ja or "活発さ" in ja or "人格" in ja or "命の恩人" in ja or "最後の一歩" in ja:
+            return "童年离别迷局反思、天台向千鹤立誓干涉与‘幸乃救命恩人’溯源", "雄二深思幸由昔日活泼野丫头异化为百依百顺人偶之谜，天台向千鹤宣告为探求人生真谛与参透麻子遗言而插手拯救幸，坦白幸乃童年救命恩人"
+        if "部外秘" in ja or "黄色の跳ね馬" in ja or "ジュリア" in ja or "イタリアン" in ja or "保護者" in ja:
+            return "JB黄跃马星夜密调CIRS绝密档案、双重身份信赖托付与高档意料之约", "JB深夜驾法拉利送达CIRS部外秘档案，震慑于幸之残酷过往，以知己、长官兼法定监护人三重身份全力托付信赖并相约高端意式大餐"
+        if "愛の力" in ja or "天然" in ja or "養殖モノ" in ja or "マグロマンの人形" in ja or "鰻" in ja:
+            return "病房四女探视守候、由美子被疑天然真傲娇与满野生鳗鱼之争", "四女守候病房见幸安睡，由美子推测雄二寻获幸乃‘爱之力量’引发满嫉妒撞人设，辩称养殖鳗鱼比野生更鲜美引爆病房相声"
+        if "ＰＴＳＤ" in ja or "フラッシュバック" in ja or "追体験" in ja or "喉元" in ja or "窒息感" in ja or "ごめんなさい" in ja:
+            return "暗室独处心绞痛爆发、重度PTSD闪回痉挛与剜喉幻痛窒息自责", "幸深夜暗室梦醒，惊觉雄二未忆及童年而胸口剧痛，坚信做乖孩子便不会受罚；惨遭重度PTSD闪回袭击，浑身剧烈冷颤干呕如喉被剜，痛哭道歉"
+        if "幸……どうして" in ja or "悪夢" in ja or "あの日" in ja or "決まった一言" in ja:
+            return "未来永劫轮回梦魇、自葬深渊记忆与‘幸……为什么’罪恶之渊序幕", "幸痛陈自‘那一天’起无数次重蹈无底深渊之噩梦，永远始于那句刻骨铭心的质问‘幸……为什么……’，开启童年惨烈真相长卷"
+        return "文本自然度与对话韵味润色优化", "重构生硬日式倒装与机械直译，润色为符合Galgame演出的自然中文"
+
     # sac_008 specific (Fruit of Grisaia Sachi Route: deduction of usual place, broom trigger, train ride to hometown, 28 hours wait in rain, collapse & childhood reunion)
     if (47101 <= line_no <= 47456) or sid.startswith("grisaia1/sac_008#"):
         if "いつもの場所" in ja or "土下座" in ja or "ミソ" in ja or "教室" in ja:
@@ -5498,6 +5512,32 @@ def build_report():
                 "section": "灰色的果实·小岭幸线‘老地方’盲点顿悟、暴雨秋千苦候二十八小时、青梅竹马确凿相认与极限昏厥相拥 (`grisaia1/sac_008`)"
             })
 
+    # sac_009 (Milestone 2 Chapter 84 - Fruit of Grisaia Sachi Route: Rooftop resolve, JB yellow Ferrari file handover, Sachi dark room PTSD seizure & nightmare prelude)
+    for lno in range(47457, 47701):
+        ja_raw = ja_lines[lno - 1]
+        cn_raw = cn_lines[lno - 1]
+        sid = ja_raw.split("\t")[0] if "\t" in ja_raw else f"L{lno}"
+        ja_txt = ja_raw.split("\t")[1] if "\t" in ja_raw else ja_raw
+        cn_txt = cn_raw.split("\t")[1] if "\t" in cn_raw else cn_raw
+
+        old_txt = cn_txt
+        if git_base_cn and len(git_base_cn) >= lno:
+            head_raw = git_base_cn[lno - 1]
+            old_txt = head_raw.split("\t")[1] if "\t" in head_raw else head_raw
+
+        if cn_txt != old_txt:
+            cat, reason = classify_change(lno, sid, ja_txt, old_txt, cn_txt)
+            diffs.append({
+                "lno": lno,
+                "sid": sid,
+                "ja": ja_txt,
+                "old": old_txt,
+                "new": cn_txt,
+                "cat": cat,
+                "reason": reason,
+                "section": "灰色的果实·小岭幸线天台立誓救赎恩人、JB密调档案与暗室重度PTSD闪回痉挛 (`grisaia1/sac_009`)"
+            })
+
     print(f"Total indexed modifications: {len(diffs)}")
 
     # Build Markdown
@@ -6767,6 +6807,15 @@ def build_report():
     md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
     md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
     for idx, d in enumerate(sac_008_diffs, 1):
+        md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
+    md.append("\n---\n")
+
+    # Section 141 - Milestone 2: Fruit of Grisaia Sachi Route Chapter 8
+    sac_009_diffs = [d for d in diffs if d["section"].startswith("灰色的果实·小岭幸线天台立誓救赎恩人、JB密调档案与暗室重度PTSD闪回痉挛")]
+    md.append(f"## 一百四十一、 灰色的果实·小岭幸线天台立誓救赎恩人、JB密调档案与暗室重度PTSD闪回痉挛 (`grisaia1/sac_009`，共 {len(sac_009_diffs)} 条) —— 【里程碑二·个人线第八十三章】\n")
+    md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
+    md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
+    for idx, d in enumerate(sac_009_diffs, 1):
         md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
     md.append("\n---\n")
 
