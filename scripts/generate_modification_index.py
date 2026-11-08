@@ -14,6 +14,16 @@ def escape_md(text):
     return text.replace("|", "\\|").replace("\n", " ").replace("\r", "")
 
 def classify_change(line_no, sid, ja, old_cn, new_cn):
+    # sac_010 specific (Fruit of Grisaia Sachi Route Chapter 10: CIRS report analysis, good child defense mechanism analysis, Asako gratitude maxim, Yuuji vow to save Sachi)
+    if (50224 <= line_no <= 50285) or sid.startswith("grisaia1/sac_010#"):
+        if any(k in ja for k in ["放火", "半焼", "職員室", "迷宮入り", "美浜学園", "精神科"]):
+            return "校舍纵火悬案与美滨转学始末", "剖析学校纵火案因霸凌反转沦为悬案、伯父夫妇察觉言行异常带幸就诊并转入美滨要塞的来龙去脉"
+        if any(k in ja for k in ["良い子", "悪い子", "ロボット", "メイド服", "戒め", "歪み", "殺人を犯して", "命令"]):
+            return "好孩子防壁心理解构与极端顺从病理", "深度解构幸将他人命令凌驾于一切之上的心理防壁，指出其如同无意识发条木偶，若被命令杀人也会面不改色照做的危险扭曲"
+        if any(k in ja for k in ["恩", "師匠", "救われ", "笑顔", "変えよう", "恥"]):
+            return "麻子报恩箴言领悟与雄二救赎立誓", "纠正机翻第一人称'俺'为'我'，借麻子受恩不报方为耻辱的箴言，确立雄二为报答当年幼年救赎而誓死拯救幸的决心"
+        return "幸线档案收尾与报恩觉悟深度润色", "消除机翻腔，纠正人称与语意断句，使雄二审读档案后的严密推演与誓言完全契合硬派男主声线"
+
     # sac_009_old Part 3 specific (Fruit of Grisaia Sachi Route Chapter 9 Part 3: ICU Frankenstein shock, Masaya mother Katsuoman trigger, Good child switch, Niigata middle school, Nakano Hitomi bullying and slave contract, school arson)
     if (49383 <= line_no <= 50223) or (sid.startswith("grisaia1/sac_009_old#") and any(k in ja for k in ["カツオマン", "ささみ", "フランケンシュタイン", "中野", "仁美", "灯油", "マッチ", "火災", "テスト"])):
         if any(k in ja for k in ["フランケンシュタイン", "集中治療室", "酸素マスク", "包帯", "管", "嘔吐", "吐き気"]):
@@ -5676,6 +5686,32 @@ def build_report():
                 "section": "灰色的果实·小岭幸线母子鲣鱼侠惊雷顿悟、好孩子绝对服从咒缚、中野仁美恶霸奴役与火烧校舍决意 (`grisaia1/sac_009_old` Part 3)"
             })
 
+    # sac_010 (Milestone 2 Chapter 88 - Fruit of Grisaia Sachi Route Chapter 10: Arson case aftermath, Yuuji psychological deconstruction, Asako gratitude maxim)
+    for lno in range(50224, 50286):
+        ja_raw = ja_lines[lno - 1]
+        cn_raw = cn_lines[lno - 1]
+        sid = ja_raw.split("\t")[0] if "\t" in ja_raw else f"L{lno}"
+        ja_txt = ja_raw.split("\t")[1] if "\t" in ja_raw else ja_raw
+        cn_txt = cn_raw.split("\t")[1] if "\t" in cn_raw else cn_raw
+
+        old_txt = cn_txt
+        if git_base_cn and len(git_base_cn) >= lno:
+            head_raw = git_base_cn[lno - 1]
+            old_txt = head_raw.split("\t")[1] if "\t" in head_raw else head_raw
+
+        if cn_txt != old_txt:
+            cat, reason = classify_change(lno, sid, ja_txt, old_txt, cn_txt)
+            diffs.append({
+                "lno": lno,
+                "sid": sid,
+                "ja": ja_txt,
+                "old": old_txt,
+                "new": cn_txt,
+                "cat": cat,
+                "reason": reason,
+                "section": "灰色的果实·小岭幸线纵火案迷局分析、好孩子绝对防壁心理解构与雄二报恩立誓 (`grisaia1/sac_010`)"
+            })
+
     print(f"Total indexed modifications: {len(diffs)}")
 
     # Build Markdown
@@ -6981,6 +7017,15 @@ def build_report():
     md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
     md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
     for idx, d in enumerate(sac_009_old_p3_diffs, 1):
+        md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
+    md.append("\n---\n")
+
+    # Section 145 - Milestone 2: Fruit of Grisaia Sachi Route Chapter 10
+    sac_010_diffs = [d for d in diffs if d["section"].startswith("灰色的果实·小岭幸线纵火案迷局分析、好孩子绝对防壁心理解构与雄二报恩立誓")]
+    md.append(f"## 一百四十五、 灰色的果实·小岭幸线纵火案迷局分析、好孩子绝对防壁心理解构与雄二报恩立誓 (`grisaia1/sac_010`，共 {len(sac_010_diffs)} 条) —— 【里程碑二·个人线第八十七章】\n")
+    md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
+    md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
+    for idx, d in enumerate(sac_010_diffs, 1):
         md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
     md.append("\n---\n")
 
