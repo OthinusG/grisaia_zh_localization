@@ -14,6 +14,18 @@ def escape_md(text):
     return text.replace("|", "\\|").replace("\n", " ").replace("\r", "")
 
 def classify_change(line_no, sid, ja, old_cn, new_cn):
+    # sac_028 specific (Fruit of Grisaia Sachi Route Chapter 28: chained nightmare, flashback breakdown & resolve to kill the nightmare)
+    if (55716 <= line_no <= 55955) or sid.startswith("grisaia1/sac_028#"):
+        if any(k in ja for k in ["鉄球", "鎖", "悲鳴", "歯を鳴らす", "体温"]):
+            return "铁球锁链梦魇预兆、凄厉绝望惊醒与体温慰藉安神", "震撼呈现雄二梦见幸被铁球锁链禁锢暗室之绝望预兆；幸凄厉惨叫从深渊惊醒浑身剧颤打齿；雄二如当年麻子抚慰自己般紧紧拥抱幸，以肉身温度叩开防线唤醒神智"
+        if any(k in ja for k in ["フラッシュバック", "ゴムが焼ける", "アイドリング", "どうして", "見舞い"]):
+            return "创伤后应激障碍闪回、车祸惨剧重现与母亲临终质问心结", "深刻剖析幸承认患上创伤闪回；车祸现场橡胶焦臭与怠速引擎轰鸣挥之不去；母亲重伤弥留之际那句“幸……为什么……”成为终生心魔，自责任性害死双亲"
+        if any(k in ja for k in ["優しかった", "飛び出し", "罰", "幸せを感じているから", "逆らった罪", "恨んでいる"]):
+            return "生日虚伪温柔怨忿、冲出家门酿祸自责与幸福引发惩罚梦魇悖论", "悲怆揭示十岁生日当天父母突然停工温柔反激起多年被冷落之委屈怨忿；冲出家门致父母寻女遇祸；幸坚信唯有惩罚才能赎罪，“越幸福越被死去的父母斥责贪图享乐”之心理死结"
+        if any(k in ja for k in ["不幸でいること", "誰よりも幸せ", "縛られる必要はない", "解決方法", "殺すことだ"]):
+            return "拒绝以不幸赎罪、摆脱沉重束缚宣告与彻底杀死心魔抉择", "极其震撼有力地展现雄二断然斥责“不幸即是赎罪”之荒谬；誓言自己深爱的女人必须比谁都幸福；郑重宣告幸不必再背负过去，指引面对恶梦的唯一行动——彻底将心魔杀死"
+        return "小岭幸线闪回袒露、母亲心结剖白与斩除恶梦宣战深层润色", "全面润色小岭幸线铁链梦魇惊醒、体温拥抱抚慰、车祸现场创伤闪回袒露与雄二下达诛杀心魔之策，消除机翻生硬语病与人称错位"
+
     # sac_027 specific (Fruit of Grisaia Sachi Route Chapter 27: morning nightmares, Makina intuition & uncle Akihiro entrusts factory key)
     if (55436 <= line_no <= 55715) or sid.startswith("grisaia1/sac_027#"):
         if any(k in ja for k in ["無防備", "悪夢", "うなされて", "顔を洗ったら", "見たくない夢"]):
@@ -6394,6 +6406,32 @@ def build_report():
                 "section": "灰色的果实·小岭幸线晨魇突袭、天台探源与伯父托付工坊钥匙 (`grisaia1/sac_027`)"
             })
 
+    # sac_028 (Milestone 2 Chapter 107 - Fruit of Grisaia Sachi Route Chapter 28: chained nightmare, flashback breakdown & resolve to kill the nightmare)
+    for lno in range(55716, 55956):
+        ja_raw = ja_lines[lno - 1]
+        cn_raw = cn_lines[lno - 1]
+        sid = ja_raw.split("\t")[0] if "\t" in ja_raw else f"L{lno}"
+        ja_txt = ja_raw.split("\t")[1] if "\t" in ja_raw else ja_raw
+        cn_txt = cn_raw.split("\t")[1] if "\t" in cn_raw else cn_raw
+
+        old_txt = cn_txt
+        if git_base_cn and len(git_base_cn) >= lno:
+            head_raw = git_base_cn[lno - 1]
+            old_txt = head_raw.split("\t")[1] if "\t" in head_raw else head_raw
+
+        if cn_txt != old_txt and cn_txt.strip() != "":
+            cat, reason = classify_change(lno, sid, ja_txt, old_txt, cn_txt)
+            diffs.append({
+                "lno": lno,
+                "sid": sid,
+                "ja": ja_txt,
+                "old": old_txt,
+                "new": cn_txt,
+                "cat": cat,
+                "reason": reason,
+                "section": "灰色的果实·小岭幸线铁链梦魇惊醒、创伤闪回袒露与彻底斩断噩梦之策 (`grisaia1/sac_028`)"
+            })
+
     print(f"Total indexed modifications: {len(diffs)}")
 
     # Build Markdown
@@ -7870,6 +7908,15 @@ def build_report():
     md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
     md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
     for idx, d in enumerate(sac_027_diffs, 1):
+        md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
+    md.append("\n---\n")
+
+    # Section 164 - Milestone 2: Fruit of Grisaia Sachi Route Chapter 28
+    sac_028_diffs = [d for d in diffs if d["section"].startswith("灰色的果实·小岭幸线铁链梦魇惊醒、创伤闪回袒露与彻底斩断噩梦之策")]
+    md.append(f"## 一百六十四、 灰色的果实·小岭幸线铁链梦魇惊醒、创伤闪回袒露与彻底斩断噩梦之策 (`grisaia1/sac_028`，共 {len(sac_028_diffs)} 条) —— 【里程碑二·个人线第一百零六章】\n")
+    md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
+    md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
+    for idx, d in enumerate(sac_028_diffs, 1):
         md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
     md.append("\n---\n")
 
