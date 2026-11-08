@@ -14,6 +14,18 @@ def escape_md(text):
     return text.replace("|", "\\|").replace("\n", " ").replace("\r", "")
 
 def classify_change(line_no, sid, ja, old_cn, new_cn):
+    # yum_004b_p2 specific (Fruit of Grisaia Yumiko Route Chapter 4b Part 2: deception revealed, classroom blood slash & exile to Mihama)
+    if (60635 <= line_no <= 61281):
+        if any(k in ja for k in ["遊園地", "海外旅行", "謝罪", "許して", "日記", "色が入って"]):
+            return "道昭影帝级忏悔洗脑、游乐园谎言与由美子心房彻底失守", "深刻刻画道昭编造孤独悔恨谎言乞求原谅、游乐园家庭约定与由美子在日记本祈愿永远幸福的心碎悲剧"
+        if any(k in ja for k in ["跡継ぎ", "急逝", "操りやすそう", "洗脳プログラム", "愛人", "興信所"]):
+            return "佣人茶水间密谈泄漏天机、男嗣暴毙真相与专家级洗脑操纵术暴光", "极具悬疑震撼力地揭露继承人男婴猝死、道昭雇侦探与心理专家设计洗脑攻心剧本将由美子当成提线木偶备胎的彻骨真相"
+        if any(k in ja for k in ["果実", "アイジンノコ", "飯田", "カッター", "血", "切り裂", "スローモーション", "破片"]):
+            return "熟烂果实坠地、名媛伪善面具撕裂与教室血腥美工刀暴走", "高燃而心碎地展现由美子目睹同伴虚伪嘴脸、如枯枝腐烂果实坠地，美工刀怒斩饭田可奈子右掌、鲜血喷溅慢镜头的绝对经典名场面"
+        if any(k in ja for k in ["狂笑", "滑稽", "示談", "籠城", "収容施設", "高い塀", "美浜学園", "笑い"]):
+            return "教室癫狂凄厉狂笑、一个月闭门绝食与押送海边高墙美滨收容所", "震撼再现由美子在血泊中绝望狂笑神明不公、道昭巨资封口和解、由美子一个月闭门绝食后被押送至弥漫海潮气息的高墙绝密收容设施美滨学园的宿命起点"
+        return "由美子线血腥断罪与美滨学园起源篇全景深度润色", "全面清除机翻语病，淋漓尽致地展现由美子被欺骗利用之剧痛、美工刀血溅教室与放逐美滨之宿命起点"
+
     # yum_004b_p1 specific (Fruit of Grisaia Yumiko Route Chapter 4b Part 1: return to Tokyo, fake father trap & thawing guilt)
     if (59987 <= line_no <= 60634):
         if any(k in ja for k in ["四季", "忘れよう", "夕立", "雷鳴", "記憶障害", "北関東"]):
@@ -6816,6 +6828,32 @@ def build_report():
                 "section": "灰色的果实·榊由美子线四季怨尤伤痕、黑车豪门使者、洋馆慈父陷阱与心防消融愧疚 (`grisaia1/yum_004b` Part 1)"
             })
 
+    # yum_004b_p2 (Milestone 2 Chapter 118 - Fruit of Grisaia Yumiko Route Chapter 4b Part 2: deception revealed, classroom blood slash & exile to Mihama)
+    for lno in range(60635, 61282):
+        ja_raw = ja_lines[lno - 1]
+        cn_raw = cn_lines[lno - 1]
+        sid = ja_raw.split("\t")[0] if "\t" in ja_raw else f"L{lno}"
+        ja_txt = ja_raw.split("\t")[1] if "\t" in ja_raw else ja_raw
+        cn_txt = cn_raw.split("\t")[1] if "\t" in cn_raw else cn_raw
+
+        old_txt = cn_txt
+        if git_base_cn and len(git_base_cn) >= lno:
+            head_raw = git_base_cn[lno - 1]
+            old_txt = head_raw.split("\t")[1] if "\t" in head_raw else head_raw
+
+        if cn_txt != old_txt and cn_txt.strip() != "":
+            cat, reason = classify_change(lno, sid, ja_txt, old_txt, cn_txt)
+            diffs.append({
+                "lno": lno,
+                "sid": sid,
+                "ja": ja_txt,
+                "old": old_txt,
+                "new": cn_txt,
+                "cat": cat,
+                "reason": reason,
+                "section": "灰色的果实·榊由美子线洗脑剧本暴光、腐烂果实坠地、教室血溅美工刀与放逐美滨起点 (`grisaia1/yum_004b` Part 2)"
+            })
+
     print(f"Total indexed modifications: {len(diffs)}")
 
     # Build Markdown
@@ -8391,6 +8429,15 @@ def build_report():
     md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
     md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
     for idx, d in enumerate(yum_004b_p1_diffs, 1):
+        md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
+    md.append("\n---\n")
+
+    # Section 175 - Milestone 2: Fruit of Grisaia Yumiko Route Chapter 4b Part 2
+    yum_004b_p2_diffs = [d for d in diffs if d["section"].startswith("灰色的果实·榊由美子线洗脑剧本暴光")]
+    md.append(f"## 一百七十五、 灰色的果实·榊由美子线洗脑剧本暴光、腐烂果实坠地、教室血溅美工刀与放逐美滨起点 (`grisaia1/yum_004b` Part 2，共 {len(yum_004b_p2_diffs)} 条) —— 【里程碑二·个人线第一百一十七章】\n")
+    md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
+    md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
+    for idx, d in enumerate(yum_004b_p2_diffs, 1):
         md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
     md.append("\n---\n")
 
