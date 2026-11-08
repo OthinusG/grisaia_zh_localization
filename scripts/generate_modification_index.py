@@ -14,6 +14,16 @@ def escape_md(text):
     return text.replace("|", "\\|").replace("\n", " ").replace("\r", "")
 
 def classify_change(line_no, sid, ja, old_cn, new_cn):
+    # sac_020 specific (Fruit of Grisaia Sachi Route Chapter 20: JB Ferrari secret meeting, Chizuru blueprints negotiation & Sachi 3rd floor desperation)
+    if (53462 <= line_no <= 53641) or sid.startswith("grisaia1/sac_020#"):
+        if any(k in ja for k in ["１０分前", "ドイツ人", "モッサリヘアー", "ジュリア", "スープ", "家族"]):
+            return "JB法拉利密会、养母唯一家人真情吐露与炸药药水调配", "雄二提前会晤JB，坦诚为让幸解开心锁愿全力以赴；称JB为麻子之后唯一信赖的家人，JB热泪盈眶以养母孝心笑纳，答应筹备东滨电铁情报、直升机游览票与爆破药水"
+        if any(k in ja for k in ["千鶴", "乙女", "浮気", "常任理事", "月のモノ", "マンガ", "用具室"]):
+            return "千鹤更衣少女娇嗔、知事千金常任理事交涉与蓝图黑话", "雄二不敲门突入校长室调侃约会出轨，千鹤慌乱娇嗔；借用知事千金常任理事特权批准行动，纠正将工程黑话'漫画（蓝图图纸）'机翻为漫画书的严重错误，借用操场用具室备战"
+        if any(k in ja for k in ["三階", "鬼気迫る", "校舎の構造", "良い子でいなければいけない"]):
+            return "三楼走廊疯狂翻阅、纵火旧法失效与好孩子咒缚绝境", "幸为达成消除考试委托在三楼搬来海量书籍疯狂翻阅寻找方案，面对美滨庞大现代钢筋混凝土建筑深感旧日纵火手段失效，在好孩子绝望咒缚下陷入极度专注"
+        return "幸线JB法拉利密谈、千鹤蓝图交涉与幸绝望苦思深度润色", "消除机翻生硬语病，精确刻画雄二对JB真挚深沉的家人之爱、千鹤的反差萌与幸走向崩溃临界点的压迫感"
+
     # sac_019 specific (Fruit of Grisaia Sachi Route Chapter 19: Dave action figure, dorm secret summit, test elimination request & box cutter alliance)
     if (52986 <= line_no <= 53461) or sid.startswith("grisaia1/sac_019#"):
         if any(k in ja for k in ["デイブ教授", "マグロマン", "アルゼンチンバックブリーカー", "老兵", "縫合"]):
@@ -6058,6 +6068,32 @@ def build_report():
                 "section": "灰色的果实·小岭幸线日常积木崩解、消除测验危机与由美子美工刀盟约 (`grisaia1/sac_019`)"
             })
 
+    # sac_020 (Milestone 2 Chapter 98 - Fruit of Grisaia Sachi Route Chapter 20: JB Ferrari secret meeting, Chizuru blueprints negotiation & Sachi 3rd floor desperation)
+    for lno in range(53462, 53642):
+        ja_raw = ja_lines[lno - 1]
+        cn_raw = cn_lines[lno - 1]
+        sid = ja_raw.split("\t")[0] if "\t" in ja_raw else f"L{lno}"
+        ja_txt = ja_raw.split("\t")[1] if "\t" in ja_raw else ja_raw
+        cn_txt = cn_raw.split("\t")[1] if "\t" in cn_raw else cn_raw
+
+        old_txt = cn_txt
+        if git_base_cn and len(git_base_cn) >= lno:
+            head_raw = git_base_cn[lno - 1]
+            old_txt = head_raw.split("\t")[1] if "\t" in head_raw else head_raw
+
+        if cn_txt != old_txt:
+            cat, reason = classify_change(lno, sid, ja_txt, old_txt, cn_txt)
+            diffs.append({
+                "lno": lno,
+                "sid": sid,
+                "ja": ja_txt,
+                "old": old_txt,
+                "new": cn_txt,
+                "cat": cat,
+                "reason": reason,
+                "section": "灰色的果实·小岭幸线JB法拉利密谈、千鹤蓝图交涉与幸绝望苦思 (`grisaia1/sac_020`)"
+            })
+
     print(f"Total indexed modifications: {len(diffs)}")
 
     # Build Markdown
@@ -7453,6 +7489,15 @@ def build_report():
     md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
     md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
     for idx, d in enumerate(sac_019_diffs, 1):
+        md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
+    md.append("\n---\n")
+
+    # Section 155 - Milestone 2: Fruit of Grisaia Sachi Route Chapter 20
+    sac_020_diffs = [d for d in diffs if d["section"].startswith("灰色的果实·小岭幸线JB法拉利密谈、千鹤蓝图交涉与幸绝望苦思")]
+    md.append(f"## 一百五十五、 灰色的果实·小岭幸线JB法拉利密谈、千鹤蓝图交涉与幸绝望苦思 (`grisaia1/sac_020`，共 {len(sac_020_diffs)} 条) —— 【里程碑二·个人线第九十七章】\n")
+    md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
+    md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
+    for idx, d in enumerate(sac_020_diffs, 1):
         md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
     md.append("\n---\n")
 
