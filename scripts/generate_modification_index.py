@@ -14,6 +14,20 @@ def escape_md(text):
     return text.replace("|", "\\|").replace("\n", " ").replace("\r", "")
 
 def classify_change(line_no, sid, ja, old_cn, new_cn):
+    # sac_009_old Part 3 specific (Fruit of Grisaia Sachi Route Chapter 9 Part 3: ICU Frankenstein shock, Masaya mother Katsuoman trigger, Good child switch, Niigata middle school, Nakano Hitomi bullying and slave contract, school arson)
+    if (49383 <= line_no <= 50223) or (sid.startswith("grisaia1/sac_009_old#") and any(k in ja for k in ["カツオマン", "ささみ", "フランケンシュタイン", "中野", "仁美", "灯油", "マッチ", "火災", "テスト"])):
+        if any(k in ja for k in ["フランケンシュタイン", "集中治療室", "酸素マスク", "包帯", "管", "嘔吐", "吐き気"]):
+            return "ICU重症监护室与弗兰肯斯坦惨烈冲击", "幸目睹母亲全身插满管线如科学怪人般昏迷，引发剧烈反胃呕吐与严重应激反应，确诊极度创伤应激障碍"
+        if any(k in ja for k in ["カツオマン", "ささみ", "雅也", "ニンギョー", "カチリ", "スイッチ"]):
+            return "街头母子训诫与好孩子绝对开关拨动", "目睹母亲以“不听话坏孩子会被所有人抛弃”训诫雅也，幸顿悟自身“大罪”，心中“好孩子绝对服从”的心灵开关咔哒拨动"
+        if any(k in ja for k in ["新潟", "伯父", "菩薩", "秀才", "塾", "勉強", "転校"]):
+            return "新潟寄宿苦读与一年C班菩萨秀才", "寄居新潟伯父家，为当好孩子拼命苦读拔得头筹，有求必应被同学与老师誉为“一年C班活菩萨秀才”"
+        if any(k in ja for k in ["中野", "仁美", "掃除当番", "パシリ", "イジメ", "窓", "奴隷", "敬語"]):
+            return "中野仁美不良霸凌与全校通宵擦窗奴役契约", "仁美恶意指使大扫除，幸以“无受害自觉即非霸凌”淡定回应并通宵擦完学校所有窗户，震撼仁美并立下绝对奴隶誓约"
+        if any(k in ja for k in ["テスト", "無くして", "灯油", "マッチ", "火の手", "導火線", "火災", "サイレン", "火の海"]):
+            return "期中统考消除悖论与深夜火烧学校决行", "仁美下达消除期中考试绝命指令，幸无法作弊陷入绝境，毅然运来大批煤油点火引燃校舍，在警笛与火海中确信自己依然是好孩子"
+        return "幸线过去篇创伤终章深度润色", "消除机翻腔，生动还原幸扭曲顺从与自我消亡的心路历程，使角色行为逻辑完全闭环"
+
     # sac_009_old Part 2 specific (Fruit of Grisaia Sachi Route Chapter 9 Part 2: Park games, shoe-kicking marriage test, Kazuki bus crash, 10th birthday rebellion, parents fatal accident)
     if (48542 <= line_no <= 49382) or (sid.startswith("grisaia1/sac_009_old#") and any(k in ja for k in ["カイリキ", "しぼりカス", "靴飛ばし", "鉄人レース", "トラック", "昭弘"])):
         if any(k in ja for k in ["カイリキ", "力比べ", "腕相撲", "男の子"]):
@@ -5636,6 +5650,32 @@ def build_report():
                 "section": "灰色的果实·小岭幸线公园铁人甩鞋婚约、一姬空难小雄心碎、十岁生日叛逆争吵与双亲车祸血色惨剧 (`grisaia1/sac_009_old` Part 2)"
             })
 
+    # sac_009_old Part 3 (Milestone 2 Chapter 87 - Fruit of Grisaia Sachi Route Chapter 9 Part 3: ICU trauma, Katsuoman good child trigger, Nakano Hitomi slave contract, school arson)
+    for lno in range(49383, 50224):
+        ja_raw = ja_lines[lno - 1]
+        cn_raw = cn_lines[lno - 1]
+        sid = ja_raw.split("\t")[0] if "\t" in ja_raw else f"L{lno}"
+        ja_txt = ja_raw.split("\t")[1] if "\t" in ja_raw else ja_raw
+        cn_txt = cn_raw.split("\t")[1] if "\t" in cn_raw else cn_raw
+
+        old_txt = cn_txt
+        if git_base_cn and len(git_base_cn) >= lno:
+            head_raw = git_base_cn[lno - 1]
+            old_txt = head_raw.split("\t")[1] if "\t" in head_raw else head_raw
+
+        if cn_txt != old_txt:
+            cat, reason = classify_change(lno, sid, ja_txt, old_txt, cn_txt)
+            diffs.append({
+                "lno": lno,
+                "sid": sid,
+                "ja": ja_txt,
+                "old": old_txt,
+                "new": cn_txt,
+                "cat": cat,
+                "reason": reason,
+                "section": "灰色的果实·小岭幸线母子鲣鱼侠惊雷顿悟、好孩子绝对服从咒缚、中野仁美恶霸奴役与火烧校舍决意 (`grisaia1/sac_009_old` Part 3)"
+            })
+
     print(f"Total indexed modifications: {len(diffs)}")
 
     # Build Markdown
@@ -6932,6 +6972,15 @@ def build_report():
     md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
     md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
     for idx, d in enumerate(sac_009_old_p2_diffs, 1):
+        md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
+    md.append("\n---\n")
+
+    # Section 144 - Milestone 2: Fruit of Grisaia Sachi Route Chapter 9 Part 3
+    sac_009_old_p3_diffs = [d for d in diffs if d["section"].startswith("灰色的果实·小岭幸线母子鲣鱼侠惊雷顿悟、好孩子绝对服从咒缚、中野仁美恶霸奴役与火烧校舍决意")]
+    md.append(f"## 一百四十四、 灰色的果实·小岭幸线母子鲣鱼侠惊雷顿悟、好孩子绝对服从咒缚、中野仁美恶霸奴役与火烧校舍决意 (`grisaia1/sac_009_old` Part 3，共 {len(sac_009_old_p3_diffs)} 条) —— 【里程碑二·个人线第八十六章】\n")
+    md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
+    md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
+    for idx, d in enumerate(sac_009_old_p3_diffs, 1):
         md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
     md.append("\n---\n")
 
