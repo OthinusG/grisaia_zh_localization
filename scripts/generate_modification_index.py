@@ -14,6 +14,16 @@ def escape_md(text):
     return text.replace("|", "\\|").replace("\n", " ").replace("\r", "")
 
 def classify_change(line_no, sid, ja, old_cn, new_cn):
+    # sac_021 specific (Fruit of Grisaia Sachi Route Chapter 21: fertilizer explosive delivery, Yumiko gardening banter & 4AM classroom vigil)
+    if (53642 <= line_no <= 53760) or sid.startswith("grisaia1/sac_021#"):
+        if any(k in ja for k in ["東浜電鉄", "藤見運送", "チワーッス", "肥料", "トラクター", "花壇"]):
+            return "藤见运输卡车卸货、化肥伪装爆药与天音全能拖拉机", "藤见运输送达大批硝酸铵化肥原料用于配制炸药，雄二以繁花似锦绿化运动为借口搪塞，天音豪言不需驾照带轮载具全能开；由美子嗅出恶臭质问"
+        if any(k in ja for k in ["定例会議", "腫れ物", "土いじり"]):
+            return "由美子例会暗语、触碰疮疤共识与泥土大业调侃", "由美子确认雄二接单意在解开课题答案，暗示女生们的智囊会议使命达成，以'侍弄泥土好好加油'打趣反将一军"
+        if any(k in ja for k in ["午前４時", "徹夜", "新聞の切り抜き", "エール", "近代的な建築物"]):
+            return "凌晨四点夜潜勘测、现代校舍难度与三楼孤灯剪报", "雄二深夜勘测美滨现代建筑结构耗尽心力，四点撞见幸伏案彻夜未眠，身旁散落现代建筑资料与火灾旧报纸，雄二心底默默送上无声应援"
+        return "幸线化肥爆药伪装、由美子暗中默契与四点孤灯应援深度润色", "消除机翻生硬语病，精确刻画雄二与美滨众人的心照不宣、特工级物资筹备与对幸孤独奋战的深切怜惜"
+
     # sac_020 specific (Fruit of Grisaia Sachi Route Chapter 20: JB Ferrari secret meeting, Chizuru blueprints negotiation & Sachi 3rd floor desperation)
     if (53462 <= line_no <= 53641) or sid.startswith("grisaia1/sac_020#"):
         if any(k in ja for k in ["１０分前", "ドイツ人", "モッサリヘアー", "ジュリア", "スープ", "家族"]):
@@ -6094,6 +6104,32 @@ def build_report():
                 "section": "灰色的果实·小岭幸线JB法拉利密谈、千鹤蓝图交涉与幸绝望苦思 (`grisaia1/sac_020`)"
             })
 
+    # sac_021 (Milestone 2 Chapter 99 - Fruit of Grisaia Sachi Route Chapter 21: fertilizer explosive delivery, Yumiko gardening banter & 4AM classroom vigil)
+    for lno in range(53642, 53761):
+        ja_raw = ja_lines[lno - 1]
+        cn_raw = cn_lines[lno - 1]
+        sid = ja_raw.split("\t")[0] if "\t" in ja_raw else f"L{lno}"
+        ja_txt = ja_raw.split("\t")[1] if "\t" in ja_raw else ja_raw
+        cn_txt = cn_raw.split("\t")[1] if "\t" in cn_raw else cn_raw
+
+        old_txt = cn_txt
+        if git_base_cn and len(git_base_cn) >= lno:
+            head_raw = git_base_cn[lno - 1]
+            old_txt = head_raw.split("\t")[1] if "\t" in head_raw else head_raw
+
+        if cn_txt != old_txt:
+            cat, reason = classify_change(lno, sid, ja_txt, old_txt, cn_txt)
+            diffs.append({
+                "lno": lno,
+                "sid": sid,
+                "ja": ja_txt,
+                "old": old_txt,
+                "new": cn_txt,
+                "cat": cat,
+                "reason": reason,
+                "section": "灰色的果实·小岭幸线化肥爆药伪装、由美子暗中默契与四点孤灯应援 (`grisaia1/sac_021`)"
+            })
+
     print(f"Total indexed modifications: {len(diffs)}")
 
     # Build Markdown
@@ -7498,6 +7534,15 @@ def build_report():
     md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
     md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
     for idx, d in enumerate(sac_020_diffs, 1):
+        md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
+    md.append("\n---\n")
+
+    # Section 156 - Milestone 2: Fruit of Grisaia Sachi Route Chapter 21
+    sac_021_diffs = [d for d in diffs if d["section"].startswith("灰色的果实·小岭幸线化肥爆药伪装、由美子暗中默契与四点孤灯应援")]
+    md.append(f"## 一百五十六、 灰色的果实·小岭幸线化肥爆药伪装、由美子暗中默契与四点孤灯应援 (`grisaia1/sac_021`，共 {len(sac_021_diffs)} 条) —— 【里程碑二·个人线第九十八章】\n")
+    md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
+    md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
+    for idx, d in enumerate(sac_021_diffs, 1):
         md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
     md.append("\n---\n")
 
