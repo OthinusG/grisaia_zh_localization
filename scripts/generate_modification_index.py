@@ -14,6 +14,32 @@ def escape_md(text):
     return text.replace("|", "\\|").replace("\n", " ").replace("\r", "")
 
 def classify_change(line_no, sid, ja, old_cn, new_cn):
+    # sac_009_old Part 1 specific (Fruit of Grisaia Sachi Route Chapter 9 Part 1: childhood factory home, parents working hard, Sachi wanting to be praised, Yuuji friendship)
+    if (47701 <= line_no <= 48541) or sid.startswith("grisaia1/sac_009_old#"):
+        if "金物細工" in ja or "町工場" in ja or "お日様の匂い" in ja or "オイルで化粧" in ja or "小口なもの" in ja:
+            return "町工场家庭背景与童年温馨", "父亲新潟五金加工与母亲神奈川町工场因缘相会，刻画阳光气息母亲与机油沾面微笑父亲，生动还原夫妻为病中幼幸推迟交货的父母深情"
+        if "サメさん" in ja or "たまごふりかけ" in ja or "ウィンナー" in ja or "オマケ" in ja or "贔屓" in ja:
+            return "买菜日常与童稚饮食偏好", "纠正'撒的鸡蛋'为鸡蛋拌饭素、修正肉店店主承蒙小岭家照顾生意的反转语病，还原小幸酷爱大鲨鱼与章鱼小香肠的纯真童心"
+        if "オルゴール" in ja or "エッチング" in ja or "結婚式" in ja or "幸せ" in ja or "ぎゅうにゅー" in ja:
+            return "八音盒婚礼旋律与童言天真誓约", "修正'洋葱先生'为玩具娃娃，生动还原父亲灵手修钟、八音盒结婚誓约曲与'幸'即'幸福'之寄托，小幸天真宣称长大会和爸妈结婚"
+        if "キャッチボール" in ja or "運動" in ja or "ホウキ" in ja or "掃除" in ja or "おてんば" in ja:
+            return "工坊打扫受夸与亲子嬉戏时光", "父亲打接球感叹小幸运动神经随母亲，小幸扫工坊获父母夸奖大奖状般赞誉，纠正'做家务'为工坊扫地，确立小幸'干活讨父母欢心'行动逻辑"
+        if "１００点" in ja or "通知表" in ja or "手巻きずし" in ja or "ご褒美" in ja or "模範" in ja:
+            return "满分喜悦、手卷寿司庆功与全优期待", "小幸首次算术测验考百分享受大餐，学期全优4分以上获手卷寿司奖励，父亲承诺买任何奖赏，小幸纯真回答'只要爸妈夸奖和寿司就满足'"
+        if "スペースシャトル" in ja or "金型" in ja or "取材" in ja or "注文" in ja or "鉛筆" in ja:
+            return "航天镜头轰动、工坊订单激增与冷饭长铅笔", "纠正'爸爸的娘家'为新潟老家，航天飞机透镜研磨轰动导致模具订单暴增，父母日夜赶工无法增员，生动刻画热气散去的冷盘与失去削短陪伴的长铅笔"
+        if "理科のテスト" in ja or "国語のテスト" in ja or "家政婦" in ja or "参観" in ja or "ゴミ箱" in ja:
+            return "家政妇代劳、陪伴剥夺与百分卷揉弃垃圾桶", "家政妇代开家长会无法填补空虚，小幸深夜苦等却因母亲赶去客户公司受挫，人生首次未获父母看一眼，百分卷揉弃垃圾桶的创伤隐痛"
+        if "ステーキ" in ja or "カレー" in ja or "キカイの音" in ja or "ワガママ" in ja or "誕生日" in ja:
+            return "九岁生日冷宴、咖喱任性哭诉与创伤之源", "纠正'撒娇'为任性（ワガママ），还原九岁生日小幸苦等至深夜哭诉'宁愿在没有机器声的家里全家吃咖喱也不要一个人吃牛排'，深陷祸及双亲自责"
+        if "５以外の数字" in ja or "終業式" in ja or "テントウ虫" in ja or "捨てられた" in ja or "ブランコ" in ja:
+            return "全优模范生落空与公园绝望避难", "小幸改换策略以全优5分与模范生拼命讨好，结业式再遭父亲忙碌搁置，绝望认定被父母厌弃，逃至附近公园秋千与瓢虫雕塑旁孤独彷徨"
+        if "何もしてない" in ja or "ジャングルジム" in ja or "風見雄二" in ja or "シャチ" in ja or "ユウくん" in ja:
+            return "公园初逢风见雄二、虎鲸空耳拳击与游乐决胜", "纠正'尤吉'为雄二、纠正雄二误听'小幸'为'虎鲸'引发小幸握拳暴揍梗，修正'不情不愿'为小雄乖乖陪伴，还原攀爬架与赛跑微弱险胜的棋逢对手"
+        if "お姉ちゃん" in ja or "カンシャ" in ja or "ありがとう" in ja or "さんせー" in ja:
+            return "感谢论共鸣、身教闭环与相伴相知之乐", "纠正'去感谢优君姐姐'为'赞同小雄姐姐的感激理论'，小雄复述一姬感恩幸福论，小幸以母亲教诲相呼应，彼此推心置腹了解互敬"
+        return "文本自然度与对话韵味润色优化", "重构生硬日式倒装与机械直译，润色为符合Galgame演出的自然中文"
+
     # sac_009 specific (Fruit of Grisaia Sachi Route: childhood parting memory, rooftop talk with Chizuru, Sachi life saver, JB yellow Ferrari file handover, Sachi dark room PTSD seizure)
     if (47457 <= line_no <= 47700) or sid.startswith("grisaia1/sac_009#"):
         if "突然の別れ" in ja or "活発さ" in ja or "人格" in ja or "命の恩人" in ja or "最後の一歩" in ja:
@@ -5538,6 +5564,32 @@ def build_report():
                 "section": "灰色的果实·小岭幸线天台立誓救赎恩人、JB密调档案与暗室重度PTSD闪回痉挛 (`grisaia1/sac_009`)"
             })
 
+    # sac_009_old Part 1 (Milestone 2 Chapter 85 - Fruit of Grisaia Sachi Route Chapter 9 Part 1: Childhood workshop memories, music box, 9th birthday tantrum, meeting young Yuuji in park)
+    for lno in range(47701, 48542):
+        ja_raw = ja_lines[lno - 1]
+        cn_raw = cn_lines[lno - 1]
+        sid = ja_raw.split("\t")[0] if "\t" in ja_raw else f"L{lno}"
+        ja_txt = ja_raw.split("\t")[1] if "\t" in ja_raw else ja_raw
+        cn_txt = cn_raw.split("\t")[1] if "\t" in cn_raw else cn_raw
+
+        old_txt = cn_txt
+        if git_base_cn and len(git_base_cn) >= lno:
+            head_raw = git_base_cn[lno - 1]
+            old_txt = head_raw.split("\t")[1] if "\t" in head_raw else head_raw
+
+        if cn_txt != old_txt:
+            cat, reason = classify_change(lno, sid, ja_txt, old_txt, cn_txt)
+            diffs.append({
+                "lno": lno,
+                "sid": sid,
+                "ja": ja_txt,
+                "old": old_txt,
+                "new": cn_txt,
+                "cat": cat,
+                "reason": reason,
+                "section": "灰色的果实·小岭幸线童年机油微笑与八音盒誓约、町工场订单激增孤独冷饭、九岁生日咖喱任性哭诉与公园初遇无为小雄 (`grisaia1/sac_009_old` Part 1)"
+            })
+
     print(f"Total indexed modifications: {len(diffs)}")
 
     # Build Markdown
@@ -6816,6 +6868,15 @@ def build_report():
     md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
     md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
     for idx, d in enumerate(sac_009_diffs, 1):
+        md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
+    md.append("\n---\n")
+
+    # Section 142 - Milestone 2: Fruit of Grisaia Sachi Route Chapter 9 Part 1
+    sac_009_old_p1_diffs = [d for d in diffs if d["section"].startswith("灰色的果实·小岭幸线童年机油微笑与八音盒誓约、町工场订单激增孤独冷饭、九岁生日咖喱任性哭诉与公园初遇无为小雄")]
+    md.append(f"## 一百四十二、 灰色的果实·小岭幸线童年机油微笑与八音盒誓约、町工场订单激增孤独冷饭、九岁生日咖喱任性哭诉与公园初遇无为小雄 (`grisaia1/sac_009_old` Part 1，共 {len(sac_009_old_p1_diffs)} 条) —— 【里程碑二·个人线第八十四章】\n")
+    md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
+    md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
+    for idx, d in enumerate(sac_009_old_p1_diffs, 1):
         md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
     md.append("\n---\n")
 
