@@ -14,6 +14,26 @@ def escape_md(text):
     return text.replace("|", "\\|").replace("\n", " ").replace("\r", "")
 
 def classify_change(line_no, sid, ja, old_cn, new_cn):
+    # sac_009_old Part 2 specific (Fruit of Grisaia Sachi Route Chapter 9 Part 2: Park games, shoe-kicking marriage test, Kazuki bus crash, 10th birthday rebellion, parents fatal accident)
+    if (48542 <= line_no <= 49382) or (sid.startswith("grisaia1/sac_009_old#") and any(k in ja for k in ["カイリキ", "しぼりカス", "靴飛ばし", "鉄人レース", "トラック", "昭弘"])):
+        if any(k in ja for k in ["カイリキ", "力比べ", "腕相撲", "男の子"]):
+            return "公园腕力比拼与怪力女调侃", "幸力气胜过雄二被戏称为怪力女，修正机翻僵硬语序，生动还原两人打成平手的童真打闹与雄二羞赧道歉"
+        if any(k in ja for k in ["しぼりカス", "姉貴", "天才", "出来損ない"]):
+            return "一姬天才光芒与残渣废料自嘲", "纠正机翻误译，精准还原雄二自轻为姐姐榨汁剩下的残渣废料、幸为其落泪驳斥绝非残渣的心灵触动"
+        if any(k in ja for k in ["鉄人レース", "逆上がり", "うんてい", "ブランコ"]):
+            return "公园铁人拉力赛与回环秋千对决", "修正机翻运动术语，准确翻译单杠后回环翻身（逆上がり）、云梯攀横渡（うんてい）与360度大风车回环无尽秋千"
+        if any(k in ja for k in ["靴飛ばし", "お嫁さん", "天気", "結婚"]):
+            return "甩鞋测卜婚期与纯稚婚约暗许", "精准还原甩鞋占卜晴雨与婚期，雄二鞋朝前早婚、幸鞋朝后晚婚十年，幸暗生情愫誓言十年后嫁给雄二的纯情萌动"
+        if any(k in ja for k in ["神様", "事故", "ピンチ", "助けて"]):
+            return "神明叩问与一姬遇难绝望神隐", "精准呈现一姬因校车翻坠事故身亡后雄二万念俱灰、断言神明绝不存在的心理重创，幸无法施救的自责与无力感"
+        if any(k in ja for k in ["誕生日", "１０歳", "味噌汁", "怒り", "赤黒い"]):
+            return "十岁生日怨怒爆发与任性决裂", "父母罕见歇业欲补偿十岁生日，长期受冷落的幸心结爆发咆哮“你们两个人自己去庆祝吧”，赤黑怒火与悲愤夺门而出"
+        if any(k in ja for k in ["トラック", "ブレーキ", "急ブレーキ", "血", "どうして", "跳ね飛ば"]):
+            return "飞来横祸卡车撞击与双亲血溅惨剧", "雨夜街头父母狂追，卡车紧急刹车失灵惨烈撞飞双亲，父亲当场毙命、母亲濒死呢喃“幸……为什么……”的致命心理创伤"
+        if any(k in ja for k in ["病院", "ベッド", "昭弘", "叔父"]):
+            return "白壁病房苏醒与昭弘伯父噩耗转达", "从昏迷中苏醒面对刺眼白壁，昭弘伯父面色凝重告知双亲双亡噩耗，幸的世界彻底崩塌"
+        return "幸线童年记忆关键剧情深度润色", "消除机翻腔，纠正人称与语意断句，使幸童年创伤闪回的文学感染力与角色心理轨迹完全契合"
+
     # sac_009_old Part 1 specific (Fruit of Grisaia Sachi Route Chapter 9 Part 1: childhood factory home, parents working hard, Sachi wanting to be praised, Yuuji friendship)
     if (47701 <= line_no <= 48541) or sid.startswith("grisaia1/sac_009_old#"):
         if "金物細工" in ja or "町工場" in ja or "お日様の匂い" in ja or "オイルで化粧" in ja or "小口なもの" in ja:
@@ -5590,6 +5610,32 @@ def build_report():
                 "section": "灰色的果实·小岭幸线童年机油微笑与八音盒誓约、町工场订单激增孤独冷饭、九岁生日咖喱任性哭诉与公园初遇无为小雄 (`grisaia1/sac_009_old` Part 1)"
             })
 
+    # sac_009_old Part 2 (Milestone 2 Chapter 86 - Fruit of Grisaia Sachi Route Chapter 9 Part 2: Park ironman, shoe kicking marriage test, Kazuki bus crash, 10th birthday rebellion, fatal truck accident)
+    for lno in range(48542, 49383):
+        ja_raw = ja_lines[lno - 1]
+        cn_raw = cn_lines[lno - 1]
+        sid = ja_raw.split("\t")[0] if "\t" in ja_raw else f"L{lno}"
+        ja_txt = ja_raw.split("\t")[1] if "\t" in ja_raw else ja_raw
+        cn_txt = cn_raw.split("\t")[1] if "\t" in cn_raw else cn_raw
+
+        old_txt = cn_txt
+        if git_base_cn and len(git_base_cn) >= lno:
+            head_raw = git_base_cn[lno - 1]
+            old_txt = head_raw.split("\t")[1] if "\t" in head_raw else head_raw
+
+        if cn_txt != old_txt:
+            cat, reason = classify_change(lno, sid, ja_txt, old_txt, cn_txt)
+            diffs.append({
+                "lno": lno,
+                "sid": sid,
+                "ja": ja_txt,
+                "old": old_txt,
+                "new": cn_txt,
+                "cat": cat,
+                "reason": reason,
+                "section": "灰色的果实·小岭幸线公园铁人甩鞋婚约、一姬空难小雄心碎、十岁生日叛逆争吵与双亲车祸血色惨剧 (`grisaia1/sac_009_old` Part 2)"
+            })
+
     print(f"Total indexed modifications: {len(diffs)}")
 
     # Build Markdown
@@ -6877,6 +6923,15 @@ def build_report():
     md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
     md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
     for idx, d in enumerate(sac_009_old_p1_diffs, 1):
+        md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
+    md.append("\n---\n")
+
+    # Section 143 - Milestone 2: Fruit of Grisaia Sachi Route Chapter 9 Part 2
+    sac_009_old_p2_diffs = [d for d in diffs if d["section"].startswith("灰色的果实·小岭幸线公园铁人甩鞋婚约、一姬空难小雄心碎、十岁生日叛逆争吵与双亲车祸血色惨剧")]
+    md.append(f"## 一百四十三、 灰色的果实·小岭幸线公园铁人甩鞋婚约、一姬空难小雄心碎、十岁生日叛逆争吵与双亲车祸血色惨剧 (`grisaia1/sac_009_old` Part 2，共 {len(sac_009_old_p2_diffs)} 条) —— 【里程碑二·个人线第八十五章】\n")
+    md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
+    md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
+    for idx, d in enumerate(sac_009_old_p2_diffs, 1):
         md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
     md.append("\n---\n")
 
