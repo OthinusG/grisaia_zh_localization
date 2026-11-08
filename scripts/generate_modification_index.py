@@ -14,6 +14,22 @@ def escape_md(text):
     return text.replace("|", "\\|").replace("\n", " ").replace("\r", "")
 
 def classify_change(line_no, sid, ja, old_cn, new_cn):
+    # mic_021 Part 2 specific (Michiru Route: Coffin Burial Ceremony Part 2 - Inner Persona Confrontation, Yumiko's Phone Call, Breakout from Coffin, Rainy Mountain Rescue & Dorm Return)
+    if (42986 <= line_no <= 43515) or sid.startswith("grisaia1/mic_021#"):
+        if "自分のために生きなさい" in ja or "誰かのためじゃなくて" in ja:
+            return "第二人格当头棒喝与'为了自己而活'灵魂唤醒", "第二人格斥责满糟蹋生命，命令她学会期待自己、珍惜自己，不为迎合他人而是为了自己真正活下去"
+        if "由美子" in new_cn or "電話" in ja or "これから幸せになろう" in ja or "一緒に生きよう" in ja:
+            return "断电手机幽灵来电与由美子真情告白跨界呼唤", "断电手机响起由美子跨界真情呼唤，誓言彼此不再孤单、从今往后一起抓住幸福并肩活下去"
+        if "過去の人" in ja or "天台少女" in ja or "本当の友情" in ja or "手から血" in ja:
+            return "天台自杀挚友幻影诀别、血拳砸棺与真正友情领悟", "满斩断对天台少女死之殉葬的依恋，领悟真正的友情是珍惜当下相伴的同伴，挥舞血拳撞破棺盖破土而出"
+        if "１１時間" in ja or "雨" in ja or "プランＢ" in ja or "発芽" in ja or "指先" in ja:
+            return "十一小时暴雨苦候、幼芽破土与向死而生深情救赎", "雄二在暴雨泥泞中苦候十一小时等候满破棺重生；满如幼芽探出指尖重获生机，二人相拥泣不成声"
+        if "海岸" in ja or "トイレ" in ja or "堤防" in ja or "モジモジ" in ja or "丑三つ時" in ja:
+            return "十一小时憋尿搞笑修罗场与深夜公厕百米冲刺", "雄二打趣丑时三刻出土如丧尸，面对十一小时憋尿危机毒舌提议投奔大海，满羞愤咆哮百米冲刺公厕"
+        if "背中を流して" in ja or "ごっこじゃない" in ja or "キスして" in ja or "抱きつ" in ja:
+            return "浴室赤诚搓背温存、背后相拥与非过家家真实之吻", "深夜归校后满赤裸闯入淋浴间为雄二搓背温存，背后紧紧相拥索求真正情侣之吻，感情彻底升华圆满"
+        return "文本自然度与对话韵味润色优化", "重构生硬日式倒装与机械直译，润色为符合Galgame演出的自然中文"
+
     # mic_021 Part 1 specific (Michiru Route: Coffin Burial Ceremony, Inner Monologue, Dorm Girls' Farewell Letters & Terror in Deep Earth)
     if (42456 <= line_no <= 42985) or sid.startswith("grisaia1/mic_021#"):
         if "榊は本当にいいんだな" in ja:
@@ -5020,6 +5036,32 @@ def build_report():
                 "section": "灰色的果实·松岛满线棺木活埋仪式、同伴绝笔信笺与地底绝望死之恐惧 (`grisaia1/mic_021` Part 1)"
             })
 
+    # mic_021 Part 2 (Milestone 2 Chapter 72 - Michiru Route: Inner Persona Confrontation, Yumiko's Phone Call, Breakout from Coffin, Rainy Mountain Rescue & Dorm Return)
+    for lno in range(42986, 43516):
+        ja_raw = ja_lines[lno - 1]
+        cn_raw = cn_lines[lno - 1]
+        sid = ja_raw.split("\t")[0] if "\t" in ja_raw else f"L{lno}"
+        ja_txt = ja_raw.split("\t")[1] if "\t" in ja_raw else ja_raw
+        cn_txt = cn_raw.split("\t")[1] if "\t" in cn_raw else cn_raw
+
+        old_txt = cn_txt
+        if git_base_cn and len(git_base_cn) >= lno:
+            head_raw = git_base_cn[lno - 1]
+            old_txt = head_raw.split("\t")[1] if "\t" in head_raw else head_raw
+
+        if cn_txt != old_txt:
+            cat, reason = classify_change(lno, sid, ja_txt, old_txt, cn_txt)
+            diffs.append({
+                "lno": lno,
+                "sid": sid,
+                "ja": ja_txt,
+                "old": old_txt,
+                "new": cn_txt,
+                "cat": cat,
+                "reason": reason,
+                "section": "灰色的果实·松岛满线二重人格唤醒、断电幽灵电话、破土重生与暴雨深情救赎 (`grisaia1/mic_021` Part 2)"
+            })
+
     print(f"Total indexed modifications: {len(diffs)}")
 
     # Build Markdown
@@ -6181,6 +6223,15 @@ def build_report():
     md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
     md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
     for idx, d in enumerate(mic_021_p1_diffs, 1):
+        md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
+    md.append("\n---\n")
+
+    # Section 129 - Milestone 2: Michiru Route Chapter 21 Part 2
+    mic_021_p2_diffs = [d for d in diffs if d["section"].startswith("灰色的果实·松岛满线二重人格唤醒、断电幽灵电话、破土重生与暴雨深情救赎")]
+    md.append(f"## 一百二十九、 灰色的果实·松岛满线二重人格唤醒、断电幽灵电话、破土重生与暴雨深情救赎 (`grisaia1/mic_021` Part 2，共 {len(mic_021_p2_diffs)} 条) —— 【里程碑二·个人线第七十二章】\n")
+    md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
+    md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
+    for idx, d in enumerate(mic_021_p2_diffs, 1):
         md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
     md.append("\n---\n")
 
