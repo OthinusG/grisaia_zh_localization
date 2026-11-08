@@ -14,6 +14,18 @@ def escape_md(text):
     return text.replace("|", "\\|").replace("\n", " ").replace("\r", "")
 
 def classify_change(line_no, sid, ja, old_cn, new_cn):
+    # sac_012 specific (Fruit of Grisaia Sachi Route Chapter 12: Dating announcement to girls, childhood friend cheek kiss revelation, rooftop 3 vows & Mad Hatter vs Michiru-sama banter)
+    if (50349 <= line_no <= 50703) or sid.startswith("grisaia1/sac_012#"):
+        if any(k in ja for k in ["彼女", "付き合", "幼馴染み", "ツンデレ", "キス", "チュウ", "奇跡"]):
+            return "宣告交往与青梅竹马名分公开", "雄二当众宣告与幸交往，公开儿时公园相伴与脸颊亲吻旧约，满因青梅竹马压制傲娇而无奈退让"
+        if any(k in ja for k in ["幸せに", "彼氏", "文句", "異議", "勝ち", "大人ぶっ"]):
+            return "雄二守护誓言与美滨同伴释怀承认", "雄二立下倾尽所有让幸幸福的誓言彻底折服众人，莳菜宣告幸大获全胜，由美子体悟霸道之下的治愈"
+        if any(k in ja for k in ["心がけ", "性欲", "理由", "金属バット", "見ていて"]):
+            return "天台情侣三大约法与思考理由开导", "雄二在天台提出多相处、学会探究他人行动理由与观察不完美自我生活方式的三项原则，引导幸走出盲从戒律"
+        if any(k in ja for k in ["サッチ", "サッちゃん", "ユウくん", "マッドハッター", "みちる様", "胸", "成長"]):
+            return "萨奇昵称乌龙、悠君呼唤与胸围爆笑调侃", "修正机翻混淆萨奇与小幸的重大错误，还原疯帽子与满大人代号爆笑对比，以及莳菜对琪露琪露胸部停滞生长的绝妙调侃"
+        return "幸线交往确立与天台互动深度润色", "消除机翻腔，纠正人称与语意断句，使雄二的担当与幸的严谨纯真及同伴欢脱对话完全契合原作声线"
+
     # sac_011 specific (Fruit of Grisaia Sachi Route Chapter 11: Sachi waking from nightmare in hospital, 4 girls caring, Amane warmth, breast size joke)
     if (50286 <= line_no <= 50348) or sid.startswith("grisaia1/sac_011#"):
         if any(k in ja for k in ["うなされてる", "汗", "起こし", "お父…さん", "ごめんなさい", "嫌"]):
@@ -5748,6 +5760,32 @@ def build_report():
                 "section": "灰色的果实·小岭幸线病榻恶梦惊醒、美滨四女温情守护、傲娇黑发与器量如胸调侃 (`grisaia1/sac_011`)"
             })
 
+    # sac_012 (Milestone 2 Chapter 90 - Fruit of Grisaia Sachi Route Chapter 12: Dating announcement, rooftop 3 vows, nickname comedy)
+    for lno in range(50349, 50704):
+        ja_raw = ja_lines[lno - 1]
+        cn_raw = cn_lines[lno - 1]
+        sid = ja_raw.split("\t")[0] if "\t" in ja_raw else f"L{lno}"
+        ja_txt = ja_raw.split("\t")[1] if "\t" in ja_raw else ja_raw
+        cn_txt = cn_raw.split("\t")[1] if "\t" in cn_raw else cn_raw
+
+        old_txt = cn_txt
+        if git_base_cn and len(git_base_cn) >= lno:
+            head_raw = git_base_cn[lno - 1]
+            old_txt = head_raw.split("\t")[1] if "\t" in head_raw else head_raw
+
+        if cn_txt != old_txt:
+            cat, reason = classify_change(lno, sid, ja_txt, old_txt, cn_txt)
+            diffs.append({
+                "lno": lno,
+                "sid": sid,
+                "ja": ja_txt,
+                "old": old_txt,
+                "new": cn_txt,
+                "cat": cat,
+                "reason": reason,
+                "section": "灰色的果实·小岭幸线宣告交往青梅契约、天台三大约法与疯帽子萨奇称呼趣谈 (`grisaia1/sac_012`)"
+            })
+
     print(f"Total indexed modifications: {len(diffs)}")
 
     # Build Markdown
@@ -7071,6 +7109,15 @@ def build_report():
     md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
     md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
     for idx, d in enumerate(sac_011_diffs, 1):
+        md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
+    md.append("\n---\n")
+
+    # Section 147 - Milestone 2: Fruit of Grisaia Sachi Route Chapter 12
+    sac_012_diffs = [d for d in diffs if d["section"].startswith("灰色的果实·小岭幸线宣告交往青梅契约、天台三大约法与疯帽子萨奇称呼趣谈")]
+    md.append(f"## 一百四十七、 灰色的果实·小岭幸线宣告交往青梅契约、天台三大约法与疯帽子萨奇称呼趣谈 (`grisaia1/sac_012`，共 {len(sac_012_diffs)} 条) —— 【里程碑二·个人线第八十九章】\n")
+    md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
+    md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
+    for idx, d in enumerate(sac_012_diffs, 1):
         md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
     md.append("\n---\n")
 
