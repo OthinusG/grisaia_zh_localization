@@ -14,6 +14,18 @@ def escape_md(text):
     return text.replace("|", "\\|").replace("\n", " ").replace("\r", "")
 
 def classify_change(line_no, sid, ja, old_cn, new_cn):
+    # sac_ep specific (Fruit of Grisaia Sachi Route Epilogue: hospital visit, park date, proposal & radiant smile)
+    if (56834 <= line_no <= 56941) or sid.startswith("grisaia1/sac_ep#"):
+        if any(k in ja for k in ["病室", "エクストリームスポーツ", "みちる様", "マキちゃん", "看護師", "お見舞い"]):
+            return "午后病房温煦探母、学园趣事分享与母女心意相通", "温暖呈现阳光倾泻的午后病房，幸再无阴霾，生动讲述学园极限棒球与满大人扑垒趣事；与护士亲切招呼，相约日后经常探望、细水长流"
+        if any(k in ja for k in ["公園", "ブランコ", "貸し切り", "誕生日プレゼント", "ワガママ", "引っ張って"]):
+            return "包场公园重温童心、秋千拉拽嬉闹与平凡幸福真谛", "雄二兑现生日补办承诺，与幸包场童年公园；幸娇憨认真规划玩到午夜，拽着雄二奔跑嬉闹；雄二在琐碎温存中领悟平凡幸福的真谛"
+        if any(k in ja for k in ["結婚", "プロポーズ", "提案", "卒業したら", "養っていける", "子供を育てる"]):
+            return "比双亲更幸福之罚、美滨毕业结婚求婚与执手余生期盼", "雄二反思比双亲更幸福才是真正的救赎；情不自禁向幸正式求婚，承诺哪怕辞职也足以养活幸，郑重期盼美滨毕业后与幸携手一生"
+        if any(k in ja for k in ["お断りします", "靴を飛ばせる", "眩しい笑顔", "名前", "夏は終わらない"]):
+            return "踢鞋胜负戏谑拒绝、烈阳失色灿烂笑靥与真幸之名定格", "幸合上双眼后调皮严拒求婚，娇嗔悠君踢鞋还未胜过自己；在盛夏阳光下绽放出令烈日失色的绝美笑靥，完美定格与“幸”之美名浑然天成的人生新篇"
+        return "小岭幸线尾声午后探母、公园求婚戏谑与真幸笑颜深层润色", "全面润色小岭幸线尾声病房探母、公园包场约会、毕业求婚被戏谑拒绝与烈日笑靥，彻底消除机翻生硬语病与人称错位"
+
     # sac_bad specific (Fruit of Grisaia Sachi Route Bad End: crossroad tragedy, fatal collision & eternal damnation)
     if (56699 <= line_no <= 56833) or sid.startswith("grisaia1/sac_bad#"):
         if any(k in ja for k in ["トラック", "撥ね飛ばされ", "血だまり", "ブレーキ", "スキール音", "衝突"]):
@@ -6508,6 +6520,32 @@ def build_report():
                 "section": "灰色的果实·小岭幸线坏结局十字路口惨剧、母亲临终质问重现与永世罪罚认领 (`grisaia1/sac_bad`)"
             })
 
+    # sac_ep (Milestone 2 Chapter 110 - Fruit of Grisaia Sachi Route Epilogue: hospital visit, park date, proposal & radiant smile)
+    for lno in range(56834, 56942):
+        ja_raw = ja_lines[lno - 1]
+        cn_raw = cn_lines[lno - 1]
+        sid = ja_raw.split("\t")[0] if "\t" in ja_raw else f"L{lno}"
+        ja_txt = ja_raw.split("\t")[1] if "\t" in ja_raw else ja_raw
+        cn_txt = cn_raw.split("\t")[1] if "\t" in cn_raw else cn_raw
+
+        old_txt = cn_txt
+        if git_base_cn and len(git_base_cn) >= lno:
+            head_raw = git_base_cn[lno - 1]
+            old_txt = head_raw.split("\t")[1] if "\t" in head_raw else head_raw
+
+        if cn_txt != old_txt and cn_txt.strip() != "":
+            cat, reason = classify_change(lno, sid, ja_txt, old_txt, cn_txt)
+            diffs.append({
+                "lno": lno,
+                "sid": sid,
+                "ja": ja_txt,
+                "old": old_txt,
+                "new": cn_txt,
+                "cat": cat,
+                "reason": reason,
+                "section": "灰色的果实·小岭幸线尾声午后病房探母、公园童心包场、毕业求婚戏谑拒绝与真幸笑颜定格 (`grisaia1/sac_ep`)"
+            })
+
     print(f"Total indexed modifications: {len(diffs)}")
 
     # Build Markdown
@@ -8011,6 +8049,15 @@ def build_report():
     md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
     md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
     for idx, d in enumerate(sac_bad_diffs, 1):
+        md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
+    md.append("\n---\n")
+
+    # Section 167 - Milestone 2: Fruit of Grisaia Sachi Route Epilogue
+    sac_ep_diffs = [d for d in diffs if d["section"].startswith("灰色的果实·小岭幸线尾声午后病房探母、公园童心包场、毕业求婚戏谑拒绝与真幸笑颜定格")]
+    md.append(f"## 一百六十七、 灰色的果实·小岭幸线尾声午后病房探母、公园童心包场、毕业求婚戏谑拒绝与真幸笑颜定格 (`grisaia1/sac_ep`，共 {len(sac_ep_diffs)} 条) —— 【里程碑二·个人线第一百零九章】\n")
+    md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
+    md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
+    for idx, d in enumerate(sac_ep_diffs, 1):
         md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
     md.append("\n---\n")
 
