@@ -14,8 +14,20 @@ def escape_md(text):
     return text.replace("|", "\\|").replace("\n", " ").replace("\r", "")
 
 def classify_change(line_no, sid, ja, old_cn, new_cn):
+    # yum_004a_p2 specific (Fruit of Grisaia Yumiko Route Chapter 4a Part 2: mother breakdown, tabloid scandal & rooftop thunderstorm trauma)
+    if (59194 <= line_no <= 59986):
+        if any(k in ja for k in ["退院", "カーテン", "青空", "屋上", "空を見", "快復"]):
+            return "康复出院在即、拉开窗帘看天与短暂美好希望", "生动刻画美佐子神智好转、约定离开前看天，以及由美子重拾生活希望与对恶劣亲戚的小小反抗"
+        if any(k in ja for k in ["記者", "傘", "隠し子", "男子誕生", "週刊誌", "離婚"]):
+            return "阴魂不散狗仔拦截、八卦周刊私生子暴击与离婚协议噩耗", "细腻再现小报记者油腻纠缠、曝光东滨急行社长私生子诞生与正室离婚协议，将由美子狠狠踹入绝望深渊"
+        if any(k in ja for k in ["津田", "顧問弁護士", "羽交い締め", "病室", "不在", "主治医"]):
+            return "榊家顾问律师突袭逼门、粗暴制服由美子与病房人去楼空", "凌厉刻画道昭顾问律师津田的虚伪冷酷、两名壮汉粗暴架住由美子，以及发现病床空无一人的极端恐慌"
+        if any(k in ja for k in ["雨音", "屋上", "どなた", "黒い雨", "フラッシュ", "溶けて"]):
+            return "雷暴天台寻母惊魂、母亲失智遗忘陌路与绝望雷雨坍塌", "极具文学震撼力地重现母亲在狂暴雷雨天台彻底精神崩溃、认不出由美子为谁，被如货物般架走隔离，以及由美子在轰鸣雷暴中瘫倒在混凝土冰雨里的绝望创伤"
+        return "由美子线身世篇后篇全景深度润色", "全面清除机翻生硬语病，淋漓尽致地展现由美子童年雷雨创伤与母亲失智之悲剧根源"
+
     # yum_004a_p1 specific (Fruit of Grisaia Yumiko Route Chapter 4a Part 1: childhood trauma, mirror greeting, mother breakdown & rooftop hair-cutting)
-    if (58400 <= line_no <= 59193) or sid.startswith("grisaia1/yum_004a#"):
+    if (58400 <= line_no <= 59193):
         if any(k in ja for k in ["地面を焦がす", "わんちゃん", "ごめんなさい", "日傘"]):
             return "酷暑烈日古道、幼年喋喋不休与母亲习惯性谢罪", "生动呈现六岁由美子天真雀跃的依恋与母亲美佐子宛如瓷娃娃般冰冷麻木的侧脸与谢罪心结"
         if any(k in ja for k in ["仕事人間", "自宅", "鏡の前", "あいさつ", "東浜電鉄", "跡継ぎ"]):
@@ -6740,6 +6752,32 @@ def build_report():
                 "section": "灰色的果实·榊由美子线幼年身世溯源、镜前问候演练、母亲崩溃谢罪与天台断发血泪 (`grisaia1/yum_004a` Part 1)"
             })
 
+    # yum_004a_p2 (Milestone 2 Chapter 116 - Fruit of Grisaia Yumiko Route Chapter 4a Part 2: mother breakdown, tabloid scandal & rooftop thunderstorm trauma)
+    for lno in range(59194, 59987):
+        ja_raw = ja_lines[lno - 1]
+        cn_raw = cn_lines[lno - 1]
+        sid = ja_raw.split("\t")[0] if "\t" in ja_raw else f"L{lno}"
+        ja_txt = ja_raw.split("\t")[1] if "\t" in ja_raw else ja_raw
+        cn_txt = cn_raw.split("\t")[1] if "\t" in cn_raw else cn_raw
+
+        old_txt = cn_txt
+        if git_base_cn and len(git_base_cn) >= lno:
+            head_raw = git_base_cn[lno - 1]
+            old_txt = head_raw.split("\t")[1] if "\t" in head_raw else head_raw
+
+        if cn_txt != old_txt and cn_txt.strip() != "":
+            cat, reason = classify_change(lno, sid, ja_txt, old_txt, cn_txt)
+            diffs.append({
+                "lno": lno,
+                "sid": sid,
+                "ja": ja_txt,
+                "old": old_txt,
+                "new": cn_txt,
+                "cat": cat,
+                "reason": reason,
+                "section": "灰色的果实·榊由美子线母亲康复希望破灭、狗仔私生子丑闻暴击、顾问律师逼门与雷雨天台崩溃 (`grisaia1/yum_004a` Part 2)"
+            })
+
     print(f"Total indexed modifications: {len(diffs)}")
 
     # Build Markdown
@@ -8297,6 +8335,15 @@ def build_report():
     md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
     md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
     for idx, d in enumerate(yum_004a_p1_diffs, 1):
+        md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
+    md.append("\n---\n")
+
+    # Section 173 - Milestone 2: Fruit of Grisaia Yumiko Route Chapter 4a Part 2
+    yum_004a_p2_diffs = [d for d in diffs if d["section"].startswith("灰色的果实·榊由美子线母亲康复希望破灭")]
+    md.append(f"## 一百七十三、 灰色的果实·榊由美子线母亲康复希望破灭、狗仔私生子丑闻暴击、顾问律师逼门与雷雨天台崩溃 (`grisaia1/yum_004a` Part 2，共 {len(yum_004a_p2_diffs)} 条) —— 【里程碑二·个人线第一百一十五章】\n")
+    md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
+    md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
+    for idx, d in enumerate(yum_004a_p2_diffs, 1):
         md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
     md.append("\n---\n")
 
