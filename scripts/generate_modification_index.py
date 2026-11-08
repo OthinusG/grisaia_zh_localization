@@ -14,6 +14,20 @@ def escape_md(text):
     return text.replace("|", "\\|").replace("\n", " ").replace("\r", "")
 
 def classify_change(line_no, sid, ja, old_cn, new_cn):
+    # mic_022 specific (Michiru Route: Second Persona Backstory, Flight to Gardena California, Thousand Cranes & Mother Heartfelt Farewell)
+    if (43516 <= line_no <= 44109) or sid.startswith("grisaia1/mic_022#"):
+        if "千羽鶴" in ja or "折" in ja or ("お父さん" in ja and "母" in ja):
+            return "父亲病榻暗藏千羽纸鹤与生母悲痛自责释怀", "第二人格生父生前默默折叠千羽鹤祈祷奇迹；生母痛悔未尽保护之责崩溃大哭，第二人格泪拥母亲释怀执念"
+        if "絨毯" in ja or "ガーデナ" in ja or "カルフォルニア" in ja or "輸送機" in ja:
+            return "跨洋军机空降加州与雄二机智地毯推销诈电定位", "雄二调用CIRS运输机空降加州加德纳，化身三流地毯推销员通过骚扰电话精准定位第二人格生母住所"
+        if "鏡" in ja or "ジョギング" in ja or "交代" in ja or "５キロ" in ja:
+            return "晨跑约会镜面凝视技巧与第二人格唤出约定", "雄二与满五公里晨跑约会，通过凝视穿衣镜的心理技巧自如唤出第二人格并许诺实现其最后心愿"
+        if "交通事故" in ja or "植物状態" in ja or "ドナー" in ja or "心臓" in ja:
+            return "第二人格车祸植物人惨烈身世与器官捐赠真相揭示", "第二人格详述其赴美车祸沦为植物人、亲睹父母崩溃、为免父母痛苦祈求安乐死并将心脏移植给满的悲绝过往"
+        if "ゾンビ" in ja or "粉" in ja or "帰隊" in ja or "蒔菜" in ja:
+            return "满土中归来宿舍清晨爆笑修罗场与同伴拥泣", "满自土中归队诚惶诚恐报到，天音尖叫丧尸出土、莳菜索要驱邪粉抱头痛哭，宿舍同伴深情拥吻冰释前嫌"
+        return "文本自然度与对话韵味润色优化", "重构生硬日式倒装与机械直译，润色为符合Galgame演出的自然中文"
+
     # mic_021 Part 2 specific (Michiru Route: Coffin Burial Ceremony Part 2 - Inner Persona Confrontation, Yumiko's Phone Call, Breakout from Coffin, Rainy Mountain Rescue & Dorm Return)
     if (42986 <= line_no <= 43515) or sid.startswith("grisaia1/mic_021#"):
         if "自分のために生きなさい" in ja or "誰かのためじゃなくて" in ja:
@@ -5062,6 +5076,32 @@ def build_report():
                 "section": "灰色的果实·松岛满线二重人格唤醒、断电幽灵电话、破土重生与暴雨深情救赎 (`grisaia1/mic_021` Part 2)"
             })
 
+    # mic_022 (Milestone 2 Chapter 73 - Michiru Route: Second Persona Backstory, Flight to Gardena California, Thousand Cranes & Mother Heartfelt Farewell)
+    for lno in range(43516, 44110):
+        ja_raw = ja_lines[lno - 1]
+        cn_raw = cn_lines[lno - 1]
+        sid = ja_raw.split("\t")[0] if "\t" in ja_raw else f"L{lno}"
+        ja_txt = ja_raw.split("\t")[1] if "\t" in ja_raw else ja_raw
+        cn_txt = cn_raw.split("\t")[1] if "\t" in cn_raw else cn_raw
+
+        old_txt = cn_txt
+        if git_base_cn and len(git_base_cn) >= lno:
+            head_raw = git_base_cn[lno - 1]
+            old_txt = head_raw.split("\t")[1] if "\t" in head_raw else head_raw
+
+        if cn_txt != old_txt:
+            cat, reason = classify_change(lno, sid, ja_txt, old_txt, cn_txt)
+            diffs.append({
+                "lno": lno,
+                "sid": sid,
+                "ja": ja_txt,
+                "old": old_txt,
+                "new": cn_txt,
+                "cat": cat,
+                "reason": reason,
+                "section": "灰色的果实·松岛满线二重人格身世揭秘、加州跨洋奔赴、千羽纸鹤与生母释怀诀别 (`grisaia1/mic_022`)"
+            })
+
     print(f"Total indexed modifications: {len(diffs)}")
 
     # Build Markdown
@@ -6232,6 +6272,15 @@ def build_report():
     md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
     md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
     for idx, d in enumerate(mic_021_p2_diffs, 1):
+        md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
+    md.append("\n---\n")
+
+    # Section 130 - Milestone 2: Michiru Route Chapter 22
+    mic_022_diffs = [d for d in diffs if d["section"].startswith("灰色的果实·松岛满线二重人格身世揭秘、加州跨洋奔赴、千羽纸鹤与生母释怀诀别")]
+    md.append(f"## 一百三十、 灰色的果实·松岛满线二重人格身世揭秘、加州跨洋奔赴、千羽纸鹤与生母释怀诀别 (`grisaia1/mic_022`，共 {len(mic_022_diffs)} 条) —— 【里程碑二·个人线第七十三章】\n")
+    md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
+    md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
+    for idx, d in enumerate(mic_022_diffs, 1):
         md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
     md.append("\n---\n")
 
