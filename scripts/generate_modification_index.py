@@ -14,6 +14,18 @@ def escape_md(text):
     return text.replace("|", "\\|").replace("\n", " ").replace("\r", "")
 
 def classify_change(line_no, sid, ja, old_cn, new_cn):
+    # yum_004a_p1 specific (Fruit of Grisaia Yumiko Route Chapter 4a Part 1: childhood trauma, mirror greeting, mother breakdown & rooftop hair-cutting)
+    if (58400 <= line_no <= 59193) or sid.startswith("grisaia1/yum_004a#"):
+        if any(k in ja for k in ["地面を焦がす", "わんちゃん", "ごめんなさい", "日傘"]):
+            return "酷暑烈日古道、幼年喋喋不休与母亲习惯性谢罪", "生动呈现六岁由美子天真雀跃的依恋与母亲美佐子宛如瓷娃娃般冰冷麻木的侧脸与谢罪心结"
+        if any(k in ja for k in ["仕事人間", "自宅", "鏡の前", "あいさつ", "東浜電鉄", "跡継ぎ"]):
+            return "冷酷父亲形同虚设、镜前苦练问候与豪门重男轻女原罪", "深刻刻画道昭的绝对冷漠、由美子在镜前绝望练习问候，以及东滨电铁门阀视女嗣为弃子的封建原罪"
+        if any(k in ja for k in ["実家", "入院", "心療内科", "と志枝", "スケッチブック", "風景画"]):
+            return "寄居外公外婆家、登志枝婆婆温情与孤僻素描避难所", "细腻描摹寄人篱下的窒息争吵、老女仆登志枝唯一的慈爱，以及由美子逃入黑白素描本的自闭防御"
+        if any(k in ja for k in ["記者", "二宮", "男の子", "胸", "カッター", "黒い束"]):
+            return "狗仔八卦骚扰、母亲绝望诛心诅咒与天台美工刀断发狂乱", "高燃而心碎地重现美佐子『你要是个男孩该多好』的毁灭性打击、由美子挤压胸脯憎恨女躯、天台美工刀疯狂割断长发的名场面"
+        return "由美子线幼年身世篇前篇全景深度润色", "全面清除机翻语病生硬，淋漓尽致地还原由美子童年身世与断发绝望的情感冲击力"
+
     # yum_003 specific (Fruit of Grisaia Yumiko Route Chapter 3: girls summit interrogation, private contract & railway bridge thunderstorm)
     if (57670 <= line_no <= 58399) or sid.startswith("grisaia1/yum_003#"):
         if any(k in ja for k in ["任務", "河川敷", "写生", "クロロホルム", "椅子", "拘束"]):
@@ -6702,6 +6714,32 @@ def build_report():
                 "section": "灰色的果实·榊由美子线女子峰会审讯、私人护卫契约缔结与高架桥雷雨依偎 (`grisaia1/yum_003`)"
             })
 
+    # yum_004a_p1 (Milestone 2 Chapter 115 - Fruit of Grisaia Yumiko Route Chapter 4a Part 1: childhood trauma & rooftop hair-cutting)
+    for lno in range(58400, 59194):
+        ja_raw = ja_lines[lno - 1]
+        cn_raw = cn_lines[lno - 1]
+        sid = ja_raw.split("\t")[0] if "\t" in ja_raw else f"L{lno}"
+        ja_txt = ja_raw.split("\t")[1] if "\t" in ja_raw else ja_raw
+        cn_txt = cn_raw.split("\t")[1] if "\t" in cn_raw else cn_raw
+
+        old_txt = cn_txt
+        if git_base_cn and len(git_base_cn) >= lno:
+            head_raw = git_base_cn[lno - 1]
+            old_txt = head_raw.split("\t")[1] if "\t" in head_raw else head_raw
+
+        if cn_txt != old_txt and cn_txt.strip() != "":
+            cat, reason = classify_change(lno, sid, ja_txt, old_txt, cn_txt)
+            diffs.append({
+                "lno": lno,
+                "sid": sid,
+                "ja": ja_txt,
+                "old": old_txt,
+                "new": cn_txt,
+                "cat": cat,
+                "reason": reason,
+                "section": "灰色的果实·榊由美子线幼年身世溯源、镜前问候演练、母亲崩溃谢罪与天台断发血泪 (`grisaia1/yum_004a` Part 1)"
+            })
+
     print(f"Total indexed modifications: {len(diffs)}")
 
     # Build Markdown
@@ -8250,6 +8288,15 @@ def build_report():
     md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
     md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
     for idx, d in enumerate(yum_003_diffs, 1):
+        md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
+    md.append("\n---\n")
+
+    # Section 172 - Milestone 2: Fruit of Grisaia Yumiko Route Chapter 4a Part 1
+    yum_004a_p1_diffs = [d for d in diffs if d["section"].startswith("灰色的果实·榊由美子线幼年身世溯源、镜前问候演练、母亲崩溃谢罪与天台断发血泪")]
+    md.append(f"## 一百七十二、 灰色的果实·榊由美子线幼年身世溯源、镜前问候演练、母亲崩溃谢罪与天台断发血泪 (`grisaia1/yum_004a` Part 1，共 {len(yum_004a_p1_diffs)} 条) —— 【里程碑二·个人线第一百一十四章】\n")
+    md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
+    md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
+    for idx, d in enumerate(yum_004a_p1_diffs, 1):
         md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
     md.append("\n---\n")
 
