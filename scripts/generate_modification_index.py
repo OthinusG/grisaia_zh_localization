@@ -14,6 +14,18 @@ def escape_md(text):
     return text.replace("|", "\\|").replace("\n", " ").replace("\r", "")
 
 def classify_change(line_no, sid, ja, old_cn, new_cn):
+    # sac_013 specific (Fruit of Grisaia Sachi Route Chapter 13: Chizuru negotiation, Sachi spy scope stalking, Michiru room cleanup & daruma bondage, Yuuji taking over chores & Amane ojisan face)
+    if (50704 <= line_no <= 51104) or sid.startswith("grisaia1/sac_013#"):
+        if any(k in ja for k in ["勝敗", "引き金", "使い捨て", "春寺", "モッサリ頭", "未完成"]):
+            return "校长室交涉谈判与千鹤恋爱点拨", "雄二以翘腿狂妄姿态向千鹤报告交往，千鹤识破其不安并点拨未完成的人类正是在学园互助中填补空缺"
+        if any(k in ja for k in ["スパイスコープ", "単眼鏡", "胸の大きさ", "６枚", "観察"]):
+            return "幸特工望远镜死板盯梢与胸围触感识别", "幸严格执行观察雄二原则动用KGB特工侦查镜，雄二飞扑压制凭触感与气味瞬间辨认幸，纠正机翻'香料望远镜'大错"
+        if any(k in ja for k in ["ビニール紐", "縛り", "亀の甲羅", "ダルマ", "北海道"]):
+            return "满房间杂物捆扎与幸龟甲缚达摩惩戒", "雄二战术手法利落打包傲娇漫画，幸趁机将满五花大绑成龟甲缚达摩不倒翁，冷嘲满的段子比二月北海道还冷"
+        if any(k in ja for k in ["奴隷", "エロイこと", "中年オヤジ", "カチョー", "パンツ", "乾燥機", "浮気"]):
+            return "传话游戏奴隶误会与天音课长脸狂想", "满传话走样致莳菜脑补奴隶，天音露出发情母狗兼油腻中年课长脸，幸天然呆建议内裤烘干与出轨大度妻子预言"
+        return "幸线日常替班实验与宿舍欢脱互动润色", "消除机翻腔，纠正人称与语意断句，使雄二反向代劳意图、幸的天然死板与同伴的喜剧日常完全契合原作声线"
+
     # sac_012 specific (Fruit of Grisaia Sachi Route Chapter 12: Dating announcement to girls, childhood friend cheek kiss revelation, rooftop 3 vows & Mad Hatter vs Michiru-sama banter)
     if (50349 <= line_no <= 50703) or sid.startswith("grisaia1/sac_012#"):
         if any(k in ja for k in ["彼女", "付き合", "幼馴染み", "ツンデレ", "キス", "チュウ", "奇跡"]):
@@ -5786,6 +5798,32 @@ def build_report():
                 "section": "灰色的果实·小岭幸线宣告交往青梅契约、天台三大约法与疯帽子萨奇称呼趣谈 (`grisaia1/sac_012`)"
             })
 
+    # sac_013 (Milestone 2 Chapter 91 - Fruit of Grisaia Sachi Route Chapter 13: Chizuru negotiation, spy scope stalking, room cleanup daruma, chores takeover)
+    for lno in range(50704, 51105):
+        ja_raw = ja_lines[lno - 1]
+        cn_raw = cn_lines[lno - 1]
+        sid = ja_raw.split("\t")[0] if "\t" in ja_raw else f"L{lno}"
+        ja_txt = ja_raw.split("\t")[1] if "\t" in ja_raw else ja_raw
+        cn_txt = cn_raw.split("\t")[1] if "\t" in cn_raw else cn_raw
+
+        old_txt = cn_txt
+        if git_base_cn and len(git_base_cn) >= lno:
+            head_raw = git_base_cn[lno - 1]
+            old_txt = head_raw.split("\t")[1] if "\t" in head_raw else head_raw
+
+        if cn_txt != old_txt:
+            cat, reason = classify_change(lno, sid, ja_txt, old_txt, cn_txt)
+            diffs.append({
+                "lno": lno,
+                "sid": sid,
+                "ja": ja_txt,
+                "old": old_txt,
+                "new": cn_txt,
+                "cat": cat,
+                "reason": reason,
+                "section": "灰色的果实·小岭幸线校长室恋爱谈判、KGB特工镜盯梢、满龟甲缚达摩与天音课长脸狂想 (`grisaia1/sac_013`)"
+            })
+
     print(f"Total indexed modifications: {len(diffs)}")
 
     # Build Markdown
@@ -7118,6 +7156,15 @@ def build_report():
     md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
     md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
     for idx, d in enumerate(sac_012_diffs, 1):
+        md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
+    md.append("\n---\n")
+
+    # Section 148 - Milestone 2: Fruit of Grisaia Sachi Route Chapter 13
+    sac_013_diffs = [d for d in diffs if d["section"].startswith("灰色的果实·小岭幸线校长室恋爱谈判、KGB特工镜盯梢、满龟甲缚达摩与天音课长脸狂想")]
+    md.append(f"## 一百四十八、 灰色的果实·小岭幸线校长室恋爱谈判、KGB特工镜盯梢、满龟甲缚达摩与天音课长脸狂想 (`grisaia1/sac_013`，共 {len(sac_013_diffs)} 条) —— 【里程碑二·个人线第九十章】\n")
+    md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
+    md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
+    for idx, d in enumerate(sac_013_diffs, 1):
         md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
     md.append("\n---\n")
 
