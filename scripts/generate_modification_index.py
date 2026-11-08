@@ -14,6 +14,20 @@ def escape_md(text):
     return text.replace("|", "\\|").replace("\n", " ").replace("\r", "")
 
 def classify_change(line_no, sid, ja, old_cn, new_cn):
+    # sac_003 specific (Fruit of Grisaia Sachi Route: Multigrade class, M/slave banter, curry cooking, Yumiko eavesdropping, 9PM sleep & good girl)
+    if (45966 <= line_no <= 46440) or sid.startswith("grisaia1/sac_003#"):
+        if "良い子" in ja or "ＳＬＥＥＰ" in ja or "眠" in ja or "似ていた" in ja or "約束" in ja:
+            return "九点就寝清规戒律、乖孩子创伤共鸣与同类照镜之救赎契约", "幸恪守九点就寝只为成为'乖孩子'，雄二深刻洞悉幸以紧凑日程掩盖虚无之同类心境；二人立下暑假约定，天音廊下守护少女情怀"
+        if "牝奴隷" in ja or "ドＳ" in ja or "ケダモノ" in ja or "捌け口" in ja or "全てをお見せ" in ja:
+            return "天台受虐母奴隶误解、抖Ｓ属性戏言与全员下流妄想大骚乱", "幸直白援引成人杂志称自身为受虐母奴隶、调侃雄二为抖Ｓ；放学宣称展示全部肉体当雄二泄压口引爆全员跳脚误会"
+        if "ニンジン" in ja or "カレー" in ja or "頭に手" in ja or "褒め" in ja:
+            return "切胡萝卜洗脑歌、特制爱心酸奶咖喱与摸头夸奖温馨救赎", "幸烹调特制咖喱哼唱莳菜洗脑歌，雄二大快朵颐并温柔轻抚幸之发顶兑现夸奖诺言，幸心神震颤温婉浅笑"
+        if "アヒル" in ja or "ボイラー室" in ja or "ドア" in ja or "尻餅" in ja or "由美子" in ja:
+            return "小黄鸭头上顶、由美子暗中窃听摔跌屁股墩与正人君子辩白", "幸头顶塑料小黄鸭邀约混浴，雄二拉开门抓包由美子猫在角落偷听摔成屁股墩，由美子傲娇质询雄二非分之想"
+        if "複式学級" in ja or "因数分解" in ja or "遺伝子" in ja or "満点" in ja or "問題" in ja:
+            return "复式学级因式分解教学、优秀基因本能臣服与出题考官任命", "美滨学园全校合并复式教学，幸秒解二次函数压轴题；满与莳菜惊叹幸之全能基因并任命雄二为出题刁难考官"
+        return "文本自然度与对话韵味润色优化", "重构生硬日式倒装与机械直译，润色为符合Galgame演出的自然中文"
+
     # sac_002 specific (Fruit of Grisaia Sachi Route: Morning podium spanking, Chizuru office, Sachi bento & JB Ferrari arrival)
     if (45624 <= line_no <= 45965) or sid.startswith("grisaia1/sac_002#"):
         if "跳ね馬" in ja or "マフラー" in ja or "ジャガイモ" in ja or "ＪＢ" in ja or "キンパツ" in ja:
@@ -5298,6 +5312,32 @@ def build_report():
                 "section": "灰色的果实·小岭幸线讲台轻度调情过家家、悬绳擦外墙往事、雄二沙包玩偶与法拉利跃马会晤 (`grisaia1/sac_002`)"
             })
 
+    # sac_003 (Milestone 2 Chapter 79 - Fruit of Grisaia Sachi Route: Multigrade class, M/slave banter, curry cooking, Yumiko eavesdropping, 9PM sleep & good girl)
+    for lno in range(45966, 46441):
+        ja_raw = ja_lines[lno - 1]
+        cn_raw = cn_lines[lno - 1]
+        sid = ja_raw.split("\t")[0] if "\t" in ja_raw else f"L{lno}"
+        ja_txt = ja_raw.split("\t")[1] if "\t" in ja_raw else ja_raw
+        cn_txt = cn_raw.split("\t")[1] if "\t" in cn_raw else cn_raw
+
+        old_txt = cn_txt
+        if git_base_cn and len(git_base_cn) >= lno:
+            head_raw = git_base_cn[lno - 1]
+            old_txt = head_raw.split("\t")[1] if "\t" in head_raw else head_raw
+
+        if cn_txt != old_txt:
+            cat, reason = classify_change(lno, sid, ja_txt, old_txt, cn_txt)
+            diffs.append({
+                "lno": lno,
+                "sid": sid,
+                "ja": ja_txt,
+                "old": old_txt,
+                "new": cn_txt,
+                "cat": cat,
+                "reason": reason,
+                "section": "灰色的果实·小岭幸线复式学级解难题、母奴隶下流大骚乱、爱心酸奶咖喱、由美子暗听与九点就寝乖孩子 (`grisaia1/sac_003`)"
+            })
+
     print(f"Total indexed modifications: {len(diffs)}")
 
     # Build Markdown
@@ -6522,6 +6562,15 @@ def build_report():
     md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
     md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
     for idx, d in enumerate(sac_002_diffs, 1):
+        md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
+    md.append("\n---\n")
+
+    # Section 136 - Milestone 2: Fruit of Grisaia Sachi Route Chapter 3
+    sac_003_diffs = [d for d in diffs if d["section"].startswith("灰色的果实·小岭幸线复式学级解难题、母奴隶下流大骚乱、爱心酸奶咖喱、由美子暗听与九点就寝乖孩子")]
+    md.append(f"## 一百三十六、 灰色的果实·小岭幸线复式学级解难题、母奴隶下流大骚乱、爱心酸奶咖喱、由美子暗听与九点就寝乖孩子 (`grisaia1/sac_003`，共 {len(sac_003_diffs)} 条) —— 【里程碑二·个人线第七十八章】\n")
+    md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
+    md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
+    for idx, d in enumerate(sac_003_diffs, 1):
         md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
     md.append("\n---\n")
 
