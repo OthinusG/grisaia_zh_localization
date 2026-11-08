@@ -14,6 +14,20 @@ def escape_md(text):
     return text.replace("|", "\\|").replace("\n", " ").replace("\r", "")
 
 def classify_change(line_no, sid, ja, old_cn, new_cn):
+    # mic_023 specific (Michiru Route: Epilogue - Two Souls in One Body, Tsundere Quiz & Yuuji Love Bluff)
+    if (44110 <= line_no <= 44185) or sid.startswith("grisaia1/mic_023#"):
+        if "この手" in ja or "好きだぞ" in ja or "嬉しいです" in ja:
+            return "雄二虚晃一枪告白脱困与机翻'通电'荒谬误译修正", "修复机翻将雄二脱困花招'この手'荒诞直译为'这双手还能通几次电'；满本体与第二人格因雄二告白娇羞争风吃醋"
+        if "ツンデレ" in ja or "当てて" in ja or "大好きなんだからね" in ja:
+            return "双重人格傲娇猜谜与'人家才没有最喜欢你'逆向告白", "双重人格向雄二发起傲娇模仿大猜谜，逆向傲娇台词情深意切，雄二无法辨别陷入甜蜜修罗场"
+        if "天井裏" in ja or "宝物" in ja or "屋根裏" in ja:
+            return "天花板夹层秘宝隐匿揭秘与双人格释怀互助契约", "第二人格道破当年并未丢弃宝物箱而是藏于阁楼夹层；二人格立下互为挚友、携手报恩扶持的一生契约"
+        if "境界線" in ja or "交代" in ja or "ハンバーガー" in ja:
+            return "二重人格共存日常拌嘴与界线模糊自如切换", "满与第二人格共用身体甜蜜斗嘴，界线模糊自如切换，雄二面对双份傲娇甜蜜告饶"
+        if "奇妙な少女二人" in ja or "幕を閉じる" in ja or "羽根" in ja or "物語" in ja:
+            return "奇妙少女物语圆满落幕与向阳而生哲思升华", "以人类背无羽翼需脚踏实地前行为喻，为两位奇妙少女并肩走向未来的物语写下圆满哲思结语"
+        return "文本自然度与对话韵味润色优化", "重构生硬日式倒装与机械直译，润色为符合Galgame演出的自然中文"
+
     # mic_022 specific (Michiru Route: Second Persona Backstory, Flight to Gardena California, Thousand Cranes & Mother Heartfelt Farewell)
     if (43516 <= line_no <= 44109) or sid.startswith("grisaia1/mic_022#"):
         if "千羽鶴" in ja or "折" in ja or ("お父さん" in ja and "母" in ja):
@@ -5102,6 +5116,32 @@ def build_report():
                 "section": "灰色的果实·松岛满线二重人格身世揭秘、加州跨洋奔赴、千羽纸鹤与生母释怀诀别 (`grisaia1/mic_022`)"
             })
 
+    # mic_023 (Milestone 2 Chapter 74 - Michiru Route: Epilogue - Two Souls in One Body, Tsundere Quiz & Yuuji Love Bluff)
+    for lno in range(44110, 44186):
+        ja_raw = ja_lines[lno - 1]
+        cn_raw = cn_lines[lno - 1]
+        sid = ja_raw.split("\t")[0] if "\t" in ja_raw else f"L{lno}"
+        ja_txt = ja_raw.split("\t")[1] if "\t" in ja_raw else ja_raw
+        cn_txt = cn_raw.split("\t")[1] if "\t" in cn_raw else cn_raw
+
+        old_txt = cn_txt
+        if git_base_cn and len(git_base_cn) >= lno:
+            head_raw = git_base_cn[lno - 1]
+            old_txt = head_raw.split("\t")[1] if "\t" in head_raw else head_raw
+
+        if cn_txt != old_txt:
+            cat, reason = classify_change(lno, sid, ja_txt, old_txt, cn_txt)
+            diffs.append({
+                "lno": lno,
+                "sid": sid,
+                "ja": ja_txt,
+                "old": old_txt,
+                "new": cn_txt,
+                "cat": cat,
+                "reason": reason,
+                "section": "灰色的果实·松岛满线双重人格同体共存、傲娇大猜谜与雄二虚晃告白 (`grisaia1/mic_023`)"
+            })
+
     print(f"Total indexed modifications: {len(diffs)}")
 
     # Build Markdown
@@ -6281,6 +6321,15 @@ def build_report():
     md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
     md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
     for idx, d in enumerate(mic_022_diffs, 1):
+        md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
+    md.append("\n---\n")
+
+    # Section 131 - Milestone 2: Michiru Route Chapter 23
+    mic_023_diffs = [d for d in diffs if d["section"].startswith("灰色的果实·松岛满线双重人格同体共存、傲娇大猜谜与雄二虚晃告白")]
+    md.append(f"## 一百三十一、 灰色的果实·松岛满线双重人格同体共存、傲娇大猜谜与雄二虚晃告白 (`grisaia1/mic_023`，共 {len(mic_023_diffs)} 条) —— 【里程碑二·个人线第七十四章】\n")
+    md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
+    md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
+    for idx, d in enumerate(mic_023_diffs, 1):
         md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
     md.append("\n---\n")
 
