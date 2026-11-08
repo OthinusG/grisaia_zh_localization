@@ -14,6 +14,24 @@ def escape_md(text):
     return text.replace("|", "\\|").replace("\n", " ").replace("\r", "")
 
 def classify_change(line_no, sid, ja, old_cn, new_cn):
+    # mic_021 Part 1 specific (Michiru Route: Coffin Burial Ceremony, Inner Monologue, Dorm Girls' Farewell Letters & Terror in Deep Earth)
+    if (42456 <= line_no <= 42985) or sid.startswith("grisaia1/mic_021#"):
+        if "榊は本当にいいんだな" in ja:
+            return "由美子未写信确认机翻误译纠偏", "修复机翻将雄二向由美子确认是否确定不写信误译为'榊果然是个好孩子'的荒谬错误"
+        if "他人を第一に考える" in ja:
+            return "优先为他人着想否定极性颠倒纠偏", "修复机翻将满总是先为他人着想颠倒错译为'把自己放在他人之前'的极性倒错"
+        if "胸が乗ったのかな" in ja or "胸が大きかったら" in ja:
+            return "棺箱天音巨乳压沿感知与满自嘲胸围", "满在棺中感知天音胸口压在箱沿并自嘲若自己胸部更丰满就好了，修正机翻错误"
+        if "心地よかった" in ja or "全てが平坦" in ja or "闇が怖くなくなった" in ja or "膝枕" in ja:
+            return "深层潜意识虚无平静、黑暗为友与膝枕融化", "满在潜意识深渊中感受无痛无觉的平静，黑暗如挚友奉上膝枕相拥融化"
+        if "殺してやる" in ja or "愛する人に殺される" in ja or "死後の世界" in ja:
+            return "雄二亲手弑杀誓言、死之幸福与棺木催眠苏醒", "雄二誓言亲手弑杀满以逼出求生本能；满误认被爱人杀死乃至高幸福，随后在催眠与棺材搬运中苏醒"
+        if "棺桶" in ja or "火葬" in ja or "取り乱" in ja or "手紙" in ja or "爪の引っかかる音" in ja:
+            return "学园死讯宣告、同伴崩溃失态与棺木绝笔信", "雄二宣称满暴毙举行出殡，莳菜痛哭、由美子指甲抓挠棺盖绝望崩溃；全员为满置入绝笔信"
+        if "短縮の１" in ja or "携帯" in ja or "充電" in ja or "救いの糸" in ja or "怖い" in ja:
+            return "单向热线电话绝命通牒、电量耗尽救赎断绝与地底狂暴死之恐惧", "雄二留置手机给出求生热线通牒，电量告罄救赎之线断绝，满在万籁俱寂深土中爆发对死亡与虚无的极致惊恐痛哭"
+        return "文本自然度与对话韵味润色优化", "重构生硬日式倒装与机械直译，润色为符合Galgame演出的自然中文"
+
     # mic_020 specific (Michiru Route: Hospital Confrontation with Donor Persona, Homemade Hypnosis Apparatus & Sworn Vow against God)
     if (42238 <= line_no <= 42455) or sid.startswith("grisaia1/mic_020#"):
         if "白衣" in ja or "カルテ" in ja or "医局" in ja or "精神" in ja:
@@ -4976,6 +4994,32 @@ def build_report():
                 "section": "灰色的果实·松岛满线二重人格医院诀别揭秘、自制光学催眠装置与弑神起誓 (grisaia1/mic_020)"
             })
 
+    # mic_021 Part 1 (Milestone 2 Chapter 71 - Michiru Route: Coffin Burial Ceremony, Inner Monologue, Dorm Girls' Farewell Letters & Terror in Deep Earth)
+    for lno in range(42456, 42986):
+        ja_raw = ja_lines[lno - 1]
+        cn_raw = cn_lines[lno - 1]
+        sid = ja_raw.split("\t")[0] if "\t" in ja_raw else f"L{lno}"
+        ja_txt = ja_raw.split("\t")[1] if "\t" in ja_raw else ja_raw
+        cn_txt = cn_raw.split("\t")[1] if "\t" in cn_raw else cn_raw
+
+        old_txt = cn_txt
+        if git_base_cn and len(git_base_cn) >= lno:
+            head_raw = git_base_cn[lno - 1]
+            old_txt = head_raw.split("\t")[1] if "\t" in head_raw else head_raw
+
+        if cn_txt != old_txt:
+            cat, reason = classify_change(lno, sid, ja_txt, old_txt, cn_txt)
+            diffs.append({
+                "lno": lno,
+                "sid": sid,
+                "ja": ja_txt,
+                "old": old_txt,
+                "new": cn_txt,
+                "cat": cat,
+                "reason": reason,
+                "section": "灰色的果实·松岛满线棺木活埋仪式、同伴绝笔信笺与地底绝望死之恐惧 (`grisaia1/mic_021` Part 1)"
+            })
+
     print(f"Total indexed modifications: {len(diffs)}")
 
     # Build Markdown
@@ -6128,6 +6172,15 @@ def build_report():
     md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
     md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
     for idx, d in enumerate(mic_020_diffs, 1):
+        md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
+    md.append("\n---\n")
+
+    # Section 128 - Milestone 2: Michiru Route Chapter 21 Part 1
+    mic_021_p1_diffs = [d for d in diffs if d["section"].startswith("灰色的果实·松岛满线棺木活埋仪式、同伴绝笔信笺与地底绝望死之恐惧")]
+    md.append(f"## 一百二十八、 灰色的果实·松岛满线棺木活埋仪式、同伴绝笔信笺与地底绝望死之恐惧 (`grisaia1/mic_021` Part 1，共 {len(mic_021_p1_diffs)} 条) —— 【里程碑二·个人线第七十一章】\n")
+    md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
+    md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
+    for idx, d in enumerate(mic_021_p1_diffs, 1):
         md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
     md.append("\n---\n")
 
