@@ -14,6 +14,18 @@ def escape_md(text):
     return text.replace("|", "\\|").replace("\n", " ").replace("\r", "")
 
 def classify_change(line_no, sid, ja, old_cn, new_cn):
+    # yum_003 specific (Fruit of Grisaia Yumiko Route Chapter 3: girls summit interrogation, private contract & railway bridge thunderstorm)
+    if (57670 <= line_no <= 58399) or sid.startswith("grisaia1/yum_003#"):
+        if any(k in ja for k in ["任務", "河川敷", "写生", "クロロホルム", "椅子", "拘束"]):
+            return "护卫职责自省、河滩日常巡查与突发麻药绑架", "生动刻画雄二对任务的高效执行与由美子遭遇宿舍同伴突击绑架的荒诞戏谑"
+        if any(k in ja for k in ["写真", "隠し撮り", "クーデレ", "ケルペソ", "一方通行"]):
+            return "同伴峰会审讯、暗中偷拍铁证与由美子真情自白", "精准重现美滨四人审讯会的爆笑互动与由美子对风见雄二的动人单相思剖析"
+        if any(k in ja for k in ["道昭", "自作自演", "契約", "ボディーガード", "雇う"]):
+            return "父亲撤销委托、解除警卫通报与私人聘雇契约缔结", "精细展现榊道昭阴谋受挫的恼怒、JB与雄二的交涉以及由美子出资雇佣的逆转"
+        if any(k in ja for k in ["雷", "高架下", "雨宿り", "制服", "脆い", "過去"]):
+            return "雷暴雨桥下避雨、惊雷创伤依偎与由美子过去身世启封", "深刻还原暴雨雷鸣下由美子内心的极致脆弱、依偎颤抖与身世序幕"
+        return "由美子线第三章全景深度润色", "全面清除机翻生硬语病，精确还原人物口吻与场景情绪张力"
+
     # yum_002b specific (Fruit of Grisaia Yumiko Route Chapter 2b: Riverbank sketching, black-suit ambush, CQC takedowns & Yumiko bow)
     if (57390 <= line_no <= 57669) or sid.startswith("grisaia1/yum_002b#"):
         if any(k in ja for k in ["学生寮", "私服", "テンション", "慇懃無礼", "四六時中", "刃傷沙汰"]):
@@ -6664,6 +6676,32 @@ def build_report():
                 "section": "灰色的果实·榊由美子线河滩写生、黑衣伏击、特种CQC锁技破敌与中庭鞠躬致谢 (`grisaia1/yum_002b`)"
             })
 
+    # yum_003 (Milestone 2 Chapter 114 - Fruit of Grisaia Yumiko Route Chapter 3: girls summit interrogation, private contract & railway bridge thunderstorm)
+    for lno in range(57670, 58400):
+        ja_raw = ja_lines[lno - 1]
+        cn_raw = cn_lines[lno - 1]
+        sid = ja_raw.split("\t")[0] if "\t" in ja_raw else f"L{lno}"
+        ja_txt = ja_raw.split("\t")[1] if "\t" in ja_raw else ja_raw
+        cn_txt = cn_raw.split("\t")[1] if "\t" in cn_raw else cn_raw
+
+        old_txt = cn_txt
+        if git_base_cn and len(git_base_cn) >= lno:
+            head_raw = git_base_cn[lno - 1]
+            old_txt = head_raw.split("\t")[1] if "\t" in head_raw else head_raw
+
+        if cn_txt != old_txt and cn_txt.strip() != "":
+            cat, reason = classify_change(lno, sid, ja_txt, old_txt, cn_txt)
+            diffs.append({
+                "lno": lno,
+                "sid": sid,
+                "ja": ja_txt,
+                "old": old_txt,
+                "new": cn_txt,
+                "cat": cat,
+                "reason": reason,
+                "section": "灰色的果实·榊由美子线女子峰会审讯、私人护卫契约缔结与高架桥雷雨依偎 (`grisaia1/yum_003`)"
+            })
+
     print(f"Total indexed modifications: {len(diffs)}")
 
     # Build Markdown
@@ -8203,6 +8241,15 @@ def build_report():
     md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
     md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
     for idx, d in enumerate(yum_002b_diffs, 1):
+        md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
+    md.append("\n---\n")
+
+    # Section 171 - Milestone 2: Fruit of Grisaia Yumiko Route Chapter 3
+    yum_003_diffs = [d for d in diffs if d["section"].startswith("灰色的果实·榊由美子线女子峰会审讯、私人护卫契约缔结与高架桥雷雨依偎")]
+    md.append(f"## 一百七十一、 灰色的果实·榊由美子线女子峰会审讯、私人护卫契约缔结与高架桥雷雨依偎 (`grisaia1/yum_003`，共 {len(yum_003_diffs)} 条) —— 【里程碑二·个人线第一百一十三章】\n")
+    md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
+    md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
+    for idx, d in enumerate(yum_003_diffs, 1):
         md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
     md.append("\n---\n")
 
