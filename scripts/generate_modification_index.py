@@ -14,6 +14,18 @@ def escape_md(text):
     return text.replace("|", "\\|").replace("\n", " ").replace("\r", "")
 
 def classify_change(line_no, sid, ja, old_cn, new_cn):
+    # sac_029 specific (Fruit of Grisaia Sachi Route Chapter 29: hospital visit, workshop album & parental letter)
+    if (55956 <= line_no <= 56698) or sid.startswith("grisaia1/sac_029#"):
+        if any(k in ja for k in ["病院", "病室", "殺す", "お母さん", "意識", "眠り"]):
+            return "奔赴医院探母、扼杀噩梦冲动与病榻崩溃宣泄", "深沉刻画幸在雄二陪伴下直面长达七年逃避的病床母亲；在扼杀心魔与崩溃悔恨中完成心灵蜕变，痛哭告白将深藏于心底的罪疚彻底宣泄"
+        if any(k in ja for k in ["工場", "鍵", "機械", "扉", "アルバム", "パーティー", "装飾"]):
+            return "重返封闭工坊、沉重铁门开启与整面立体相册震撼", "以伯父托付的古旧钥匙推开封闭七年的模具厂大门；原本吵闹冰冷的机床全部搬空，整面墙壁装点着气球横幅与无数记录幸成长轨迹的照片与奖状"
+        if any(k in ja for k in ["手紙", "ごめんなさい", "ステーキ", "カレー", "お金", "変える"]):
+            return "泛黄信笺揭秘、父母工作转型与十岁生日真正心愿", "细腻揭示十岁生日父母手书长信：反思拼命赚钱忽视陪伴之过，下定决心全面转行转型，将工坊改造成承载全家璀璨幸福的巨型相册作为生日惊喜"
+        if any(k in ja for k in ["オルゴール", "メロディ", "愛してる", "ありがとう", "お願い", "聴いて"]):
+            return "婚礼八音盒信物寄语、感谢降生与释怀救赎之乐", "双亲留下最珍贵的婚礼八音盒托付给未来挚爱；信末深情写下“谢谢你降生作为我们的女儿”；幸彻底卸下七年心结泪崩释怀，向雄二提出一同聆听八音盒的最美心愿"
+        return "医院探母直面心魔、工坊相册揭秘与终极救赎升华", "彻底消除机翻腔调与代词错位，生动还原幸从罪疚深渊重获新生、双亲深沉博大之爱完全显露的高潮剧情"
+
     # sac_028 specific (Fruit of Grisaia Sachi Route Chapter 28: chained nightmare, flashback breakdown & resolve to kill the nightmare)
     if (55716 <= line_no <= 55955) or sid.startswith("grisaia1/sac_028#"):
         if any(k in ja for k in ["鉄球", "鎖", "悲鳴", "歯を鳴らす", "体温"]):
@@ -6432,6 +6444,32 @@ def build_report():
                 "section": "灰色的果实·小岭幸线铁链梦魇惊醒、创伤闪回袒露与彻底斩断噩梦之策 (`grisaia1/sac_028`)"
             })
 
+    # sac_029 (Milestone 2 Chapter 108 - Fruit of Grisaia Sachi Route Chapter 29: hospital visit, workshop album & parental letter)
+    for lno in range(55956, 56699):
+        ja_raw = ja_lines[lno - 1]
+        cn_raw = cn_lines[lno - 1]
+        sid = ja_raw.split("\t")[0] if "\t" in ja_raw else f"L{lno}"
+        ja_txt = ja_raw.split("\t")[1] if "\t" in ja_raw else ja_raw
+        cn_txt = cn_raw.split("\t")[1] if "\t" in cn_raw else cn_raw
+
+        old_txt = cn_txt
+        if git_base_cn and len(git_base_cn) >= lno:
+            head_raw = git_base_cn[lno - 1]
+            old_txt = head_raw.split("\t")[1] if "\t" in head_raw else head_raw
+
+        if cn_txt != old_txt and cn_txt.strip() != "":
+            cat, reason = classify_change(lno, sid, ja_txt, old_txt, cn_txt)
+            diffs.append({
+                "lno": lno,
+                "sid": sid,
+                "ja": ja_txt,
+                "old": old_txt,
+                "new": cn_txt,
+                "cat": cat,
+                "reason": reason,
+                "section": "灰色的果实·小岭幸线医院探母直面心魔、工坊揭秘双亲立体相册与十年生日终极救赎 (`grisaia1/sac_029`)"
+            })
+
     print(f"Total indexed modifications: {len(diffs)}")
 
     # Build Markdown
@@ -7917,6 +7955,15 @@ def build_report():
     md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
     md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
     for idx, d in enumerate(sac_028_diffs, 1):
+        md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
+    md.append("\n---\n")
+
+    # Section 165 - Milestone 2: Fruit of Grisaia Sachi Route Chapter 29
+    sac_029_diffs = [d for d in diffs if d["section"].startswith("灰色的果实·小岭幸线医院探母直面心魔、工坊揭秘双亲立体相册与十年生日终极救赎")]
+    md.append(f"## 一百六十五、 灰色的果实·小岭幸线医院探母直面心魔、工坊揭秘双亲立体相册与十年生日终极救赎 (`grisaia1/sac_029`，共 {len(sac_029_diffs)} 条) —— 【里程碑二·个人线第一百零七章】\n")
+    md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
+    md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
+    for idx, d in enumerate(sac_029_diffs, 1):
         md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
     md.append("\n---\n")
 
