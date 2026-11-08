@@ -14,6 +14,22 @@ def escape_md(text):
     return text.replace("|", "\\|").replace("\n", " ").replace("\r", "")
 
 def classify_change(line_no, sid, ja, old_cn, new_cn):
+    # sac_006 specific (Fruit of Grisaia Sachi Route: courtyard cleaning, funk burnable song, past tense parents, flirtatious junior, head patting & waterlogged phone)
+    if (46501 <= line_no <= 46712) or sid.startswith("grisaia1/sac_006#"):
+        if "萌えないゴミ" in ja or "燃えるゴミ" in ja or "著作権フリー" in ja or "シュール" in ja:
+            return "可燃与不萌垃圾双关打扫歌、免版权恶搞与魔性超现实演出", "幸清扫中庭哼唱莳菜所赠之不萌垃圾可燃歌，女仆认真劳作与魔性洗脑曲碰撞出极度超现实幽默"
+        if "でした" in ja or "両親" in ja or "ゴミを拾って" in ja or "遊具" in ja or "正反対" in ja:
+            return "双亲旧情过去式流露、无欲奉献伏笔与童年青梅捡垃圾旧忆照映", "幸提及深爱父母时下意识使用过去式隐含变故，雄二触景生情忆及童年公园相遇捡垃圾野丫头青梅竹马（实为幸本人）"
+        if "ワガママを言うのは悪いこと" in ja or "口癖" in ja or "形成" in ja:
+            return "绝对排斥任性心理创伤探微、口头禅基石深察与病态乖孩子解析", "幸面对任性撒娇骤变严肃斥为坏事，雄二敏锐洞察该信条乃是构筑小岭幸人格与过度服从之核心创伤"
+        if "ワガママな後輩" in ja or "風見先輩" in ja or "据え膳" in ja or "羞恥心" in ja or "演技" in ja:
+            return "娇嗔任性小学妹角色扮演、肥肉送嘴边俗谚反套路与羞耻心辩证", "雄二指名幸反串扮演任性挑逗小学妹发起轻度恶作剧报复，幸超常逼真演技与自称羞耻心代名词的反差引爆笑点"
+        if "マル" in ja or "頭を撫で" in ja or "子猫" in ja or "栄養ドリンク" in ja or "無条件降伏" in ja:
+            return "超纲难题全对破防、圆圈暗示摸头奖赏与比肩十瓶营养液治愈", "幸全解超纲试题后含蓄画圈索求摸头奖励，如幼猫被母猫舐毛般毫无防备，坦言雄二抚摸胜过十瓶营养液"
+        if "ケータイ" in ja or "ダイビング" in ja or "カルビ将軍" in ja or "ナカムラさん" in ja or "温めたら" in ja or "４６歳父" in ja or "鮮魚超人" in ja:
+            return "牛小排将军手机落水打捞、塞入欧派怀中捂热急救与平胸莳菜老父亲醋意", "莳菜浴池捞起手机，幸试图塞入胸前以体温捂热急救；莳菜手捂飞机场胸口大发‘辛劳带大闺女被野男人拐跑之46岁老父’悲叹"
+        return "文本自然度与对话韵味润色优化", "重构生硬日式倒装与机械直译，润色为符合Galgame演出的自然中文"
+
     # sac_005 specific (Fruit of Grisaia Sachi Route: Math test, kiss practice banter, all-nighter preview & accompanying to the end)
     if (46441 <= line_no <= 46500) or sid.startswith("grisaia1/sac_005#"):
         if "キス" in ja or "和ませ" in ja or "ショック" in ja or "冗談" in ja:
@@ -5376,6 +5392,32 @@ def build_report():
                 "section": "灰色的果实·小岭幸线暑假数学摸底考、接吻暖场戏言、通宵吃透一学年课业与奉陪到底 (`grisaia1/sac_005`)"
             })
 
+    # sac_006 (Milestone 2 Chapter 81 - Fruit of Grisaia Sachi Route: Courtyard cleaning, funk burnable song, flirtatious junior roleplay, head patting & waterlogged phone)
+    for lno in range(46501, 46713):
+        ja_raw = ja_lines[lno - 1]
+        cn_raw = cn_lines[lno - 1]
+        sid = ja_raw.split("\t")[0] if "\t" in ja_raw else f"L{lno}"
+        ja_txt = ja_raw.split("\t")[1] if "\t" in ja_raw else ja_raw
+        cn_txt = cn_raw.split("\t")[1] if "\t" in cn_raw else cn_raw
+
+        old_txt = cn_txt
+        if git_base_cn and len(git_base_cn) >= lno:
+            head_raw = git_base_cn[lno - 1]
+            old_txt = head_raw.split("\t")[1] if "\t" in head_raw else head_raw
+
+        if cn_txt != old_txt:
+            cat, reason = classify_change(lno, sid, ja_txt, old_txt, cn_txt)
+            diffs.append({
+                "lno": lno,
+                "sid": sid,
+                "ja": ja_txt,
+                "old": old_txt,
+                "new": cn_txt,
+                "cat": cat,
+                "reason": reason,
+                "section": "灰色的果实·小岭幸线不萌垃圾洗脑歌、反串任性小学妹、画圈索求摸头抚慰与水没手机欧派回温 (`grisaia1/sac_006`)"
+            })
+
     print(f"Total indexed modifications: {len(diffs)}")
 
     # Build Markdown
@@ -6618,6 +6660,15 @@ def build_report():
     md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
     md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
     for idx, d in enumerate(sac_005_diffs, 1):
+        md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
+    md.append("\n---\n")
+
+    # Section 138 - Milestone 2: Fruit of Grisaia Sachi Route Chapter 5
+    sac_006_diffs = [d for d in diffs if d["section"].startswith("灰色的果实·小岭幸线不萌垃圾洗脑歌、反串任性小学妹、画圈索求摸头抚慰与水没手机欧派回温")]
+    md.append(f"## 一百三十八、 灰色的果实·小岭幸线不萌垃圾洗脑歌、反串任性小学妹、画圈索求摸头抚慰与水没手机欧派回温 (`grisaia1/sac_006`，共 {len(sac_006_diffs)} 条) —— 【里程碑二·个人线第八十章】\n")
+    md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
+    md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
+    for idx, d in enumerate(sac_006_diffs, 1):
         md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
     md.append("\n---\n")
 
