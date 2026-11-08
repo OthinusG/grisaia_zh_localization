@@ -14,6 +14,20 @@ def escape_md(text):
     return text.replace("|", "\\|").replace("\n", " ").replace("\r", "")
 
 def classify_change(line_no, sid, ja, old_cn, new_cn):
+    # op specific (Fruit of Grisaia Prologue: Street Interrogation, Fortress Academy, Heroines First Encounter & Dusk Curtain Fall)
+    if (44237 <= line_no <= 45222) or sid.startswith("grisaia1/op#"):
+        if "由美子" in ja or "カッター" in ja or "ドア" in ja or "平手打ち" in ja:
+            return "由美子黄昏教室戒备对峙、狂暴撞门被阻与五公分掌掴擒腕", "由美子冰冷敌意以移门狂暴撞击，雄二铁掌阻门并于五公分处擒拿手腕制伏，黄昏余晖中揭开命运序幕"
+        if "ツンデレ" in ja or "みちる様" in ja or "ブリーチ" in ja or "金髪" in ja:
+            return "松岛满清晨空教室傲娇开嗓演练、双马尾宿命诅咒与小幸爆笑'满大人'", "满于空教室偷练傲娇台词当场社死，自曝金发双马尾宿命诅咒；小幸直呼'满大人'引爆指令撤销大溃败"
+        if "セミ" in ja or "周防" in ja or "天音" in ja or "マキナ" in ja:
+            return "天音高挑大姐姐防空警报、知了追逐尖叫与莳菜人见生握手契约", "天音遭莳菜持活知了尖叫狂追；雄二以麻子跑步揍人读书教诲破冰，以公关假笑轻握莳菜滚烫小手"
+        if "小嶺" in ja or "幸" in ja or "メイド" in ja or "スリーサイズ" in ja:
+            return "小岭幸女仆装呆萌盘查、三围诚实全盘托出与舍监大浴场导览", "幸以呆萌逻辑盘查雄二非可疑人员，被突袭盘问三围与异性交往全盘如实交代，细致导览海景大浴场"
+        if "市ヶ谷" in ja or "桜田門" in ja or "警官" in ja or "掃除" in ja or "アロハ" in ja:
+            return "烈日街头徒步盘查、一箇条抑制伏飞车抢匪与市谷扫保特工交锋", "雄二街头合气道一箇条抑瞬间制伏抢包贼；警署审讯室以市谷清洁工与军犬项圈黑话暗讽樱田门老刑警"
+        return "文本自然度与对话韵味润色优化", "重构生硬日式倒装与机械直译，润色为符合Galgame演出的自然中文"
+
     # mic_024 specific (Michiru Route Grand Finale: Letter to Mother Across the Ocean, Attic Hidden Secret Box & Eternal Warmth)
     if (44186 <= line_no <= 44236) or sid.startswith("grisaia1/mic_024#"):
         if "日本より愛を込めて" in ja or ("おばさま" in ja and "愛を" in ja):
@@ -5180,6 +5194,32 @@ def build_report():
                 "section": "灰色的果实·松岛满线跨洋致信生母、天花板童年遗宝与终章余韵 (`grisaia1/mic_024`)"
             })
 
+    # op (Milestone 2 Chapter 76 - Fruit of Grisaia Prologue: Street Interrogation, Fortress Academy, Heroines First Encounter & Dusk Curtain Fall)
+    for lno in range(44237, 45223):
+        ja_raw = ja_lines[lno - 1]
+        cn_raw = cn_lines[lno - 1]
+        sid = ja_raw.split("\t")[0] if "\t" in ja_raw else f"L{lno}"
+        ja_txt = ja_raw.split("\t")[1] if "\t" in ja_raw else ja_raw
+        cn_txt = cn_raw.split("\t")[1] if "\t" in cn_raw else cn_raw
+
+        old_txt = cn_txt
+        if git_base_cn and len(git_base_cn) >= lno:
+            head_raw = git_base_cn[lno - 1]
+            old_txt = head_raw.split("\t")[1] if "\t" in head_raw else head_raw
+
+        if cn_txt != old_txt:
+            cat, reason = classify_change(lno, sid, ja_txt, old_txt, cn_txt)
+            diffs.append({
+                "lno": lno,
+                "sid": sid,
+                "ja": ja_txt,
+                "old": old_txt,
+                "new": cn_txt,
+                "cat": cat,
+                "reason": reason,
+                "section": "灰色的果实·序章全景：烈日街头盘查、合气道制伏抢匪、女仆小幸导览、傲娇满开嗓与由美子黄昏对峙 (`grisaia1/op`)"
+            })
+
     print(f"Total indexed modifications: {len(diffs)}")
 
     # Build Markdown
@@ -6377,6 +6417,15 @@ def build_report():
     md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
     md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
     for idx, d in enumerate(mic_024_diffs, 1):
+        md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
+    md.append("\n---\n")
+
+    # Section 133 - Milestone 2: Fruit of Grisaia Prologue
+    op_diffs = [d for d in diffs if d["section"].startswith("灰色的果实·序章全景：烈日街头盘查、合气道制伏抢匪、女仆小幸导览、傲娇满开嗓与由美子黄昏对峙")]
+    md.append(f"## 一百三十三、 灰色的果实·序章全景：烈日街头盘查、合气道制伏抢匪、女仆小幸导览、傲娇满开嗓与由美子黄昏对峙 (`grisaia1/op`，共 {len(op_diffs)} 条) —— 【里程碑二·果实序章篇·大揭幕】\n")
+    md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
+    md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
+    for idx, d in enumerate(op_diffs, 1):
         md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
     md.append("\n---\n")
 
