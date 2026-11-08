@@ -14,6 +14,20 @@ def escape_md(text):
     return text.replace("|", "\\|").replace("\n", " ").replace("\r", "")
 
 def classify_change(line_no, sid, ja, old_cn, new_cn):
+    # sac_007 specific (Fruit of Grisaia Sachi Route: praise maxim, childhood Yu-kun memory, standby mission, delay to 17:00, Sachi missing, phone joke, Chizuru police inquiry)
+    if (46713 <= line_no <= 47100) or sid.startswith("grisaia1/sac_007#"):
+        if "褒められることが嫌いな女はいない" in ja or "ツインテール" in ja or "ユウくん" in ja or "天才だった姉の絞りカス" in ja or "スレた子供" in ja:
+            return "麻子褒奖箴言、满双马尾傲娇验证与童年榨干余渣逢迎自保旧伤", "麻子传授女人皆喜被夸箴言，雄二以满双马尾实证；回忆童年自认天才姐姐残渣废料，以逢迎奉承旁人求生及公园初遇青梅竹马（幸）之救赎羁绊"
+        if "準待機" in ja or "跳ね馬" in ja or "脱ぎたて" in ja or "ナイスタイミング" in ja or "約束" in ja:
+            return "CIRS紧急准待命召唤、原味女仆装黄色误解与十七点老地方补习约定", "JB紧急暗号征调雄二待命，雄二撞见幸被原味女仆装调侃，改约十七点老地方碰头；纠正机翻将‘来得正好’误译为‘时机太糟糕’之反转大错"
+        if "マリアナ海溝" in ja or "ハプニングシーン" in ja or "パツキン" in ja or "携帯に電話" in ja or "一発解決" in ja:
+            return "马里亚纳海沟绝对不迟到铁律、潜水报废手机打脸与三岛崎最不幸金发双马尾", "幸失约一小时引爆宿舍震动，莳菜誓言幸沉入马里亚纳海沟亦绝不迟到；满得意宣称神之一手打手机解决，遭水没报废真相打脸萎成最不幸双马尾"
+        if "二次災害" in ja or "スーパー護身術" in ja or "ズルイ言い方" in ja or "肩を軽く叩" in ja:
+            return "深夜搜寻二次灾害防范、莳菜特工护身术啜泣与由美子大局托付脸红", "由美子与天音严防女生夜出引发二次灾害，莳菜忧幸安危落泪；雄二轻拍由美子香肩托付大局后防，由美子娇嗔狡猾脸红应承"
+        if "学園長" in ja or "保護者の意向" in ja or "模造紙" in ja or "これを見たら" in ja or "不安を押し隠す" in ja:
+            return "千鹤动用暗线排查警署保护记录、黑板硕大留字与黑夜疾走压抑不安", "千鹤联络监护人并动用内部人脉全面排查全县警署收容记录；雄二黑板粘贴硕大留字，夜色中全力奔跑压制同窗失踪漫溢之焦灼与不安"
+        return "文本自然度与对话韵味润色优化", "重构生硬日式倒装与机械直译，润色为符合Galgame演出的自然中文"
+
     # sac_006 specific (Fruit of Grisaia Sachi Route: courtyard cleaning, funk burnable song, past tense parents, flirtatious junior, head patting & waterlogged phone)
     if (46501 <= line_no <= 46712) or sid.startswith("grisaia1/sac_006#"):
         if "萌えないゴミ" in ja or "燃えるゴミ" in ja or "著作権フリー" in ja or "シュール" in ja:
@@ -5418,6 +5432,32 @@ def build_report():
                 "section": "灰色的果实·小岭幸线不萌垃圾洗脑歌、反串任性小学妹、画圈索求摸头抚慰与水没手机欧派回温 (`grisaia1/sac_006`)"
             })
 
+    # sac_007 (Milestone 2 Chapter 82 - Fruit of Grisaia Sachi Route: Praise maxim, childhood memory, CIRS standby, Sachi missing, phone joke, Chizuru police inquiry)
+    for lno in range(46713, 47101):
+        ja_raw = ja_lines[lno - 1]
+        cn_raw = cn_lines[lno - 1]
+        sid = ja_raw.split("\t")[0] if "\t" in ja_raw else f"L{lno}"
+        ja_txt = ja_raw.split("\t")[1] if "\t" in ja_raw else ja_raw
+        cn_txt = cn_raw.split("\t")[1] if "\t" in cn_raw else cn_raw
+
+        old_txt = cn_txt
+        if git_base_cn and len(git_base_cn) >= lno:
+            head_raw = git_base_cn[lno - 1]
+            old_txt = head_raw.split("\t")[1] if "\t" in head_raw else head_raw
+
+        if cn_txt != old_txt:
+            cat, reason = classify_change(lno, sid, ja_txt, old_txt, cn_txt)
+            diffs.append({
+                "lno": lno,
+                "sid": sid,
+                "ja": ja_txt,
+                "old": old_txt,
+                "new": cn_txt,
+                "cat": cat,
+                "reason": reason,
+                "section": "灰色的果实·小岭幸线麻子夸奖箴言、马里亚纳海沟绝对不迟到铁律、潜水手机打脸与全城夜搜失踪幸 (`grisaia1/sac_007`)"
+            })
+
     print(f"Total indexed modifications: {len(diffs)}")
 
     # Build Markdown
@@ -6669,6 +6709,15 @@ def build_report():
     md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
     md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
     for idx, d in enumerate(sac_006_diffs, 1):
+        md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
+    md.append("\n---\n")
+
+    # Section 139 - Milestone 2: Fruit of Grisaia Sachi Route Chapter 6
+    sac_007_diffs = [d for d in diffs if d["section"].startswith("灰色的果实·小岭幸线麻子夸奖箴言、马里亚纳海沟绝对不迟到铁律、潜水手机打脸与全城夜搜失踪幸")]
+    md.append(f"## 一百三十九、 灰色的果实·小岭幸线麻子夸奖箴言、马里亚纳海沟绝对不迟到铁律、潜水手机打脸与全城夜搜失踪幸 (`grisaia1/sac_007`，共 {len(sac_007_diffs)} 条) —— 【里程碑二·个人线第八十一章】\n")
+    md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
+    md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
+    for idx, d in enumerate(sac_007_diffs, 1):
         md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
     md.append("\n---\n")
 
