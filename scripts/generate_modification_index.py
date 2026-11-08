@@ -14,6 +14,18 @@ def escape_md(text):
     return text.replace("|", "\\|").replace("\n", " ").replace("\r", "")
 
 def classify_change(line_no, sid, ja, old_cn, new_cn):
+    # sac_bad specific (Fruit of Grisaia Sachi Route Bad End: crossroad tragedy, fatal collision & eternal damnation)
+    if (56699 <= line_no <= 56833) or sid.startswith("grisaia1/sac_bad#"):
+        if any(k in ja for k in ["トラック", "撥ね飛ばされ", "血だまり", "ブレーキ", "スキール音", "衝突"]):
+            return "十字路口卡车碾轧惨剧、断线布偶凌空抛飞与猩红血泊漫延", "极其震撼悲怆地描写重型卡车急刹尖啸与沉闷撞击巨响；幸娇小身躯如断线木偶般凌空抛飞砸落路面，身下猩红血泊缓缓漫延，噩梦骤然化为现实惨案"
+        if any(k in ja for k in ["一姫", "麻子", "呪い", "死んでいく", "罰", "真っ黒"]):
+            return "至爱皆死残酷宿命哀鸣、狂妄罪孽天谴与不可赦免神罚认领", "雄二睹状陷入歇斯底里的灵魂拷问：一姬、麻子到如今的幸，凡自己敞开心扉的至亲至爱皆走向死亡；痛彻心扉反思自身狂妄背负他人之罪，断定这是降临自身的永世惩罚"
+        if any(k in ja for k in ["どうして", "心臓", "くり抜かれる", "償う", "逆らった罪", "許されることのない罪"]):
+            return "母亲临终质问梦魇重叠、心生剜除绝望与永世罪业共担", "濒死幸长睫微颤睁眼，口中溢出的微弱遗言竟是当年母亲临终同样的“为什么”；雄二仿佛被活生生剜出心脏，彻底大彻大悟当年幸的痛苦，决然全盘接受惩罚，永世背负不可赦免的死罪"
+        if any(k in ja for k in ["自分を殺す", "弱い心", "克服", "受け入れて", "病室"]):
+            return "杀死软弱怯懦心魔、克服梦魇决意与笃定告别病床母亲", "细腻展现幸对“杀死噩梦”之深刻体悟；厘清并非自残或顺从诅咒，而是杀死内心软弱之恶念；在病榻前郑重向沉睡母亲告白，迈着坚实步伐踏上新生之路"
+        return "小岭幸线坏结局十字路口惨剧、母亲遗言重现与宿命绝望深层润色", "全面润色小岭幸线Bad End惨绝人寰的卡车事故、血泊弥留、遗言重现与雄二心魔宿命绝望，彻底消除机翻生硬语病与人称错位"
+
     # sac_029 specific (Fruit of Grisaia Sachi Route Chapter 29: hospital visit, workshop album & parental letter)
     if (55956 <= line_no <= 56698) or sid.startswith("grisaia1/sac_029#"):
         if any(k in ja for k in ["病院", "病室", "殺す", "お母さん", "意識", "眠り"]):
@@ -6470,6 +6482,32 @@ def build_report():
                 "section": "灰色的果实·小岭幸线医院探母直面心魔、工坊揭秘双亲立体相册与十年生日终极救赎 (`grisaia1/sac_029`)"
             })
 
+    # sac_bad (Milestone 2 Chapter 109 - Fruit of Grisaia Sachi Route Bad End: crossroad tragedy, fatal collision & eternal damnation)
+    for lno in range(56699, 56834):
+        ja_raw = ja_lines[lno - 1]
+        cn_raw = cn_lines[lno - 1]
+        sid = ja_raw.split("\t")[0] if "\t" in ja_raw else f"L{lno}"
+        ja_txt = ja_raw.split("\t")[1] if "\t" in ja_raw else ja_raw
+        cn_txt = cn_raw.split("\t")[1] if "\t" in cn_raw else cn_raw
+
+        old_txt = cn_txt
+        if git_base_cn and len(git_base_cn) >= lno:
+            head_raw = git_base_cn[lno - 1]
+            old_txt = head_raw.split("\t")[1] if "\t" in head_raw else head_raw
+
+        if cn_txt != old_txt and cn_txt.strip() != "":
+            cat, reason = classify_change(lno, sid, ja_txt, old_txt, cn_txt)
+            diffs.append({
+                "lno": lno,
+                "sid": sid,
+                "ja": ja_txt,
+                "old": old_txt,
+                "new": cn_txt,
+                "cat": cat,
+                "reason": reason,
+                "section": "灰色的果实·小岭幸线坏结局十字路口惨剧、母亲临终质问重现与永世罪罚认领 (`grisaia1/sac_bad`)"
+            })
+
     print(f"Total indexed modifications: {len(diffs)}")
 
     # Build Markdown
@@ -7964,6 +8002,15 @@ def build_report():
     md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
     md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
     for idx, d in enumerate(sac_029_diffs, 1):
+        md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
+    md.append("\n---\n")
+
+    # Section 166 - Milestone 2: Fruit of Grisaia Sachi Route Bad End
+    sac_bad_diffs = [d for d in diffs if d["section"].startswith("灰色的果实·小岭幸线坏结局十字路口惨剧、母亲临终质问重现与永世罪罚认领")]
+    md.append(f"## 一百六十六、 灰色的果实·小岭幸线坏结局十字路口惨剧、母亲临终质问重现与永世罪罚认领 (`grisaia1/sac_bad`，共 {len(sac_bad_diffs)} 条) —— 【里程碑二·个人线第一百零八章】\n")
+    md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
+    md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
+    for idx, d in enumerate(sac_bad_diffs, 1):
         md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
     md.append("\n---\n")
 
