@@ -14,6 +14,18 @@ def escape_md(text):
     return text.replace("|", "\\|").replace("\n", " ").replace("\r", "")
 
 def classify_change(line_no, sid, ja, old_cn, new_cn):
+    # mic_020 specific (Michiru Route: Hospital Confrontation with Donor Persona, Homemade Hypnosis Apparatus & Sworn Vow against God)
+    if (42238 <= line_no <= 42455) or sid.startswith("grisaia1/mic_020#"):
+        if "白衣" in ja or "カルテ" in ja or "医局" in ja or "精神" in ja:
+            return "白大褂潜入病区与病历调查", "雄二身着白大褂潜入综合医院病区调查满的心脏移植与精神科就诊记录"
+        if "神" in ja or "殺" in ja or "引きずり降ろ" in ja:
+            return "对神决战誓言与深渊弑神决意", "雄二发誓哪怕与神为敌也要将神拖下神坛，不惜代价将真正的满拯救唤醒"
+        if "装置" in ja or "ミラーボール" in ja or "光" in ja or "催眠" in ja or "点滅" in ja:
+            return "自制光学催眠装置与废弃地下室潜行实验", "雄二手工组装频闪镜与光学催眠仪器，精密测算赫兹频率准备唤醒本体"
+        if "お母さん" in ja or "ドナー" in ja or "手紙" in ja:
+            return "心脏供体母亲羁绊与隐秘心事释怀", "第二人格道出供体母亲探视的过往真相与满背负的心结"
+        return "文本自然度与对话韵味润色优化", "重构生硬日式倒装与机械直译，润色为符合Galgame演出的自然中文"
+
     # mic_019 specific (Michiru Route: Dawn Return, Second Persona Clown Masquerade, "Yuuji-kun" Slip, Sinking into Deep Darkness, Uniform Sprint)
     if (42153 <= line_no <= 42237) or sid.startswith("grisaia1/mic_019#"):
         if "雄二くん" in ja or "二度と浮き上がってこない" in ja or "深い闇" in ja:
@@ -4938,6 +4950,32 @@ def build_report():
                 "section": "灰色的果实·松岛满线清晨五点第二人格伪装归校、深渊永眠宣判与制服狂奔 (grisaia1/mic_019)"
             })
 
+    # mic_020 (Milestone 2 Chapter 70 - Michiru Route: Hospital Confrontation, Hypnosis Prep & Sworn Vow against God)
+    for lno in range(42238, 42456):
+        ja_raw = ja_lines[lno - 1]
+        cn_raw = cn_lines[lno - 1]
+        sid = ja_raw.split("\t")[0] if "\t" in ja_raw else f"L{lno}"
+        ja_txt = ja_raw.split("\t")[1] if "\t" in ja_raw else ja_raw
+        cn_txt = cn_raw.split("\t")[1] if "\t" in cn_raw else cn_raw
+
+        old_txt = cn_txt
+        if git_base_cn and len(git_base_cn) >= lno:
+            head_raw = git_base_cn[lno - 1]
+            old_txt = head_raw.split("\t")[1] if "\t" in head_raw else head_raw
+
+        if cn_txt != old_txt:
+            cat, reason = classify_change(lno, sid, ja_txt, old_txt, cn_txt)
+            diffs.append({
+                "lno": lno,
+                "sid": sid,
+                "ja": ja_txt,
+                "old": old_txt,
+                "new": cn_txt,
+                "cat": cat,
+                "reason": reason,
+                "section": "灰色的果实·松岛满线二重人格医院诀别揭秘、自制光学催眠装置与弑神起誓 (grisaia1/mic_020)"
+            })
+
     print(f"Total indexed modifications: {len(diffs)}")
 
     # Build Markdown
@@ -6081,6 +6119,15 @@ def build_report():
     md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
     md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
     for idx, d in enumerate(mic_019_diffs, 1):
+        md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
+    md.append("\n---\n")
+
+    # Section 127 - Milestone 2: Michiru Route Chapter 20
+    mic_020_diffs = [d for d in diffs if d["section"].startswith("灰色的果实·松岛满线二重人格医院诀别揭秘、自制光学催眠装置与弑神起誓")]
+    md.append(f"## 一百二十七、 灰色的果实·松岛满线二重人格医院诀别揭秘、自制光学催眠装置与弑神起誓 (`grisaia1/mic_020`，共 {len(mic_020_diffs)} 条) —— 【里程碑二·个人线第七十章】\n")
+    md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
+    md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
+    for idx, d in enumerate(mic_020_diffs, 1):
         md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
     md.append("\n---\n")
 
