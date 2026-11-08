@@ -14,6 +14,18 @@ def escape_md(text):
     return text.replace("|", "\\|").replace("\n", " ").replace("\r", "")
 
 def classify_change(line_no, sid, ja, old_cn, new_cn):
+    # sac_001 specific (Fruit of Grisaia Sachi Route: Chupacabra summon, powder puff misunderstanding, underwear encounter & bath collapse)
+    if (45223 <= line_no <= 45623) or sid.startswith("grisaia1/sac_001#"):
+        if "チュパカブラ" in ja or "大魔神" in ja or "パフラパフ" in ja or "パフパフ" in ja:
+            return "课间中二召唤大魔神、粉扑色情误解与有求必应女仆", "满课间以双马尾天线念咒召唤大魔神幸，小幸以粉扑引发色情妄想，彻底展现无论何种离谱要求皆毫不拒绝的女仆特质"
+        if "ドラム" in ja or "下着姿" in ja or "露出" in ja or "混浴" in ja:
+            return "洗衣房贴身内衣坦然相对、混浴邀请与暴露狂社团吐槽", "小幸在洗衣房当面脱衣仅着纯白内衣，以最高效率利用时间为由邀请雄二大浴场混浴，雄二犀利吐槽暴露狂同好会"
+        if "１万" in ja or "気絶" in ja or "のぼせ" in ja or "人工呼吸" in ja or "全裸" in ja or "抱き起" in ja:
+            return "大浴场数到一万休克晕厥、全裸急救抱出与莳菜神医吹嘘", "幸信守诺言在热汤中坚持数到一万导致严重虚脱休克，雄二冲入浴场将全裸的幸抱出急救，莳菜自告奋勇以小说神医自居"
+        if "断" in ja or "メイド" in ja or "小嶺" in ja or "幸" in ja:
+            return "小岭幸不拒人完美女仆心理机制与人情代价", "深度刻画幸无法拒绝任何他人请求的极端心理机理与校园日常互动"
+        return "文本自然度与对话韵味润色优化", "重构生硬日式倒装与机械直译，润色为符合Galgame演出的自然中文"
+
     # op specific (Fruit of Grisaia Prologue: Street Interrogation, Fortress Academy, Heroines First Encounter & Dusk Curtain Fall)
     if (44237 <= line_no <= 45222) or sid.startswith("grisaia1/op#"):
         if "由美子" in ja or "カッター" in ja or "ドア" in ja or "平手打ち" in ja:
@@ -5220,6 +5232,32 @@ def build_report():
                 "section": "灰色的果实·序章全景：烈日街头盘查、合气道制伏抢匪、女仆小幸导览、傲娇满开嗓与由美子黄昏对峙 (`grisaia1/op`)"
             })
 
+    # sac_001 (Milestone 2 Chapter 77 - Fruit of Grisaia Sachi Route: Chupacabra summon, powder puff, laundry locker room underwear, bath collapse & nude first aid)
+    for lno in range(45223, 45624):
+        ja_raw = ja_lines[lno - 1]
+        cn_raw = cn_lines[lno - 1]
+        sid = ja_raw.split("\t")[0] if "\t" in ja_raw else f"L{lno}"
+        ja_txt = ja_raw.split("\t")[1] if "\t" in ja_raw else ja_raw
+        cn_txt = cn_raw.split("\t")[1] if "\t" in cn_raw else cn_raw
+
+        old_txt = cn_txt
+        if git_base_cn and len(git_base_cn) >= lno:
+            head_raw = git_base_cn[lno - 1]
+            old_txt = head_raw.split("\t")[1] if "\t" in head_raw else head_raw
+
+        if cn_txt != old_txt:
+            cat, reason = classify_change(lno, sid, ja_txt, old_txt, cn_txt)
+            diffs.append({
+                "lno": lno,
+                "sid": sid,
+                "ja": ja_txt,
+                "old": old_txt,
+                "new": cn_txt,
+                "cat": cat,
+                "reason": reason,
+                "section": "灰色的果实·小岭幸线课间魔神召唤、不拒人女仆特质、大浴场数到一万休克与裸体救护 (`grisaia1/sac_001`)"
+            })
+
     print(f"Total indexed modifications: {len(diffs)}")
 
     # Build Markdown
@@ -6426,6 +6464,15 @@ def build_report():
     md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
     md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
     for idx, d in enumerate(op_diffs, 1):
+        md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
+    md.append("\n---\n")
+
+    # Section 134 - Milestone 2: Fruit of Grisaia Sachi Route Chapter 1
+    sac_001_diffs = [d for d in diffs if d["section"].startswith("灰色的果实·小岭幸线课间魔神召唤、不拒人女仆特质、大浴场数到一万休克与裸体救护")]
+    md.append(f"## 一百三十四、 灰色的果实·小岭幸线课间魔神召唤、不拒人女仆特质、大浴场数到一万休克与裸体救护 (`grisaia1/sac_001`，共 {len(sac_001_diffs)} 条) —— 【里程碑二·个人线第七十六章】\n")
+    md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
+    md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
+    for idx, d in enumerate(sac_001_diffs, 1):
         md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
     md.append("\n---\n")
 
