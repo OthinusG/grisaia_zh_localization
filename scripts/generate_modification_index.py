@@ -14,6 +14,16 @@ def escape_md(text):
     return text.replace("|", "\\|").replace("\n", " ").replace("\r", "")
 
 def classify_change(line_no, sid, ja, old_cn, new_cn):
+    # sac_011 specific (Fruit of Grisaia Sachi Route Chapter 11: Sachi waking from nightmare in hospital, 4 girls caring, Amane warmth, breast size joke)
+    if (50286 <= line_no <= 50348) or sid.startswith("grisaia1/sac_011#"):
+        if any(k in ja for k in ["うなされてる", "汗", "起こし", "お父…さん", "ごめんなさい", "嫌"]):
+            return "病榻恶梦惊悸与众女急切唤醒", "幸陷入恶梦冷汗浸透悲鸣道歉，莳菜与满急切摇晃唤醒，展现美滨同伴深切关切"
+        if any(k in ja for k in ["黒いの", "手間", "謝っちゃう", "友達", "由美子"]):
+            return "由美子傲娇搜寻与满仗义直言", "修正机翻误译'道谢'为'道歉'，由美子傲娇表示花工夫寻找，满仗义反驳不把恩惠挂在嘴边才是真正朋友"
+        if any(k in ja for k in ["胸", "心の大きさ", "負けてない", "ユージ", "約束", "悪くない"]):
+            return "天音温厚抚慰与莳菜胸围器量神评", "天音温和抚慰幸坚守与雄二之约绝无过错，莳菜大赞天音器量深阔完全不输给胸围尺寸，由美子补刀调侃"
+        return "幸线病房苏醒互动深度润色", "消除机翻腔，纠正人称与语意断句，使美滨四女守护幸的生动性格与日常喜剧感完全契合原作声线"
+
     # sac_010 specific (Fruit of Grisaia Sachi Route Chapter 10: CIRS report analysis, good child defense mechanism analysis, Asako gratitude maxim, Yuuji vow to save Sachi)
     if (50224 <= line_no <= 50285) or sid.startswith("grisaia1/sac_010#"):
         if any(k in ja for k in ["放火", "半焼", "職員室", "迷宮入り", "美浜学園", "精神科"]):
@@ -5712,6 +5722,32 @@ def build_report():
                 "section": "灰色的果实·小岭幸线纵火案迷局分析、好孩子绝对防壁心理解构与雄二报恩立誓 (`grisaia1/sac_010`)"
             })
 
+    # sac_011 (Milestone 2 Chapter 89 - Fruit of Grisaia Sachi Route Chapter 11: Nightmare waking, 4 girls caring, breast size joke)
+    for lno in range(50286, 50349):
+        ja_raw = ja_lines[lno - 1]
+        cn_raw = cn_lines[lno - 1]
+        sid = ja_raw.split("\t")[0] if "\t" in ja_raw else f"L{lno}"
+        ja_txt = ja_raw.split("\t")[1] if "\t" in ja_raw else ja_raw
+        cn_txt = cn_raw.split("\t")[1] if "\t" in cn_raw else cn_raw
+
+        old_txt = cn_txt
+        if git_base_cn and len(git_base_cn) >= lno:
+            head_raw = git_base_cn[lno - 1]
+            old_txt = head_raw.split("\t")[1] if "\t" in head_raw else head_raw
+
+        if cn_txt != old_txt:
+            cat, reason = classify_change(lno, sid, ja_txt, old_txt, cn_txt)
+            diffs.append({
+                "lno": lno,
+                "sid": sid,
+                "ja": ja_txt,
+                "old": old_txt,
+                "new": cn_txt,
+                "cat": cat,
+                "reason": reason,
+                "section": "灰色的果实·小岭幸线病榻恶梦惊醒、美滨四女温情守护、傲娇黑发与器量如胸调侃 (`grisaia1/sac_011`)"
+            })
+
     print(f"Total indexed modifications: {len(diffs)}")
 
     # Build Markdown
@@ -7026,6 +7062,15 @@ def build_report():
     md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
     md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
     for idx, d in enumerate(sac_010_diffs, 1):
+        md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
+    md.append("\n---\n")
+
+    # Section 146 - Milestone 2: Fruit of Grisaia Sachi Route Chapter 11
+    sac_011_diffs = [d for d in diffs if d["section"].startswith("灰色的果实·小岭幸线病榻恶梦惊醒、美滨四女温情守护、傲娇黑发与器量如胸调侃")]
+    md.append(f"## 一百四十六、 灰色的果实·小岭幸线病榻恶梦惊醒、美滨四女温情守护、傲娇黑发与器量如胸调侃 (`grisaia1/sac_011`，共 {len(sac_011_diffs)} 条) —— 【里程碑二·个人线第八十八章】\n")
+    md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
+    md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
+    for idx, d in enumerate(sac_011_diffs, 1):
         md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
     md.append("\n---\n")
 
