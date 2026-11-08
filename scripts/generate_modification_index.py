@@ -14,6 +14,18 @@ def escape_md(text):
     return text.replace("|", "\\|").replace("\n", " ").replace("\r", "")
 
 def classify_change(line_no, sid, ja, old_cn, new_cn):
+    # sac_005 specific (Fruit of Grisaia Sachi Route: Math test, kiss practice banter, all-nighter preview & accompanying to the end)
+    if (46441 <= line_no <= 46500) or sid.startswith("grisaia1/sac_005#"):
+        if "キス" in ja or "和ませ" in ja or "ショック" in ja or "冗談" in ja:
+            return "接吻练习暖场戏言、年下学妹黄段子与受挫精神打击", "幸提议先从接吻练习破冰以缓解孤男寡女尴尬，雄二吐槽黄色冷笑话不好笑让幸备受精神打击"
+        if "徹夜" in ja or "寝ていない" in ja or "数学" in ja or "平方根" in ja or "予習" in ja:
+            return "一昼夜通读整学年数学、彻夜通宵备战与非凡理解力惊叹", "幸仅凭一宿通宵便吃透整学年数学大纲，面对平方根与超纲二次方程秒答正解，展现非凡数理天赋"
+        if "校則" in ja or "脱色" in ja or "キンパツ" in ja:
+            return "假期死板校服遵循、金发漂白傲娇调侃与死守规章", "幸即便在暑假亦严守利用校舍须穿制服之蝇头校规，并调侃是否该效仿满漂白金发当傲娇"
+        if "満足" in ja or "お相手" in ja or "テスト" in ja or "次の日" in ja:
+            return "奉陪到底下流歧义、极限摸底顺延次日与失衡付出深思", "幸宣称直到雄二满意为止无论多少次都奉陪到底引发下流歧义；雄二深思其超常努力背后与美滨收容之隐秘关联"
+        return "文本自然度与对话韵味润色优化", "重构生硬日式倒装与机械直译，润色为符合Galgame演出的自然中文"
+
     # sac_003 specific (Fruit of Grisaia Sachi Route: Multigrade class, M/slave banter, curry cooking, Yumiko eavesdropping, 9PM sleep & good girl)
     if (45966 <= line_no <= 46440) or sid.startswith("grisaia1/sac_003#"):
         if "良い子" in ja or "ＳＬＥＥＰ" in ja or "眠" in ja or "似ていた" in ja or "約束" in ja:
@@ -5338,6 +5350,32 @@ def build_report():
                 "section": "灰色的果实·小岭幸线复式学级解难题、母奴隶下流大骚乱、爱心酸奶咖喱、由美子暗听与九点就寝乖孩子 (`grisaia1/sac_003`)"
             })
 
+    # sac_005 (Milestone 2 Chapter 80 - Fruit of Grisaia Sachi Route: Math test, kiss practice banter, all-nighter preview & accompanying to the end)
+    for lno in range(46441, 46501):
+        ja_raw = ja_lines[lno - 1]
+        cn_raw = cn_lines[lno - 1]
+        sid = ja_raw.split("\t")[0] if "\t" in ja_raw else f"L{lno}"
+        ja_txt = ja_raw.split("\t")[1] if "\t" in ja_raw else ja_raw
+        cn_txt = cn_raw.split("\t")[1] if "\t" in cn_raw else cn_raw
+
+        old_txt = cn_txt
+        if git_base_cn and len(git_base_cn) >= lno:
+            head_raw = git_base_cn[lno - 1]
+            old_txt = head_raw.split("\t")[1] if "\t" in head_raw else head_raw
+
+        if cn_txt != old_txt:
+            cat, reason = classify_change(lno, sid, ja_txt, old_txt, cn_txt)
+            diffs.append({
+                "lno": lno,
+                "sid": sid,
+                "ja": ja_txt,
+                "old": old_txt,
+                "new": cn_txt,
+                "cat": cat,
+                "reason": reason,
+                "section": "灰色的果实·小岭幸线暑假数学摸底考、接吻暖场戏言、通宵吃透一学年课业与奉陪到底 (`grisaia1/sac_005`)"
+            })
+
     print(f"Total indexed modifications: {len(diffs)}")
 
     # Build Markdown
@@ -6571,6 +6609,15 @@ def build_report():
     md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
     md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
     for idx, d in enumerate(sac_003_diffs, 1):
+        md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
+    md.append("\n---\n")
+
+    # Section 137 - Milestone 2: Fruit of Grisaia Sachi Route Chapter 4
+    sac_005_diffs = [d for d in diffs if d["section"].startswith("灰色的果实·小岭幸线暑假数学摸底考、接吻暖场戏言、通宵吃透一学年课业与奉陪到底")]
+    md.append(f"## 一百三十七、 灰色的果实·小岭幸线暑假数学摸底考、接吻暖场戏言、通宵吃透一学年课业与奉陪到底 (`grisaia1/sac_005`，共 {len(sac_005_diffs)} 条) —— 【里程碑二·个人线第七十九章】\n")
+    md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
+    md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
+    for idx, d in enumerate(sac_005_diffs, 1):
         md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
     md.append("\n---\n")
 
