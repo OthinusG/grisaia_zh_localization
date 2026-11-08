@@ -14,6 +14,16 @@ def escape_md(text):
     return text.replace("|", "\\|").replace("\n", " ").replace("\r", "")
 
 def classify_change(line_no, sid, ja, old_cn, new_cn):
+    # sac_025 specific (Fruit of Grisaia Sachi Route Chapter 25: love maid, triple tails, Chizuru banter & co-sleeping request)
+    if (55046 <= line_no <= 55216) or sid.startswith("grisaia1/sac_025#"):
+        if any(k in ja for k in ["ボマー風見", "可愛く言った", "風穴", "恋するメイド", "トリプルテール"]):
+            return "爆弹狂人风见、恋爱女仆小岭幸参上与战斗力暴涨三马尾", "生动刻画满吐槽炸弹狂风见与卖萌无用；幸打扫如脱胎换骨自称恋爱女仆；忽悠满双马尾加量一根成三马尾威慑力暴涨之搞笑日常"
+        if any(k in ja for k in ["ベッドの上", "千鶴", "生理", "殊勝", "立役者", "ガッツポーズ"]):
+            return "千鹤床笫调侃、美滨全体同伴立役者与软绵绵加油", "生动再现雄二与千鹤关于直呼闺名与床上称呼的幽默调侃；深刻指出美滨全体同伴才是唤醒拯救幸的真正立役者；千鹤留下软绵绵加油手势"
+        if any(k in ja for k in ["事前対策", "袖を引っ張", "人目をはばかる", "一緒に寝", "すぅすぅ"]):
+            return "少女式先发制人、同榻而眠恳求与安眠抚额真情", "极其细腻动人地刻画幸因吃醋采取少女式先发制人、将雄二拉入房间依偎同眠；忐忑提出今后每晚同榻而眠的真挚心愿；雄二欣然应允并温柔抚弄其熟睡前额"
+        return "小岭幸线恋爱女仆、同伴立役者与同榻而眠深层润色", "全面润色小岭幸线宿舍欢快日常、千鹤教育者功绩反思与幸同榻而眠的深情依恋，消除机翻生硬语病与人称错位"
+
     # sac_024 specific (Fruit of Grisaia Sachi Route Chapter 24: aftermath, Chizuru cover story, JB meeting & vow of mutual trust)
     if (54693 <= line_no <= 55045) or sid.startswith("grisaia1/sac_024#"):
         if any(k in ja for k in ["ドラッグ", "女の身体", "赤鬼", "小顔美人", "包み隠さず", "鳥籠"]):
@@ -6282,6 +6292,32 @@ def build_report():
                 "section": "灰色的果实·小岭幸线爆破余波全员释怀、JB密谈国家隐秘与互信相依誓言 (`grisaia1/sac_024`)"
             })
 
+    # sac_025 (Milestone 2 Chapter 104 - Fruit of Grisaia Sachi Route Chapter 25: love maid, triple tails, Chizuru banter & co-sleeping request)
+    for lno in range(55046, 55217):
+        ja_raw = ja_lines[lno - 1]
+        cn_raw = cn_lines[lno - 1]
+        sid = ja_raw.split("\t")[0] if "\t" in ja_raw else f"L{lno}"
+        ja_txt = ja_raw.split("\t")[1] if "\t" in ja_raw else ja_raw
+        cn_txt = cn_raw.split("\t")[1] if "\t" in cn_raw else cn_raw
+
+        old_txt = cn_txt
+        if git_base_cn and len(git_base_cn) >= lno:
+            head_raw = git_base_cn[lno - 1]
+            old_txt = head_raw.split("\t")[1] if "\t" in head_raw else head_raw
+
+        if cn_txt != old_txt and cn_txt.strip() != "":
+            cat, reason = classify_change(lno, sid, ja_txt, old_txt, cn_txt)
+            diffs.append({
+                "lno": lno,
+                "sid": sid,
+                "ja": ja_txt,
+                "old": old_txt,
+                "new": cn_txt,
+                "cat": cat,
+                "reason": reason,
+                "section": "灰色的果实·小岭幸线恋爱女仆改头换面、千鹤床笫调侃与同榻而眠安眠之诺 (`grisaia1/sac_025`)"
+            })
+
     print(f"Total indexed modifications: {len(diffs)}")
 
     # Build Markdown
@@ -7731,6 +7767,15 @@ def build_report():
     md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
     md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
     for idx, d in enumerate(sac_024_diffs, 1):
+        md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
+    md.append("\n---\n")
+
+    # Section 161 - Milestone 2: Fruit of Grisaia Sachi Route Chapter 25
+    sac_025_diffs = [d for d in diffs if d["section"].startswith("灰色的果实·小岭幸线恋爱女仆改头换面、千鹤床笫调侃与同榻而眠安眠之诺")]
+    md.append(f"## 一百六十一、 灰色的果实·小岭幸线恋爱女仆改头换面、千鹤床笫调侃与同榻而眠安眠之诺 (`grisaia1/sac_025`，共 {len(sac_025_diffs)} 条) —— 【里程碑二·个人线第一百零三章】\n")
+    md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
+    md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
+    for idx, d in enumerate(sac_025_diffs, 1):
         md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
     md.append("\n---\n")
 
