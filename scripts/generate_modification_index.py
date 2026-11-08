@@ -14,6 +14,18 @@ def escape_md(text):
     return text.replace("|", "\\|").replace("\n", " ").replace("\r", "")
 
 def classify_change(line_no, sid, ja, old_cn, new_cn):
+    # sac_014 specific (Fruit of Grisaia Sachi Route Chapter 14: Assam milk tea service, strip Old Maid card game, Ranger Komine broom drill, Amane intervention & friendship vow)
+    if (51105 <= line_no <= 51458) or sid.startswith("grisaia1/sac_014#"):
+        if any(k in ja for k in ["アッサム", "ミルクティー", "コップ", "メイド服", "脱衣ババ抜き", "ババ"]):
+            return "执事红茶伺候与脱衣抽鬼牌较量", "雄二顺走顶级阿萨姆茶叶调配奶茶，回忆军校指白为青洗脑，抽鬼牌识破微表情反制莳菜陷害"
+        if any(k in ja for k in ["暴食美人", "若いツバメ", "いき遅れ", "乳頭", "豆乳"]):
+            return "莳菜成语错乱与豆乳甜甜圈黄段子", "纠正机翻误译莳菜错乱成语『暴食美人』（傍若无人）、包养小白脸调侃、豆乳口误与学园长嫁不出去躺枪"
+        if any(k in ja for k in ["レンジャー", "箒", "屈み跳躍", "パツキン", "軍曹殿"]):
+            return "游骑兵小岭扫帚特训与金发傲娇调侃", "幸换上运动女仆装扛扫帚执行跳跃深蹲，高喊游骑兵口令，雄二怒吼金发双马尾也能过关，纠正机翻'游侠'"
+        if any(k in ja for k in ["友達", "戒め", "笑顔", "笑っている", "フッて", "餅は餅屋"]):
+            return "天音闺蜜真情开导与雄二戒律心理解构", "天音怒扯雄二逼其反省，雄二剖析幸心防重枷，天音以朋友身份鼎力相助并指出雄二笑意增多，纠正机翻'洛阳纸贵'"
+        return "幸线日常约会特训与天音开导深度润色", "消除机翻腔，纠正人称与语意断句，使雄二的特工硬汉反差、幸的呆萌军规与天音的温情大姐姐声线完全契合"
+
     # sac_013 specific (Fruit of Grisaia Sachi Route Chapter 13: Chizuru negotiation, Sachi spy scope stalking, Michiru room cleanup & daruma bondage, Yuuji taking over chores & Amane ojisan face)
     if (50704 <= line_no <= 51104) or sid.startswith("grisaia1/sac_013#"):
         if any(k in ja for k in ["勝敗", "引き金", "使い捨て", "春寺", "モッサリ頭", "未完成"]):
@@ -5824,6 +5836,32 @@ def build_report():
                 "section": "灰色的果实·小岭幸线校长室恋爱谈判、KGB特工镜盯梢、满龟甲缚达摩与天音课长脸狂想 (`grisaia1/sac_013`)"
             })
 
+    # sac_014 (Milestone 2 Chapter 92 - Fruit of Grisaia Sachi Route Chapter 14: Assam tea, strip Old Maid, Ranger Komine broom drill, Amane friendship)
+    for lno in range(51105, 51459):
+        ja_raw = ja_lines[lno - 1]
+        cn_raw = cn_lines[lno - 1]
+        sid = ja_raw.split("\t")[0] if "\t" in ja_raw else f"L{lno}"
+        ja_txt = ja_raw.split("\t")[1] if "\t" in ja_raw else ja_raw
+        cn_txt = cn_raw.split("\t")[1] if "\t" in cn_raw else cn_raw
+
+        old_txt = cn_txt
+        if git_base_cn and len(git_base_cn) >= lno:
+            head_raw = git_base_cn[lno - 1]
+            old_txt = head_raw.split("\t")[1] if "\t" in head_raw else head_raw
+
+        if cn_txt != old_txt:
+            cat, reason = classify_change(lno, sid, ja_txt, old_txt, cn_txt)
+            diffs.append({
+                "lno": lno,
+                "sid": sid,
+                "ja": ja_txt,
+                "old": old_txt,
+                "new": cn_txt,
+                "cat": cat,
+                "reason": reason,
+                "section": "灰色的果实·小岭幸线阿萨姆奶茶、游骑兵扫帚特训、脱衣抽鬼牌与天音闺蜜托付 (`grisaia1/sac_014`)"
+            })
+
     print(f"Total indexed modifications: {len(diffs)}")
 
     # Build Markdown
@@ -7165,6 +7203,15 @@ def build_report():
     md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
     md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
     for idx, d in enumerate(sac_013_diffs, 1):
+        md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
+    md.append("\n---\n")
+
+    # Section 149 - Milestone 2: Fruit of Grisaia Sachi Route Chapter 14
+    sac_014_diffs = [d for d in diffs if d["section"].startswith("灰色的果实·小岭幸线阿萨姆奶茶、游骑兵扫帚特训、脱衣抽鬼牌与天音闺蜜托付")]
+    md.append(f"## 一百四十九、 灰色的果实·小岭幸线阿萨姆奶茶、游骑兵扫帚特训、脱衣抽鬼牌与天音闺蜜托付 (`grisaia1/sac_014`，共 {len(sac_014_diffs)} 条) —— 【里程碑二·个人线第九十一章】\n")
+    md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
+    md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
+    for idx, d in enumerate(sac_014_diffs, 1):
         md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
     md.append("\n---\n")
 
