@@ -14,6 +14,18 @@ def escape_md(text):
     return text.replace("|", "\\|").replace("\n", " ").replace("\r", "")
 
 def classify_change(line_no, sid, ja, old_cn, new_cn):
+    # yum_001 specific (Fruit of Grisaia Yumiko Route Chapter 1: Michiaki pressure, staged attack plot & lunch artisan quiz)
+    if (56942 <= line_no <= 57041) or sid.startswith("grisaia1/yum_001#"):
+        if any(k in ja for k in ["東浜グループ", "親不孝者", "収容施設", "税金", "心付け", "改心"]):
+            return "东滨财阀社长施压、美滨收容所真相与不孝女最后通牒", "生动刻画榊道昭专横跋扈、视女儿为工具人之资本巨鳄嘴脸；以巨额税款与资助向CIRS极限施压，揭露美滨学园实为收容所之真相，下达最后通牒逼由美子臣服"
+        if any(k in ja for k in ["襲わせて", "危機感", "護衛", "自作自演", "恐怖"]):
+            return "自导自演危机密谋、JB力荐雄二护卫借力打力", "道昭提议雇凶袭击由美子施加极度恐惧；JB从容周旋顺水推舟，力荐雄二充当贴身护卫，在自导自演阴谋中为雄二争取主导权"
+        if any(k in ja for k in ["楽しい仕事", "職人", "無形物", "対価", "表舞台"]):
+            return "世间绝无快乐工作、无形手艺人自白与美滨午餐盘问", "冷峻剖析雄二关于“世间绝无快乐工作”的现实主义哲学；午餐被莳菜盘问底细，雄二将特工生涯比拟为经手世间最无形之物的手艺人"
+        if any(k in ja for k in ["五臓六腑", "四面楚歌", "バナナ", "ウキーッ", "携帯", "電話"]):
+            return "五脏六腑成语翻车、金发香蕉绝妙新说与骤响密电", "滑稽呈现小满傲娇盘问翻车将四面楚歌误作五脏六腑；幸毒舌补刀；莳菜给小满递香蕉引发发色论争；雄二趁机抽身接听JB密电，危机暗流涌动"
+        return "榊由美子线财阀社长施压、护卫密谋与午休职人自省深层润色", "全面润色由美子线开篇财阀社长压迫、自导自演遇袭密谋、午餐教室打闹与接听密电，彻底消除机翻生硬语病与代词错位"
+
     # sac_ep specific (Fruit of Grisaia Sachi Route Epilogue: hospital visit, park date, proposal & radiant smile)
     if (56834 <= line_no <= 56941) or sid.startswith("grisaia1/sac_ep#"):
         if any(k in ja for k in ["病室", "エクストリームスポーツ", "みちる様", "マキちゃん", "看護師", "お見舞い"]):
@@ -6546,6 +6558,32 @@ def build_report():
                 "section": "灰色的果实·小岭幸线尾声午后病房探母、公园童心包场、毕业求婚戏谑拒绝与真幸笑颜定格 (`grisaia1/sac_ep`)"
             })
 
+    # yum_001 (Milestone 2 Chapter 111 - Fruit of Grisaia Yumiko Route Chapter 1: Michiaki pressure, staged attack plot & lunch artisan quiz)
+    for lno in range(56942, 57042):
+        ja_raw = ja_lines[lno - 1]
+        cn_raw = cn_lines[lno - 1]
+        sid = ja_raw.split("\t")[0] if "\t" in ja_raw else f"L{lno}"
+        ja_txt = ja_raw.split("\t")[1] if "\t" in ja_raw else ja_raw
+        cn_txt = cn_raw.split("\t")[1] if "\t" in cn_raw else cn_raw
+
+        old_txt = cn_txt
+        if git_base_cn and len(git_base_cn) >= lno:
+            head_raw = git_base_cn[lno - 1]
+            old_txt = head_raw.split("\t")[1] if "\t" in head_raw else head_raw
+
+        if cn_txt != old_txt and cn_txt.strip() != "":
+            cat, reason = classify_change(lno, sid, ja_txt, old_txt, cn_txt)
+            diffs.append({
+                "lno": lno,
+                "sid": sid,
+                "ja": ja_txt,
+                "old": old_txt,
+                "new": cn_txt,
+                "cat": cat,
+                "reason": reason,
+                "section": "灰色的果实·榊由美子线财阀社长施压、自导自演袭击密谋与午休职人拷问 (`grisaia1/yum_001`)"
+            })
+
     print(f"Total indexed modifications: {len(diffs)}")
 
     # Build Markdown
@@ -8058,6 +8096,15 @@ def build_report():
     md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
     md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
     for idx, d in enumerate(sac_ep_diffs, 1):
+        md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
+    md.append("\n---\n")
+
+    # Section 168 - Milestone 2: Fruit of Grisaia Yumiko Route Chapter 1
+    yum_001_diffs = [d for d in diffs if d["section"].startswith("灰色的果实·榊由美子线财阀社长施压、自导自演袭击密谋与午休职人拷问")]
+    md.append(f"## 一百六十八、 灰色的果实·榊由美子线财阀社长施压、自导自演袭击密谋与午休职人拷问 (`grisaia1/yum_001`，共 {len(yum_001_diffs)} 条) —— 【里程碑二·个人线第一百一十章】\n")
+    md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
+    md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
+    for idx, d in enumerate(yum_001_diffs, 1):
         md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
     md.append("\n---\n")
 
