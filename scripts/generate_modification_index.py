@@ -14,6 +14,20 @@ def escape_md(text):
     return text.replace("|", "\\|").replace("\n", " ").replace("\r", "")
 
 def classify_change(line_no, sid, ja, old_cn, new_cn):
+    # sac_008 specific (Fruit of Grisaia Sachi Route: deduction of usual place, broom trigger, train ride to hometown, 28 hours wait in rain, collapse & childhood reunion)
+    if (47101 <= line_no <= 47456) or sid.startswith("grisaia1/sac_008#"):
+        if "いつもの場所" in ja or "土下座" in ja or "ミソ" in ja or "教室" in ja:
+            return "‘老地方’盲点破局、满当场土下座请教与二人认知错位推演", "由美子敏锐质疑老地方是否真指教室，天音剖析幸死守诺言特质；满土下座求解释，全员恍然大悟幸心中的老地方绝非美滨教室"
+        if "青い鳥" in ja or "竹箒" in ja or "決めつけ" in ja or "生まれた街" in ja or "児童公園" in ja:
+            return "幸福青鸟破局箴言、门旁竹扫帚闪电顿悟与跨城列车奔赴童年故土", "雄二借麻子青鸟箴言与门边竹扫帚彻底粉碎相识盲区定势，顿悟幸从相遇即穿女仆装与打扫语录；搭乘数小时列车重返出生成长之伤心小镇僻静儿童公园"
+        if "２８時間" in ja or "ブランコ" in ja or "雨の中" in ja or "馬鹿野郎" in ja or "ユウくんとの待ち合わせ" in ja:
+            return "暴雨秋千守候二十八小时、大笨蛋怒吼心碎与‘因为是跟悠君的约定’暴击", "幸浑身湿透端坐秋千整整二十八小时不吃不喝不眠；雄二目睹凄楚模样怒吼大笨蛋，幸温柔回应‘因为是跟悠君的约定’引爆童年重逢泪点"
+        if "頭を撫でてくれた時" in ja or "同じ温かさ" in ja or "『言え』" in ja or "機械人偶" in ja or "ロボット" in ja:
+            return "摸头掌心温度确凿相认、未奉指令绝不开口之重度创伤与服从枷锁", "幸坦白凭转学姓名与摸头掌心熟悉温度早已确信雄二即悠君；因未曾收到‘把真相说出来’之指令而一直沉默，揭露美滨收容之极端顺从心理枷锁"
+        if "作り笑顔" in ja or "頭の上に手" in ja or "約束守ってくれてありがとう" in ja or "倒れ込" in ja or "冷え切って" in ja or "よく頑張ったな" in ja:
+            return "同类虚伪假笑刺痛、逆向抚头‘谢谢你遵守约定’与极限虚脱昏厥相拥", "雄二痛悟幸之假笑与自身毫无二致；幸伸手反抚雄二头顶感谢其遵守诺言，坦白童年未赴约非悠君之过乃自身‘坏孩子’单方强加，力竭昏厥落入雄二怀抱"
+        return "文本自然度与对话韵味润色优化", "重构生硬日式倒装与机械直译，润色为符合Galgame演出的自然中文"
+
     # sac_007 specific (Fruit of Grisaia Sachi Route: praise maxim, childhood Yu-kun memory, standby mission, delay to 17:00, Sachi missing, phone joke, Chizuru police inquiry)
     if (46713 <= line_no <= 47100) or sid.startswith("grisaia1/sac_007#"):
         if "褒められることが嫌いな女はいない" in ja or "ツインテール" in ja or "ユウくん" in ja or "天才だった姉の絞りカス" in ja or "スレた子供" in ja:
@@ -5458,6 +5472,32 @@ def build_report():
                 "section": "灰色的果实·小岭幸线麻子夸奖箴言、马里亚纳海沟绝对不迟到铁律、潜水手机打脸与全城夜搜失踪幸 (`grisaia1/sac_007`)"
             })
 
+    # sac_008 (Milestone 2 Chapter 83 - Fruit of Grisaia Sachi Route: Usual place deduction, broom trigger, hometown train, 28h swing wait, childhood reunion & collapse)
+    for lno in range(47101, 47457):
+        ja_raw = ja_lines[lno - 1]
+        cn_raw = cn_lines[lno - 1]
+        sid = ja_raw.split("\t")[0] if "\t" in ja_raw else f"L{lno}"
+        ja_txt = ja_raw.split("\t")[1] if "\t" in ja_raw else ja_raw
+        cn_txt = cn_raw.split("\t")[1] if "\t" in cn_raw else cn_raw
+
+        old_txt = cn_txt
+        if git_base_cn and len(git_base_cn) >= lno:
+            head_raw = git_base_cn[lno - 1]
+            old_txt = head_raw.split("\t")[1] if "\t" in head_raw else head_raw
+
+        if cn_txt != old_txt:
+            cat, reason = classify_change(lno, sid, ja_txt, old_txt, cn_txt)
+            diffs.append({
+                "lno": lno,
+                "sid": sid,
+                "ja": ja_txt,
+                "old": old_txt,
+                "new": cn_txt,
+                "cat": cat,
+                "reason": reason,
+                "section": "灰色的果实·小岭幸线‘老地方’盲点顿悟、暴雨秋千苦候二十八小时、青梅竹马确凿相认与极限昏厥相拥 (`grisaia1/sac_008`)"
+            })
+
     print(f"Total indexed modifications: {len(diffs)}")
 
     # Build Markdown
@@ -6718,6 +6758,15 @@ def build_report():
     md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
     md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
     for idx, d in enumerate(sac_007_diffs, 1):
+        md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
+    md.append("\n---\n")
+
+    # Section 140 - Milestone 2: Fruit of Grisaia Sachi Route Chapter 7
+    sac_008_diffs = [d for d in diffs if d["section"].startswith("灰色的果实·小岭幸线‘老地方’盲点顿悟、暴雨秋千苦候二十八小时、青梅竹马确凿相认与极限昏厥相拥")]
+    md.append(f"## 一百四十、 灰色的果实·小岭幸线‘老地方’盲点顿悟、暴雨秋千苦候二十八小时、青梅竹马确凿相认与极限昏厥相拥 (`grisaia1/sac_008`，共 {len(sac_008_diffs)} 条) —— 【里程碑二·个人线第八十二章】\n")
+    md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
+    md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
+    for idx, d in enumerate(sac_008_diffs, 1):
         md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
     md.append("\n---\n")
 
