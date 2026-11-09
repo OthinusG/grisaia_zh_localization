@@ -14,6 +14,22 @@ def escape_md(text):
     return text.replace("|", "\\|").replace("\n", " ").replace("\r", "")
 
 def classify_change(line_no, sid, ja, old_cn, new_cn):
+    # yum_008_p1 specific (Fruit of Grisaia Yumiko Route Chapter 8 Part 1: detective fired, lap-sitting reading, amusement park promise & housewife cooking disaster)
+    if (63077 <= line_no <= 63689):
+        if any(k in ja for k in ["興信所", "探偵", "クビ", "半年", "株主総会", "狸", "財布"]):
+            return "道昭搜捕半年无功暴怒解雇侦探、股东大会危机与JB暗号密电示警", "生动呈现道昭搜捕半年毫无线索无能狂怒下令解雇全部侦探、因股东大会在即深陷政商反扑危机，以及JB借古典乐暗语通报平稳局势并叮嘱小心由美子隐性尖刺"
+        if any(k in ja for k in ["サボテン", "虫食い", "共存", "トゲ", "西務鉄道", "出世", "責任者"]):
+            return "仙人掌与毛毛虫甜蜜共生暗语、人际关系沧桑剧变与西务铁道势力圈隐匿", "幽默深刻展现雄二以仙人掌受虫蛀意外融洽向JB报备二人结合、人际关系沧桑剧变的哲思，以及雄二在敌对西务铁道势力圈低调打工反因勤勉被提拔为班长"
+        if any(k in ja for k in ["ミステリ", "犯人", "棒線", "膝の上", "重い", "体重", "我慢して"]):
+            return "膝上阅读温存甜宠日常、推理小说剧透横线吐槽与「嫌重」娇嗔反诘", "极具萌点与甜度！由美子吐槽图书馆借来的推理小说被无良读者划横线剧透凶手，自然而然霸占雄二膝头阅读被雄二吐槽太沉，由美子娇嗔命令「忍着点」"
+        if any(k in ja for k in ["遊園地", "首を絞め", "首筋", "舐めて", "いってらっしゃい", "キス"]):
+            return "绝美游乐园之约誓言、亲吻脖颈安慰与出门前「深情告别吻」默契", "又甜又虐！由美子娇羞吐露渴望去从未去过的游乐园、雄二郑重立下约定，由美子舔吻雄二脖颈撒娇，以及出门前由美子扭捏等待深情告别吻的极致甜蜜日常"
+        if any(k in ja for k in ["一人芝居", "肉じゃが", "ピーラー", "針", "焦げ", "洗濯物", "雨"]):
+            return "忘带钱包自我嫌弃、一人两角精分自导自演与贤妻良母大作战灾难崩盘", "神级搞笑名场面！由美子独自在家精分上演一人两角贤妻独角戏，决意为雄二料理土豆炖牛肉大显身手，却遭遇菜刀当削皮器、针线扎手、热锅烧焦、暴雨打翻茶水等接二连三的毁灭性大翻车"
+        if any(k in ja for k in ["由美子っ", "土足", "引っ繰り返", "焦燥感", "蹲", "奴ら"]):
+            return "狼藉废墟焦糊浓烟惊魂、误判杀手突袭与瑟瑟发抖无助蜷缩", "高燃而揪心！雄二提早收工归家目睹满地狼藉、浓烟焦味与翻倒餐具误判为仇家杀手突袭破门营救，赫然发现由美子在屋中央自责自卑蜷缩瑟瑟发抖"
+        return "由美子线甜蜜温存日常与贤妻大作战篇全景深度润色", "全面清除机翻语病，淋漓尽致地展现相濡以沫的膝上甜宠日常、游乐园之约与贤妻良母大作战灾难崩盘的丰富群像"
+
     # yum_007 specific (Fruit of Grisaia Yumiko Route Chapter 7: runaway cohabitation, cactus code, midnight kiss & confession of love)
     if (62471 <= line_no <= 63076):
         if any(k in ja for k in ["下町", "日雇い", "毛布", "作業員", "アパート", "２０３", "路地"]):
@@ -6972,6 +6988,32 @@ def build_report():
                 "section": "灰色的果实·榊由美子线市井隐匿同居、仙人掌暗号、深夜偷吻与直球告白冰释 (`grisaia1/yum_007`)"
             })
 
+    # yum_008_p1 (Milestone 2 Chapter 122 - Fruit of Grisaia Yumiko Route Chapter 8 Part 1: detective fired, lap reading & cooking disaster)
+    for lno in range(63077, 63690):
+        ja_raw = ja_lines[lno - 1]
+        cn_raw = cn_lines[lno - 1]
+        sid = ja_raw.split("\t")[0] if "\t" in ja_raw else f"L{lno}"
+        ja_txt = ja_raw.split("\t")[1] if "\t" in ja_raw else ja_raw
+        cn_txt = cn_raw.split("\t")[1] if "\t" in cn_raw else cn_raw
+
+        old_txt = cn_txt
+        if git_base_cn and len(git_base_cn) >= lno:
+            head_raw = git_base_cn[lno - 1]
+            old_txt = head_raw.split("\t")[1] if "\t" in head_raw else head_raw
+
+        if cn_txt != old_txt and cn_txt.strip() != "":
+            cat, reason = classify_change(lno, sid, ja_txt, old_txt, cn_txt)
+            diffs.append({
+                "lno": lno,
+                "sid": sid,
+                "ja": ja_txt,
+                "old": old_txt,
+                "new": cn_txt,
+                "cat": cat,
+                "reason": reason,
+                "section": "灰色的果实·榊由美子线半年搜捕无果、膝上甜宠依偎、游乐园之约与贤妻作战大崩盘 (`grisaia1/yum_008` Part 1)"
+            })
+
     print(f"Total indexed modifications: {len(diffs)}")
 
     # Build Markdown
@@ -8583,6 +8625,15 @@ def build_report():
     md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
     md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
     for idx, d in enumerate(yum_007_diffs, 1):
+        md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
+    md.append("\n---\n")
+
+    # Section 179 - Milestone 2: Fruit of Grisaia Yumiko Route Chapter 8 Part 1
+    yum_008_p1_diffs = [d for d in diffs if d["section"].startswith("灰色的果实·榊由美子线半年搜捕无果")]
+    md.append(f"## 一百七十九、 灰色的果实·榊由美子线半年搜捕无果、膝上甜宠依偎、游乐园之约与贤妻作战大崩盘 (`grisaia1/yum_008` Part 1，共 {len(yum_008_p1_diffs)} 条) —— 【里程碑二·个人线第一百二十一章】\n")
+    md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
+    md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
+    for idx, d in enumerate(yum_008_p1_diffs, 1):
         md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
     md.append("\n---\n")
 
