@@ -14,6 +14,20 @@ def escape_md(text):
     return text.replace("|", "\\|").replace("\n", " ").replace("\r", "")
 
 def classify_change(line_no, sid, ja, old_cn, new_cn):
+    # yuj_005 specific (Milestone 3 Chapter 5 - Yuuji Past Chapter 5: Asako & JB orphanage flashback, hospital adoption, mountain cabin, fly PTSD, puppy John & Asako illness)
+    if (80370 <= line_no <= 80913):
+        if any(k in ja for k in ["滑り台", "心づけ", "養護施設", "タメ", "二段ベッド", "シスター", "マーガレット", "問題児", "幼年学校", "人身売買"]):
+            return "孤儿院滑梯初遇恶霸麻子、索要上贡与海军幼年学校同窗孽缘", "宿命羁绊！回溯JB八岁孤儿院初遇日下部麻子：翘腿盘踞滑梯顶索要拜码头上贡，立下‘少靠近日下部麻子’铁律；玛格丽特修女指派同室看管头号问题儿，海军幼年学校再次同寝，见证被卖入军营充当炮灰之底层孤儿命运"
+        if any(k in ja for k in ["デスク", "実働", "ラングレー", "赤坂", "市ヶ谷", "左遷", "犬のように", "新車", "点滴", "拾う神"]):
+            return "CIRS文职外勤分道扬镳、走狗与骨头论及麻子医院霸气提领雄二", "冷峻觉醒！JB坐镇后方、麻子一线卖命，麻子哲学：反正干脏活，做条冲出价最高金主摇尾巴的走狗死得痛快；JB报复性买豪车；前往病房提领被奥斯陆摧残濒死之雄二：‘天弃之，我拾之！我是捡你的神仙，四十秒收拾滚蛋跟我走！’"
+        if any(k in ja for k in ["山梨", "管理小屋", "風呂", "野良犬", "デッキブラシ", "美少年", "蠅", "フラッシュバック", "オエ"]):
+            return "山梨护林小屋硬毛板刷洗澡、绝色美少年色气与拍苍蝇PTSD剧烈反胃", "心碎崩溃！带回山梨国有林小屋，麻子硬毛刷刷掉三层野狗油垢死皮，露出雄二满身枪创刀疤、神经性指尖恐惧与脆弱美少年真容；雄二轻言‘习惯皮肉痛’破冰；晚餐雄二条件反射拍死苍蝇，掌心肉感瞬间触发杀人记忆闪回，剧烈干呕胃酸泣不成声道歉"
+        if any(k in ja for k in ["おじや", "カレー粉", "鹿の", "重湯", "鼻水", "素っ裸", "風邪", "ライオン", "ガヲー", "ボーダーコリー", "ジョン"]):
+            return "暗黑鹿鞭杂炊大乱斗、裸体脱敏败退、动物园吼狮与边牧幼犬约翰疗愈", "幽默与温情！麻子下厨炖入鹿鞭特制大补杂炊，被JB整锅掀翻斥为剧毒并温柔喂米汤；雄二自闭‘沾上我的女人都会死’，麻子霸气怒斥‘是因为你什么都没做！’；麻子全裸脱敏遭雄二淡定提醒着凉；动物园雄狮挑衅遭麻子咆哮‘宰了你’引雄二破涕为笑；申领K9边牧幼犬约翰，雄二玩球展露纯真笑颜"
+        if any(k in ja for k in ["辞表", "大口径", "毛細血管", "逆流", "視神経", "循環不良", "突然死", "予備役", "大人"]):
+            return "麻子旧伤恶化视神经受损、辞官相伴雄二与市谷最高机密预备役折中", "深沉牺牲！麻子肩部旧枪伤动能逆流挤压视神经导致失明加剧、全身循环不良伴随猝死风险，决意辞官倾尽余生陪伴雄二；JB冒死扣押辞呈周旋，以‘退一线不退官’将麻子转入市谷预备役名册；成年雄二与JB回首往昔，感怀麻子胜似亲母之救赎大爱"
+        return "灰色的迷宫·雄二过去篇第五章·麻子JB孤儿院回溯、护林小屋救赎与边牧约翰润色", "全面清除机翻语病，极致还原麻子与JB相爱相杀宿命、雄二战后创伤应激崩溃、暗黑料理与动物园温情、以及麻子旧伤隐疾为爱隐退之全篇核心情感脉络！"
+
     # yuj_004 specific (Milestone 3 Chapter 4 - Yuuji Past Chapter 4: Mihama girls trauma debate, serial ballpoint pen assassinations, CIRS orphan dark history & Asako adoption)
     if (80101 <= line_no <= 80369):
         if any(k in ja for k in ["自殺", "図々しい", "逃げ", "僻み", "レンジャー", "価値基準", "今日をシッカリ", "可哀想"]):
@@ -7358,6 +7372,32 @@ def build_report():
                 "section": "灰色的迷宫·雄二过去篇第四章·美滨心理剖析、圆珠笔连环刺杀与麻子强行收养 (`grisaia2/yuj_004`)"
             })
 
+    # yuj_005 (Milestone 3 Chapter 5 - Yuuji Past Chapter 5: Asako & JB orphanage flashback, hospital adoption, mountain cabin, fly PTSD, puppy John & Asako illness)
+    for lno in range(80370, 80914):
+        ja_raw = ja_lines[lno - 1].rstrip("\r\n")
+        cn_raw = cn_lines[lno - 1].rstrip("\r\n")
+        sid = ja_raw.split("\t")[0] if "\t" in ja_raw else f"L{lno}"
+        ja_txt = ja_raw.split("\t")[1] if "\t" in ja_raw else ja_raw
+        cn_txt = cn_raw.split("\t")[1] if "\t" in cn_raw else cn_raw
+
+        old_txt = cn_txt
+        if git_base_cn and len(git_base_cn) >= lno:
+            head_raw = git_base_cn[lno - 1].rstrip("\r\n")
+            old_txt = head_raw.split("\t")[1] if "\t" in head_raw else head_raw
+
+        if cn_txt != old_txt and cn_txt.strip() != "":
+            cat, reason = classify_change(lno, sid, ja_txt, old_txt, cn_txt)
+            diffs.append({
+                "lno": lno,
+                "sid": sid,
+                "ja": ja_txt,
+                "old": old_txt,
+                "new": cn_txt,
+                "cat": cat,
+                "reason": reason,
+                "section": "灰色的迷宫·雄二过去篇第五章·麻子JB孤儿院回溯、护林小屋救赎与边牧约翰 (`grisaia2/yuj_005`)"
+            })
+
     print(f"Total indexed modifications: {len(diffs)}")
 
     # Build Markdown
@@ -9050,6 +9090,15 @@ def build_report():
     md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
     md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
     for idx, d in enumerate(yuj_004_diffs, 1):
+        md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
+    md.append("\n---\n")
+
+    # Section 188 - Milestone 3: Labyrinth of Grisaia Yuuji Past Chapter 5
+    yuj_005_diffs = [d for d in diffs if d["section"].startswith("灰色的迷宫·雄二过去篇第五章")]
+    md.append(f"## 一百八十八、 灰色的迷宫·雄二过去篇第五章·孤儿院羁绊、护林小屋脱敏、边牧约翰与麻子旧疾隐退 (`grisaia2/yuj_005`，共 {len(yuj_005_diffs)} 条) —— 【里程碑三·雄二过去篇随想录第五章】\n")
+    md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
+    md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
+    for idx, d in enumerate(yuj_005_diffs, 1):
         md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
     md.append("\n---\n")
 
