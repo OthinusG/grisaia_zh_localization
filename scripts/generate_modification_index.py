@@ -14,6 +14,26 @@ def escape_md(text):
     return text.replace("|", "\\|").replace("\n", " ").replace("\r", "")
 
 def classify_change(line_no, sid, ja, old_cn, new_cn):
+    # yuj_003 specific (Milestone 3 Chapter 3 - Yuuji Past Chapter 3: Oslo terrorist school, Merlin death match, high society crossdressing & Judge Glenn assassination)
+    if (79437 <= line_no <= 80100):
+        if any(k in ja for k in ["エチケット", "南瓜", "ショタ", "マクワウリ", "ナンカシャ", "オークション", "洗濯", "シガレットケース", "オルゴール"]):
+            return "美滨宿舍南卡舍巴列恩空耳、正太收养推论与桐原礼洗钱走廊初遇", "诙谐与暗流！满偷听档案大受震撼，将南卡舍·巴列恩空耳为南瓜，幸毒舌补刀甜瓜与正太论；揭露桐原礼（希斯·奥斯陆）借一姬画作洗钱数亿，走廊赠金八音盒瑞士巧克力初见幼年雄二"
+        if any(k in ja for k in ["引き取り", "女装", "膝", "小児愛", "ペドフィリア", "目玉", "花瓶", "ボールペン", "笑"]):
+            return "失语雄二沦为女装玩物、变态来客眼球圆珠笔爆刺与奥斯陆鼓掌狂笑", "冷血觉醒！父母双亡后失语雄二被桐原从医院收养，逼穿女装抱坐膝头；肥胖变态来客欲行不轨，雄二闪回暴虐生父，右手持圆珠笔直刺其眼球并以花瓶碎颅；奥斯陆目睹残局击掌狂笑赞叹"
+        if any(k in ja for k in ["氷点下", "Ｔ字型", "滑走路", "少年兵", "スコープ", "１マイル", "才能", "狙撃"]):
+            return "极北冻土T型跑道魔窟、少年兵杀手集训与一英里精准狙击王牌", "严酷集训！雄二乘私人飞机抵达极寒冻土秘密基地，沦为跨国少年兵恐怖营地受训者；展现超凡远距离狙击潜能，一英里盲狙例无虚发，迅速跃升为奥斯陆极度偏爱之心头王牌"
+        if any(k in ja for k in ["マーリン", "手当て", "水", "解剖", "ナイフ", "格闘", "生き残り"]):
+            return "神秘失忆少女梅林夜半赠粮、奥斯陆匕首肉搏信条与死尸解剖特训", "残酷生存！神秘失忆少女梅林夜半为负伤雄二疗伤赠干粮；奥斯陆灌输‘枪械粗糙，匕首见血定生死’之极端暴论；强推水箱感官剥夺、极端严寒求生与新鲜死尸解剖实操教学"
+        if any(k in ja for k in ["ドーピング", "肘", "膝蹴り", "狂気", "母親の顔", "罰", "地下牢", "血が固まり"]):
+            return "毕业试炼同窗狂暴死斗、重创梅林幻视亡母跪地挨打与地下死牢弃尸", "痛彻心扉！毕业试炼竟被安排与梅林同室操戈，梅林遭注射神经药物陷入狂暴；雄二重肘狠膝反击，目睹梅林被打得青紫肿胀的面庞与惨死母亲重叠，恐惧窒息跪地认罚遭其狂殴濒死，被弃于地下死牢如破布"
+        if any(k in ja for k in ["苦い", "看護師", "死亡", "呪い", "自習", "自己教練"]):
+            return "苦涩药水温存试饮、梅林首秀暴毙死讯与‘善待我之女子必死’宿命领悟", "凄绝绝望！梅林清醒后日日下地牢温毛巾融血痂、试喝极苦药水温柔喂食；两周后护士冷血宣布梅林实战首秀暴毙，宿舍物是人非；雄二领悟‘凡待我温柔之女皆不得好死’之无情诅咒"
+        if any(k in ja for k in ["凋礼紅", "チョウ・レイホァン", "グレン", "マクファーソン", "最高裁", "判事", "ダストシュート"]):
+            return "中国名媛凋礼红绝美潜入、善心老法官金笔穿喉与垃圾滑槽遁走", "惊天暗杀！雄二无试直接现场配置，化身中国女性‘凋礼红’女装潜入美国高档酒店；借格伦法官资助穷苦孩童之善心，趁其品茶以金笔贯穿下颌捣碎脑干，顺垃圾滑槽利落脱身"
+        if any(k in ja for k in ["ＥＴ−０１", "アンファンテリブル", "子守唄", "コードネーム", "麻子", "新品少尉", "情報局"]):
+            return "奥斯陆狂喜筹备酷炫代号、美军调查ET-01与JB少尉宿命交错", "首尾呼应！奥斯陆得知刺杀成功心花怒放，欲赐酷炫代号；美滨现世JB向雄二揭露当年自己作为初出茅庐的美军少尉受命调查‘可怕幼童1号’ET-01，命运齿轮终迎交错"
+        return "灰色的迷宫·雄二过去篇第三章·奥斯陆刺客特训营、梅林生死同窗死斗与法官暗杀血祭润色", "全面清除机翻语病，极致还原奥斯陆魔窟集训、梅林狂暴死斗、亡母阴影窒息、凋礼红女装金笔刺杀法官与JB初任调查之全剧惊心动魄历史回溯！"
+
     # yuj_002 specific (Milestone 3 Chapter 2 - Yuuji Past Chapter 2: Takizono disaster, father domestic violence, bottle skull smash & mother suicide)
     if (78856 <= line_no <= 79436):
         if any(k in ja for k in ["エチケット", "３ガーリー", "礼儀", "おから", "ドーナツ", "ジグソーパズル", "スパイ", "同級生", "バスケ"]):
@@ -7274,6 +7294,32 @@ def build_report():
                 "section": "灰色的迷宫·雄二过去篇第二章·泷园海难神隐、生父兽行家暴、酒瓶碎颅与母亲自缢绝笔 (`grisaia2/yuj_002`)"
             })
 
+    # yuj_003 (Milestone 3 Chapter 3 - Yuuji Past Chapter 3: Oslo terrorist school, Merlin death match, high society crossdressing & Judge Glenn assassination)
+    for lno in range(79437, 80101):
+        ja_raw = ja_lines[lno - 1].rstrip("\r\n")
+        cn_raw = cn_lines[lno - 1].rstrip("\r\n")
+        sid = ja_raw.split("\t")[0] if "\t" in ja_raw else f"L{lno}"
+        ja_txt = ja_raw.split("\t")[1] if "\t" in ja_raw else ja_raw
+        cn_txt = cn_raw.split("\t")[1] if "\t" in cn_raw else cn_raw
+
+        old_txt = cn_txt
+        if git_base_cn and len(git_base_cn) >= lno:
+            head_raw = git_base_cn[lno - 1].rstrip("\r\n")
+            old_txt = head_raw.split("\t")[1] if "\t" in head_raw else head_raw
+
+        if cn_txt != old_txt and cn_txt.strip() != "":
+            cat, reason = classify_change(lno, sid, ja_txt, old_txt, cn_txt)
+            diffs.append({
+                "lno": lno,
+                "sid": sid,
+                "ja": ja_txt,
+                "old": old_txt,
+                "new": cn_txt,
+                "cat": cat,
+                "reason": reason,
+                "section": "灰色的迷宫·雄二过去篇第三章·奥斯陆刺客特训营、梅林生死同窗死斗与法官暗杀血祭 (`grisaia2/yuj_003`)"
+            })
+
     print(f"Total indexed modifications: {len(diffs)}")
 
     # Build Markdown
@@ -8948,6 +8994,15 @@ def build_report():
     md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
     md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
     for idx, d in enumerate(yuj_002_diffs, 1):
+        md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
+    md.append("\n---\n")
+
+    # Section 186 - Milestone 3: Labyrinth of Grisaia Yuuji Past Chapter 3
+    yuj_003_diffs = [d for d in diffs if d["section"].startswith("灰色的迷宫·雄二过去篇第三章")]
+    md.append(f"## 一百八十六、 灰色的迷宫·雄二过去篇第三章·奥斯陆刺客特训营、梅林生死同窗死斗与法官暗杀血祭 (`grisaia2/yuj_003`，共 {len(yuj_003_diffs)} 条) —— 【里程碑三·雄二过去篇随想录第三章】\n")
+    md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
+    md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
+    for idx, d in enumerate(yuj_003_diffs, 1):
         md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
     md.append("\n---\n")
 
