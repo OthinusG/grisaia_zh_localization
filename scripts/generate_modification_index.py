@@ -14,6 +14,20 @@ def escape_md(text):
     return text.replace("|", "\\|").replace("\n", " ").replace("\r", "")
 
 def classify_change(line_no, sid, ja, old_cn, new_cn):
+    # yum_007 specific (Fruit of Grisaia Yumiko Route Chapter 7: runaway cohabitation, cactus code, midnight kiss & confession of love)
+    if (62471 <= line_no <= 63076):
+        if any(k in ja for k in ["下町", "日雇い", "毛布", "作業員", "アパート", "２０３", "路地"]):
+            return "大隐隐于市闹市下町潜伏、工地日薪零工与203室温馨隐匿同居生活", "深刻生动地刻画欲藏一叶必隐于林的城市隐匿哲学、雄二在工地打零工融入市井，以及与由美子在狭窄旧公寓203室相濡以沫的清贫日常"
+        if any(k in ja for k in ["道昭", "報道管制", "ハワイアン", "ボサノヴァ", "インスト", "エスパー"]):
+            return "道昭狂怒施压防卫省、JB严辞反驳与BossaNova夏威夷密电暗语", "精彩展现道昭对保镖无能狂怒威逼灭口却忌惮丑闻不敢报警、JB义正辞严反驳，并以波萨诺瓦夏威夷纯音乐暗语向雄二通报搜捕态势"
+        if any(k in ja for k in ["サボテン", "虫食い", "名字", "君", "玉子焼き", "距離"]):
+            return "仙人掌与毛毛虫黑话密电、同居男女情愫萌动与姓氏称呼心结", "风趣诙谐地还原JB以仙人掌受虫蛀暗探二人同居进展、雄二被触动纠结于由美子坚持用「风见君」称呼的距离感与由美子羞愤戳烂厚蛋烧的微妙情愫"
+        if any(k in ja for k in ["ジュリア", "唇", "柔らかい", "寝ぼけ", "狸寝入り", "味噌汁", "性欲"]):
+            return "深夜装睡偷吻名场面、假梦呓「茱莉亚」破防与清晨厚蛋烧对质", "绝顶经典的名场面！由美子深夜试探偷吻雄二、雄二装睡假梦呓前上司闺名「茱莉亚」巧妙化解，翌日清晨餐桌直球提问偷吻害由美子当场狂喷味噌汤"
+        if any(k in ja for k in ["抱きしめ", "好きだ", "抱きたい", "ゆうじ", "正座", "春寺", "女性遍歴"]):
+            return "紧拥入怀直球深情告白、首度直呼真名「雄二」与春寺吃醋修罗场", "催泪与爆笑兼备！雄二紧拥由美子直球告白消融少女心防、由美子满脸通红首度娇羞直呼「雄二」，随后吃醋狂拧手臂拷问JB秘密往事与雄二每日正座苦行"
+        return "由美子线甜蜜逃亡同居与心结冰释篇全景深度润色", "全面清除机翻语病，淋漓尽致地展现市井隐匿同居的温情、深夜偷吻的心跳互动与直球定情的心结彻底冰释"
+
     # yum_006 specific (Fruit of Grisaia Yumiko Route Chapter 6: farewell text, Gallardo high-speed pursuit, frozen turkey turbine strike & jet cabin rescue)
     if (61721 <= line_no <= 62470):
         if any(k in ja for k in ["門真", "陸将補", "東浜", "ＣＩＲＳ", "越権", "私怨", "クビ"]):
@@ -6932,6 +6946,32 @@ def build_report():
                 "section": "灰色的果实·榊由美子线绝望短信告别、借调盖拉多跑车、火鸡撞击引擎与机场客机空降营救 (`grisaia1/yum_006`)"
             })
 
+    # yum_007 (Milestone 2 Chapter 121 - Fruit of Grisaia Yumiko Route Chapter 7: runaway cohabitation, cactus code, midnight kiss & confession of love)
+    for lno in range(62471, 63077):
+        ja_raw = ja_lines[lno - 1]
+        cn_raw = cn_lines[lno - 1]
+        sid = ja_raw.split("\t")[0] if "\t" in ja_raw else f"L{lno}"
+        ja_txt = ja_raw.split("\t")[1] if "\t" in ja_raw else ja_raw
+        cn_txt = cn_raw.split("\t")[1] if "\t" in cn_raw else cn_raw
+
+        old_txt = cn_txt
+        if git_base_cn and len(git_base_cn) >= lno:
+            head_raw = git_base_cn[lno - 1]
+            old_txt = head_raw.split("\t")[1] if "\t" in head_raw else head_raw
+
+        if cn_txt != old_txt and cn_txt.strip() != "":
+            cat, reason = classify_change(lno, sid, ja_txt, old_txt, cn_txt)
+            diffs.append({
+                "lno": lno,
+                "sid": sid,
+                "ja": ja_txt,
+                "old": old_txt,
+                "new": cn_txt,
+                "cat": cat,
+                "reason": reason,
+                "section": "灰色的果实·榊由美子线市井隐匿同居、仙人掌暗号、深夜偷吻与直球告白冰释 (`grisaia1/yum_007`)"
+            })
+
     print(f"Total indexed modifications: {len(diffs)}")
 
     # Build Markdown
@@ -8534,6 +8574,15 @@ def build_report():
     md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
     md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
     for idx, d in enumerate(yum_006_diffs, 1):
+        md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
+    md.append("\n---\n")
+
+    # Section 178 - Milestone 2: Fruit of Grisaia Yumiko Route Chapter 7
+    yum_007_diffs = [d for d in diffs if d["section"].startswith("灰色的果实·榊由美子线市井隐匿同居")]
+    md.append(f"## 一百七十八、 灰色的果实·榊由美子线市井隐匿同居、仙人掌暗号、深夜偷吻与直球告白冰释 (`grisaia1/yum_007`，共 {len(yum_007_diffs)} 条) —— 【里程碑二·个人线第一百二十章】\n")
+    md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
+    md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
+    for idx, d in enumerate(yum_007_diffs, 1):
         md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
     md.append("\n---\n")
 
