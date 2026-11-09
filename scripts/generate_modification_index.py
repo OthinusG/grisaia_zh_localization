@@ -14,6 +14,20 @@ def escape_md(text):
     return text.replace("|", "\\|").replace("\n", " ").replace("\r", "")
 
 def classify_change(line_no, sid, ja, old_cn, new_cn):
+    # yum_006 specific (Fruit of Grisaia Yumiko Route Chapter 6: farewell text, Gallardo high-speed pursuit, frozen turkey turbine strike & jet cabin rescue)
+    if (61721 <= line_no <= 62470):
+        if any(k in ja for k in ["門真", "陸将補", "東浜", "ＣＩＲＳ", "越権", "私怨", "クビ"]):
+            return "JB严厉警告、陆将补门真威压、东滨财阀爪牙逼近与JB私人默许掩护", "生动刻画JB告知由美子生父道昭通过政经私铁巨头施压防卫省陆将补门真、CIRS受限不能官方介入，但JB私下提供情报并默认雄二独立行动的默契"
+        if any(k in ja for k in ["メール", "ごめんなさい", "ミニベロ", "モールトン", "自転車", "ウィーグレ", "坂"]):
+            return "由美子绝望短信「对不起」、雄二心急如焚借用小折叠车全力追踪", "极具张力地展现由美子留下心碎道歉短信被生父黑衣保镖带走，雄二果断借用幸网购的极品折叠自行车全力蹬车疾驰追踪直升机"
+        if any(k in ja for k in ["ランボルギーニ", "ガヤルド", "ガヤルディ", "金髪", "河内", "東河内", "３００キロ"]):
+            return "巧借金发男绝版兰博基尼敞篷超跑、时速285公里狂飙截击起飞客机", "诙谐幽默与极致狂飙并存，地道还原关西河内腔金发男豪车炫耀，雄二当街果断强征兰博基尼超跑以逼近时速300公里的狂暴极速强闯机场围栏拦截起飞喷气机"
+        if any(k in ja for k in ["七面鳥", "冷凍", "バードストライク", "タービン", "エンジン", "火を噴", "爆音"]):
+            return "急中生智冷冻火鸡暴击涡轮叶片、诱发鸟击迫降引擎失火破窗突入", "神级脑洞名场面！精准展现雄二在跑道贴地并驾齐驱之际将如石头般坚硬的冷冻火鸡精准投掷入客机喷气引擎涡轮叶片，诱发引擎空中失火紧急折返"
+        if any(k in ja for k in ["由美子", "名前", "手を伸ば", "シュート", "脱出", "人間", "探しに行く"]):
+            return "制服护卫、首度呼唤真名「由美子」、解救少女并乘充气滑梯脱出", "催泪与高燃交织！雄二突入机舱击倒护卫，首次直呼封印多年的「由美子」承认其作为普通人的尊严与生存权，牵起少女之手通过逃生充气滑梯潇洒脱出"
+        return "由美子线机场绝境奔袭营救篇全景深度润色", "全面清除机翻语病，淋漓尽致地展现兰博基尼狂飙拦截、火鸡诱发鸟击与机舱绝境拯救由美子的高燃脱险高潮"
+
     # yum_005 specific (Fruit of Grisaia Yumiko Route Chapter 5: rainy night fever nursing, riverbank thugs ambush, stabbed arm & painful dismissal)
     if (61282 <= line_no <= 61720):
         if any(k in ja for k in ["立方体", "球体", "いびつ", "角が取れ", "傷つけて", "人形"]):
@@ -6892,6 +6906,32 @@ def build_report():
                 "section": "灰色的果实·榊由美子线雨夜高烧照护、河堤伏击浴血、短刃刺臂与解雇绝望落幕 (`grisaia1/yum_005`)"
             })
 
+    # yum_006 (Milestone 2 Chapter 120 - Fruit of Grisaia Yumiko Route Chapter 6: farewell text, Gallardo pursuit, turkey strike & jet cabin rescue)
+    for lno in range(61721, 62471):
+        ja_raw = ja_lines[lno - 1]
+        cn_raw = cn_lines[lno - 1]
+        sid = ja_raw.split("\t")[0] if "\t" in ja_raw else f"L{lno}"
+        ja_txt = ja_raw.split("\t")[1] if "\t" in ja_raw else ja_raw
+        cn_txt = cn_raw.split("\t")[1] if "\t" in cn_raw else cn_raw
+
+        old_txt = cn_txt
+        if git_base_cn and len(git_base_cn) >= lno:
+            head_raw = git_base_cn[lno - 1]
+            old_txt = head_raw.split("\t")[1] if "\t" in head_raw else head_raw
+
+        if cn_txt != old_txt and cn_txt.strip() != "":
+            cat, reason = classify_change(lno, sid, ja_txt, old_txt, cn_txt)
+            diffs.append({
+                "lno": lno,
+                "sid": sid,
+                "ja": ja_txt,
+                "old": old_txt,
+                "new": cn_txt,
+                "cat": cat,
+                "reason": reason,
+                "section": "灰色的果实·榊由美子线绝望短信告别、借调盖拉多跑车、火鸡撞击引擎与机场客机空降营救 (`grisaia1/yum_006`)"
+            })
+
     print(f"Total indexed modifications: {len(diffs)}")
 
     # Build Markdown
@@ -8485,6 +8525,15 @@ def build_report():
     md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
     md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
     for idx, d in enumerate(yum_005_diffs, 1):
+        md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
+    md.append("\n---\n")
+
+    # Section 177 - Milestone 2: Fruit of Grisaia Yumiko Route Chapter 6
+    yum_006_diffs = [d for d in diffs if d["section"].startswith("灰色的果实·榊由美子线绝望短信告别")]
+    md.append(f"## 一百七十七、 灰色的果实·榊由美子线绝望短信告别、借调盖拉多跑车、火鸡撞击引擎与机场客机空降营救 (`grisaia1/yum_006`，共 {len(yum_006_diffs)} 条) —— 【里程碑二·个人线第一百一十九章】\n")
+    md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
+    md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
+    for idx, d in enumerate(yum_006_diffs, 1):
         md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
     md.append("\n---\n")
 
