@@ -14,6 +14,28 @@ def escape_md(text):
     return text.replace("|", "\\|").replace("\n", " ").replace("\r", "")
 
 def classify_change(line_no, sid, ja, old_cn, new_cn):
+    # yum_011 specific (Fruit of Grisaia Yumiko Route Chapter 11: True Ending Part 2 & Grand Finale - morning affection, hospital confrontation, Michiaki confession & Yuma epilogue)
+    if (65178 <= line_no <= 66164):
+        if any(k in ja for k in ["時間", "非力", "ランニング", "ただいま", "タオル", "デレ", "抱きしめ", "胸板", "脂っこい", "人間の尊厳"]):
+            return "时间支配一切之冷峻引言、晨跑归来索抱撒娇与美滨全员撞破处刑", "爆笑高甜！开篇深刻论述时间乃支配万物之无情主宰，转入雄二晨跑归来由美子送毛巾索抱蹭胸口贪恋男人味；天音、美满、幸、莳菜全体大厅围观，毒舌调侃夜生活泄露与大清早太油腻，由美子石化社死上演极品反差萌"
+        if any(k in ja for k in ["閉校", "集合住宅", "料理", "味噌汁", "煮物", "信じられない", "陰", "過去の人", "株式", "譲渡"]):
+            return "美滨闭校转型公寓、由美子贤妻料理修行与道昭全部股份意外无偿转让", "温情转折！美滨全员各奔前程，由美子在天音指导下苦练味噌汤与雄二同居；看似圆满背后难掩生父心结阴霾，律师突发来电证实失踪的道昭已将名下全部股份无偿赠予由美子，引发剧烈心绪波澜"
+        if any(k in ja for k in ["３年後", "スーツ", "起業", "邸宅", "ジュリア", "予備役", "探偵", "居場所", "デート"]):
+            return "三年后干练女企业家蝶变、JB备用机来电寻获道昭行踪与约会邀约", "时代跃进！三年后由美子攻读大学创立企业频登电视媒体；闲置三年的备用机响起，JB受托秘密查出隐姓埋名的道昭暗中重访妻女足迹之处，雄二心领神会主动邀约由美子共赴解开心结之旅"
+        if any(k in ja for k in ["総合病院", "美佐子", "二年前", "他界", "病室", "週", "知られたくない", "過去を受け入れ", "真っ直ぐな表情"]):
+            return "重返北关东生母旧病房、揭穿道昭每周暗中凭吊真相与由美子直面宿命", "肃穆深沉！雄二携由美子重返两年前生母美佐子病逝之综合医院，由美子震颤得知失势后的道昭每周乔装前来凭吊；由美子毅然决定不再逃避过去，伫立病房门外倾听雄二与生父正面对话"
+        if any(k in ja for k in ["老い", "血と肉の容れ物", "帝王学", "９歳", "カネ", "人形", "自我", "コピー"]):
+            return "道昭枯槁残年面貌、自揭九岁遭生父幸治郎畸形精神虐待与人偶宿命根源", "直击灵魂！病房内道昭容颜苍老枯槁自称血肉废壳；在雄二质问下悲怆剖白九岁遭生父幸治郎强行灌输金钱权术、严酷家暴、迫令抹杀自我沦为扩张人偶，至死方悟自己不过是父亲的空洞复刻品"
+        if any(k in ja for k in ["何も無かった", "悲しいとすら", "道具", "良い形", "人間の感情", "生きていてくれ", "幸せにしてやってくれ"]):
+            return "连悲伤都无法感知之极度荒芜绝望、雄二同类救赎箴言与生父终极忏悔托孤", "催人泪下！道昭痛苦咆哮从小被灌输人皆草芥使得自身连悲伤都无法感知；雄二以自身被由美子拯救之经历开解，恳请道昭务必活着保留由美子的父亲；道昭老泪纵横猛然起身，泣血哀求让由美子作为人堂堂正正获得幸福"
+        if any(k in ja for k in ["屋上", "青空", "白いスカート", "涙", "父に教えてあげたい", "一緒に教えていこう", "独りの空"]):
+            return "天台白裙相拥泪崩、由美子立誓以漫长光阴重塑生父人性与澄澈碧空", "升华救赎！天台狂风烈烈，由美子在雄二怀中失声痛哭；由美子坚毅祈愿‘想像雄二教会我那样，教会父亲作为活生生的人存在于世’，雄二温柔许诺携手并肩，昔日象征虚无之苍蓝天空彻底化作辽阔希望"
+        if any(k in ja for k in ["門真陸将補", "急逝", "病死", "処理", "上層部の思惑", "ナインオートゥーナイン", "子供", "寂しそう"]):
+            return "门真陆将补突遭清除暴毙、CIRS终局战报与9029彻底退伍为人父母落幕", "冷峻暗线收束！基亚拉向JB汇报敌对幕后黑手门真陆将补被暗杀定性病死，印证一切皆在上位高层股掌之中；JB感慨雄二退役生子告别战场，基亚拉点破JB孤单落寞，JB隐忍叹息告别‘再见了，雄二’"
+        if any(k in ja for k in ["５年後", "河川敷", "由真", "パパ", "ママ", "スケッチブック", "退院", "おじいちゃん", "一点の曇りも無い"]):
+            return "五年后河堤天伦春光、爱女由真稚拙涂鸦、道昭出院阖家团圆与大结局晴空", "全剧最高华彩！五年后春光明媚河堤，四岁爱女由真娇憨黏人直呼爸爸大腿太硬，一家三口温馨野餐；由美子透露道昭终于康复出院成为和蔼外公；由真自豪展示抽象涂鸦逗乐全家；全线在没有一丝阴霾的澄澈晴空下迎来宏大圆满收官！"
+        return "由美子线真实结局下篇·道昭赎罪、灵魂互救与家庭圆满全景深度润色", "全面清除机翻语病，极致还原由美子线从同居日常、生父病房救赎到五年后河堤阖家天伦的恢弘真结局！"
+
     # yum_010 specific (Fruit of Grisaia Yumiko Route Chapter 10: True Ending Part 1 - Mihama reunion, corporate shareholder battle & MLIT coup)
     if (64591 <= line_no <= 65177):
         if any(k in ja for k in ["深夜", "美浜", "学園", "玄関", "ロビー", "待って", "お帰り", "ただいま", "バカね", "温かい"]):
@@ -7136,6 +7158,32 @@ def build_report():
                 "section": "灰色的果实·榊由美子线真实结局上篇·重返美滨备战、大东滨股东大会倒戈与道昭彻底垮台 (`grisaia1/yum_010`)"
             })
 
+    # yum_011 (Milestone 2 Chapter 126 - Fruit of Grisaia Yumiko Route Chapter 11: True Ending Part 2 & Epilogue - freedom, reunion & grand finale)
+    for lno in range(65178, 66165):
+        ja_raw = ja_lines[lno - 1].rstrip("\r\n")
+        cn_raw = cn_lines[lno - 1].rstrip("\r\n")
+        sid = ja_raw.split("\t")[0] if "\t" in ja_raw else f"L{lno}"
+        ja_txt = ja_raw.split("\t")[1] if "\t" in ja_raw else ja_raw
+        cn_txt = cn_raw.split("\t")[1] if "\t" in cn_raw else cn_raw
+
+        old_txt = cn_txt
+        if git_base_cn and len(git_base_cn) >= lno:
+            head_raw = git_base_cn[lno - 1].rstrip("\r\n")
+            old_txt = head_raw.split("\t")[1] if "\t" in head_raw else head_raw
+
+        if cn_txt != old_txt and cn_txt.strip() != "":
+            cat, reason = classify_change(lno, sid, ja_txt, old_txt, cn_txt)
+            diffs.append({
+                "lno": lno,
+                "sid": sid,
+                "ja": ja_txt,
+                "old": old_txt,
+                "new": cn_txt,
+                "cat": cat,
+                "reason": reason,
+                "section": "灰色的果实·榊由美子线真实结局下篇与大结局·晨跑温存遭同窗撞破处刑、重返故土病房长谈、道昭自我剖白赎罪与多年后阖家河堤大团圆 (`grisaia1/yum_011`)"
+            })
+
     print(f"Total indexed modifications: {len(diffs)}")
 
     # Build Markdown
@@ -8783,6 +8831,15 @@ def build_report():
     md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
     md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
     for idx, d in enumerate(yum_010_diffs, 1):
+        md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
+    md.append("\n---\n")
+
+    # Section 183 - Milestone 2: Fruit of Grisaia Yumiko Route Chapter 11 (True Ending Part 2 & Grand Finale)
+    yum_011_diffs = [d for d in diffs if d["section"].startswith("灰色的果实·榊由美子线真实结局下篇与大结局")]
+    md.append(f"## 一百八十三、 灰色的果实·榊由美子线真实结局下篇与大结局·晨跑温存遭同窗撞破处刑、重返故土病房长谈、道昭自我剖白赎罪与多年后阖家河堤大团圆 (`grisaia1/yum_011`，共 {len(yum_011_diffs)} 条) —— 【里程碑二·个人线第一百二十五章·里程碑二圆满收官】\n")
+    md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
+    md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
+    for idx, d in enumerate(yum_011_diffs, 1):
         md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
     md.append("\n---\n")
 
