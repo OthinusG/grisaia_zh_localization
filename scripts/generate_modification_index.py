@@ -14,6 +14,24 @@ def escape_md(text):
     return text.replace("|", "\\|").replace("\n", " ").replace("\r", "")
 
 def classify_change(line_no, sid, ja, old_cn, new_cn):
+    # yuj_001 specific (Milestone 3 Chapter 1 - Yuuji Past Chapter 1: Oslo breach, Tuna Man banter, shredded dossier & Kazuki catchball)
+    if (78252 <= line_no <= 78855):
+        if any(k in ja for k in ["オスロ", "密入国", "フランス", "外人部隊", "４０億", "顧問", "新世代兵器", "民間"]):
+            return "希斯·奥斯陆非法潜入警报、雇佣兵传奇档案与防卫省巨额冤案黑历史", "冷峻开篇！防卫省高层震动，通报原法国外籍兵团传奇雇佣兵、新时代武装顾问希斯·奥斯陆非法越境潜入日本；揭露其过往曾遭误捕获赔40亿日元国家赔偿之荒诞黑历史，暗流涌动危机一触即发"
+        if any(k in ja for k in ["ツナマン", "ジョーズ", "サメ男", "気仙沼", "おから", "ドーナツ", "６２グレイン", "三角関数", "弾道学"]):
+            return "金枪鱼侠沙雕战记、莳菜高精狙弹道学授课与天音豆腐渣甜甜圈", "爆笑美滨日常！全员围观沙雕特摄动画《金枪鱼侠》，幸死板奉送鲨鱼谐音冷笑话；莳菜用62格令弹头与940m/s初速给满硬核科普狙击弹道学与三角函数，天音端出23日元豆腐渣甜甜圈被满疯狂毒舌"
+        if any(k in ja for k in ["シュレッダー", "自己報告書", "桑原", "ダイマカロフ", "Ｓ小隊", "ぬるま湯", "昇進", "パズル"]):
+            return "碎纸机晋升报告书拼接大作战、桑原一路少尉来电与美滨温水乡诱惑", "暗线交织！幸凭借惊人拼图能力将雄二打碎的晋升报告书复原并敲诈‘共犯’；旧长官桑原一路少尉（大马卡洛夫）致电邀雄二重返激战S小队，雄二在美滨平稳温水中陷入去留自省"
+        if any(k in ja for k in ["ＣＩＲＳ", "調査報告書", "風見一姫", "風见一姫", "ＩＱ", "出来損ない", "劣等", "家庭内暴力", "父親", "母親"]):
+            return "CIRS风见家绝密调查卷宗、一姬超绝天才神话与雄二家暴残渣地狱", "震撼揭秘！由美子查阅CIRS绝密档案，揭露风见家病态全貌：姐姐一姬乃IQ180之旷世奇才，父亲亮二家暴成瘾将雄二视作累赘残渣与避税工具，母亲顺子精神崩溃彻底屈从"
+        if any(k in ja for k in ["キャッチボール", "ゴムボール", "ピンク", "左利き", "それでも", "下向き", "あきらめない", "武器", "絵"]):
+            return "粉红橡胶球传接球试炼、双刀流手眼协调与一姬‘就算如此’不屈灵魂箴言", "感人至深！儿时一姬以粉红橡胶球训练雄二双利手投掷与手眼协调，留下‘永不放弃的执念才是你唯一的武器’与‘即使被打倒也要喊出「就算如此」重新站起’的终身座右铭；一姬为守护雄二画作反遭父亲撕碎，痛定思痛开启‘向下修正’自我封印"
+        if any(k in ja for k in ["水パン", "バナナ", "水道水", "徹夜", "説教", "泣い", "飢え"]):
+            return "自来水浸泡发霉面包度日、一姬泪崩赠香蕉画与彻夜叱责双亲", "极致心疼！雄二为充饥被迫吞咽浸湿自来水之干硬面包，一姬撞破当场心碎泪崩，将获奖写生香蕉赠予雄二充饥，更彻夜守护雄二并在客厅严厉斥责无情父母直至天明"
+        if any(k in ja for k in ["公園", "小嶺", "幸", "嫉妬", "女友達", "お風呂", "遺伝子", "ＤＮＡ", "種族", "男の娘"]):
+            return "幼年幸公园初遇、一姬病态独占欲发作、严禁结交女性与浴缸硬核繁衍说教", "名场面还原！幼年雄二在公园偶遇幸互生好感，一姬得知后病态独占欲彻底爆发，严令雄二终生不许交女性朋友；浴缸内一姬以生物学DNA与繁衍本能为由，对雄二展开霸道洗脑与禁忌宣誓，将命运死死绑定"
+        return "灰色的迷宫·雄二过去篇第一章·奥斯陆潜入警报、碎纸档案与风见一姬宿命羁绊深度润色", "全面清除机翻语病与生硬句式，极致还原希斯·奥斯陆登场暗流、美滨日常毒舌调侃、一姬超凡智慧与病态禁忌姐弟羁绊之全景神作开篇！"
+
     # yum_011 specific (Fruit of Grisaia Yumiko Route Chapter 11: True Ending Part 2 & Grand Finale - morning affection, hospital confrontation, Michiaki confession & Yuma epilogue)
     if (65178 <= line_no <= 66164):
         if any(k in ja for k in ["時間", "非力", "ランニング", "ただいま", "タオル", "デレ", "抱きしめ", "胸板", "脂っこい", "人間の尊厳"]):
@@ -7184,6 +7202,32 @@ def build_report():
                 "section": "灰色的果实·榊由美子线真实结局下篇与大结局·晨跑温存遭同窗撞破处刑、重返故土病房长谈、道昭自我剖白赎罪与多年后阖家河堤大团圆 (`grisaia1/yum_011`)"
             })
 
+    # yuj_001 (Milestone 3 Chapter 1 - Yuuji Past Chapter 1: Oslo breach, Tuna Man banter, shredded dossier & Kazuki catchball)
+    for lno in range(78252, 78856):
+        ja_raw = ja_lines[lno - 1].rstrip("\r\n")
+        cn_raw = cn_lines[lno - 1].rstrip("\r\n")
+        sid = ja_raw.split("\t")[0] if "\t" in ja_raw else f"L{lno}"
+        ja_txt = ja_raw.split("\t")[1] if "\t" in ja_raw else ja_raw
+        cn_txt = cn_raw.split("\t")[1] if "\t" in cn_raw else cn_raw
+
+        old_txt = cn_txt
+        if git_base_cn and len(git_base_cn) >= lno:
+            head_raw = git_base_cn[lno - 1].rstrip("\r\n")
+            old_txt = head_raw.split("\t")[1] if "\t" in head_raw else head_raw
+
+        if cn_txt != old_txt and cn_txt.strip() != "":
+            cat, reason = classify_change(lno, sid, ja_txt, old_txt, cn_txt)
+            diffs.append({
+                "lno": lno,
+                "sid": sid,
+                "ja": ja_txt,
+                "old": old_txt,
+                "new": cn_txt,
+                "cat": cat,
+                "reason": reason,
+                "section": "灰色的迷宫·雄二过去篇第一章·希斯·奥斯陆潜入警报、碎纸报告复原、一姬传接球座右铭与禁忌姐弟羁绊 (`grisaia2/yuj_001`)"
+            })
+
     print(f"Total indexed modifications: {len(diffs)}")
 
     # Build Markdown
@@ -8840,6 +8884,15 @@ def build_report():
     md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
     md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
     for idx, d in enumerate(yum_011_diffs, 1):
+        md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
+    md.append("\n---\n")
+
+    # Section 184 - Milestone 3: Labyrinth of Grisaia Yuuji Past Chapter 1
+    yuj_001_diffs = [d for d in diffs if d["section"].startswith("灰色的迷宫·雄二过去篇第一章")]
+    md.append(f"## 一百八十四、 灰色的迷宫·雄二过去篇第一章·希斯·奥斯陆潜入警报、碎纸报告复原、一姬传接球座右铭与禁忌姐弟羁绊 (`grisaia2/yuj_001`，共 {len(yuj_001_diffs)} 条) —— 【里程碑三·雄二过去篇随想录第一章】\n")
+    md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
+    md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
+    for idx, d in enumerate(yuj_001_diffs, 1):
         md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
     md.append("\n---\n")
 
