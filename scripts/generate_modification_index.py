@@ -14,6 +14,18 @@ def escape_md(text):
     return text.replace("|", "\\|").replace("\n", " ").replace("\r", "")
 
 def classify_change(line_no, sid, ja, old_cn, new_cn):
+    # yuj_004 specific (Milestone 3 Chapter 4 - Yuuji Past Chapter 4: Mihama girls trauma debate, serial ballpoint pen assassinations, CIRS orphan dark history & Asako adoption)
+    if (80101 <= line_no <= 80369):
+        if any(k in ja for k in ["自殺", "図々しい", "逃げ", "僻み", "レンジャー", "価値基準", "今日をシッカリ", "可哀想"]):
+            return "美滨五人组读档崩溃、满质问雄二为何不自杀与由美子剖析创伤心理", "沉痛反思！幸指出雄二系受害者，建立自惩价值标准以维系心智；满情绪失控质问‘为何不自杀一了百了’，遭莳菜飞扑肉搏拦截；由美子直击满内心痛处：满厌恶当年软弱无力的自己，嫉妒撒娇同龄人，更因雄二凭借意志坚强求生而破防；全员悟出‘自以为世上最可怜才勉强苟活至今’之共性悲哀"
+        if any(k in ja for k in ["マクファーソン", "ボーマン", "ポール", "ブノワ", "クリストファー", "ボールペン", "ＶＨＳ", "ゴスロリ", "ピンボケ"]):
+            return "JB暗杀绝密档案长卷、圆珠笔贯穿脑干连环案与VHS录像带哥特萝莉", "冷峻案卷！连环离奇刺杀高官要人：老法官、调查记者、银行CEO、FBI探员、法国议员；作案手法离奇一致――就地取材以普通圆珠笔自下颌暴力贯穿脑干；麻子截取VHS监控带录像带模糊照片送至JB案头，揭露作案者赫然为身披哥特萝莉洋装之幼女"
+        if any(k in ja for k in ["缶詰", "養護施設", "献金", "マッチポンプ", "創造と破壊", "獅子身中", "ギッタギタ", "ノルウェー", "パスタ"]):
+            return "麻子与JB哲学交锋、CIRS买孤儿黑历史与奥斯陆自导自演纵火狂潮", "针锋相对！探讨童兵现实，麻子辛辣戳破CIRS打着领养资助旗号从孤儿院买断潜能孩童之黑历史；二人辩论和平与啃泥巴大义；揭露希斯·奥斯陆乃冷战后国际军工巨头与政府两头通吃的纵火兼灭火‘自导自演者’；麻子提议挪威突袭行动命名为‘直接杀进老巢揍个稀巴烂大作战’"
+        if any(k in ja for k in ["突入", "狂犬", "少年", "自傷", "舌", "記憶障害", "殺人装置", "犬や猫", "養親", "褒める", "引き取る"]):
+            return "挪威突袭庄园地下室、哥特萝莉少年兵雄二暴走自残与麻子流浪犬领养宣言", "震撼救赎！CIRS突击挪威庄园，奥斯陆潜逃，地下室挖出全身血痕被铁链锁固之哥特萝莉少年兵雄二；雄二陷入严重缄默自残狂躁，右手不受控挥击杀人，无目标则企图自尽；官僚欲借医疗过量将其灭口人道毁灭，麻子怒斥JB与高层：‘没器量负责到底就别随手捡阿猫阿狗！他不需要药，需要的是像父亲一样摸头夸他干得好的人！’麻子霸气决定收养雄二带回日本，JB忙于领养公文崩溃"
+        return "灰色的迷宫·雄二过去篇第四章·美滨心理剖析、圆珠笔连环刺杀与麻子强行收养润色", "全面清除机翻语病，极致还原美滨女生创伤共鸣、冷战后奥斯陆利益黑网、哥特萝莉雄二暴走绝境与麻子霸气收养破局之全剧救赎关键拐点！"
+
     # yuj_003 specific (Milestone 3 Chapter 3 - Yuuji Past Chapter 3: Oslo terrorist school, Merlin death match, high society crossdressing & Judge Glenn assassination)
     if (79437 <= line_no <= 80100):
         if any(k in ja for k in ["エチケット", "南瓜", "ショタ", "マクワウリ", "ナンカシャ", "オークション", "洗濯", "シガレットケース", "オルゴール"]):
@@ -7320,6 +7332,32 @@ def build_report():
                 "section": "灰色的迷宫·雄二过去篇第三章·奥斯陆刺客特训营、梅林生死同窗死斗与法官暗杀血祭 (`grisaia2/yuj_003`)"
             })
 
+    # yuj_004 (Milestone 3 Chapter 4 - Yuuji Past Chapter 4: Mihama girls trauma debate, serial ballpoint pen assassinations, CIRS orphan dark history & Asako adoption)
+    for lno in range(80101, 80370):
+        ja_raw = ja_lines[lno - 1].rstrip("\r\n")
+        cn_raw = cn_lines[lno - 1].rstrip("\r\n")
+        sid = ja_raw.split("\t")[0] if "\t" in ja_raw else f"L{lno}"
+        ja_txt = ja_raw.split("\t")[1] if "\t" in ja_raw else ja_raw
+        cn_txt = cn_raw.split("\t")[1] if "\t" in cn_raw else cn_raw
+
+        old_txt = cn_txt
+        if git_base_cn and len(git_base_cn) >= lno:
+            head_raw = git_base_cn[lno - 1].rstrip("\r\n")
+            old_txt = head_raw.split("\t")[1] if "\t" in head_raw else head_raw
+
+        if cn_txt != old_txt and cn_txt.strip() != "":
+            cat, reason = classify_change(lno, sid, ja_txt, old_txt, cn_txt)
+            diffs.append({
+                "lno": lno,
+                "sid": sid,
+                "ja": ja_txt,
+                "old": old_txt,
+                "new": cn_txt,
+                "cat": cat,
+                "reason": reason,
+                "section": "灰色的迷宫·雄二过去篇第四章·美滨心理剖析、圆珠笔连环刺杀与麻子强行收养 (`grisaia2/yuj_004`)"
+            })
+
     print(f"Total indexed modifications: {len(diffs)}")
 
     # Build Markdown
@@ -9003,6 +9041,15 @@ def build_report():
     md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
     md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
     for idx, d in enumerate(yuj_003_diffs, 1):
+        md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
+    md.append("\n---\n")
+
+    # Section 187 - Milestone 3: Labyrinth of Grisaia Yuuji Past Chapter 4
+    yuj_004_diffs = [d for d in diffs if d["section"].startswith("灰色的迷宫·雄二过去篇第四章")]
+    md.append(f"## 一百八十七、 灰色的迷宫·雄二过去篇第四章·美滨心理剖析、圆珠笔连环刺杀与麻子强行收养 (`grisaia2/yuj_004`，共 {len(yuj_004_diffs)} 条) —— 【里程碑三·雄二过去篇随想录第四章】\n")
+    md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
+    md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
+    for idx, d in enumerate(yuj_004_diffs, 1):
         md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
     md.append("\n---\n")
 
