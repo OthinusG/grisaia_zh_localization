@@ -14,6 +14,20 @@ def escape_md(text):
     return text.replace("|", "\\|").replace("\n", " ").replace("\r", "")
 
 def classify_change(line_no, sid, ja, old_cn, new_cn):
+    # yum_009 specific (Fruit of Grisaia Yumiko Route Chapter 9: Bad Ending - escape, harbor life, baby son, Amane call & seaside reconciliation wish)
+    if (64303 <= line_no <= 64590):
+        if any(k in ja for k in ["諍", "時間", "策", "漁船", "大石", "ベビーカー", "息子"]):
+            return "时间抚平一切之冷峻哲学、港湾平民生活与一家三口归途", "深刻动人！开篇深刻论述时间乃平息世间争端之唯一万能良药，转入雄二在港湾事务所勤恳劳作成为调停渔民纠纷的中流砥柱，推着婴儿车与由美子及襁褓中的幼子漫步归家"
+        if any(k in ja for k in ["ジュリア", "打ち切り", "養子", "休戦", "男の児", "自由", "ユージから"]):
+            return "道昭过继男嗣搜捕终止、JB最后密电与全面重获自由", "重大剧情转折！揭示逃亡两年后道昭因耗尽耐心转而过继收养男嗣，宣布彻底撤销搜捕并断绝关系，JB秘密运作撤销雄二预备役通缉，隐晦借上位权威（一姬系统）庇佑助其洗白获得自由"
+        if any(k in ja for k in ["三嶋崎", "港湾", "母親らしく", "家族", "父親らしく", "残影"]):
+            return "重返三嶋崎港湾隐居、为人父母的蜕变与挥之不去的亲情残影", "温情脉脉！雄二与由美子定居故地三嶋崎，由美子系着围裙洗碗蜕变为温婉慈母，却也因孩子诞生更加频繁念及『家人』，隐隐拖曳着昔日破碎家族与父亲的沉重残影"
+        if any(k in ja for k in ["スオウ", "料亭", "天音", "のよさ", "京都弁", "痛いとこ", "言って欲しい"]):
+            return "天音料亭来电插科打诨、学麻子口癖与洞悉由美子逃亡心结", "搞笑而敏锐！天音借料亭公话打趣雄二、慌乱中脱口而出莳菜口癖『のよさ』，在得知近况后敏锐一语中的：由美子因当初主动选择逃亡而深怕提起生父会被误会为后悔或责怪雄二，内心极度渴望雄二主动挑明破冰"
+        if any(k in ja for k in ["遠回り", "悔い", "父親の事", "お父さん", "孫", "架け橋", "光明"]):
+            return "夕阳海堤绕道长谈、由美子终极释怀告白与外孙破冰心愿", "全线余韵升华！雄二在晚霞海堤温柔询问由美子心底遗憾，由美子真挚吐露渴望有朝一日能将外孙抱给父亲看的心愿，雄二深受触动，感慨由美子与孩子为自己死寂内心洒入光明，寄望时间与血脉终将化作化解宿仇的桥梁"
+        return "由美子线亡命结局·港湾岁月、家庭羁绊与世代和解全景深度润色", "全面清除机翻语病，淋漓尽致地展现亡命归隐后的平民市井烟火、为人父母的心理蜕变与晚霞海堤上的终极释怀"
+
     # yum_008_p2 specific (Fruit of Grisaia Yumiko Route Chapter 8 Part 2: misunderstanding, phone trace escape, merry-go-round confession & choice)
     if (63690 <= line_no <= 64302):
         if any(k in ja for k in ["空き巣", "強盗", "割れて", "指先", "肉じゃが", "旨い", "拍車"]):
@@ -7054,6 +7068,32 @@ def build_report():
                 "section": "灰色的果实·榊由美子线绝望公话追踪、闭园夜旋转木马心声告白与终局命运抉择 (`grisaia1/yum_008` Part 2)"
             })
 
+    # yum_009 (Milestone 2 Chapter 124 - Fruit of Grisaia Yumiko Route Chapter 9: Bad Ending - escape, harbor life, baby son, Amane call & seaside reconciliation wish)
+    for lno in range(64303, 64591):
+        ja_raw = ja_lines[lno - 1]
+        cn_raw = cn_lines[lno - 1]
+        sid = ja_raw.split("\t")[0] if "\t" in ja_raw else f"L{lno}"
+        ja_txt = ja_raw.split("\t")[1] if "\t" in ja_raw else ja_raw
+        cn_txt = cn_raw.split("\t")[1] if "\t" in cn_raw else cn_raw
+
+        old_txt = cn_txt
+        if git_base_cn and len(git_base_cn) >= lno:
+            head_raw = git_base_cn[lno - 1]
+            old_txt = head_raw.split("\t")[1] if "\t" in head_raw else head_raw
+
+        if cn_txt != old_txt and cn_txt.strip() != "":
+            cat, reason = classify_change(lno, sid, ja_txt, old_txt, cn_txt)
+            diffs.append({
+                "lno": lno,
+                "sid": sid,
+                "ja": ja_txt,
+                "old": old_txt,
+                "new": cn_txt,
+                "cat": cat,
+                "reason": reason,
+                "section": "灰色的果实·榊由美子线亡命结局·港湾归隐、初为人父母与晚霞海堤终极释怀 (`grisaia1/yum_009`)"
+            })
+
     print(f"Total indexed modifications: {len(diffs)}")
 
     # Build Markdown
@@ -8683,6 +8723,15 @@ def build_report():
     md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
     md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
     for idx, d in enumerate(yum_008_p2_diffs, 1):
+        md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
+    md.append("\n---\n")
+
+    # Section 181 - Milestone 2: Fruit of Grisaia Yumiko Route Chapter 9 (Bad Ending)
+    yum_009_diffs = [d for d in diffs if d["section"].startswith("灰色的果实·榊由美子线亡命结局")]
+    md.append(f"## 一百八十一、 灰色的果实·榊由美子线亡命结局·港湾归隐、初为人父母与晚霞海堤终极释怀 (`grisaia1/yum_009`，共 {len(yum_009_diffs)} 条) —— 【里程碑二·个人线第一百二十三章】\n")
+    md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
+    md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
+    for idx, d in enumerate(yum_009_diffs, 1):
         md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
     md.append("\n---\n")
 
