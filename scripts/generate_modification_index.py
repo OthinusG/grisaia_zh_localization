@@ -14,6 +14,26 @@ def escape_md(text):
     return text.replace("|", "\\|").replace("\n", " ").replace("\r", "")
 
 def classify_change(line_no, sid, ja, old_cn, new_cn):
+    # yuj_002 specific (Milestone 3 Chapter 2 - Yuuji Past Chapter 2: Takizono disaster, father domestic violence, bottle skull smash & mother suicide)
+    if (78856 <= line_no <= 79436):
+        if any(k in ja for k in ["エチケット", "３ガーリー", "礼儀", "おから", "ドーナツ", "ジグソーパズル", "スパイ", "同級生", "バスケ"]):
+            return "美滨大厅拼图神技、满大人三姐妹空耳与天音同窗惊天身世揭露", "爆笑温情交织！满偷看档案将礼节空耳成呕吐袋与3-Girly，莳菜高能偷袭满喷出鼻孔豆渣吧；幸与莳菜化身特工7分钟拼出一页碎纸报告；天音坦白一姬曾是同班同队挚友，雄二自白感激一姬让天音生还，奉姐姐为心中之神"
+        if any(k in ja for k in ["滝園", "７０点", "バランサー", "夏合宿", "長野", "コーヒー", "逆鱗", "神隠し", "行方"]):
+            return "泷园学园七十分神级控分、单轴平衡器崩解与长野合宿中巴神隐", "深沉回忆！一姬升入名校故意考70分隐藏锋芒、幕后操纵人心；夏季篮球合宿离家后家庭失去单轴平衡器彻底失控，父亲因咖啡太烫砸碎咖啡杯迁怒雄二；归家日大巴迟迟未至，全员如遭神隐从世间蒸发"
+        if any(k in ja for k in ["キャベツ", "農家", "転落", "ネズミ返し", "原生林", "白骨化", "神の死", "家族の崩壊"]):
+            return "卷心菜田唯一生还少女、深坑白骨化惨剧与神明陨落家庭地狱", "名场面回顾！天音在卷心菜田暴食被救，警方揭开客车爆胎坠入防鼠深坑两周惨烈绝境；现场发现争斗痕迹与白骨化遗体证实一姬死讯，神明陨落导致风见家彻底崩溃，母亲沦为出气筒"
+        if any(k in ja for k in ["茂原", "反抗", "金時計", "血", "謝り", "保険", "洋服ダンス"]):
+            return "千叶茂原初次潜逃败露、父亲金表开瓢家暴与母亲磕头求饶", "惨绝人寰！母亲带雄二逃亡千叶茂原两周即被生父截获暴打，雄二首次反抗遭父亲廉价金表重击侧头鲜血喷涌，顿悟自身乃一姬之保险；母亲被踩着头下跪磕头求饶，母子被押解回人间地狱"
+        if any(k in ja for k in ["群馬", "高崎", "缶詰", "スナック", "バイタ", "チャーハン", "余所者"]):
+            return "群马西南部荒屋逃亡、母亲双份血汗劳作与闭塞乡村‘破鞋’恶名", "辛酸相依！母子辗转逃至群马西南部租下荒宅，母亲白天罐头厂夜晚小酒馆拼命供雄二读书；闭塞村民冷眼排外污蔑母亲为‘破鞋’，不知情的雄二天真询问导致母亲心碎道歉"
+        if any(k in ja for k in ["３２００万", "借金", "軽自動車", "金の卵", "ガチョウ", "歯", "裏拳", "獣", "食われ"]):
+            return "生父病态嗜酒形同枯鬼索命、欲造金蛋再施暴行与反手重拳断齿", "窒息压迫！生父债台高筑数倍宛如枯骨恶鬼再度杀至，抢走三千日元逼雄二买烈酒；发狂欲强占母亲再造‘天才金蛋’，折返的雄二目睹生父啃咬母亲颈项误认食人，遭反手重拳打断牙齿昏死"
+        if any(k in ja for k in ["殺意", "酒瓶", "後頭部", "右手", "ユウちゃん", "巾着袋", "駅", "少女のような笑顔"]):
+            return "后脑酒瓶轰然爆头绝杀、母亲塞全副家当托孤与少女般绝美惨笑", "震撼高潮！雄二在脑海中一姬‘杀人该用哪只手’的声音指引下，右手抡起酒瓶狠狠敲碎生父颅骨；浑身是血的母亲将存折与全部家当装进布袋挂在雄二脖子上催其快逃，展露十岁少女般圣洁笑容"
+        if any(k in ja for k in ["救急車", "無理心中", "首を吊る", "ギーギー", "遺書", "物", "軸", "コーヒーのおかわり"]):
+            return "担架金表死尸、房梁悬颈对视断魂、绝笔血书与JB咖啡肃穆长谈", "万劫不复！雄二折返家门目击救护车抬出戴金表的生父死尸；屋内传来吱嘎异响，母亲已在房梁悬颈自尽，遗体旋转间未闭双目与雄二绝望对视；母亲遗书独自揽下弑夫罪名，雄二世界轴心粉碎，JB震撼无言倒满咖啡"
+        return "灰色的迷宫·雄二过去篇第二章·泷园海难惨剧、弑父家暴地狱与双亲血书绝命润色", "全面清除机翻语病，极致还原美滨大厅拼图日常、一姬神明陨落、生父兽性暴虐、雄二爆头绝杀与母亲自缢顶罪之全剧最高潮惨烈悲歌！"
+
     # yuj_001 specific (Milestone 3 Chapter 1 - Yuuji Past Chapter 1: Oslo breach, Tuna Man banter, shredded dossier & Kazuki catchball)
     if (78252 <= line_no <= 78855):
         if any(k in ja for k in ["オスロ", "密入国", "フランス", "外人部隊", "４０億", "顧問", "新世代兵器", "民間"]):
@@ -7228,6 +7248,32 @@ def build_report():
                 "section": "灰色的迷宫·雄二过去篇第一章·希斯·奥斯陆潜入警报、碎纸报告复原、一姬传接球座右铭与禁忌姐弟羁绊 (`grisaia2/yuj_001`)"
             })
 
+    # yuj_002 (Milestone 3 Chapter 2 - Yuuji Past Chapter 2: Takizono disaster, father domestic violence, bottle skull smash & mother suicide)
+    for lno in range(78856, 79437):
+        ja_raw = ja_lines[lno - 1].rstrip("\r\n")
+        cn_raw = cn_lines[lno - 1].rstrip("\r\n")
+        sid = ja_raw.split("\t")[0] if "\t" in ja_raw else f"L{lno}"
+        ja_txt = ja_raw.split("\t")[1] if "\t" in ja_raw else ja_raw
+        cn_txt = cn_raw.split("\t")[1] if "\t" in cn_raw else cn_raw
+
+        old_txt = cn_txt
+        if git_base_cn and len(git_base_cn) >= lno:
+            head_raw = git_base_cn[lno - 1].rstrip("\r\n")
+            old_txt = head_raw.split("\t")[1] if "\t" in head_raw else head_raw
+
+        if cn_txt != old_txt and cn_txt.strip() != "":
+            cat, reason = classify_change(lno, sid, ja_txt, old_txt, cn_txt)
+            diffs.append({
+                "lno": lno,
+                "sid": sid,
+                "ja": ja_txt,
+                "old": old_txt,
+                "new": cn_txt,
+                "cat": cat,
+                "reason": reason,
+                "section": "灰色的迷宫·雄二过去篇第二章·泷园海难神隐、生父兽行家暴、酒瓶碎颅与母亲自缢绝笔 (`grisaia2/yuj_002`)"
+            })
+
     print(f"Total indexed modifications: {len(diffs)}")
 
     # Build Markdown
@@ -8893,6 +8939,15 @@ def build_report():
     md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
     md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
     for idx, d in enumerate(yuj_001_diffs, 1):
+        md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
+    md.append("\n---\n")
+
+    # Section 185 - Milestone 3: Labyrinth of Grisaia Yuuji Past Chapter 2
+    yuj_002_diffs = [d for d in diffs if d["section"].startswith("灰色的迷宫·雄二过去篇第二章")]
+    md.append(f"## 一百八十五、 灰色的迷宫·雄二过去篇第二章·泷园海难神隐、生父兽行家暴、酒瓶碎颅与母亲自缢绝笔 (`grisaia2/yuj_002`，共 {len(yuj_002_diffs)} 条) —— 【里程碑三·雄二过去篇随想录第二章】\n")
+    md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
+    md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
+    for idx, d in enumerate(yuj_002_diffs, 1):
         md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
     md.append("\n---\n")
 
