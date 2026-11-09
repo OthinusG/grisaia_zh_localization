@@ -14,6 +14,22 @@ def escape_md(text):
     return text.replace("|", "\\|").replace("\n", " ").replace("\r", "")
 
 def classify_change(line_no, sid, ja, old_cn, new_cn):
+    # yum_010 specific (Fruit of Grisaia Yumiko Route Chapter 10: True Ending Part 1 - Mihama reunion, corporate shareholder battle & MLIT coup)
+    if (64591 <= line_no <= 65177):
+        if any(k in ja for k in ["深夜", "美浜", "学園", "玄関", "ロビー", "待って", "お帰り", "ただいま", "バカね", "温かい"]):
+            return "深夜重返美滨学园、全员守候玄关相迎与‘欢迎回家’破防泪崩", "感人至深！雄二携由美子深夜驱车重返美滨学园；美滨全员齐聚玄关静静等候由美子归来，由美子颤抖轻呼‘我回来了’，天音宠溺斥其大笨蛋、莳菜与满相继拥抱，冰冷逃亡终化作美滨温暖归宿"
+        if any(k in ja for k in ["持ち株", "比率", "筆頭株主", "総会", "解任", "東浜", "国土交通省", "黄金株", "市ヶ谷", "ＪＢ"]):
+            return "东滨控股持股图谱全景剖析、国交省黄金股杀手锏与市谷JB暗线串联", "精妙绝伦！幸调出大东滨复杂持股网，揭示由美子与反对派各持15%表面均势，实则背后国交省持有30%决定性国家黄金股；JB暗中串联上位高层，敲定借股东大会发起解任动议之必胜连环计"
+        if any(k in ja for k in ["公衆電話", "宣戦布告", "挑発", "軍人上がり", "春寺", "軟禁", "地下室", "消していただろう"]):
+            return "公用电话正面宣战、挑衅道昭引蛇出洞与JB遭非法软禁拘禁地下室", "扣人心弦！雄二拨通公话向道昭正面宣战，指明欲要由美子明日便来美滨；道昭暴怒将春寺（JB）非法拘禁于无信号地下室，扬言生擒由美子彻底抹杀雄二"
+        if any(k in ja for k in ["黒塗りの車", "十台", "強面", "包囲", "父親", "人形", "母親", "決別", "人間じゃない"]):
+            return "十辆黑车兵临城下大兵压境、直面道昭人偶独裁霸权与由美子彻底决裂宣誓", "高潮迭起！道昭率十辆黑车与黑道打手铁壁包围宿舍；由美子飒爽出面直斥其将母亲与自己视为人偶工具的非人本质，斩钉截铁宣告今日在此与生父彻底决裂，绝不再做傀儡"
+        if any(k in ja for k in ["株主総会", "動議", "賛成", "立ち上がらない", "フェイク", "携帯", "村松", "国土交通大臣", "解任可決", "８割"]):
+            return "股东会佯攻反对派哑火反转、国交大臣私人密电夺权与道昭当场崩溃倾覆", "终极绝杀！道昭自鸣得意反制反对派佯攻，雄二冷峻揭穿佯攻仅为声东击西；国交大臣村松突发夺命来电强令道昭退位，股东大会八成票数雷霆罢免社长，道昭毕生野心轰然粉碎瘫坐绝望"
+        if any(k in ja for k in ["終わりか", "呆気なく", "土煙", "自由の身", "寂しげ", "トンビ", "夏を見せていた"]):
+            return "车队溃退败局收场、由美子落寞目送生父远去与海角黑鸢长鸣夏风", "意蕴深远！打手作鸟兽散，道昭步履蹒跚败退溃逃；由美子虽重获自由却难掩骨肉反目的悲戚与寂寥，久久目送生父背影；海风拂散烟尘，黑鸢展翅滑向海天，残酷人世在如常夏景中沉静定格"
+        return "由美子线真实结局上篇·美滨归宿、商战夺权与宿命决裂全景深度润色", "全面清除机翻语病，极致还原美滨羁绊之温情、商业股东会之博弈、国交省一击必杀之智斗以及父女决裂的悲剧宿命感"
+
     # yum_009 specific (Fruit of Grisaia Yumiko Route Chapter 9: Bad Ending - escape, harbor life, baby son, Amane call & seaside reconciliation wish)
     if (64303 <= line_no <= 64590):
         if any(k in ja for k in ["諍", "時間", "策", "漁船", "大石", "ベビーカー", "息子"]):
@@ -7094,6 +7110,32 @@ def build_report():
                 "section": "灰色的果实·榊由美子线亡命结局·港湾归隐、初为人父母与晚霞海堤终极释怀 (`grisaia1/yum_009`)"
             })
 
+    # yum_010 (Milestone 2 Chapter 125 - Fruit of Grisaia Yumiko Route Chapter 10: True Ending Part 1 - Mihama reunion, corporate shareholder battle & MLIT coup)
+    for lno in range(64591, 65178):
+        ja_raw = ja_lines[lno - 1]
+        cn_raw = cn_lines[lno - 1]
+        sid = ja_raw.split("\t")[0] if "\t" in ja_raw else f"L{lno}"
+        ja_txt = ja_raw.split("\t")[1] if "\t" in ja_raw else ja_raw
+        cn_txt = cn_raw.split("\t")[1] if "\t" in cn_raw else cn_raw
+
+        old_txt = cn_txt
+        if git_base_cn and len(git_base_cn) >= lno:
+            head_raw = git_base_cn[lno - 1]
+            old_txt = head_raw.split("\t")[1] if "\t" in head_raw else head_raw
+
+        if cn_txt != old_txt and cn_txt.strip() != "":
+            cat, reason = classify_change(lno, sid, ja_txt, old_txt, cn_txt)
+            diffs.append({
+                "lno": lno,
+                "sid": sid,
+                "ja": ja_txt,
+                "old": old_txt,
+                "new": cn_txt,
+                "cat": cat,
+                "reason": reason,
+                "section": "灰色的果实·榊由美子线真实结局上篇·重返美滨备战、大东滨股东大会倒戈与道昭彻底垮台 (`grisaia1/yum_010`)"
+            })
+
     print(f"Total indexed modifications: {len(diffs)}")
 
     # Build Markdown
@@ -8732,6 +8774,15 @@ def build_report():
     md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
     md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
     for idx, d in enumerate(yum_009_diffs, 1):
+        md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
+    md.append("\n---\n")
+
+    # Section 182 - Milestone 2: Fruit of Grisaia Yumiko Route Chapter 10 (True Ending Part 1)
+    yum_010_diffs = [d for d in diffs if d["section"].startswith("灰色的果实·榊由美子线真实结局上篇")]
+    md.append(f"## 一百八十二、 灰色的果实·榊由美子线真实结局上篇·重返美滨备战、大东滨股东大会倒戈与道昭彻底垮台 (`grisaia1/yum_010`，共 {len(yum_010_diffs)} 条) —— 【里程碑二·个人线第一百二十四章】\n")
+    md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
+    md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
+    for idx, d in enumerate(yum_010_diffs, 1):
         md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
     md.append("\n---\n")
 
