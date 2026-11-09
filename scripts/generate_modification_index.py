@@ -14,6 +14,20 @@ def escape_md(text):
     return text.replace("|", "\\|").replace("\n", " ").replace("\r", "")
 
 def classify_change(line_no, sid, ja, old_cn, new_cn):
+    # yum_008_p2 specific (Fruit of Grisaia Yumiko Route Chapter 8 Part 2: misunderstanding, phone trace escape, merry-go-round confession & choice)
+    if (63690 <= line_no <= 64302):
+        if any(k in ja for k in ["空き巣", "強盗", "割れて", "指先", "肉じゃが", "旨い", "拍車"]):
+            return "误认强盗洗劫、指尖负伤相拥与土豆炖肉极力盛赞", "幽默温存！雄二误将由美子家务翻车惨状当成入室强盗洗劫，得知真相后懊悔火上浇油并体贴安抚，收拾碎玻璃割伤手指引来由美子心痛相拥，并极力盛赞由美子亲手做的土豆炖肉远胜自己"
+        if any(k in ja for k in ["公衆電話", "携帯", "記録", "通話", "道昭", "追え", "降参"]):
+            return "绝望公话打向道昭、反向追踪定位暴露与亡命紧急转移", "紧张窒息！由美子因自责无用陷入绝望自贬，企图以牺牲自我回榊家为代价求道昭放过雄二，最后一刻悔悟挂断公话，道昭却顺藤摸瓜反向追踪定位公话亭派杀手扑空，雄二携由美子雨夜果断紧急转移"
+        if any(k in ja for k in ["遊園地", "ジェットコースター", "ウォータースライダー", "カート", "恐怖の館", "蝋人形", "ドＳ"]):
+            return "谎称甩脱追兵作战、游乐园狂欢与「恐怖之馆」反击吓瘫", "搞笑高甜！雄二在电车上由棒球场海报记起游乐园誓言，果断变轨换乘，谎称掩人耳目作战带由美子狂欢过山车、激流勇进、卡丁车，并借鬼屋「恐怖之馆」报复嘲弄自己的由美子，反被娇嗔控诉抖S"
+        if any(k in ja for k in ["メリーゴーランド", "木馬", "子供騙し", "生まれてきて", "いちゃ、いけない", "独り", "楽園"]):
+            return "旋转木马深情相拥、童年遗弃创伤救赎与「你能出生真好」终极告白", "全线最高泪点！旋转木马华彩流光之下，由美子揭开童年被弃娘家「自己是不该出生的孩子」的血泪创伤与自责痛哭，雄二紧紧相拥真挚致谢告白「你能来到这世上真的太好了」，在破旧乐园中升华确认彼此是生命唯一乐园"
+        if any(k in ja for k in ["海岸線", "対峙", "逃げる", "選択", "意志", "共に逃げる", "共に対峙する"]):
+            return "深夜列车站台决意、破茧成蝶觉醒与「逃亡/对峙」命运分歧点", "震撼收官！深夜列车重归残酷现实，雄二点出由美子最后一刻凭借自主意志挂断电话的成长与蜕变，两人心意相通相视而笑，共同迎来「一起逃亡 / 一起正面对峙」的关键宿命分支点"
+        return "由美子线游乐园誓言兑现、旋转木马深情救赎与命运分支全景深度润色", "全面清除机翻语病，极致还原相濡以沫的温存日常、惊心动魄的公话暴露危机、旋转木马上的灵魂互救告白以及宿命分支抉择"
+
     # yum_008_p1 specific (Fruit of Grisaia Yumiko Route Chapter 8 Part 1: detective fired, lap-sitting reading, amusement park promise & housewife cooking disaster)
     if (63077 <= line_no <= 63689):
         if any(k in ja for k in ["興信所", "探偵", "クビ", "半年", "株主総会", "狸", "財布"]):
@@ -7014,6 +7028,32 @@ def build_report():
                 "section": "灰色的果实·榊由美子线半年搜捕无果、膝上甜宠依偎、游乐园之约与贤妻作战大崩盘 (`grisaia1/yum_008` Part 1)"
             })
 
+    # yum_008_p2 (Milestone 2 Chapter 123 - Fruit of Grisaia Yumiko Route Chapter 8 Part 2: misunderstanding, phone trace escape, merry-go-round confession & choice)
+    for lno in range(63690, 64303):
+        ja_raw = ja_lines[lno - 1]
+        cn_raw = cn_lines[lno - 1]
+        sid = ja_raw.split("\t")[0] if "\t" in ja_raw else f"L{lno}"
+        ja_txt = ja_raw.split("\t")[1] if "\t" in ja_raw else ja_raw
+        cn_txt = cn_raw.split("\t")[1] if "\t" in cn_raw else cn_raw
+
+        old_txt = cn_txt
+        if git_base_cn and len(git_base_cn) >= lno:
+            head_raw = git_base_cn[lno - 1]
+            old_txt = head_raw.split("\t")[1] if "\t" in head_raw else head_raw
+
+        if cn_txt != old_txt and cn_txt.strip() != "":
+            cat, reason = classify_change(lno, sid, ja_txt, old_txt, cn_txt)
+            diffs.append({
+                "lno": lno,
+                "sid": sid,
+                "ja": ja_txt,
+                "old": old_txt,
+                "new": cn_txt,
+                "cat": cat,
+                "reason": reason,
+                "section": "灰色的果实·榊由美子线绝望公话追踪、闭园夜旋转木马心声告白与终局命运抉择 (`grisaia1/yum_008` Part 2)"
+            })
+
     print(f"Total indexed modifications: {len(diffs)}")
 
     # Build Markdown
@@ -8634,6 +8674,15 @@ def build_report():
     md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
     md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
     for idx, d in enumerate(yum_008_p1_diffs, 1):
+        md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
+    md.append("\n---\n")
+
+    # Section 180 - Milestone 2: Fruit of Grisaia Yumiko Route Chapter 8 Part 2
+    yum_008_p2_diffs = [d for d in diffs if d["section"].startswith("灰色的果实·榊由美子线绝望公话追踪")]
+    md.append(f"## 一百八十、 灰色的果实·榊由美子线绝望公话追踪、闭园夜旋转木马心声告白与终局命运抉择 (`grisaia1/yum_008` Part 2，共 {len(yum_008_p2_diffs)} 条) —— 【里程碑二·个人线第一百二十二章】\n")
+    md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
+    md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
+    for idx, d in enumerate(yum_008_p2_diffs, 1):
         md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
     md.append("\n---\n")
 
