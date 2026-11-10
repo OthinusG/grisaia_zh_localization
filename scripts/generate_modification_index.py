@@ -14,6 +14,20 @@ def escape_md(text):
     return text.replace("|", "\\|").replace("\n", " ").replace("\r", "")
 
 def classify_change(line_no, sid, ja, old_cn, new_cn):
+    # yuj_014 specific (Milestone 3 Chapter 14 - Yuuji Past Chapter 14: Vancouver airport siege, 1300m fog sniper, MV-22, CheyTac M200, Robbie digital spotter, Danny tackle, Chizuru Showa reveal & Mihama origin)
+    if (84261 <= line_no <= 84592):
+        if any(k in ja for k in ["バンクーバー", "神の教科書", "アルヌ・マリク", "１３００メートル", "アニー", "ジャイケル・マクソン", "ＭＶ−２２", "チルトローター"]):
+            return "温哥华机场恐袭劫持、加勒特强硬拍板、千三米极限盲狙点将与迈克尔门票调侃", "反恐风云！ISR系‘神之教科书’头目落网残党劫持客机勒索六千万；加勒特上尉力排众议拍板一千三百米超远距离狙击方案；指名全球仅存三名神枪手之预备特工雄二；雄二电话索要迈克尔·杰克逊同排球票调侃，搭乘MV-22鱼鹰直奔前线"
+        if any(k in ja for k in ["ロビー", "ダニー", "転科", "ミラマー", "瑞慶覧", "アキーバ", "市ヶ谷", "チェイ太", "二硫化タングステン"]):
+            return "战友集结薮犬重聚、米莉转隶航空联队、罗比市谷地下网管与夏伊太重狙就位", "故友重聚！雄二C-2运输机重逢丹尼与罗比；得知米莉转隶米拉马航空联队，罗比常驻市谷地下谍报一课；米莉转科留下爱枪‘夏伊太’（CheyTac M200）与二硫化钨喷丸定制高精弹药，战术前瞻一应俱全"
+        if any(k in ja for k in ["濃霧", "心眼", "フォトリーディング", "下平兵ちゃん", "計器射撃", "時計を見ろ", "１４時３２分１４秒"]):
+            return "浓雾遮蔽十米盲区、一姬速读启发心眼具象、下平兵酱数码解算与看表静心法", "神技破茧！阵位浓雾封锁十米外不辨西东，加勒特倒吊抽鞭死命令；雄二回忆一姬速读术悟出心眼彩色具象化神技；罗比启动‘下平兵酱4.02’兽耳妹应用程序解算卫星微气象与科氏力；雄二遵海军古训看表确认绝对镇定，蓄势待发"
+        if any(k in ja for k in ["引き金を絞り込む", "ライフリング", "着弾を確認", "ゲロ袋", "タックル", "もやい綱", "アップアップ", "溺れ死ぬ", "言い残すことは"]):
+            return "千三米一发入魂诛敌、突击队强攻、丹尼舍身飞撞与落水救美闹剧", "决死瞬杀！雄二心象锁定平稳扣击，千三米自旋穿甲弹精准斩首引信暴徒；突击队强攻残党劫持人质欲乘艇潜逃；丹尼舍身飞撞连人带匪双双入海；人质旱鸭子扑腾溺水，丹尼听不懂日语拿船桨戳头，雄二喊话问遗言啼笑皆非"
+        if any(k in ja for k in ["２８歳", "運転免許証", "昭和", "小学生", "ポンポン", "学園長", "普通の学校", "普通の学生", "チヅルさん"]):
+            return "初中生竟是二十八岁昭和学园长、摸头杀暴怒抗议、名校留学推荐与美滨学园起点", "宿命之锁！获救‘初中生’怒甩昭和驾照自证二十八岁成年女教师；丹尼震惊小学生不如，千鹤抗议摸头杀誓言起诉；千鹤为报大恩替丹尼之妹搞定留学，雄二随口许愿‘想去普通学校体验普通学生’，美滨学园命运羁绊自此正式结下"
+        return "温哥华机场雷霆营救、千三米超凡狙击与宿命邂逅深度润色", "词句润色！生动重塑温哥华国际机场危机态势、极高难度的超远距离浓雾射击细节、战友逗趣互损与解救千鹤的爆笑戏剧性起源，彻底剔除生硬机翻，全面恢复剧作核心情感厚度"
+
     # yuj_013 specific (Milestone 3 Chapter 13 - Yuuji Past Chapter 13: Narashino SFGp, Kuwahara, Mutou combat duel, Tokisoba pushups, carp eating, water cup drinking, parents revelation & Daimakarov)
     if (84002 <= line_no <= 84260):
         if any(k in ja for k in ["特作群", "習志野", "桑原", "武藤", "外資", "雪崩", "モギタン", "親指", "頭突き", "プライド"]):
@@ -7716,6 +7730,32 @@ def build_report():
                 "section": "灰色的迷宫·雄二过去篇第十三章·习志野特作群、夺刀锁喉、时荞麦整人、水池烤鲤鱼与手刃双亲坦白 (`grisaia2/yuj_013`)"
             })
 
+    # yuj_014 (Milestone 3 Chapter 14 - Yuuji Past Chapter 14: Vancouver airport siege, 1300m fog sniper, MV-22, CheyTac M200, Robbie digital spotter, Danny tackle, Chizuru Showa reveal & Mihama origin)
+    for lno in range(84261, 84593):
+        ja_raw = ja_lines[lno - 1].rstrip("\r\n")
+        cn_raw = cn_lines[lno - 1].rstrip("\r\n")
+        sid = ja_raw.split("\t")[0] if "\t" in ja_raw else f"L{lno}"
+        ja_txt = ja_raw.split("\t")[1] if "\t" in ja_raw else ja_raw
+        cn_txt = cn_raw.split("\t")[1] if "\t" in cn_raw else cn_raw
+
+        old_txt = cn_txt
+        if git_base_cn and len(git_base_cn) >= lno:
+            head_raw = git_base_cn[lno - 1].rstrip("\r\n")
+            old_txt = head_raw.split("\t")[1] if "\t" in head_raw else head_raw
+
+        if cn_txt != old_txt and cn_txt.strip() != "":
+            cat, reason = classify_change(lno, sid, ja_txt, old_txt, cn_txt)
+            diffs.append({
+                "lno": lno,
+                "sid": sid,
+                "ja": ja_txt,
+                "old": old_txt,
+                "new": cn_txt,
+                "cat": cat,
+                "reason": reason,
+                "section": "灰色的迷宫·雄二过去篇第十四章·温哥华机场危局、千三米盲狙斩首、二十八岁学园长与美滨因缘起点 (`grisaia2/yuj_014`)"
+            })
+
     print(f"Total indexed modifications: {len(diffs)}")
 
     # Build Markdown
@@ -9489,6 +9529,15 @@ def build_report():
     md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
     md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
     for idx, d in enumerate(yuj_013_diffs, 1):
+        md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
+    md.append("\n---\n")
+
+    # Section 197 - Milestone 3: Labyrinth of Grisaia Yuuji Past Chapter 14
+    yuj_014_diffs = [d for d in diffs if d["section"].startswith("灰色的迷宫·雄二过去篇第十四章")]
+    md.append(f"## 一百九十七、 灰色的迷宫·雄二过去篇第十四章·温哥华机场危局、千三米盲狙斩首、二十八岁学园长与美滨因缘起点 (`grisaia2/yuj_014`，共 {len(yuj_014_diffs)} 条) —— 【里程碑三·雄二过去篇随想录第十四章】\n")
+    md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
+    md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
+    for idx, d in enumerate(yuj_014_diffs, 1):
         md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
     md.append("\n---\n")
 
