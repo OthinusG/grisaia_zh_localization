@@ -14,6 +14,20 @@ def escape_md(text):
     return text.replace("|", "\\|").replace("\n", " ").replace("\r", "")
 
 def classify_change(line_no, sid, ja, old_cn, new_cn):
+    # yuj_009 specific (Milestone 3 Chapter 9 - Yuuji Past Chapter 9: Asako's tremor & failing body, emergency CIRS mission call, Yuuji secretly impersonating 9029 on motorbike, precision non-lethal sniping, JB finding out, argument on Oslo comparison, JB's yellow car talk, red vs yellow fruit & CIRS operative oath)
+    if (82160 <= line_no <= 82405):
+        if any(k in ja for k in ["包丁を落とした", "手が震えてる", "黒い携帯", "甲府南", "第９条", "バイク"]):
+            return "麻子手抖落刀身体崩塌、黑手机紧急调令与雄二单枪匹马摩托奔袭代打", "暗流汹涌！午后书海读书时光，麻子手抖菜刀脱手、机能衰竭征兆昭然若揭；雄二严防其酒精麻痹并关切相依为命之情；黑手机突发内阁官房特别动员紧急调令，麻子沉睡不醒，雄二为护麻子单枪匹马借重型摩托四十分钟狂飙甲府南高速立交，冒领代号９０２９奔赴一线"
+        if any(k in ja for k in ["靴の踵", "ワゴン車", "無線", "現場に居た", "たまーーーーーーに", "内密", "犬"]):
+            return "神准碎鞋跟击穿引擎、非杀伤性奇技、麻子坦言替身内幕与走狗编号讽刺", "技惊四座！JB复盘近期战绩，惊叹９０２９出神入化却风格大变：不杀生、数百米盲打精准崩碎逃犯鞋跟、狙击打爆冲卡面包车发动机缸体后切断无线电；麻子平静揭露开枪者非己，点破市谷官僚只要走狗信标到位从不过问枪手真身之冷血本质，JB闻讯彻底破防"
+        if any(k in ja for k in ["ヒース・オスロがしていたこと", "恩返し", "殺さずに済む方法", "価値観の枠", "過程と結果"]):
+            return "恩情反思、奥斯陆行径同质拷问、不杀之道追求与JB狭隘体制价值观交锋", "剧烈碰撞！JB痛斥麻子使唤童工行径与恶魔希斯·奥斯陆无异，麻子哑口无言；雄二挺身而出揽下全责：代打皆系个人意志、旨在报恩并确认自身残生价值；纵使无法杀戮，麻子亦传授不杀之法；麻子反唇相讥JB囿于官僚体制偏狭框架、见规章不见活人"
+        if any(k in ja for k in ["ライセンス", "後悔しない选择", "後悔しない選択", "生きていることの意味", "黄色い新車", "キーレスエントリー"]):
+            return "特工执照决断、个人存在意义辩护、麻子JB砸墙激辩与黄色新车一对一密谈", "命运岔口！麻子提议为雄二考核特工执照，JB严防雄二重蹈深渊；雄二力主找寻自身活在世间之意义、不愿沦为无益累赘；JB怒砸原木墙壁强行带走雄二，穿高跟鞋步入山道，登上有车钥匙感应之昂贵黄色新车，拉开密闭车厢一对一促膝长谈序幕"
+        if any(k in ja for k in ["優秀な上官は二人要らない", "１０年後の敵", "日下部麻子は二人も要らない", "汝は赤く、我は黄なり", "アルミジャッキ", "ＣＩＲＳの特殊工作員"]):
+            return "双指挥官全灭悖论、十载假想敌谋划、赤红金黄双果寓言与CIRS特工第一步", "灵魂指引！JB欲引雄二回归阳光社会，雄二引述‘双卓越指挥官全灭悖论’与‘麻子战眼前、JB谋十年’之分工哲学；JB点破麻子视雄二为分身镜像、麻子曾言‘世上不需第二个麻子’；JB喟叹‘纵使同沐风雨，汝赤我黄’果实寓言，换胎千斤顶戏谑，全权包办手续引渡雄二正式迈向CIRS特工第一步"
+        return "灰色的迷宫·雄二过去篇第九章·麻子病危代打、不杀哲学、黄色座驾长谈与特工受命润色", "全面清除机翻语病，极致还原麻子旧疾沉疴之危局、雄二独步代打之冷冽担当、麻子与JB价值观冲突、以及黄色座驾推心置腹促成雄二正式成为特工之历史转折！"
+
     # yuj_008 specific (Milestone 3 Chapter 8 - Yuuji Past Chapter 8: JB's home cooking Auflauf, Asako & JB banter, orderly Yuuji, bathroom birthday memory, King for a day, Asako's scheme & cabin nostalgia)
     if (81957 <= line_no <= 82159):
         if any(k in ja for k in ["手料理", "万年イライラ病", "皿に山盛り", "１０００ドル", "ビール", "麦ジュース"]):
@@ -7524,6 +7538,32 @@ def build_report():
                 "section": "灰色的迷宫·雄二过去篇第八章·JB私房菜、日常拌嘴、浴室生日礼与山林温馨岁月 (`grisaia2/yuj_008`)"
             })
 
+    # yuj_009 (Milestone 3 Chapter 9 - Yuuji Past Chapter 9: Asako's tremor & failing body, emergency CIRS mission call, Yuuji secretly impersonating 9029 on motorbike, precision non-lethal sniping, JB finding out, argument on Oslo comparison, JB's yellow car talk, red vs yellow fruit & CIRS operative oath)
+    for lno in range(82160, 82406):
+        ja_raw = ja_lines[lno - 1].rstrip("\r\n")
+        cn_raw = cn_lines[lno - 1].rstrip("\r\n")
+        sid = ja_raw.split("\t")[0] if "\t" in ja_raw else f"L{lno}"
+        ja_txt = ja_raw.split("\t")[1] if "\t" in ja_raw else ja_raw
+        cn_txt = cn_raw.split("\t")[1] if "\t" in cn_raw else cn_raw
+
+        old_txt = cn_txt
+        if git_base_cn and len(git_base_cn) >= lno:
+            head_raw = git_base_cn[lno - 1].rstrip("\r\n")
+            old_txt = head_raw.split("\t")[1] if "\t" in head_raw else head_raw
+
+        if cn_txt != old_txt and cn_txt.strip() != "":
+            cat, reason = classify_change(lno, sid, ja_txt, old_txt, cn_txt)
+            diffs.append({
+                "lno": lno,
+                "sid": sid,
+                "ja": ja_txt,
+                "old": old_txt,
+                "new": cn_txt,
+                "cat": cat,
+                "reason": reason,
+                "section": "灰色的迷宫·雄二过去篇第九章·麻子病危代打、不杀哲学、黄色座驾长谈与特工受命 (`grisaia2/yuj_009`)"
+            })
+
     print(f"Total indexed modifications: {len(diffs)}")
 
     # Build Markdown
@@ -9252,6 +9292,15 @@ def build_report():
     md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
     md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
     for idx, d in enumerate(yuj_008_diffs, 1):
+        md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
+    md.append("\n---\n")
+
+    # Section 192 - Milestone 3: Labyrinth of Grisaia Yuuji Past Chapter 9
+    yuj_009_diffs = [d for d in diffs if d["section"].startswith("灰色的迷宫·雄二过去篇第九章")]
+    md.append(f"## 一百九十二、 灰色的迷宫·雄二过去篇第九章·麻子病危代打、不杀哲学、黄色座驾长谈与特工受命 (`grisaia2/yuj_009`，共 {len(yuj_009_diffs)} 条) —— 【里程碑三·雄二过去篇随想录第九章】\n")
+    md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
+    md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
+    for idx, d in enumerate(yuj_009_diffs, 1):
         md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
     md.append("\n---\n")
 
