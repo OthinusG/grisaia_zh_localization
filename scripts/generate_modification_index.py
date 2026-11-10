@@ -14,6 +14,20 @@ def escape_md(text):
     return text.replace("|", "\\|").replace("\n", " ").replace("\r", "")
 
 def classify_change(line_no, sid, ja, old_cn, new_cn):
+    # yuj_006 specific (Milestone 3 Chapter 6 - Yuuji Past Chapter 6: Midnight terror, 16km beast trail run, CQC & Power vs Violence, Kazuki's influence, reading books & guessing jobs)
+    if (80914 <= line_no <= 81161):
+        if any(k in ja for k in ["李礼生", "青過ぎる果実", "約束の大地", "満天の星空", "白雪姫", "２人と１匹"]):
+            return "奥斯陆洗脑心魔反扑、漫天星河幼犬约翰相伴与白雪公主绘本破冰", "灵魂救赎！夜半惊魂冷汗淋漓，奥斯陆‘坏果子与应许之地’恶毒诅咒幻听回响，雄二惶恐右手再度沦为杀人凶器；潜逃木屋仰望无垠星河，幼犬约翰蹭腿依偎唤醒守护本能，决意重回木屋；麻子倚门戏谑讲绘本，雄二冷幽默点单《白雪公主》，两人一犬重返社会拉开序幕"
+        if any(k in ja for k in ["足が速い", "獣道", "１６キロ", "方位磁石", "倒木", "イノシシ", "ヌタ場"]):
+            return "清晨五点十六公里兽道越野、黑森林迷航法则与深山野猪泥浴", "斯巴达体训！麻子灌输‘跑得快的男生最吃香’怪论，雄二清晨五点携约翰狂奔十六公里崎岖山脊兽道，体悟八公里极限呼吸突破；麻子严肃警示树冠遮日磁针失效黑森林迷路法则，发现野猪獠牙蹭树与泥浆浴痕迹，重拾健全肉体基础"
+        if any(k in ja for k in ["不良っぽい", "投げ飛ば", "受け身", "力", "暴力", "志", "牙を研ぎ", "ジョーーーーーーン"]):
+            return "近战CQC摔投化劲受身、力量与暴力的哲学辨析及召唤约翰反咬麻子", "硬核武道！麻子进阶初中‘能打的不良男人才吃香’理论，脱衣邀战，干净利落大外割柔道暴摔雄二，赞叹其受身化劲本领；麻子痛殴雄二并厉声传授武道真谛：正义所用为力量、邪恶所驱为暴力，力量的克制亦是威力，男人唯有为守护深爱之人方亮出獠牙；雄二被膝压绝境急中生智呼唤幼犬约翰狂咬麻子脚踝翻盘"
+        if any(k in ja for k in ["頭の良い", "インテリ", "家庭菜園", "実践", "経験に勝る知識なし", "天才", "はしっこい"]):
+            return "高中智囊吃香论、麻子大田实践哲学与一姬‘经验重于知识’神童真髓", "思想交融！麻子抛出‘高中头脑好的男人才吃香’，自夸知识分子；雄二吐槽JB与麻子区别，麻子指出JB全盘照信书本、唯自己亲手实践验证方为真知；雄二共鸣亡姐一姬‘无胜于经验之知识’神童座右铭，麻子惊叹一姬绝世之才，点破雄二刁钻精明之底层思维源泉"
+        if any(k in ja for k in ["書棚", "読書", "人生の糧", "軍隊", "１００人の兵士", "外資系", "パチプロ", "ヤクザ"]):
+            return "开放书架博览群书、军营百人斩戏言与外企女强人对决极道柏青哥赌徒", "温情成长！麻子大度开放藏书书架，寄语‘阅读是滋养人生的食粮’，雄二博览群书实践验证；晨跑、午读、暮斗，宛如魔鬼军营，麻子狂言培养单兵硬刚百人；JB探班探讨第一印象：雄二误认JB为外企IT女强人、麻子为游荡山林的极道柏青哥赌徒，为探索麻子真实身世埋下伏笔"
+        return "灰色的迷宫·雄二过去篇第六章·星空救赎、兽道奔袭、近身搏击与实践读书润色", "全面清除机翻语病，极致还原雄二应激创伤脱敏、麻子粗中有细的斯巴达武德训导、一姬哲学回响与山林书海蜕变之全篇热血温情成长脉络！"
+
     # yuj_005 specific (Milestone 3 Chapter 5 - Yuuji Past Chapter 5: Asako & JB orphanage flashback, hospital adoption, mountain cabin, fly PTSD, puppy John & Asako illness)
     if (80370 <= line_no <= 80913):
         if any(k in ja for k in ["滑り台", "心づけ", "養護施設", "タメ", "二段ベッド", "シスター", "マーガレット", "問題児", "幼年学校", "人身売買"]):
@@ -7398,6 +7412,32 @@ def build_report():
                 "section": "灰色的迷宫·雄二过去篇第五章·麻子JB孤儿院回溯、护林小屋救赎与边牧约翰 (`grisaia2/yuj_005`)"
             })
 
+    # yuj_006 (Milestone 3 Chapter 6 - Yuuji Past Chapter 6: Midnight terror, 16km beast trail run, CQC & Power vs Violence, Kazuki's influence, reading books & guessing jobs)
+    for lno in range(80914, 81162):
+        ja_raw = ja_lines[lno - 1].rstrip("\r\n")
+        cn_raw = cn_lines[lno - 1].rstrip("\r\n")
+        sid = ja_raw.split("\t")[0] if "\t" in ja_raw else f"L{lno}"
+        ja_txt = ja_raw.split("\t")[1] if "\t" in ja_raw else ja_raw
+        cn_txt = cn_raw.split("\t")[1] if "\t" in cn_raw else cn_raw
+
+        old_txt = cn_txt
+        if git_base_cn and len(git_base_cn) >= lno:
+            head_raw = git_base_cn[lno - 1].rstrip("\r\n")
+            old_txt = head_raw.split("\t")[1] if "\t" in head_raw else head_raw
+
+        if cn_txt != old_txt and cn_txt.strip() != "":
+            cat, reason = classify_change(lno, sid, ja_txt, old_txt, cn_txt)
+            diffs.append({
+                "lno": lno,
+                "sid": sid,
+                "ja": ja_txt,
+                "old": old_txt,
+                "new": cn_txt,
+                "cat": cat,
+                "reason": reason,
+                "section": "灰色的迷宫·雄二过去篇第六章·星空救赎、兽道奔袭、近身搏击与实践读书 (`grisaia2/yuj_006`)"
+            })
+
     print(f"Total indexed modifications: {len(diffs)}")
 
     # Build Markdown
@@ -9099,6 +9139,15 @@ def build_report():
     md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
     md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
     for idx, d in enumerate(yuj_005_diffs, 1):
+        md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
+    md.append("\n---\n")
+
+    # Section 189 - Milestone 3: Labyrinth of Grisaia Yuuji Past Chapter 6
+    yuj_006_diffs = [d for d in diffs if d["section"].startswith("灰色的迷宫·雄二过去篇第六章")]
+    md.append(f"## 一百八十九、 灰色的迷宫·雄二过去篇第六章·星空破冰、兽道奔袭、力量哲学与实践读书 (`grisaia2/yuj_006`，共 {len(yuj_006_diffs)} 条) —— 【里程碑三·雄二过去篇随想录第六章】\n")
+    md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
+    md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
+    for idx, d in enumerate(yuj_006_diffs, 1):
         md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
     md.append("\n---\n")
 
