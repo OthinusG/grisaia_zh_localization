@@ -14,6 +14,20 @@ def escape_md(text):
     return text.replace("|", "\\|").replace("\n", " ").replace("\r", "")
 
 def classify_change(line_no, sid, ja, old_cn, new_cn):
+    # yuj_015_p1 specific (Milestone 3 Chapter 15 Part 1 - Yuuji Past Chapter 15: 9029 succession, Vancouver fame, river can duel with Asako, Little JB babysitting, Asako collapse, stars at 16:13, Asako passing, JB care & motorcycle journey north)
+    if (84593 <= line_no <= 85264):
+        if any(k in ja for k in ["習志野", "認識番号", "２０００ｍ", "０.５上", "調子コキ", "ビールの缶", "空き缶", "川に流し", "ジョンの墓石", "１４００ｍ", "得意技", "兜の緒", "下を見て安心するな"]):
+            return "9029代号正式继承、温哥华战功传名、空罐狙击三连败与麻子看家绝技之训", "师徒对决！雄二转正正式继承9029代号，任务暴增自信膨胀向麻子夸海口；山间顺流空罐狙击比试，麻子盲眼从1400米约翰墓前开枪击碎、次局打溅飞尘妨碍、三局射落树枝变轨连胜三盘；麻子亲传‘胜更须勒紧盔带’、看家绝技强行掌控战局与‘别往下看、往上看带着烦恼活着’的人生哲理"
+        if any(k in ja for k in ["コロンビア", "会計士", "ベビーシッター", "９歳", "ブーツの紐", "ちっさいＪＢ", "真っ裸", "微型", "恋愛映画", "動物園"]):
+            return "哥伦比亚会计大麻案、九岁刁蛮千金保镖、微型JB破局攻略与融会贯通之悟", "战术变通！雄二践行麻子‘年轻多吃苦、无用经验拓宽人生’之训，不挑不拣承接任务；伪装新员工潜入哥伦比亚毒贩会计家中贴身保护任性九岁千金；遭大小姐使唤刁难向JB求助，顿悟将小女孩视作‘微型JB’以动物园、高档餐厅与倾听赞美组合拳彻底攻略，领会融会贯通之妙"
+        if any(k in ja for k in ["麻子が倒れた", "山梨", "静脈血栓", "ブースター", "１６時１３分", "星が綺麗だな", "５人の人間", "神様", "２０００メートル先から頭", "９ｍｍの弾丸", "あの電車"]):
+            return "麻子病危急电、十六点十三分的星空、拯救五人之托、麻子逝世与绝望怒吼", "至痛永诀！JB急电麻子重病垂危，雄二慌乱赶回山梨小屋；麻子因早年枪伤与强化剂后遗症血栓脑干恶化回天乏术；留下‘去救5个人、给人生赋予意义、活下去’的遗言，在16点13分赞叹星空美丽后安详离世；雄二绝望怒吼要击毙神明，火葬遗骨中发现未取出的9毫米弹头，誓言在完成拯救五人前不被准许赴死"
+        if any(k in ja for k in ["赤坂", "六本木", "サムおじさん", "トースター", "アイスキャベツ", "歯ブラシ", "ジャー戦", "インテリヤクザ", "ホスト", "傷つけ合うように抱き合"]):
+            return "赤坂公寓同居、烤面包机格格不入、牙刷常识崩塌、伤痕相拥与窒息逃避", "同居疗伤！JB接心力交瘁的雄二入住赤坂外交官高级公寓；平民烤面包机如同自身格格不入，误用JB牙刷引发‘常识崩塌’爆笑闹剧；换上牛郎风紫色西装，触碰麻子遗留的痛苦细刺，二人为了填补空洞互相伤害般拥抱；JB无法忍受令人窒息的悲伤借故逃避离家"
+        if any(k in ja for k in ["北海道", "油冷", "１１００ｃｃ", "ＵＫライダース", "大洗", "仙台", "苫小牧", "握りゴケ", "空き缶でメシ", "長い直線", "叫んでみた"]):
+            return "油冷1100重机修复、单骑踏风北上、仙台渡轮渡海、北海道无垠长路与逆风长啸", "踏上追寻！雄二重温与麻子聊及北海道机车自由旅行与‘享受人生无谓浪费’的回忆，决定顺风而行；修复麻子生前的铃木GSX-R1100油冷重机，身着英式皮衣头戴麻子头盔单骑北上；自仙台乘渡轮抵苫小牧踏上北国大地；见识空罐焖饭生存技巧，在无尽的长直公路上压低整流罩，迎着狂风放声长啸"
+        return "9029特工传承、麻子病逝星空、赤坂公寓同居与单骑北上流浪深度润色", "词句润色！生动重塑雄二继承特工代号、与麻子山野空罐对决的深情教诲、麻子离世时令人心碎的星空遗言、与JB在赤坂同居相拥疗伤的复杂情绪，以及单骑踏上北海道追寻麻子印记的壮阔旅程，全面剔除生硬机翻，深度还原全篇核心灵魂高潮"
+
     # yuj_014 specific (Milestone 3 Chapter 14 - Yuuji Past Chapter 14: Vancouver airport siege, 1300m fog sniper, MV-22, CheyTac M200, Robbie digital spotter, Danny tackle, Chizuru Showa reveal & Mihama origin)
     if (84261 <= line_no <= 84592):
         if any(k in ja for k in ["バンクーバー", "神の教科書", "アルヌ・マリク", "１３００メートル", "アニー", "ジャイケル・マクソン", "ＭＶ−２２", "チルトローター"]):
@@ -7756,6 +7770,32 @@ def build_report():
                 "section": "灰色的迷宫·雄二过去篇第十四章·温哥华机场危局、千三米盲狙斩首、二十八岁学园长与美滨因缘起点 (`grisaia2/yuj_014`)"
             })
 
+    # yuj_015_p1 (Milestone 3 Chapter 15 Part 1 - Yuuji Past Chapter 15: 9029 succession, Vancouver fame, river can duel with Asako, Little JB babysitting, Asako collapse, stars at 16:13, Asako passing, JB care & motorcycle journey north)
+    for lno in range(84593, 85265):
+        ja_raw = ja_lines[lno - 1].rstrip("\r\n")
+        cn_raw = cn_lines[lno - 1].rstrip("\r\n")
+        sid = ja_raw.split("\t")[0] if "\t" in ja_raw else f"L{lno}"
+        ja_txt = ja_raw.split("\t")[1] if "\t" in ja_raw else ja_raw
+        cn_txt = cn_raw.split("\t")[1] if "\t" in cn_raw else cn_raw
+
+        old_txt = cn_txt
+        if git_base_cn and len(git_base_cn) >= lno:
+            head_raw = git_base_cn[lno - 1].rstrip("\r\n")
+            old_txt = head_raw.split("\t")[1] if "\t" in head_raw else head_raw
+
+        if cn_txt != old_txt and cn_txt.strip() != "":
+            cat, reason = classify_change(lno, sid, ja_txt, old_txt, cn_txt)
+            diffs.append({
+                "lno": lno,
+                "sid": sid,
+                "ja": ja_txt,
+                "old": old_txt,
+                "new": cn_txt,
+                "cat": cat,
+                "reason": reason,
+                "section": "灰色的迷宫·雄二过去篇第十五章前篇·9029继承、空罐狙击对决、麻子病逝、十六点十三分的星空、同居赤坂与单骑北上 (`grisaia2/yuj_015_p1`)"
+            })
+
     print(f"Total indexed modifications: {len(diffs)}")
 
     # Build Markdown
@@ -9538,6 +9578,15 @@ def build_report():
     md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
     md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
     for idx, d in enumerate(yuj_014_diffs, 1):
+        md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
+    md.append("\n---\n")
+
+    # Section 198 - Milestone 3: Labyrinth of Grisaia Yuuji Past Chapter 15 Part 1
+    yuj_015_p1_diffs = [d for d in diffs if d["section"].startswith("灰色的迷宫·雄二过去篇第十五章前篇")]
+    md.append(f"## 一百九十八、 灰色的迷宫·雄二过去篇第十五章前篇·9029继承、空罐狙击对决、麻子病逝、十六点十三分的星空、同居赤坂与单骑北上 (`grisaia2/yuj_015_p1`，共 {len(yuj_015_p1_diffs)} 条) —— 【里程碑三·雄二过去篇随想录第十五章前篇】\n")
+    md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
+    md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
+    for idx, d in enumerate(yuj_015_p1_diffs, 1):
         md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
     md.append("\n---\n")
 
