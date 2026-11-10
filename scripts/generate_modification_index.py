@@ -14,6 +14,18 @@ def escape_md(text):
     return text.replace("|", "\\|").replace("\n", " ").replace("\r", "")
 
 def classify_change(line_no, sid, ja, old_cn, new_cn):
+    # yuj_010 specific (Milestone 3 Chapter 10 - Yuuji Past Chapter 10: USMC boot camp, Captain Garrett, barracks hazing & PX barter, sports meet & cutter boat 3rd place, 300m shooting champion, Milly twilight .22 challenge, toilet cleaning punishment & deployment)
+    if (82406 <= line_no <= 83035):
+        if any(k in ja for k in ["サンディエゴ", "１２キロ", "バス", "Ｉ-９０２９", "ギャレット大尉", "アイダホのジャガイモ", "テレビゲーム", "口紅"]):
+            return "新兵入伍检阅、加勒特上尉铁血教条与第七排问题儿童集结", "铁血淬炼！麻子护送雄二至圣迭戈，新兵徒步十二公里至集合点登上罪犯押送大巴；体检脱光、防疫针刺接种与大号行囊配发；加勒特上尉登场发表经典痛骂‘爱达荷土豆、电视游戏宅男与口红’，宣布第七排‘问题儿童集结地’成立，掌掴新兵立威，唯独四位数预备役Ｉ-９０２９引起注意"
+        if any(k in ja for k in ["アサコ・クサカベの弟子", "ビンタ", "オペラ歌手", "Ｐｏｓｔ Ｅｘｃｈａｎｇｅ", "ＰＸ", "針金", "煙草", "ジャングルブーツ", "靴下"]):
+            return "麻子同期私仇刁难、丹尼嘴碎连坐惩戒、PX军人服务社与长跑保命袜秘诀", "残酷磨砺！加勒特借故麻子昔日恩怨对雄二拳脚相加百般挑刺；丹尼背后嘲讽母夜叉反被抓包，雄二连坐受罚双双趴睡；PX小卖部橡皮印章记账购信封信纸，老兵‘带铁丝顺手带钳子’处事火候教育；雄二悟透长跑并非出于自身喜好而是渴望女人夸奖，以烟换厚袜、凝胶鞋垫爽身粉绝活保命"
+        if any(k in ja for k in ["運動会", "水泳", "アイアンマン", "巨乳", "Punishment Bar", "カッター漕艇", "キャッチ・ロー", "缶ビール"]):
+            return "全营综合比武、丹尼巨乳动力学游泳惨剧、新兵惩戒大木与巡逻艇季军狂欢", "热血搏杀！全营比武第七排长跑垫底；达摩死肌肉丹尼游泳直沉池底，雄二高呼‘巨乳大姐姐溺水’精神注入依然难抗物理浮力；加勒特挥舞粗木大棒暴怒惩戒，全员冰敷趴睡；次日十四人多桨巡逻艇皮肉磨烂决死拼搏，斩获全营季军，鬼教官扛啤酒营房庆功"
+        if any(k in ja for k in ["ライフルマン", "３００メートル", "１５発“的中”", "ミリエラ", "ミリー", "トマトの空き缶", "風…オマエには何色", "クアンティコ", "アフガン"]):
+            return "三百米全满环夺冠、米莉艾拉薄暮极限赌射、风之颜色与匡提科实战远征", "宗师之境！三百米射击大比武雄二十五发全满环夺冠震撼教官，加勒特揭晓其为麻子亲传；二名米莉艾拉不服约战两百码薄暮小口径番茄罐头赌局；雄二悟道‘风的颜色’一发入魂；传授‘相信吹牛老爹与信仰自我’哲学；私带枪支受罚刷厕所，前期集训圆满毕业，匡提科两月深造直奔阿富汗与洪都拉斯战场"
+        return "美军集训日常、硬核体能操练与战友情谊深度润色", "词句润色！生动重塑美国海军陆战队新兵营硬核体能操课、食堂暗黑料理、战友调侃羁绊与日常心理动态，去除机翻僵硬生涩腔调，全面恢复硬朗军营叙事笔锋"
+
     # yuj_009 specific (Milestone 3 Chapter 9 - Yuuji Past Chapter 9: Asako's tremor & failing body, emergency CIRS mission call, Yuuji secretly impersonating 9029 on motorbike, precision non-lethal sniping, JB finding out, argument on Oslo comparison, JB's yellow car talk, red vs yellow fruit & CIRS operative oath)
     if (82160 <= line_no <= 82405):
         if any(k in ja for k in ["包丁を落とした", "手が震えてる", "黒い携帯", "甲府南", "第９条", "バイク"]):
@@ -7564,6 +7576,32 @@ def build_report():
                 "section": "灰色的迷宫·雄二过去篇第九章·麻子病危代打、不杀哲学、黄色座驾长谈与特工受命 (`grisaia2/yuj_009`)"
             })
 
+    # yuj_010 (Milestone 3 Chapter 10 - Yuuji Past Chapter 10: USMC boot camp, Captain Garrett, barracks hazing & PX barter, sports meet & cutter boat 3rd place, 300m shooting champion, Milly twilight .22 challenge, toilet cleaning punishment & deployment)
+    for lno in range(82406, 83036):
+        ja_raw = ja_lines[lno - 1].rstrip("\r\n")
+        cn_raw = cn_lines[lno - 1].rstrip("\r\n")
+        sid = ja_raw.split("\t")[0] if "\t" in ja_raw else f"L{lno}"
+        ja_txt = ja_raw.split("\t")[1] if "\t" in ja_raw else ja_raw
+        cn_txt = cn_raw.split("\t")[1] if "\t" in cn_raw else cn_raw
+
+        old_txt = cn_txt
+        if git_base_cn and len(git_base_cn) >= lno:
+            head_raw = git_base_cn[lno - 1].rstrip("\r\n")
+            old_txt = head_raw.split("\t")[1] if "\t" in head_raw else head_raw
+
+        if cn_txt != old_txt and cn_txt.strip() != "":
+            cat, reason = classify_change(lno, sid, ja_txt, old_txt, cn_txt)
+            diffs.append({
+                "lno": lno,
+                "sid": sid,
+                "ja": ja_txt,
+                "old": old_txt,
+                "new": cn_txt,
+                "cat": cat,
+                "reason": reason,
+                "section": "灰色的迷宫·雄二过去篇第十章·美军新兵营、加勒特上尉、全满环枪王与米莉暮色赌局 (`grisaia2/yuj_010`)"
+            })
+
     print(f"Total indexed modifications: {len(diffs)}")
 
     # Build Markdown
@@ -9301,6 +9339,15 @@ def build_report():
     md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
     md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
     for idx, d in enumerate(yuj_009_diffs, 1):
+        md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
+    md.append("\n---\n")
+
+    # Section 193 - Milestone 3: Labyrinth of Grisaia Yuuji Past Chapter 10
+    yuj_010_diffs = [d for d in diffs if d["section"].startswith("灰色的迷宫·雄二过去篇第十章")]
+    md.append(f"## 一百九十三、 灰色的迷宫·雄二过去篇第十章·美军新兵营、加勒特上尉、全满环枪王与米莉暮色赌局 (`grisaia2/yuj_010`，共 {len(yuj_010_diffs)} 条) —— 【里程碑三·雄二过去篇随想录第十章】\n")
+    md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
+    md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
+    for idx, d in enumerate(yuj_010_diffs, 1):
         md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
     md.append("\n---\n")
 
