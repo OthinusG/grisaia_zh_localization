@@ -14,6 +14,20 @@ def escape_md(text):
     return text.replace("|", "\\|").replace("\n", " ").replace("\r", "")
 
 def classify_change(line_no, sid, ja, old_cn, new_cn):
+    # yuj_008 specific (Milestone 3 Chapter 8 - Yuuji Past Chapter 8: JB's home cooking Auflauf, Asako & JB banter, orderly Yuuji, bathroom birthday memory, King for a day, Asako's scheme & cabin nostalgia)
+    if (81957 <= line_no <= 82159):
+        if any(k in ja for k in ["手料理", "万年イライラ病", "皿に山盛り", "１０００ドル", "ビール", "麦ジュース"]):
+            return "JB手作烤菜山中小屋投喂、万年狂躁症调侃与千元懒惰赌局", "温情羁绊！JB休假探望深山护林小屋，亲自张罗手作大餐，嫌雄二吃饭味同嚼蜡激发女性胜负欲；麻子吐槽JB身患万年更年期狂躁症、以发脾气掩饰热心肠；超大盘堆尖吃大锅饭重现孤儿院传统，围绕洗碗省事展开千美元懒惰赌局；麻子畅饮第五瓶啤酒，雄二自白反感醉鬼，JB欲解除收养监护引发爆笑对决"
+        if any(k in ja for k in ["ソーセージ", "野菜", "大豆サポニン", "味覚", "アウフラウフ", "ドイツ人", "酢漬け", "ヌカヅケ"]):
+            return "烤香肠荤素配给争端、味觉包容、德式烤菜家常溯源与意式酸渍菜吐槽", "家庭日常！JB规定香肠一人两根并严查荤前吃蔬菜，麻子顺水推舟将蔬菜全数倒进雄二盘中并拿热带雨林生存调侃；雄二评价‘普通’引JB抓狂，麻子传授女孩子做菜抢先夸赞之道并宽慰雄二味觉创伤；JB端上茱莉亚风味德式烤菜砂锅（Auflauf），麻子吐槽德国人自恋命名法与意式酸渍菜怪癖"
+        if any(k in ja for k in ["召使い", "当番兵", "女泣かせ", "歓楽街", "素人落とし", "処女"]):
+            return "勤务兵洗碗杂役自荐、麻子带兵女色脱敏论、JB大龄处女调侃与风月之辩", "成长插曲！雄二主动包揽煮拉面与洗碗杂务，麻子赞其如军官勤务兵懂事前途无量；JB赞雄二五官端正将来恐成芳心纵火犯；麻子语出惊人称雄二早已对自己身体脱敏绝不会在外胡乱扑食，JB破防尖叫；麻子反驳带兵风月乃长官职责，回击军营绿茶女行径，调侃JB大龄处女引发激烈拌嘴"
+        if any(k in ja for k in ["風呂", "溢れちまった", "誕生日", "優しい養親", "プレゼントは私だ", "暴力女", "王様"]):
+            return "狭窄浴缸身板抽条、西瓜拍头、麻子肉体赠礼恶搞与雄二国王之日家暴破防", "爆笑回忆！晨训共浴追忆：雄二身板骨骼暴风成长，狭小浴缸热水漫溢；麻子察觉当天为雄二生日，西瓜拍头追问愿望，雄二冷幽默‘想要温柔养亲’遭麻子下嘴咬肩；麻子大言不惭宣称‘生日礼物就是我’遭雄二死鱼眼嫌弃；雄二直言讨厌暴力女，立誓‘今天我是国王’，因要求麻子自称蠢笨粗妇遭重拳破防"
+        if any(k in ja for k in ["簡単に死にそう", "需要と供給", "若気の至り", "一番楽しかった", "幸せ", "麻子が体調を崩し始めた"]):
+            return "‘容易死掉’女性评价、供需理论撮合、成年JB羞涩旧账与最幸福岁月回眸", "深情岁月！麻子揭露雄二审视女性异常，评价俏丽姑娘‘感觉一碰就会轻易死掉’；麻子援引供需理论欲撮合JB与雄二遭JB严词拒绝；时过境迁成年雄二与JB面红耳赤对账往事，雄二由衷感慨山中小屋乃此生最快乐时光；JB动容认同，温情对视后收敛心神，正式揭开雄二外勤特工生涯与麻子旧伤崩塌之序幕"
+        return "灰色的迷宫·雄二过去篇第八章·JB私房菜、日常拌嘴、浴室生日礼与山林温馨岁月润色", "全面清除机翻语病，极致还原麻子、JB与雄二三人如同真正家人般的山林欢脱生活、成长拔节之洗礼、以及岁月静好背后隐现的疾病阴霾！"
+
     # yuj_007 specific (Milestone 3 Chapter 7 - Yuuji Past Chapter 7: CIRS origin & school bully metaphor, M40A1 gun talk, 300m sniping & Zen state, M24 SWS 9029 gift, deer hunt & coffee ritual, black bear attack, John's sacrifice, forest tracking, starving cubs & shot into sky, crying in Asako's arms, John's grave, safety pin hypnosis & Ranger training oath)
     if (81162 <= line_no <= 81956):
         if any(k in ja for k in ["番長", "父親", "憲法９条", "折込ナイフ", "市ヶ谷", "中野学校", "消耗品", "使い捨て", "腕時計"]):
@@ -7484,6 +7498,32 @@ def build_report():
                 "section": "灰色的迷宫·雄二过去篇第七章·CIRS隐秘、神准狙击、猎杀黑熊、游骑兵誓约与驭女术 (`grisaia2/yuj_007`)"
             })
 
+    # yuj_008 (Milestone 3 Chapter 8 - Yuuji Past Chapter 8: JB's home cooking Auflauf, Asako & JB banter, orderly Yuuji, bathroom birthday memory, King for a day, Asako's scheme & cabin nostalgia)
+    for lno in range(81957, 82160):
+        ja_raw = ja_lines[lno - 1].rstrip("\r\n")
+        cn_raw = cn_lines[lno - 1].rstrip("\r\n")
+        sid = ja_raw.split("\t")[0] if "\t" in ja_raw else f"L{lno}"
+        ja_txt = ja_raw.split("\t")[1] if "\t" in ja_raw else ja_raw
+        cn_txt = cn_raw.split("\t")[1] if "\t" in cn_raw else cn_raw
+
+        old_txt = cn_txt
+        if git_base_cn and len(git_base_cn) >= lno:
+            head_raw = git_base_cn[lno - 1].rstrip("\r\n")
+            old_txt = head_raw.split("\t")[1] if "\t" in head_raw else head_raw
+
+        if cn_txt != old_txt and cn_txt.strip() != "":
+            cat, reason = classify_change(lno, sid, ja_txt, old_txt, cn_txt)
+            diffs.append({
+                "lno": lno,
+                "sid": sid,
+                "ja": ja_txt,
+                "old": old_txt,
+                "new": cn_txt,
+                "cat": cat,
+                "reason": reason,
+                "section": "灰色的迷宫·雄二过去篇第八章·JB私房菜、日常拌嘴、浴室生日礼与山林温馨岁月 (`grisaia2/yuj_008`)"
+            })
+
     print(f"Total indexed modifications: {len(diffs)}")
 
     # Build Markdown
@@ -9203,6 +9243,15 @@ def build_report():
     md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
     md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
     for idx, d in enumerate(yuj_007_diffs, 1):
+        md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
+    md.append("\n---\n")
+
+    # Section 191 - Milestone 3: Labyrinth of Grisaia Yuuji Past Chapter 8
+    yuj_008_diffs = [d for d in diffs if d["section"].startswith("灰色的迷宫·雄二过去篇第八章")]
+    md.append(f"## 一百九十一、 灰色的迷宫·雄二过去篇第八章·JB私房菜、日常拌嘴、浴室生日礼与山林温馨岁月 (`grisaia2/yuj_008`，共 {len(yuj_008_diffs)} 条) —— 【里程碑三·雄二过去篇随想录第八章】\n")
+    md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
+    md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
+    for idx, d in enumerate(yuj_008_diffs, 1):
         md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
     md.append("\n---\n")
 
