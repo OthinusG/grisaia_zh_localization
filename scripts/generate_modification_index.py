@@ -14,6 +14,18 @@ def escape_md(text):
     return text.replace("|", "\\|").replace("\n", " ").replace("\r", "")
 
 def classify_change(line_no, sid, ja, old_cn, new_cn):
+    # yuj_012 specific (Milestone 3 Chapter 12 - Yuuji Past Chapter 12: deployment, Milly pilot vow, Robbie imouto geek, PTSD bird shooting, charred tunnel corpses, J-Lieutenant & Bush Dog platoon, 9-bullet green bear hypnotherapy, Milly prayer, return to mountain cabin & Asako's embrace)
+    if (83232 <= line_no <= 84001):
+        if any(k in ja for k in ["拝艦", "妹", "モークリー", "人を殺せない", "パイロット", "出港する艦", "不死者", "妹萌え", "イモータル"]):
+            return "家属探舰心酸落寞、米莉立誓转行飞行员、重度妹控罗比与战列舰开拔", "火线前奏！战列舰探亲日丹尼与母妹相聚，无家可归的雄二与米莉前甲板相遇同病相怜；米莉立誓为分担忧患转行飞行员；部队紧急开赴洪都拉斯雨林，同小队竟被塞进二次元死宅黑客‘不死者（实妹控）’罗比"
+        if any(k in ja for k in ["デカイ鳥", "胃がひっくり返りそう", "外因性ストレス", "トンネル", "ダイヤモンド", "ジャスティン・マイクマイヤー", "いらん子小隊", "ヤブイヌ小隊"]):
+            return "击鸟生理剧烈呕吐、焦黑隧道尸山血海、战地军医J少尉与薮犬小队诞生", "丛林惊魂！行军猎鸟雄二精神创伤剧烈干呕；战略隧道刚遭伏击焦黑尸横遍野，四人菱形队形涉险穿过；与大块头埃迪重聚，结识豪门逆子军医J少尉；自嘲‘没人要的弃儿’并正式组建‘见势不妙全速倒车逃跑’之薮犬突击排"
+        if any(k in ja for k in ["対人センサー", "人間タブレット", "釣野伏せ", "７.６２ミリ", "緑色をした巨大な“熊", "九匹目", "麻痺"]):
+            return "深夜伏击胃酸狂吐、米莉搜集残弹、绿藓巨熊心理催眠与连续九发诛敌", "血战破茧！暗夜遭敌伏击雄二精神痛苦剧烈呕血；丹尼誓死不弃兄弟，米莉敌尸搜弹九枚，J少尉展开极限战场心理催眠——‘将敌人视作绿藓巨熊！保护所爱之人！’；雄二九发九中力挽狂澜全歼突击箭头，米莉温情看护唤醒"
+        if any(k in ja for k in ["口を縫われた男", "アニー", "幸運を", "山小屋", "おかえり", "生きてて良かった", "日下部麻子に、帰って来た", "市ヶ谷"]):
+            return "缝唇男战地寓言、米莉深情隐忍祈福、重返山林小屋与麻子相拥顿悟", "终极顿悟！罗比‘缝唇男’寓言点破闭嘴长生铁律；雄二结业荣归日本，米莉暗处强忍离别泪水献上全天下最真挚的幸运祈祷；雄二重返深山木屋，望着台阶上饮酒等候的麻子痛哭流涕，领悟‘平凡日常源于相守之人’，立誓以身相托攀登市谷险峰"
+        return "雨林火线鏖战、战友生死契阔与终极归宿深度润色", "词句润色！生动还原残酷绞肉机战场实态、极具文学张力的创伤心理救赎、战友生死托付与重归麻子怀抱的心灵顿悟，去除机翻所有生硬腔调，全面恢复动人心魄的战争史诗笔锋"
+
     # yuj_011 specific (Milestone 3 Chapter 11 - Yuuji Past Chapter 11: battleship barracks, PFC promotion, car & gossip, assistant instructor dilemma, Eddie Walker's filial piety, M40A1 standing demonstration, faked target rescue, Danny cowboy rampage & cannon fodder premonition)
     if (83036 <= line_no <= 83231):
         if any(k in ja for k in ["一等兵", "給料", "車を買った", "女物の時計", "ギャレット大尉とも寝た", "キス", "ストーカー", "誰が馬鹿だ", "ダニ野郎"]):
@@ -7640,6 +7652,32 @@ def build_report():
                 "section": "灰色的迷宫·雄二过去篇第十一章·战舰新营房、水牛埃迪孝心、M40A1立射传艺与醉驾牛仔闹剧 (`grisaia2/yuj_011`)"
             })
 
+    # yuj_012 (Milestone 3 Chapter 12 - Yuuji Past Chapter 12: deployment, Milly pilot vow, Robbie imouto geek, PTSD bird shooting, charred tunnel corpses, J-Lieutenant & Bush Dog platoon, 9-bullet green bear hypnotherapy, Milly prayer, return to mountain cabin & Asako's embrace)
+    for lno in range(83232, 84002):
+        ja_raw = ja_lines[lno - 1].rstrip("\r\n")
+        cn_raw = cn_lines[lno - 1].rstrip("\r\n")
+        sid = ja_raw.split("\t")[0] if "\t" in ja_raw else f"L{lno}"
+        ja_txt = ja_raw.split("\t")[1] if "\t" in ja_raw else ja_raw
+        cn_txt = cn_raw.split("\t")[1] if "\t" in cn_raw else cn_raw
+
+        old_txt = cn_txt
+        if git_base_cn and len(git_base_cn) >= lno:
+            head_raw = git_base_cn[lno - 1].rstrip("\r\n")
+            old_txt = head_raw.split("\t")[1] if "\t" in head_raw else head_raw
+
+        if cn_txt != old_txt and cn_txt.strip() != "":
+            cat, reason = classify_change(lno, sid, ja_txt, old_txt, cn_txt)
+            diffs.append({
+                "lno": lno,
+                "sid": sid,
+                "ja": ja_txt,
+                "old": old_txt,
+                "new": cn_txt,
+                "cat": cat,
+                "reason": reason,
+                "section": "灰色的迷宫·雄二过去篇第十二章·洪都拉斯雨林、薮犬突击排、九发诛敌与重归麻子怀抱 (`grisaia2/yuj_012`)"
+            })
+
     print(f"Total indexed modifications: {len(diffs)}")
 
     # Build Markdown
@@ -9395,6 +9433,15 @@ def build_report():
     md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
     md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
     for idx, d in enumerate(yuj_011_diffs, 1):
+        md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
+    md.append("\n---\n")
+
+    # Section 195 - Milestone 3: Labyrinth of Grisaia Yuuji Past Chapter 12
+    yuj_012_diffs = [d for d in diffs if d["section"].startswith("灰色的迷宫·雄二过去篇第十二章")]
+    md.append(f"## 一百九十五、 灰色的迷宫·雄二过去篇第十二章·洪都拉斯雨林、薮犬突击排、九发诛敌与重归麻子怀抱 (`grisaia2/yuj_012`，共 {len(yuj_012_diffs)} 条) —— 【里程碑三·雄二过去篇随想录第十二章】\n")
+    md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
+    md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
+    for idx, d in enumerate(yuj_012_diffs, 1):
         md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
     md.append("\n---\n")
 
