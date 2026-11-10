@@ -14,6 +14,20 @@ def escape_md(text):
     return text.replace("|", "\\|").replace("\n", " ").replace("\r", "")
 
 def classify_change(line_no, sid, ja, old_cn, new_cn):
+    # yuj_015_p2 specific (Milestone 3 Chapter 15 Part 2 - Yuuji Past Chapter 15: Hokkaido touring, engine breakdown, youth realization, mountain cabin visit, Mihama girls reading dossier, Adam sniper mission, Oslo returned PTSD, TV consulate bombing & Yuuji wanted suspect)
+    if (85265 <= line_no <= 85936):
+        if any(k in ja for k in ["北海道", "アメリカンバイク", "ツルッパゲ", "アクスルシャフト", "サケザンギ", "焼きつき", "ＣＢＲ", "青春だな", "青春か"]):
+            return "北海道重机漫游、交警测速、拉瓦抱死推车六小时、橙紫CBR车手与‘这就是青春’之悟", "青春之悟！雄二骑机车在北国长直道追忆麻子，领悟交警测速避坑；花费七万余元大修光头偏磨轮胎与主轴；品尝巨咸鲑鱼炸鸡思念JB小鸟胃；七万公里老引擎曲轴连杆大端瓦高温拉瓦抱死，荒野硬推重车六小时；偶遇橙紫CBR年轻骑手直言‘这就是青春’点醒雄二，终悟迷茫与不安正是青春本色决意返航"
+        if any(k in ja for k in ["手ぶらで戻って", "霊前", "楽しかったか", "桑原二尉", "キアラ", "お尻、触りますか", "１課", "ハート・オブ・クイーン"]):
+            return "折返山梨墓前祭酒、空手而归、奇亚拉档案递交、摸屁股玩笑与一科绝密情报", "重归轨迹！雄二飞抵东京折返山梨，墓前祭洒啤酒低语‘毫无收获两手空空归来’，恍惚听见麻子温和询问‘玩得尽兴吗’；决意重回普通学校体验青春；赴市谷向JB提交转籍材料并转入预备役；特作群奇亚拉送来桑原考核档案调侃摸屁股，私下密报一科异常暗流，山雨欲来"
+        if any(k in ja for k in ["天岩戸", "爆破です", "ツンデレ当番", "サメの詩", "ガムシロップ", "氷砂糖", "クリームシチュー", "デイブ教授", "ワニガメ"]):
+            return "美滨宿舍炸门闹剧、纯糖浆整蛊、莳菜大鳄龟秀与等待雄二归家奶油炖菜", "日常温情！美滨宿舍五女通宵研读雄二档案大受震撼；小幸以‘天岩户古礼跳舞不如爆破’威慑逼出闭门自闭的满；莳菜痛哭拥抱解开心结；小幸奉上饱和果葡糖浆原液与冰糖整蛊闹剧；天音烹饪大锅南瓜鸡肉奶油炖菜，全员齐聚客厅看戴夫斗鳄龟，满心期盼雄二归家"
+        if any(k in ja for k in ["特９", "アダム", "対物", "１２.７×９９ｍｍ", "単発式", "イーサン・グロウ", "殺せ", "私は…帰って来たぞ", "右手が"]):
+            return "站前豪华MPV接应、特九绝密指令、单发反器材步枪、奥斯陆阴影再现与右手痉挛", "惊天阴谋！雄二归途突遭一科神秘特工‘亚当’越级强制征调，执行大总统特九号狙击格杀令；配备12.7毫米大威力单发栓动反器材步枪；废弃事务所枪位锁定目标之际，耳畔骤然回响希斯·奥斯陆‘我回来了’恶魔低语；极度创伤应激右手僵死无法扣动扳机，行动破产陷入死局"
+        if any(k in ja for k in ["領事館", "カザフスタン", "銃撃戦", "坂井", "ヒース・オスロ", "カザミユージ", "風見君の名前", "さん、はい"]):
+            return "领事馆恶性枪战快讯、希斯奥斯陆暴恐团伙、风见雄二通缉要犯与全员惊骇齐呼", "绝境惊变！由美子神色慌张狂奔下楼命全员看电视；特报播发驻外哈萨克斯坦共和国总领事馆遭遇特大武装突袭严重伤亡；现场特派记者坂井连线披露暴恐组织由希斯·奥斯陆统领，而官方通报涉案凶手竟赫然列有日本籍‘风见雄二’之名；美滨全员震惊失语，在由美子倒数号令下一齐发出裂帛惊呼"
+        return "青春觉醒、美滨学园羁绊重聚与跨国反恐剧变深度润色", "词句润色！生动重塑雄二北海道流浪的青春顿悟、山梨墓前祭拜的温情释怀、美滨五女通宵读档后的治愈日常，以及随后突发的一科阴谋构陷、奥斯陆恶魔阴影复苏与全员惊骇的世界级危局大反转，彻底清除机翻语病，为迷宫全篇收束与乐园决战铺就壮丽前奏"
+
     # yuj_015_p1 specific (Milestone 3 Chapter 15 Part 1 - Yuuji Past Chapter 15: 9029 succession, Vancouver fame, river can duel with Asako, Little JB babysitting, Asako collapse, stars at 16:13, Asako passing, JB care & motorcycle journey north)
     if (84593 <= line_no <= 85264):
         if any(k in ja for k in ["習志野", "認識番号", "２０００ｍ", "０.５上", "調子コキ", "ビールの缶", "空き缶", "川に流し", "ジョンの墓石", "１４００ｍ", "得意技", "兜の緒", "下を見て安心するな"]):
@@ -7796,6 +7810,32 @@ def build_report():
                 "section": "灰色的迷宫·雄二过去篇第十五章前篇·9029继承、空罐狙击对决、麻子病逝、十六点十三分的星空、同居赤坂与单骑北上 (`grisaia2/yuj_015_p1`)"
             })
 
+    # yuj_015_p2 (Milestone 3 Chapter 15 Part 2 - Yuuji Past Chapter 15: Hokkaido touring, engine breakdown, youth realization, mountain cabin visit, Mihama girls reading dossier, Adam sniper mission, Oslo returned PTSD, TV consulate bombing & Yuuji wanted suspect)
+    for lno in range(85265, 85937):
+        ja_raw = ja_lines[lno - 1].rstrip("\r\n")
+        cn_raw = cn_lines[lno - 1].rstrip("\r\n")
+        sid = ja_raw.split("\t")[0] if "\t" in ja_raw else f"L{lno}"
+        ja_txt = ja_raw.split("\t")[1] if "\t" in ja_raw else ja_raw
+        cn_txt = cn_raw.split("\t")[1] if "\t" in cn_raw else cn_raw
+
+        old_txt = cn_txt
+        if git_base_cn and len(git_base_cn) >= lno:
+            head_raw = git_base_cn[lno - 1].rstrip("\r\n")
+            old_txt = head_raw.split("\t")[1] if "\t" in head_raw else head_raw
+
+        if cn_txt != old_txt and cn_txt.strip() != "":
+            cat, reason = classify_change(lno, sid, ja_txt, old_txt, cn_txt)
+            diffs.append({
+                "lno": lno,
+                "sid": sid,
+                "ja": ja_txt,
+                "old": old_txt,
+                "new": cn_txt,
+                "cat": cat,
+                "reason": reason,
+                "section": "灰色的迷宫·雄二过去篇第十五章后篇·北海道流浪悟青春、爱车大修折返山梨、美滨五女通宵研读档案与领事馆袭杀惊天剧变 (`grisaia2/yuj_015_p2`)"
+            })
+
     print(f"Total indexed modifications: {len(diffs)}")
 
     # Build Markdown
@@ -9587,6 +9627,15 @@ def build_report():
     md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
     md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
     for idx, d in enumerate(yuj_015_p1_diffs, 1):
+        md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
+    md.append("\n---\n")
+
+    # Section 199 - Milestone 3: Labyrinth of Grisaia Yuuji Past Chapter 15 Part 2
+    yuj_015_p2_diffs = [d for d in diffs if d["section"].startswith("灰色的迷宫·雄二过去篇第十五章后篇")]
+    md.append(f"## 一百九十九、 灰色的迷宫·雄二过去篇第十五章后篇·北海道流浪悟青春、爱车大修折返山梨、美滨五女通宵研读档案与领事馆袭杀惊天剧变 (`grisaia2/yuj_015_p2`，共 {len(yuj_015_p2_diffs)} 条) —— 【里程碑三·雄二过去篇随想录第十五章后篇】\n")
+    md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
+    md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
+    for idx, d in enumerate(yuj_015_p2_diffs, 1):
         md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
     md.append("\n---\n")
 
