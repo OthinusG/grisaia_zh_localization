@@ -14,6 +14,18 @@ def escape_md(text):
     return text.replace("|", "\\|").replace("\n", " ").replace("\r", "")
 
 def classify_change(line_no, sid, ja, old_cn, new_cn):
+    # yuj_013 specific (Milestone 3 Chapter 13 - Yuuji Past Chapter 13: Narashino SFGp, Kuwahara, Mutou combat duel, Tokisoba pushups, carp eating, water cup drinking, parents revelation & Daimakarov)
+    if (84002 <= line_no <= 84260):
+        if any(k in ja for k in ["特作群", "習志野", "桑原", "武藤", "外資", "雪崩", "モギタン", "親指", "頭突き", "プライド"]):
+            return "习志野特作群选拔、外资走狗流言、武藤格斗死斗与雪崩锁喉夺刀", "硬核过招！雄二归国赴习志野考取专业资质，遭总教官桑原冷眼放养；老队员武藤视其为外资走狗间谍挑衅约战；雄二未携短刀以雪崩战术破局，抠眼诱敌、反拧肘关节、头槌破指、绕背锁喉夺刀反制，彻底摧毁对手尊严"
+        if any(k in ja for k in ["腕立て", "時そば", "なんどきだ", "標的を隠された", "皆中", "１００万周", "スロット", "居酒屋", "１００周"]):
+            return "胜者连坐两百俯卧撑、时荞麦阴招整人、藏靶三发皆中反杀与擅飞居酒屋大罚", "军营斗法！对决获胜雄二遭桑原连坐罚做俯卧撑，领教‘时荞麦’问时辰重头数数阴险整人花活；老兵藏靶刁难，雄二套镜三发全中靶心冷酷反杀，领受罚跑一百万圈；借口动体视力与机师狂打老虎机居酒屋豪饮，被抓现行罚跑百圈"
+        if any(k in ja for k in ["断食", "空薬莢", "池の鯉", "ギンバイ", "鯉こく", "くちく", "水当番", "コップ", "飲み干し"]):
+            return "冬季绝食两天两夜、弹壳死水池偷捞锦鲤、顺手牵羊酱油烤鱼与头顶水杯大口闷解围", "险中求生！冬季野外拉练全班遭绝食严惩；饥饿难耐从沉匿空弹壳的死水池中捞捕大锦鲤，食堂顺酱油烤炙大快朵颐肚皮滚圆；桑原震怒命头顶满杯清水罚站至天明，雄二识破应变考验仰头大口喝干回屋大睡，教官狂笑全营跟着笑"
+        if any(k in ja for k in ["はしっこい", "ちょろこい", "缶メシ", "砂を食ってる", "親を…殺しました", "ダイマカロフ", "岐阜", "春寺千鶴", "Ｉ-９０２９"]):
+            return "机敏泥鳅精评价、野外行军硬嚼沙子、坦白手刃双亲实情与大马卡洛夫结缘留任CIRS", "灵魂羁绊！雄二获评狡黠泥鳅精标签；野外行军如嚼沙粒，桑原逼问入伍原委，雄二平静坦白手刃双亲实情震慑教官换来尊重；JB笑谈当年岐阜军营雄二献唱特摄《大马卡罗夫》深得教官欢心频频挖角，雄二为守护千鹤终选定CIRS"
+        return "特作群淬炼考核、严酷惩戒智斗与人生命运抉择深度润色", "词句润色！生动再现自卫队特种作战群地狱特训、教官阴险整人体罚、战术格斗狠招制胜与水池烤鱼饮水斗智，彻底剔除机翻错误，全面还原军旅与特工成长硬核质感"
+
     # yuj_012 specific (Milestone 3 Chapter 12 - Yuuji Past Chapter 12: deployment, Milly pilot vow, Robbie imouto geek, PTSD bird shooting, charred tunnel corpses, J-Lieutenant & Bush Dog platoon, 9-bullet green bear hypnotherapy, Milly prayer, return to mountain cabin & Asako's embrace)
     if (83232 <= line_no <= 84001):
         if any(k in ja for k in ["拝艦", "妹", "モークリー", "人を殺せない", "パイロット", "出港する艦", "不死者", "妹萌え", "イモータル"]):
@@ -7678,6 +7690,32 @@ def build_report():
                 "section": "灰色的迷宫·雄二过去篇第十二章·洪都拉斯雨林、薮犬突击排、九发诛敌与重归麻子怀抱 (`grisaia2/yuj_012`)"
             })
 
+    # yuj_013 (Milestone 3 Chapter 13 - Yuuji Past Chapter 13: Narashino SFGp, Kuwahara, Mutou combat duel, Tokisoba pushups, carp eating, water cup drinking, parents revelation & Daimakarov)
+    for lno in range(84002, 84261):
+        ja_raw = ja_lines[lno - 1].rstrip("\r\n")
+        cn_raw = cn_lines[lno - 1].rstrip("\r\n")
+        sid = ja_raw.split("\t")[0] if "\t" in ja_raw else f"L{lno}"
+        ja_txt = ja_raw.split("\t")[1] if "\t" in ja_raw else ja_raw
+        cn_txt = cn_raw.split("\t")[1] if "\t" in cn_raw else cn_raw
+
+        old_txt = cn_txt
+        if git_base_cn and len(git_base_cn) >= lno:
+            head_raw = git_base_cn[lno - 1].rstrip("\r\n")
+            old_txt = head_raw.split("\t")[1] if "\t" in head_raw else head_raw
+
+        if cn_txt != old_txt and cn_txt.strip() != "":
+            cat, reason = classify_change(lno, sid, ja_txt, old_txt, cn_txt)
+            diffs.append({
+                "lno": lno,
+                "sid": sid,
+                "ja": ja_txt,
+                "old": old_txt,
+                "new": cn_txt,
+                "cat": cat,
+                "reason": reason,
+                "section": "灰色的迷宫·雄二过去篇第十三章·习志野特作群、夺刀锁喉、时荞麦整人、水池烤鲤鱼与手刃双亲坦白 (`grisaia2/yuj_013`)"
+            })
+
     print(f"Total indexed modifications: {len(diffs)}")
 
     # Build Markdown
@@ -9442,6 +9480,15 @@ def build_report():
     md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
     md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
     for idx, d in enumerate(yuj_012_diffs, 1):
+        md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
+    md.append("\n---\n")
+
+    # Section 196 - Milestone 3: Labyrinth of Grisaia Yuuji Past Chapter 13
+    yuj_013_diffs = [d for d in diffs if d["section"].startswith("灰色的迷宫·雄二过去篇第十三章")]
+    md.append(f"## 一百九十六、 灰色的迷宫·雄二过去篇第十三章·习志野特作群、夺刀锁喉、时荞麦整人、水池烤鲤鱼与手刃双亲坦白 (`grisaia2/yuj_013`，共 {len(yuj_013_diffs)} 条) —— 【里程碑三·雄二过去篇随想录第十三章】\n")
+    md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
+    md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
+    for idx, d in enumerate(yuj_013_diffs, 1):
         md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
     md.append("\n---\n")
 
