@@ -14,6 +14,18 @@ def escape_md(text):
     return text.replace("|", "\\|").replace("\n", " ").replace("\r", "")
 
 def classify_change(line_no, sid, ja, old_cn, new_cn):
+    # yuj_011 specific (Milestone 3 Chapter 11 - Yuuji Past Chapter 11: battleship barracks, PFC promotion, car & gossip, assistant instructor dilemma, Eddie Walker's filial piety, M40A1 standing demonstration, faked target rescue, Danny cowboy rampage & cannon fodder premonition)
+    if (83036 <= line_no <= 83231):
+        if any(k in ja for k in ["一等兵", "給料", "車を買った", "女物の時計", "ギャレット大尉とも寝た", "キス", "ストーカー", "誰が馬鹿だ", "ダニ野郎"]):
+            return "晋升一等兵战舰驻防、丹尼买车买表八卦、米莉争风吃醋与飞踢大闹", "后期展开！雄二丹尼双双晋升一等兵移防三万三千吨战列舰；结余军饷丹尼首付买车、雄二购置神秘女表；丹尼四处打探雄二与米莉、加勒特桃色绯闻；米莉不依不饶宣示主权，同丹尼小学生式互掐对骂、飞踢狂殴"
+        if any(k in ja for k in ["短教", "助教", "紙切れ一枚", "正社員", "バイト", "救いようのない“落ちこぼれ”"]):
+            return "短期速成消耗品定位、临时工助教窘境与正规编制正社员下克上矛盾", "体制剖析！雄二以优秀毕业生获封射击副教官，深入反思‘短期速成消耗品’教导‘正规志愿兵’之荒诞现实：兼职临时工带教正规正社员，规矩繁琐生怕得罪未来长官；揭示底层士兵遭淘汰边缘之凄惨境遇"
+        if any(k in ja for k in ["エドワード・ウォーカー", "水牛野郎", "母親に送金", "孝行", "母親を死なせてしまった", "落第", "牛と育った"]):
+            return "水牛老实人埃迪身世、全额汇款母亲至孝、雄二愧疚共鸣与通融作弊辅导", "动容救赎！挂科大块头埃迪出身破产农场，入伍不花分文全额汇款病危母亲；雄二触景生情忆及无力挽救亲母之悲剧，深感共鸣；面对脱靶面临留级的埃迪，破例以随机应变要领传授生存之道"
+        if any(k in ja for k in ["Ｍ４０Ａ１", "立射", "ブル", "要領が全て", "戦場で", "カウボーイ", "激戦地", "弾除け"]):
+            return "立姿三发全中十环神技、调包靶纸救命之恩、丹尼牛仔醉驾狂飙与炮灰命运阴云", "战友重聚！雄二立姿连射三发正中靶心展示人枪合一，私调距离调包靶纸解救埃迪，结下‘战场相报’之约；返航丹尼醉酒狂飙射击路标险酿大祸，米莉丹尼争风吃醋；暗流涌动预见速成炮灰终将空投惨烈绞肉机战场之宿命"
+        return "战舰后勤日常、枪法执教辅导与宿命前瞻深度润色", "词句润色！细腻刻画战列舰兵营闲暇生活、临时带教的微妙人情世故、战友间喧闹羁绊与步入实战前夕的深沉预感，彻底消除生硬机翻腔调，全面还原纯正军事文学笔锋"
+
     # yuj_010 specific (Milestone 3 Chapter 10 - Yuuji Past Chapter 10: USMC boot camp, Captain Garrett, barracks hazing & PX barter, sports meet & cutter boat 3rd place, 300m shooting champion, Milly twilight .22 challenge, toilet cleaning punishment & deployment)
     if (82406 <= line_no <= 83035):
         if any(k in ja for k in ["サンディエゴ", "１２キロ", "バス", "Ｉ-９０２９", "ギャレット大尉", "アイダホのジャガイモ", "テレビゲーム", "口紅"]):
@@ -7602,6 +7614,32 @@ def build_report():
                 "section": "灰色的迷宫·雄二过去篇第十章·美军新兵营、加勒特上尉、全满环枪王与米莉暮色赌局 (`grisaia2/yuj_010`)"
             })
 
+    # yuj_011 (Milestone 3 Chapter 11 - Yuuji Past Chapter 11: battleship barracks, PFC promotion, car & gossip, assistant instructor dilemma, Eddie Walker's filial piety, M40A1 standing demonstration, faked target rescue, Danny cowboy rampage & cannon fodder premonition)
+    for lno in range(83036, 83232):
+        ja_raw = ja_lines[lno - 1].rstrip("\r\n")
+        cn_raw = cn_lines[lno - 1].rstrip("\r\n")
+        sid = ja_raw.split("\t")[0] if "\t" in ja_raw else f"L{lno}"
+        ja_txt = ja_raw.split("\t")[1] if "\t" in ja_raw else ja_raw
+        cn_txt = cn_raw.split("\t")[1] if "\t" in cn_raw else cn_raw
+
+        old_txt = cn_txt
+        if git_base_cn and len(git_base_cn) >= lno:
+            head_raw = git_base_cn[lno - 1].rstrip("\r\n")
+            old_txt = head_raw.split("\t")[1] if "\t" in head_raw else head_raw
+
+        if cn_txt != old_txt and cn_txt.strip() != "":
+            cat, reason = classify_change(lno, sid, ja_txt, old_txt, cn_txt)
+            diffs.append({
+                "lno": lno,
+                "sid": sid,
+                "ja": ja_txt,
+                "old": old_txt,
+                "new": cn_txt,
+                "cat": cat,
+                "reason": reason,
+                "section": "灰色的迷宫·雄二过去篇第十一章·战舰新营房、水牛埃迪孝心、M40A1立射传艺与醉驾牛仔闹剧 (`grisaia2/yuj_011`)"
+            })
+
     print(f"Total indexed modifications: {len(diffs)}")
 
     # Build Markdown
@@ -9348,6 +9386,15 @@ def build_report():
     md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
     md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
     for idx, d in enumerate(yuj_010_diffs, 1):
+        md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
+    md.append("\n---\n")
+
+    # Section 194 - Milestone 3: Labyrinth of Grisaia Yuuji Past Chapter 11
+    yuj_011_diffs = [d for d in diffs if d["section"].startswith("灰色的迷宫·雄二过去篇第十一章")]
+    md.append(f"## 一百九十四、 灰色的迷宫·雄二过去篇第十一章·战舰新营房、水牛埃迪孝心、M40A1立射传艺与醉驾牛仔闹剧 (`grisaia2/yuj_011`，共 {len(yuj_011_diffs)} 条) —— 【里程碑三·雄二过去篇随想录第十一章】\n")
+    md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
+    md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
+    for idx, d in enumerate(yuj_011_diffs, 1):
         md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
     md.append("\n---\n")
 
