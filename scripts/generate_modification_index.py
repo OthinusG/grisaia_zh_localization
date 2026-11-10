@@ -14,6 +14,26 @@ def escape_md(text):
     return text.replace("|", "\\|").replace("\n", " ").replace("\r", "")
 
 def classify_change(line_no, sid, ja, old_cn, new_cn):
+    # yuj_007 specific (Milestone 3 Chapter 7 - Yuuji Past Chapter 7: CIRS origin & school bully metaphor, M40A1 gun talk, 300m sniping & Zen state, M24 SWS 9029 gift, deer hunt & coffee ritual, black bear attack, John's sacrifice, forest tracking, starving cubs & shot into sky, crying in Asako's arms, John's grave, safety pin hypnosis & Ranger training oath)
+    if (81162 <= line_no <= 81956):
+        if any(k in ja for k in ["番長", "父親", "憲法９条", "折込ナイフ", "市ヶ谷", "中野学校", "消耗品", "使い捨て", "腕時計"]):
+            return "CIRS起源与地缘番长暗黑比喻、死士消耗品内幕及初俸手表信物", "冷酷权谋！麻子以内裤大熊慵懒形象破冰揭露公务员身份，以学校老大欺凌隐喻美日地缘与宪法九条，将CIRS定义为偷塞进裤兜防身的折叠刀；回溯旧陆军中野间谍学校至市谷大本营之死士集团消耗品本质；JB揭露领养雄二实为麻子肉身报废前之衣钵托付；雄二以首笔薪俸赠表承诺一生守护JB，麻子擦拭M40A1奉上老伴枪械论"
+        if any(k in ja for k in ["空き缶", "３００", "光学照準器", "触るんだ", "指先の延長", "当たる", "ビッグ・ラッキー", "ワンデイ、ワンショット"]):
+            return "三百米空罐狙击极限通感、人枪合一机械禅境与清晨一枪运势", "神乎其技！麻子挑衅以三百米外啤酒空罐为散兵靶标，雄二调准矢量方位气压风向，首发脱靶后进入绝对心流禅境：‘不是去击中，而是去触碰；弹丸乃指尖之延伸’，精准轰碎铁罐；人化身机械零件，携边牧约翰清晨越野，挂狗粮罐每日一枪测吉凶，进化至无镜盲打与流水平射"
+        if any(k in ja for k in ["９０２９", "Ｍ２４−ＳＷＳ", "フルーテッドバレル", "ケブラー", "弘法筆を選ばず", "一つの道", "師匠", "ドリップ", "コーヒー", "煙草"]):
+            return "专属M24步枪9029大礼、穷尽一途通达哲学、手冲咖啡仪式与师徒名分", "硬核传承！麻子以代号9029手提箱赠予专属定制版M24-SWS重管狙击枪，驳斥‘弘法不择笔’，力主初学者必倾尽财力备良器；深情传授‘穷尽一途万理皆通、深思力行终成天才’之人生格言，雄二首度正式尊称麻子为‘师父’；深山露营传授手冲咖啡滴滤仪式与军旅烟咖潜规则"
+        if any(k in ja for k in ["血税", "鹿", "ファインデュープレックス", "吐き気", "父親を殴り殺した", "男の涙", "自分のために流していいのは汗だけだ"]):
+            return "猎鹿伦理崩溃恶心反胃、弑父血腥PTSD闪回与男子汉眼泪汗水格言", "灵魂撕裂！麻子告诫子弹乃国民血税必回收弹壳；雄二准星锁定无辜野鹿，直面夺命伦理绝壁，弑父血腥记忆反扑致剧烈干呕冷汗淋漓，坐视野鹿逃逸；麻子体悟杀手职业心魔，坦言以杀止创之荒谬，温情自责；雄二咽泪，麻子怒吼传授千古名言：‘男人的眼泪是为他人而流，能为自己流下的唯有汗水！’"
+        if any(k in ja for k in ["子宮", "悪夢", "生首", "コールタール", "一姫", "チュー", "大人のキス", "別の才能"]):
+            return "封闭空间母体庇护、纸箱人头连环噩梦、麻子法式深吻与意外隐秘天赋", "潜意识深渊！封闭狭小空间之子宫拟态依恋；夜半连环噩梦：摆钟轰鸣大宅逃亡，衣柜深处整齐码放死者纸箱，父亲淌沥青黑血生首、母亲尸体与自制亡魂齐声质问质询，一姬居高垂泪；麻子温情擦汗并献上‘成熟法式深吻’驱散恶梦，惊呼察觉雄二在风月领域的惊世骇俗天赋"
+        if any(k in ja for k in ["熊", "ゴミ箱", "ダイヤル", "ジョーーーーーーン", "引き金を引けない", "首輪", "血痕"]):
+            return "深山巨熊破门闯入、幼犬约翰惨烈护主遭掳与雄二持刀暴怒追猎", "惊天危机！两米漆黑巨熊破门洗劫厨房垃圾，幼犬约翰舍命龇牙威吓牵制；雄二狂奔卧室战栗对齐9029密码锁取枪，因杀意迟疑再度无法扣动扳机；巨熊一掌拍碎约翰并咬断颈椎叼走，雄二朝天鸣枪威慑无效；目睹满地血泊悲恸狂化，口衔剔骨主厨菜刀携枪入林，伏地辨音循血追踪三十米近距一发脱靶"
+        if any(k in ja for k in ["眼球", "小枝", "子熊", "空腹", "胃", "身勝手", "オエッ", "青空"]):
+            return "舍命肉搏枯枝爆眼逆转、饥馑幼熊撞破杀意、反胃自省与空鸣放生", "绝境反杀与人性觉醒！步枪堵泥膛炸报废，雄二以枪作饵持刀舍命突进，遭拍飞短刀肉身锁喉；濒死走马灯反思‘为杀而生之荒谬’，以二十厘米枯枝爆刺黑熊眼球绝地翻盘；清泥上膛顶死熊颅欲行刑，忽见灌木中两只骨瘦如柴之饥馑幼熊；顿悟‘母熊为子夺肉’天理，痛恶自身‘不杀我狗便吃谁都行’之极度自私，剧烈呕吐后朝天鸣枪放生"
+        if any(k in ja for k in ["墓", "レンジャー", "暗示", "安全ピン", "女の扱い方", "５人"]):
+            return "约翰红项圈衣冠冢、麻子安全销催眠揭秘、五人游骑兵军规与驭女术伏笔", "终极洗礼！雄二携红项圈泣不成声归来，麻子紧拥入怀共同垂泪，立卵石之冢；雄二立誓舍弃软弱为他人而活，要求改造成不思而战之机器；麻子揭露覆盖奥斯陆恶魔暗示之‘真神安全销’法则，咆哮启动魔鬼游骑兵操练：耗尽国民血税者死前必须拯救五条国民性命！篇末JB意味深长调侃麻子亲授之‘风月驭女真传’"
+        return "灰色的迷宫·雄二过去篇第七章·CIRS隐秘、神准狙击、猎杀黑熊、游骑兵誓约与驭女术润色", "全面清除机翻语病，极致还原麻子与JB之冷战地缘权谋、雄二三百米心流禅境、M24神枪传承、黑熊惨剧与人性升华、以及游骑兵五人救赎誓言之宏大历史篇章！"
+
     # yuj_006 specific (Milestone 3 Chapter 6 - Yuuji Past Chapter 6: Midnight terror, 16km beast trail run, CQC & Power vs Violence, Kazuki's influence, reading books & guessing jobs)
     if (80914 <= line_no <= 81161):
         if any(k in ja for k in ["李礼生", "青過ぎる果実", "約束の大地", "満天の星空", "白雪姫", "２人と１匹"]):
@@ -7438,6 +7458,32 @@ def build_report():
                 "section": "灰色的迷宫·雄二过去篇第六章·星空救赎、兽道奔袭、近身搏击与实践读书 (`grisaia2/yuj_006`)"
             })
 
+    # yuj_007 (Milestone 3 Chapter 7 - Yuuji Past Chapter 7: CIRS origin & school bully metaphor, M40A1 gun talk, 300m sniping & Zen state, M24 SWS 9029 gift, deer hunt & coffee ritual, black bear attack, John's sacrifice, forest tracking, starving cubs & shot into sky, crying in Asako's arms, John's grave, safety pin hypnosis & Ranger training oath)
+    for lno in range(81162, 81957):
+        ja_raw = ja_lines[lno - 1].rstrip("\r\n")
+        cn_raw = cn_lines[lno - 1].rstrip("\r\n")
+        sid = ja_raw.split("\t")[0] if "\t" in ja_raw else f"L{lno}"
+        ja_txt = ja_raw.split("\t")[1] if "\t" in ja_raw else ja_raw
+        cn_txt = cn_raw.split("\t")[1] if "\t" in cn_raw else cn_raw
+
+        old_txt = cn_txt
+        if git_base_cn and len(git_base_cn) >= lno:
+            head_raw = git_base_cn[lno - 1].rstrip("\r\n")
+            old_txt = head_raw.split("\t")[1] if "\t" in head_raw else head_raw
+
+        if cn_txt != old_txt and cn_txt.strip() != "":
+            cat, reason = classify_change(lno, sid, ja_txt, old_txt, cn_txt)
+            diffs.append({
+                "lno": lno,
+                "sid": sid,
+                "ja": ja_txt,
+                "old": old_txt,
+                "new": cn_txt,
+                "cat": cat,
+                "reason": reason,
+                "section": "灰色的迷宫·雄二过去篇第七章·CIRS隐秘、神准狙击、猎杀黑熊、游骑兵誓约与驭女术 (`grisaia2/yuj_007`)"
+            })
+
     print(f"Total indexed modifications: {len(diffs)}")
 
     # Build Markdown
@@ -9148,6 +9194,15 @@ def build_report():
     md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
     md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
     for idx, d in enumerate(yuj_006_diffs, 1):
+        md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
+    md.append("\n---\n")
+
+    # Section 190 - Milestone 3: Labyrinth of Grisaia Yuuji Past Chapter 7
+    yuj_007_diffs = [d for d in diffs if d["section"].startswith("灰色的迷宫·雄二过去篇第七章")]
+    md.append(f"## 一百九十、 灰色的迷宫·雄二过去篇第七章·CIRS隐秘、神准狙击、猎杀黑熊、游骑兵誓约与驭女术 (`grisaia2/yuj_007`，共 {len(yuj_007_diffs)} 条) —— 【里程碑三·雄二过去篇随想录第七章】\n")
+    md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
+    md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
+    for idx, d in enumerate(yuj_007_diffs, 1):
         md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
     md.append("\n---\n")
 
