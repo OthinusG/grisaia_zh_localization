@@ -14,6 +14,14 @@ def escape_md(text):
     return text.replace("|", "\\|").replace("\n", " ").replace("\r", "")
 
 def classify_change(line_no, sid, ja, old_cn, new_cn):
+    # amaness1 specific (Milestone 3 Chapter 7 - Amane Short Story 1: Bus accident improv manzai, Kazu-chan & Ama-chan, survival dark jokes, Komori studio ghost & passerby indifference)
+    if (68401 <= line_no <= 68507):
+        if any(k in ja for k in ["コント", "安定剤", "カズちゃんアマちゃん", "ザ・遭難ズ", "塩のありがたみ"]):
+            return "遇难绝境小品救赎、暗黑组合名大乱斗与小一小天漫才出道", "爆笑绝境！巴士坠崖荒山夜，天音恐惧难眠，一姬奇思妙想提议组建搞笑漫才搭档演小品排遣焦虑；脑洞大开候选组合名‘小一和小天’、‘遇难者联盟’、‘食盐之恩’、‘天音与伙伴们’；定下‘小一小天’组合，一姬冷酷制定规则强推天音负责装傻逗哏"
+        if any(k in ja for k in ["喫茶店", "ミートソース", "犬と", "天下取る気", "ミュージシャン", "古森さん", "なーんでやーねーん"]):
+            return "咖啡馆后厨狗肉地狱笑话、录音棚古森踩踏惨案与关西腔吐槽劝退过路人", "高能神展开！两人即兴试演短剧：咖啡馆点餐一姬直言食材告急仅剩‘狗肉和……’吓哭天音；转进音乐人录音棚，背景杂音竟是衰弱濒死的小森同学喃喃呼唤前辈，天音更惊觉自己不知不觉正一脚结结实实踩在小森身上；悬崖上方偶遇搜救路人，两人激昂怒吼关西腔漫才台词‘为什么会这样啊’，反遭路人误判‘中气十足’冷漠擦肩"
+        return "周防天音短篇集第一话深度精校与去机翻重构", "词句润色！生动还原一姬与天音绝境之下的地狱笑话漫才、古森踩踏神展开与错失救援的黑色幽默，纠正声音错译与机翻语病"
+
     # ama_006 specific (Milestone 3 Chapter 6 - Amane After Story Chapter 6: Makina C&GSC bureaucracy dream & boob-biting Yumiko, Kazuki heaven letters, Yuuji left-hand walk, Sachi American joke & Kazami Yuuki birth)
     if (67906 <= line_no <= 68400):
         if any(k in ja for k in ["メンコ", "７３式小型トラック", "指揮幕僚課程", "ガッ", "吸乳", "倒置法"]):
@@ -8060,6 +8068,32 @@ def build_report():
                 "section": "灰色的迷宫·周防天音后日谈第六章·莳菜咬奶惨剧、致一姬天国长信、雄二霸气护妻与优羽姬天使降生 (`grisaia2/ama_006`)"
             })
 
+    # Milestone 3 Chapter 7: Amane Short Story 1 (grisaia2/amaness1)
+    for lno in range(68401, 68508):
+        ja_raw = ja_lines[lno - 1].rstrip("\r\n")
+        cn_raw = cn_lines[lno - 1].rstrip("\r\n")
+        sid = ja_raw.split("\t")[0] if "\t" in ja_raw else f"L{lno}"
+        ja_txt = ja_raw.split("\t")[1] if "\t" in ja_raw else ja_raw
+        cn_txt = cn_raw.split("\t")[1] if "\t" in cn_raw else cn_raw
+
+        old_txt = cn_txt
+        if git_base_cn and len(git_base_cn) >= lno:
+            head_raw = git_base_cn[lno - 1].rstrip("\r\n")
+            old_txt = head_raw.split("\t")[1] if "\t" in head_raw else head_raw
+
+        if cn_txt != old_txt and cn_txt.strip() != "":
+            cat, reason = classify_change(lno, sid, ja_txt, old_txt, cn_txt)
+            diffs.append({
+                "lno": lno,
+                "sid": sid,
+                "ja": ja_txt,
+                "old": old_txt,
+                "new": cn_txt,
+                "cat": cat,
+                "reason": reason,
+                "section": "灰色的迷宫·周防天音短篇集第一话·坠崖绝境小品漫才、后厨狗肉地狱笑话与古森踩踏惨剧 (`grisaia2/amaness1`)"
+            })
+
     print(f"Total indexed modifications: {len(diffs)}")
 
     # Build Markdown
@@ -9914,6 +9948,15 @@ def build_report():
     md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
     md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
     for idx, d in enumerate(ama_006_diffs, 1):
+        md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
+    md.append("\n---\n")
+
+    # Section 206 - Milestone 3: Labyrinth of Grisaia Amane Short Story 1
+    amaness1_diffs = [d for d in diffs if d["section"].startswith("灰色的迷宫·周防天音短篇集第一话")]
+    md.append(f"## 二百零六、 灰色的迷宫·周防天音短篇集第一话·坠崖绝境小品漫才、后厨狗肉地狱笑话与古森踩踏惨剧 (`grisaia2/amaness1`，共 {len(amaness1_diffs)} 条) —— 【里程碑三·周防天音短篇集第一话】\n")
+    md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
+    md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
+    for idx, d in enumerate(amaness1_diffs, 1):
         md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
     md.append("\n---\n")
 
