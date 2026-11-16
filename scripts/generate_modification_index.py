@@ -1859,6 +1859,20 @@ def classify_change(line_no, sid, ja, old_cn, new_cn):
     if "早食い" in ja or "チャンペスト" in ja or "アイスクリーム頭痛" in ja or "チョコバナナ" in ja or "短冊" in ja or "づっとお兄ちゃんと一緒" in ja or "黒い携帯" in ja:
         return "满刨冰脑结冰败退与七夕短册父女誓约", "绝妙还原满自封冠军之王（Champest）狂炫刨冰致脑结冰送医的活宝行径、天音舔食巧克力香蕉的母性反差、莳菜写错别字的七夕短册‘想永远和哥哥在一起’、以及雄二注视CIRS黑色手机暗誓守护莳菜的深情内核"
 
+    # mak_006 specific (Milestone 3 Chapter 15 - Makina After Story Chapter 6)
+    if "タライ回し" in ja or "部外者" in ja or "春寺" in ja or "ベッドの用意" in ja or "金髪女" in ja:
+        return "千鹤留宿恩准与金发上司JB醉酒糗事", "纠正机翻将春寺由梨亚（JB）误译为‘春寺先生’以及反转‘给你添麻烦’语义的硬伤，生动呈现千鹤拍板留宿、小幸体贴铺床、以及雄二吐槽JB喝醉酒哭诉糗事的默契日常"
+    if "アヒル" in ja or "五臓六腑" in ja or "抱っこ" in ja or "頭掴んで" in ja or "オッパイ掴んだら" in ja:
+        return "大澡堂小黄鸭重逢与抓胸抱抱父女打闹", "细腻描摹美滨大浴场久违的放松、留存原地的小黄鸭、雄二拎着脑袋和抓胸的‘假抱抱’恶作剧、以及莳菜虽然嘴硬却任由雄二抓胸的可爱依恋"
+    if "芳香剤" in ja or "グレープフルーツ" in ja or "リボンしてねーと" in ja or "お母さん" in ja or "バインバイン" in ja:
+        return "西柚芳香剂洗头与无发带母颜贫乳恐惧", "彻底纠正机翻将‘不戴发带就长得跟我妈一模一样’误译为‘做头饰浑身发麻’的荒谬错误，传神还原借用小岭西柚洗发水、莳菜照镜惊恐发现自己素颜酷似生母且面临贫乳遗传危机的爆笑反思"
+    if "見込み入隊" in ja or "エドワード" in ja or "泣き虫エディ" in ja or "こめかみ蹴っ飛ばして" in ja:
+        return "破格入伍军装改小与飞踢教官爱哭鬼埃迪", "纠正机翻将膝盖发抖（膝を笑わせる）误译为‘笑得膝盖抖’以及近身格斗打晃误译为‘傻眼’，生动还原小不点莳菜破格入伍、爱哭鬼埃迪刀子嘴豆腐心改小军装、以及被莳菜脚后跟暴踹太阳穴的丢人战史"
+    if "首までどっぷり" in ja or "人の命を奪ったら" in ja or "馬鹿笑い" in ja or "震えが止まらない" in ja or "女を抱く" in ja:
+        return "恶人泥足深陷与杀人之后战栗拥抱女人", "彻底纠正机翻将‘泥足深陷到脖子根（首までどっぷり）’荒唐翻成‘被斩首示众’的严重恶性误译，以极具穿透力的硬核笔触重现特工杀人后放声狂笑、冷汗湿透心寒战栗、拥抱女人麻木度日的创伤深渊"
+    if "引き金を引けない人" in ja or "いつもの生活" in ja or "親を殺した" in ja or "生きるための理由" in ja or "先手を打って" in ja:
+        return "扣动扳机的守护誓约与双亲弑杀真相交代", "纠正机翻将先发制人（先手を打つ）误译为‘先来打招呼’、将听不懂（よぐわがんね）误译为‘记不住’，沉痛交代雄二弑亲身世与特工使命，誓言只要现役绝不让莳菜双手染血，莳菜许下两周后相聚之约"
+
     # mak_005 specific
     if "チャリンコババァ" in ja or "ペルシア軍" in ja or "サー！　イエス！　サー！" in ja or "軽快車" in ja or "運行者" in ja:
         return "公路骑行战术拉练与国防部新兵操典", "纠正机翻将骑车大妈（チャリンコババァ）荒诞误译为‘小鸟肥婆’，生动再现雄二公路骑行视野、避险逻辑与‘国防部不是为了给新兵父母寄讣告才设立’的全金属狂潮式长官训导"
@@ -8328,6 +8342,32 @@ def build_report():
                 "section": "灰色的迷宫·入巢莳菜后日谈第四章·教室春梦吻满、水泥柱爆头与由美子美滨冷藏库落果论 (`grisaia2/mak_004`)"
             })
 
+    # Milestone 3 Chapter 15: Makina After Story Chapter 6 (grisaia2/mak_006)
+    for lno in range(70329, 70481):
+        ja_raw = ja_lines[lno - 1].rstrip("\r\n")
+        cn_raw = cn_lines[lno - 1].rstrip("\r\n")
+        sid = ja_raw.split("\t")[0] if "\t" in ja_raw else f"L{lno}"
+        ja_txt = ja_raw.split("\t")[1] if "\t" in ja_raw else ja_raw
+        cn_txt = cn_raw.split("\t")[1] if "\t" in cn_raw else cn_raw
+
+        old_txt = cn_txt
+        if git_base_cn and len(git_base_cn) >= lno:
+            head_raw = git_base_cn[lno - 1].rstrip("\r\n")
+            old_txt = head_raw.split("\t")[1] if "\t" in head_raw else head_raw
+
+        if cn_txt != old_txt and cn_txt.strip() != "":
+            cat, reason = classify_change(lno, sid, ja_txt, old_txt, cn_txt)
+            diffs.append({
+                "lno": lno,
+                "sid": sid,
+                "ja": ja_txt,
+                "old": old_txt,
+                "new": cn_txt,
+                "cat": cat,
+                "reason": reason,
+                "section": "灰色的迷宫·入巢莳菜后日谈第六章·大浴场洗头、爱哭鬼教官近身踢击与扣动扳机的理由 (`grisaia2/mak_006`)"
+            })
+
     # Milestone 3 Chapter 14: Makina After Story Chapter 5 (grisaia2/mak_005)
     for lno in range(69979, 70329):
         ja_raw = ja_lines[lno - 1].rstrip("\r\n")
@@ -10271,6 +10311,15 @@ def build_report():
     md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
     md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
     for idx, d in enumerate(mak_004_diffs, 1):
+        md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
+    md.append("\n---\n")
+
+    # Section 214 - Milestone 3: Labyrinth of Grisaia Makina After Story Chapter 6
+    mak_006_diffs = [d for d in diffs if d["section"].startswith("灰色的迷宫·入巢莳菜后日谈第六章")]
+    md.append(f"## 二百一十四、 灰色的迷宫·入巢莳菜后日谈第六章·大浴场洗头、爱哭鬼教官近身踢击与扣动扳机的理由 (`grisaia2/mak_006`，共 {len(mak_006_diffs)} 条) —— 【里程碑三·入巢莳菜后日谈第六话】\n")
+    md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
+    md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
+    for idx, d in enumerate(mak_006_diffs, 1):
         md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
     md.append("\n---\n")
 
