@@ -71665,65 +71665,65 @@ grisaia2/makinass1#00085	@莳菜@「最后就是我入巢莳菜……」
 grisaia2/makinass1#00086	@莳菜@「……等一下，我才不要加入这帮怪胎的队伍里啊……」
 grisaia2/makinass1#00087	@莳菜@「……总觉得，理想和现实果然差了十万八千里……」
 grisaia2/makinass1#00088	@莳菜@「……战队还是算了吧，我还是去看戴夫的动物世界好了」
-grisaia2/makinass2#00000	@莳菜@「用屁股捣年糕……」
-grisaia2/makinass2#00001	@莳菜@「无法理解。哪有闲人会用屁股去捣年糕啊。还是说以前的日本人是这么干的……」
-grisaia2/makinass2#00002	@莳菜@「说不定用屁股捣的年糕，因为屁股上分泌的鲜味成分，会变得美味得不得了！」
-grisaia2/makinass2#00003	@莳菜@「所以我准备了石臼。要把糯米放进去捣是吧」
-grisaia2/makinass2#00004	@莳菜@「真没想到准备工作会这么麻烦」
-grisaia2/makinass2#00005	@莳菜@「泡米、蒸米……早知道就该去吃面包了！」
-grisaia2/makinass2#00006	@莳菜@「不过都交给小幸了，我什么都没做」
-grisaia2/makinass2#00007	@莳菜@「那么这里是用蒸笼蒸得热腾腾的糯米！　把它放进石臼里――」
-grisaia2/makinass2#00008	@莳菜@「接下来！　本来应该用杵捣年糕，不过这次我想试试用屁股捣。当然，能拜托这种事的就只有那一位啦！」
-grisaia2/makinass2#00009	@满@「呐呐，听说这附近有能吸到甜蜜蜜的花朵是真的吗？」
-grisaia2/makinass2#00010	@莳菜@「嘻嘻嘻，乖乖被我编造的假情报骗过来啦」
-grisaia2/makinass2#00011	@莳菜@「咳咳。琪尔琪尔，那边有个冒着热气的石臼吧？」
-grisaia2/makinass2#00012	@满@「有的―！」
-grisaia2/makinass2#00013	@莳菜@「就在那附近」
-grisaia2/makinass2#00014	@满@「金银花！　这金银花上有蜜！　也就是说，这里就是蜜金银花！」
-grisaia2/makinass2#00015	@满@「在哪里呢在哪里呢，晃来晃去、晃来晃去」
-grisaia2/makinass2#00016	@莳菜@「嘿」
-grisaia2/makinass2#00017	@满@「呜哇疼!!」
-grisaia2/makinass2#00018	@满@「你、为什么按我！　刚才屁股可是烫得像火一样！」
-grisaia2/makinass2#00019	@莳菜@「唔，一次可捣不成年糕哦……」
-grisaia2/makinass2#00020	@满@「等等，玛琪娜，你在听我说话!?」
-grisaia2/makinass2#00021	@莳菜@「琪尔琪尔，发出声音的话蜜就会跑掉哦！　因为这里是――!」
-grisaia2/makinass2#00022	@满@「蜜金银花！」
-grisaia2/makinass2#00023	@莳菜@「嘿」
-grisaia2/makinass2#00024	@满@「好痛!!」
-grisaia2/makinass2#00025	@满@「好烫好烫，屁股着火了，谁来救救我―」
-grisaia2/makinass2#00026	@莳菜@「我好像变成了用话骗人的狸猫……」
-grisaia2/makinass2#00027	@莳菜@「琪尔琪尔，呐呐，美滨学园第一的问答王者，琪尔琪尔―」
-grisaia2/makinass2#00028	@满@「咦？
-grisaia2/makinass2#00029	　说、说的也是，我确实是问答王者。任何问题我都能答出来！」
-grisaia2/makinass2#00030	@莳菜@「那么出题。$[谚语$/谚语$]里的“欢喜屁股捣年糕”是什么意思，请实际做给我看」
-grisaia2/makinass2#00031	@满@「咦!?
-grisaia2/makinass2#00032	　那个、我、我不知道……　不过，开心地捣年糕就好了吧，用屁股」
-grisaia2/makinass2#00033	@莳菜@「答对啦，答对啦」
-grisaia2/makinass2#00034	@满@「等、等一下啦！　碰巧这里也有石臼，答案就是这个！　嘿！」
-grisaia2/makinass2#00035	@满@「好烫！　怎么样，玛琪娜，答对了吗？」
+grisaia2/makinass2#00000	@莳菜@「屁股墩儿（尻餅をつく）……」
+grisaia2/makinass2#00001	@莳菜@「怎么想都想不通的呀。用屁股去捣年糕（尻餅をつく），真会有闲人干这种无聊透顶的事吗？还是说以前的日本人真这么干过……」
+grisaia2/makinass2#00002	@莳菜@「说不定用屁股捣出来的年糕，会因为屁股渗出的鲜味成分，变得格外美味啊！」
+grisaia2/makinass2#00003	@莳菜@「所以我就弄了个石臼过来。把糯米倒进去捣就行了吧」
+grisaia2/makinass2#00004	@莳菜@「不过，真没想到前置准备居然这么麻烦」
+grisaia2/makinass2#00005	@莳菜@「又是泡水又是上锅蒸……早知道这么折腾还不如吃面包呢！」
+grisaia2/makinass2#00006	@莳菜@「嘛，不过反正全都拜托幸酱去做了，我自个儿啥都没干就是了」
+grisaia2/makinass2#00007	@莳菜@「那么这里是用蒸笼蒸得热腾腾的糯米！把这玩意儿往臼里——骑乘投送（Ride on）！」
+grisaia2/makinass2#00008	@莳菜@「接下来！按理说本来应该用杵来捣年糕，但这次我想试试用屁股捣！当然，能拜托干这种事的，没错，非那个人莫属！」
+grisaia2/makinass2#00009	@满@「喂～喂～听说这附近开了能吸到甜花蜜的花，是真的假的？」
+grisaia2/makinass2#00010	@莳菜@「库库库，那家伙果然中了我布下的假情报乖乖送上门来了」
+grisaia2/makinass2#00011	@莳菜@「咳咳。啾噜，那边有个正呼呼冒热气的石臼对吧？」
+grisaia2/makinass2#00012	@满@「嗯，有啊～！」
+grisaia2/makinass2#00013	@莳菜@「就在其近旁（近辺）」
+grisaia2/makinass2#00014	@满@「近旁（きんぺん）！这近旁有蜜！也就是说，这里就是‘蜜近旁’！」
+grisaia2/makinass2#00015	@满@「在哪呢～在哪呢～转来转去、转来转去」
+grisaia2/makinass2#00016	@莳菜@「嘿咻」
+grisaia2/makinass2#00017	@满@「嗷哇烫死了（うぉわず）！！」
+grisaia2/makinass2#00018	@满@「你、你干嘛推我啦！刚才屁股像着了火一样烫死人了好不好！」
+grisaia2/makinass2#00019	@莳菜@「唔……只坐一下的话可捣不成年糕啊……」
+grisaia2/makinass2#00020	@满@「喂，莳菜，你到底有没有在听我说话！？」
+grisaia2/makinass2#00021	@莳菜@「啾噜，大喊大叫的话花蜜会逃走的哦！因为这里可是！？」
+grisaia2/makinass2#00022	@满@「蜜近旁！」
+grisaia2/makinass2#00023	@莳菜@「嘿咻」
+grisaia2/makinass2#00024	@满@「度呃劣烫啊（どぇりゃず）！！」
+grisaia2/makinass2#00025	@满@「噫、噫，屁股失火了啦，谁来救救我啊——」
+grisaia2/makinass2#00026	@莳菜@「变得跟童话里干了坏事的狸猫一模一样了呢……」
+grisaia2/makinass2#00027	@莳菜@「啾噜，呐呐～美滨学园第一智力问答之王，啾噜大人～」
+grisaia2/makinass2#00028	@满@「诶？
+grisaia2/makinass2#00029	　没、没错，我确实是智力问答之王呢。不管什么问题我都能答得上来哦！」
+grisaia2/makinass2#00030	@莳菜@「现在开始出题。$[谚语$/ことわざ$]里的“高兴得摔了个屁股墩儿（喜んで尻餅をつく）”是什么意思，请实际做做看演示一下！」
+grisaia2/makinass2#00031	@满@「诶！？
+grisaia2/makinass2#00032	　那种事我、我怎么知道……不对，也就是说只要高高兴兴地捣年糕就行了吧，用屁股！」
+grisaia2/makinass2#00033	@莳菜@「好，倒计时，十——九——」
+grisaia2/makinass2#00034	@满@「等、等等啦！正好这里也有个石臼，正确答案就是这个吧！嘿咻！」
+grisaia2/makinass2#00035	@满@「噫，好烫！怎么样，莳菜，答对了吗？」
 grisaia2/makinass2#00036	@莳菜@「唔……」
-grisaia2/makinass2#00037	@满@「啊，是笑容。喜悦还不够呢！
-grisaia2/makinass2#00038	　呵呵呵，哈哈，嘿！」
-grisaia2/makinass2#00039	@满@「呜哦，好痛!!　怎、怎么样？」
-grisaia2/makinass2#00040	@莳菜@「唔」
-grisaia2/makinass2#00041	@满@「可恶，笑容还是不够。
-grisaia2/makinass2#00042	　嘿嘿嘿，嘻嘻嘻，嘿嘿嘿，咿呀嘿！　嘿！」
-grisaia2/makinass2#00043	@满@「唔哦，这样如何!?」
-grisaia2/makinass2#00044	@莳菜@「唔」
-grisaia2/makinass2#00045	@满@「唔唔唔。那这样呢？
-grisaia2/makinass2#00046	　唰唰唰唰！　嘿！」
-grisaia2/makinass2#00047	@满@「哦哦哦哦哦哦！」
+grisaia2/makinass2#00037	@满@「啊，这样啊，是笑容对吧！高兴劲儿还不够！
+grisaia2/makinass2#00038	　唔呼呼，啊哈哈，嘿咻！」
+grisaia2/makinass2#00039	@满@「咕哦，好烫（あずい）！！怎、怎么样？」
+grisaia2/makinass2#00040	@莳菜@「唔……」
+grisaia2/makinass2#00041	@满@「可恶，居然还嫌笑容不够吗。
+grisaia2/makinass2#00042	　诶嘿嘿嘿，嘿嘿嘿，呜嘿嘿！嘿咻！」
+grisaia2/makinass2#00043	@满@「奴九哦哦（ぬじょおお）！！这样如何！？」
+grisaia2/makinass2#00044	@莳菜@「唔……」
+grisaia2/makinass2#00045	@满@「呜呜呜。那这样呢？
+grisaia2/makinass2#00046	　唔吓吓吓吓！嘿咻！」
+grisaia2/makinass2#00047	@满@「ＮＯＯＯＯＯＯＯＯ！」
 grisaia2/makinass2#00048	……二十分钟后
-grisaia2/makinass2#00049	@满@「呼哈呼哈……玛琪娜，我、已经不行了……」
-grisaia2/makinass2#00050	@莳菜@「让我看看，年糕捣好了没有……」
-grisaia2/makinass2#00051	@满@「呼哈呼哈……」
-grisaia2/makinass2#00052	@莳菜@「蘸点酱油……咕嘟。黏糊糊的。唔―」
-grisaia2/makinass2#00053	@莳菜@「味道普通!!　琪尔琪尔，很普通哦！」
-grisaia2/makinass2#00054	@满@「咦？　啊，那就太好了……」
-grisaia2/makinass2#00055	@莳菜@「顺便说一句，“欢喜屁股捣年糕”的意思是“得意忘形而失败”，所以你答错了。现在不可以自称问答王者了」
-grisaia2/makinass2#00056	@满@「是、是的……」
-grisaia2/makinass2#00057	@莳菜@「那把石臼之类收拾好啦！　再见！」
-grisaia2/makinass2#00058	@满@「……刚才到底是什么来着……」
+grisaia2/makinass2#00049	@满@「哈啊、哈啊……莳菜，我、已经、不行了……」
+grisaia2/makinass2#00050	@莳菜@「我瞧瞧我瞧瞧，年糕捣好了没有呢……」
+grisaia2/makinass2#00051	@满@「哈啊、哈啊……」
+grisaia2/makinass2#00052	@莳菜@「蘸点酱油尝尝……嚼嚼。黏答答的。嗯——」
+grisaia2/makinass2#00053	@莳菜@「味道普通！！啾噜，就是很普通的味道啊！」
+grisaia2/makinass2#00054	@满@「诶？啊，是吗……那可真太好了呢……」
+grisaia2/makinass2#00055	@莳菜@「顺带一提，“高兴得摔了个屁股墩儿”意思是“得意忘形反遭失败”，所以算答错啦。从现在起不准再自称智力问答之王了哦」
+grisaia2/makinass2#00056	@满@「好、好的……」
+grisaia2/makinass2#00057	@莳菜@「那石臼什么的就交给你收拾干净啦！拜拜！」
+grisaia2/makinass2#00058	@满@「……到底图个啥啊……」
 grisaia2/makinass3#00000	@莳菜@「天姐天姐。稍微借我一点零花钱用」
 grisaia2/makinass3#00001	@天音@「零花钱？　要用来做什么？　想买零食可不行哦？」
 grisaia2/makinass3#00002	@莳菜@「不是啦，是要买杂志。
