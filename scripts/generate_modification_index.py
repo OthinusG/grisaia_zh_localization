@@ -1859,6 +1859,18 @@ def classify_change(line_no, sid, ja, old_cn, new_cn):
     if "早食い" in ja or "チャンペスト" in ja or "アイスクリーム頭痛" in ja or "チョコバナナ" in ja or "短冊" in ja or "づっとお兄ちゃんと一緒" in ja or "黒い携帯" in ja:
         return "满刨冰脑结冰败退与七夕短册父女誓约", "绝妙还原满自封冠军之王（Champest）狂炫刨冰致脑结冰送医的活宝行径、天音舔食巧克力香蕉的母性反差、莳菜写错别字的七夕短册‘想永远和哥哥在一起’、以及雄二注视CIRS黑色手机暗誓守护莳菜的深情内核"
 
+    # mak_009 specific (Milestone 3 Chapter 18 - Makina After Story Chapter 9 Finale)
+    if "アルマジロ" in ja or "アリクイ" in ja or "ラグ" in ja or "い草" in ja or "牛耳" in ja or "棒倒し" in ja:
+        return "犰狳玩偶错认误会与蔺草攻城锤搬运", "爆笑还原满手抱小幸缝制的‘食蚁兽’玩偶却被雄二和满误作‘犰狳’、雄二吐槽‘分不清犰狳就像分不清蛆虫和白饭’、以及二人扛着2.5米蔺草地席宛如防卫大学推倒立木竞赛攻城锤的滑稽日常"
+    if "ダンプ" in ja or "ポリバケツ" in ja or "生ゴミ" in ja or "ＡＥＤ" in ja or "頑丈" in ja or "昭和１８年" in ja:
+        return "渣土车正面撞飞二十米与满神级强运生还", "绝妙呈现满扛地毯被满载砂石的重卡撞飞20米倒插进垃圾桶、雄二急救口对口人工呼吸、满爬出垃圾桶仅擦破皮流鼻血的怪物级强运，以及雄二感叹‘若昭和18年有满这样耐操的女人战局必将改写’的爆笑独白"
+    if "白色レグホン" in ja or "首へし折" in ja or "パックメシ" in ja or "月桂樹" in ja or "タマ" in ja or "ハーネス" in ja:
+        return "白色来航鸡徒手拧断与游骑兵钻石徽章授予", "传神勾勒莳菜高空荡索训练哀嚎‘安全带把蛋蛋勒爆了’、魔鬼教官咆哮‘你个丫头哪来的蛋’、空投白来航鸡徒手拧断脖子、偷藏自热米饭分教官贿赂要领、以及通过严苛拉练被授予钻石金刚徽章的壮举"
+    if "素麺" in ja or "梅肉" in ja or "参謀" in ja or "ムッツリ" in ja or "運”だな" in ja or "ラック" in ja:
+        return "由美子梅肉素面午膳与军人首要资质气运论", "传神还原雄二扮演传令当番兵给‘高级参谋’由美子送紫苏梅肉凉拌素面、调侃通宵熬夜看成人网站导致内分泌失调、以及二人深谈军人首要资质非体魄而是绝境强运（LUCK）的硬核宿命论"
+    if "尻叩き" in ja or "関節" in ja or "ヨクジョー" in ja or "黒い携帯" in ja or "Ｉ”の方の９０２９" in ja or "合わせっ" in ja or "祈り" in ja or "時計を合わ" in ja:
+        return "父女寝室摔跤打屁股与9029双星奔赴一线终章", "细腻描摹莳菜吃醋JB通话寝室摔拿反杀被倒吊打屁股、JB施展魔法逼退人事阻挠、满咬吐司转角撞转学生烂俗少女漫Cosplay、琪娅拉来电通报B级紧急任务、雄二以代号‘I’的9029身份携手莳菜对表出击守护日常的感人终章"
+
     # mak_008 specific (Milestone 3 Chapter 17 - Makina After Story Chapter 8)
     if "トリムタブ" in ja or "情報屋" in ja or "座間" in ja or "バラスト" in ja or "アメ車" in ja:
         return "义肢配平长跑与彻夜搜集入巢本家动向", "生动呈现雄二为探寻入巢家动向彻夜奔波厚木与座间、义肢重量不均导致跑步失衡以飞机配平片打舵为喻、以及借来美式肌肉旧车的硬汉日常"
@@ -8364,6 +8376,32 @@ def build_report():
                 "section": "灰色的迷宫·入巢莳菜后日谈第四章·教室春梦吻满、水泥柱爆头与由美子美滨冷藏库落果论 (`grisaia2/mak_004`)"
             })
 
+    # Milestone 3 Chapter 18: Makina After Story Chapter 9 Finale (grisaia2/mak_009)
+    for lno in range(70908, 71579):
+        ja_raw = ja_lines[lno - 1].rstrip("\r\n")
+        cn_raw = cn_lines[lno - 1].rstrip("\r\n")
+        sid = ja_raw.split("\t")[0] if "\t" in ja_raw else f"L{lno}"
+        ja_txt = ja_raw.split("\t")[1] if "\t" in ja_raw else ja_raw
+        cn_txt = cn_raw.split("\t")[1] if "\t" in cn_raw else cn_raw
+
+        old_txt = cn_txt
+        if git_base_cn and len(git_base_cn) >= lno:
+            head_raw = git_base_cn[lno - 1].rstrip("\r\n")
+            old_txt = head_raw.split("\t")[1] if "\t" in head_raw else head_raw
+
+        if cn_txt != old_txt and cn_txt.strip() != "":
+            cat, reason = classify_change(lno, sid, ja_txt, old_txt, cn_txt)
+            diffs.append({
+                "lno": lno,
+                "sid": sid,
+                "ja": ja_txt,
+                "old": old_txt,
+                "new": cn_txt,
+                "cat": cat,
+                "reason": reason,
+                "section": "灰色的迷宫·入巢莳菜后日谈第九章·蔺草地毯重卡撞飞、游骑兵白来航鸡拔毛与9029双星出击 (`grisaia2/mak_009`)"
+            })
+
     # Milestone 3 Chapter 17: Makina After Story Chapter 8 (grisaia2/mak_008)
     for lno in range(70765, 70908):
         ja_raw = ja_lines[lno - 1].rstrip("\r\n")
@@ -10385,6 +10423,15 @@ def build_report():
     md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
     md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
     for idx, d in enumerate(mak_004_diffs, 1):
+        md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
+    md.append("\n---\n")
+
+    # Section 217 - Milestone 3: Labyrinth of Grisaia Makina After Story Chapter 9 Finale
+    mak_009_diffs = [d for d in diffs if d["section"].startswith("灰色的迷宫·入巢莳菜后日谈第九章")]
+    md.append(f"## 二百一十七、 灰色的迷宫·入巢莳菜后日谈第九章·蔺草地毯重卡撞飞、游骑兵白来航鸡拔毛与9029双星出击 (`grisaia2/mak_009`，共 {len(mak_009_diffs)} 条) —— 【里程碑三·入巢莳菜后日谈最终话】\n")
+    md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
+    md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
+    for idx, d in enumerate(mak_009_diffs, 1):
         md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
     md.append("\n---\n")
 
