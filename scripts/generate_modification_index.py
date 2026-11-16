@@ -14,6 +14,16 @@ def escape_md(text):
     return text.replace("|", "\\|").replace("\n", " ").replace("\r", "")
 
 def classify_change(line_no, sid, ja, old_cn, new_cn):
+    # mak_001 specific (Milestone 3 Chapter 10 - Makina After Story Chapter 1: 1270m sniper teacup & phone, Yuuji prosthetic arm & JB bond, Kiyoka & Sawada terror)
+    if (68877 <= line_no <= 69094):
+        if any(k in ja for k in ["ペネトレーター", "ホットローダー", "トルクレンチ", "風力計", "光学照準器", "１２７０", "装弾"]):
+            return "千米极远狙击、双弹同孔穿透与弹道计算战术校订", "硬核军武精校！生动还原莳菜使用数显棘轮扭力扳手、激光定心校枪仪组装CheyTac步枪，实时联机解算阵风升流标准差，两弹连续贯穿9厘米弹孔的惊世狙击技艺"
+        if any(k in ja for k in ["義手", "右腕", "暴力装置", "エースナンバー", "充電", "薬"]):
+            return "雄二右臂断肢机械义肢、特工暴力装置论与JB信任羁绊", "剧情核心还原！雄二坦然直面失去右臂装配数控义肢的残酷代价，深刻揭示特工为体制暴力装置的冷酷本质，并与JB在毒舌打趣中展现托付生死的默契信赖"
+        if any(k in ja for k in ["カップ", "沢田", "清夏", "防弾ガラス", "裏切り者", "田舎に帰ります", "ザマーミロ"]):
+            return "狙碎红茶座机、恶母清夏钻桌抱头与秘书泽田吓破胆辞职", "爆笑神展开！莳菜两枪惊天狙击粉碎红茶瓷杯与求救座机，恶毒生母清夏钻桌底狼狈求饶，秘书泽田抱头尖叫‘9029是死神’当场辞职跑路，恶气狠狠宣泄"
+        return "入巢莳菜后日谈第一话深度精校与去机翻重构", "词句润色！生动还原莳菜活泼童言与老辣特工双重气质，彻底消除机翻生硬语病与倒装错译"
+
     # amaness4 specific (Milestone 3 Chapter 9 - Amane Short Story 3: Tsuchinoko pot, Skyfish eel kabayaki, Crystal skull somen bowl & talking OOPArts)
     if (68601 <= line_no <= 68708):
         if any(k in ja for k in ["ツチノコ", "マムシ", "スカイフィッシュ", "クリスタルスカル", "オーパーツ", "おそうめん", "ワーレーノーネームリー"]):
@@ -8160,6 +8170,32 @@ def build_report():
                 "section": "灰色的迷宫·周防天音短篇集第三话·美滨三大UMA黑暗料理全席与说话的水晶头骨碗 (`grisaia2/amaness4`)"
             })
 
+    # Milestone 3 Chapter 10: Makina After Story Chapter 1 (grisaia2/mak_001)
+    for lno in range(68877, 69095):
+        ja_raw = ja_lines[lno - 1].rstrip("\r\n")
+        cn_raw = cn_lines[lno - 1].rstrip("\r\n")
+        sid = ja_raw.split("\t")[0] if "\t" in ja_raw else f"L{lno}"
+        ja_txt = ja_raw.split("\t")[1] if "\t" in ja_raw else ja_raw
+        cn_txt = cn_raw.split("\t")[1] if "\t" in cn_raw else cn_raw
+
+        old_txt = cn_txt
+        if git_base_cn and len(git_base_cn) >= lno:
+            head_raw = git_base_cn[lno - 1].rstrip("\r\n")
+            old_txt = head_raw.split("\t")[1] if "\t" in head_raw else head_raw
+
+        if cn_txt != old_txt and cn_txt.strip() != "":
+            cat, reason = classify_change(lno, sid, ja_txt, old_txt, cn_txt)
+            diffs.append({
+                "lno": lno,
+                "sid": sid,
+                "ja": ja_txt,
+                "old": old_txt,
+                "new": cn_txt,
+                "cat": cat,
+                "reason": reason,
+                "section": "灰色的迷宫·入巢莳菜后日谈第一章·千米狙杀红茶杯、义肢雄二与恶母清夏狼狈抱头 (`grisaia2/mak_001`)"
+            })
+
     print(f"Total indexed modifications: {len(diffs)}")
 
     # Build Markdown
@@ -10041,6 +10077,15 @@ def build_report():
     md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
     md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
     for idx, d in enumerate(amaness4_diffs, 1):
+        md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
+    md.append("\n---\n")
+
+    # Section 209 - Milestone 3: Labyrinth of Grisaia Makina After Story Chapter 1
+    mak_001_diffs = [d for d in diffs if d["section"].startswith("灰色的迷宫·入巢莳菜后日谈第一章")]
+    md.append(f"## 二百零九、 灰色的迷宫·入巢莳菜后日谈第一章·千米狙杀红茶杯、义肢雄二与恶母清夏狼狈抱头 (`grisaia2/mak_001`，共 {len(mak_001_diffs)} 条) —— 【里程碑三·入巢莳菜后日谈第一话】\n")
+    md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
+    md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
+    for idx, d in enumerate(mak_001_diffs, 1):
         md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
     md.append("\n---\n")
 
