@@ -71724,72 +71724,72 @@ grisaia2/makinass2#00055	@莳菜@「顺带一提，“高兴得摔了个屁股�
 grisaia2/makinass2#00056	@满@「好、好的……」
 grisaia2/makinass2#00057	@莳菜@「那石臼什么的就交给你收拾干净啦！拜拜！」
 grisaia2/makinass2#00058	@满@「……到底图个啥啊……」
-grisaia2/makinass3#00000	@莳菜@「天姐天姐。稍微借我一点零花钱用」
-grisaia2/makinass3#00001	@天音@「零花钱？　要用来做什么？　想买零食可不行哦？」
-grisaia2/makinass3#00002	@莳菜@「不是啦，是要买杂志。
-grisaia2/makinass3#00003	《周刊世界前线》！」
-grisaia2/makinass3#00004	@天音@「世界前线？」
-grisaia2/makinass3#00005	@莳菜@「每周从各种角度彻底分析过去战争的最前线，定价９８０日元，创刊号有卡拉丹坦特集只卖４３０日元！　太便宜了」
-grisaia2/makinass3#00006	@天音@「诶―。那个，很想要吗？」
-grisaia2/makinass3#00007	@莳菜@「想要！
-grisaia2/makinass3#00008	　咦，不想要吗？」
-grisaia2/makinass3#00009	@天音@「嗯。完全不要」
-grisaia2/makinass3#00010	@莳菜@「可是呢，听我说了就想要了哦。每期都附赠“第二次世界大战最前线场景模型”！　而且是原尺寸大！」
-grisaia2/makinass3#00011	@天音@「原尺寸大!?　怎么可能嘛!?」
-grisaia2/makinass3#00012	@莳菜@「虽然完全是夸大广告，但要是把它当成制作者倾注热情的产物，也就能原谅了嘛」
-grisaia2/makinass3#00013	@莳菜@「把全部期数集齐，就能再现二战，是个了不起的东西……」
-grisaia2/makinass3#00014	@莳菜@「而且最后一期还会附赠迷你迷你鱼雷君，万一有个万一，也能为国家所用哦？」
-grisaia2/makinass3#00015	@天音@「不不不，不用这么做才对。那种历史，我觉得不该反复重演…」
-grisaia2/makinass3#00016	@幸@「唔，好难决定」
-grisaia2/makinass3#00017	@莳菜@「嗯，小幸怎么了？」
-grisaia2/makinass3#00018	@幸@「那个，我在犹豫要不要买这次创刊的杂志」
-grisaia2/makinass3#00019	@莳菜@「那个前线的？」
-grisaia2/makinass3#00020	@幸@「全部……？
-grisaia2/makinass3#00021	　不对。是《周刊银鲛鲨》」
-grisaia2/makinass3#00022	@天音@「欸！　是《周刊鲨鱼》吧？」
-grisaia2/makinass3#00023	@幸@「《周刊鲨鱼》我已经集齐了」
-grisaia2/makinass3#00024	@幸@「那是送给那些无法满足、只想要更专业的鲨鱼爱好者的、更加专业化的鲨鱼专门杂志。其第一弹就是《周刊银鲛鲨》全５０号」
-grisaia2/makinass3#00025	@天音@「有五十本可写的内容吗？」
-grisaia2/makinass3#00026	@幸@「有哦。创刊号是关于银鲛鲨栖息海域的特集。水质、海拔等等。银鲛鲨还不会登场」
-grisaia2/makinass3#00027	@天音@「不登场吗？」
-grisaia2/makinass3#00028	@幸@「直到第十号都是关于银鲛鲨周边环境的特集，终于从第十一号开始登场。啊，好想快点看到，明明很着急，可就是这点才美……」
-grisaia2/makinass3#00029	@幸@「创刊号还附赠印有银鲛鲨的甚平」
-grisaia2/makinass3#00030	@莳菜@「不需要」
-grisaia2/makinass3#00031	@幸@「怎么会需要呢，没有这个夏天穿什么」
-grisaia2/makinass3#00032	@莳菜@「一年到头都穿着女仆装的小幸在说什么呢……」
-grisaia2/makinass3#00033	@由美子@「啊，该怎么办才好，就这样放着可以吗……」
-grisaia2/makinass3#00034	@幸@「是银鲛鲨那件事吧？　那个我觉得该买」
-grisaia2/makinass3#00035	@由美子@「甚平？　不对，不是那个。我是在犹豫要不要买。这次创刊的」
-grisaia2/makinass3#00036	@由美子@「《周刊朋友》」
-grisaia2/makinass3#00037	@幸@「那、那是什么杂志？」
-grisaia2/makinass3#00038	@由美子@「每周，会有一个朋友跟来」
-grisaia2/makinass3#00039	@天音@「哇啊啊！　我觉得还是不要为好！」
-grisaia2/makinass3#00040	@由美子@「嗯、嗯。既然这么吸引人，我就去取消预约」
-grisaia2/makinass3#00041	@幸@「原来已经预约了啊……」
-grisaia2/makinass3#00042	@天音@「榊小姐想要的杂志……虽然不知道该不该叫杂志」
-grisaia2/makinass3#00043	@天音@「这么一比，玛琪娜想要的杂志倒是显得很可爱了呢……」
-grisaia2/makinass3#00044	@天音@「好吧，玛琪娜。我买给你」
-grisaia2/makinass3#00045	@莳菜@「真的吗!?　太好了――，好开心！　太好啦！　那我去预约啦――！」
-grisaia2/makinass3#00046	@幸@「玛琪娜高兴成那样…结果一跑起来鞋子都甩飞了呢」
-grisaia2/makinass3#00047	@天音@「嗯，高兴成那样的话…也没关系吧…　嗯」
-grisaia2/makinass3#00048	@莳菜@「呼啊……」
-grisaia2/makinass3#00049	@幸@「怎么了，玛琪娜，垂头丧气的样子」
-grisaia2/makinass3#00050	@莳菜@「那个，《周刊世界前线》停刊了哦」
-grisaia2/makinass3#00051	@天音@「咦？　为什么？」
-grisaia2/makinass3#00052	@莳菜@「因为他们好像真的做了原尺寸大的场景模型，最后得出结论没人买得起」
-grisaia2/makinass3#00053	@天音@「那倒是…真可惜呢，玛琪娜」
-grisaia2/makinass3#00054	@幸@「…我把宝贵的甚平送给玛琪娜，所以打起精神来好不好？」
-grisaia2/makinass3#00055	@莳菜@「可是啊，又有一本新杂志创刊了哦！　《周刊转轮枪击的扳机》！」
-grisaia2/makinass3#00056	@莳菜@「每周只聚焦各种转轮枪击枪的扳机部分，彻底解析其材质、耐久性等等！」
-grisaia2/makinass3#00057	@天音@「…我觉得不会有人买那种东西」
-grisaia2/makinass3#00058	@莳菜@「走啦，去预约！」
-grisaia2/makinass3#00059	@雄二@「真吵啊」
-grisaia2/makinass3#00060	@幸@「啊，风见先生，您买了什么吗？」
-grisaia2/makinass3#00061	@雄二@「啊，我买了一本新创刊的杂志」
-grisaia2/makinass3#00062	@天音@「不会吧？　不会吧？　是什么杂志？」
-grisaia2/makinass3#00063	@雄二@「《周刊转轮枪击枪的扳机护圈》」
-grisaia2/makinass3#00064	@雄二@「这是每周只聚焦各种转轮枪击枪的扳机护圈部分…」
-grisaia2/makinass3#00065	@天音@「适可而止啦！」
+grisaia2/makinass3#00000	@莳菜@「天姐天姐～稍微接济我一点碎银子（零钱）嘛」
+grisaia2/makinass3#00001	@天音@「零钱？拿来干嘛用？打算买零食吃的话可不行哦？」
+grisaia2/makinass3#00002	@莳菜@「不是啦，我是要买杂志。
+grisaia2/makinass3#00003	《周刊·世界之前线》！」
+grisaia2/makinass3#00004	@天音@「世界之前线？」
+grisaia2/makinass3#00005	@莳菜@「每周从各种角度彻底分析历史上战争的最前线，平时定价９８０日元，创刊号‘卡朗唐战役特辑’只要４３０日元！超划算！」
+grisaia2/makinass3#00006	@天音@「诶——那个，你很想要吗？」
+grisaia2/makinass3#00007	@莳菜@「超想要！
+grisaia2/makinass3#00008	　诶，难道天姐不想要吗？」
+grisaia2/makinass3#00009	@天音@「嗯，完全不想要」
+grisaia2/makinass3#00010	@莳菜@「可是呢，听我讲完你肯定也会想要的。每期居然都附赠‘二战最前线情景模型套件’！而且还是１比１等身原尺寸！」
+grisaia2/makinass3#00011	@天音@「原尺寸！？怎么可能会有那种东西啦！？」
+grisaia2/makinass3#00012	@莳菜@「虽然百分之百是虚假夸大广告，但只要想到那是制作团队的热情所致，就会让人忍不住想原谅他们呢」
+grisaia2/makinass3#00013	@莳菜@「只要把所有期数全部集齐，就能彻底还原二战战场的旷世神物……」
+grisaia2/makinass3#00014	@莳菜@「而且最终号还会附赠迷你小鱼雷君，一旦有个万一还能拿来为国尽忠哦？」
+grisaia2/makinass3#00015	@天音@「不不不，才不需要尽那种忠啦。我觉得那种历史可绝不能重演啊」
+grisaia2/makinass3#00016	@幸@「唉，好纠结呀」
+grisaia2/makinass3#00017	@莳菜@「嗯，幸酱你怎么了？」
+grisaia2/makinass3#00018	@幸@「那个呢，我在犹豫要不要买这次新创刊的一本杂志」
+grisaia2/makinass3#00019	@莳菜@「前线那个？」
+grisaia2/makinass3#00020	@幸@「前线……？
+grisaia2/makinass3#00021	不对哦。是《周刊·鲸鲨》」
+grisaia2/makinass3#00022	@天音@「受众也太窄了吧！不是《周刊·鲨鱼》吗？」
+grisaia2/makinass3#00023	@幸@「《周刊·鲨鱼》我已经集齐了」
+grisaia2/makinass3#00024	@幸@「这是专门献给那些只看普通鲨鱼已经无法满足的世界鲨鱼狂热者，更加硬核狂热的鲨鱼专门杂志。其第一弹就是《周刊·鲸鲨》全５０期」
+grisaia2/makinass3#00025	@天音@「光讲鲸鲨能写得出整整５０本的内容吗？」
+grisaia2/makinass3#00026	@幸@「写得出来的。创刊号是关于鲸鲨栖息海域的特辑。水质、海拔之类。鲸鲨本人还不会登场」
+grisaia2/makinass3#00027	@天音@「还不登场的吗！？」
+grisaia2/makinass3#00028	@幸@「前１０期全部都在特辑鲸鲨的周边环境，终于要从第１１期正式登场了。啊啊，虽然让人心焦抓狂，但正是这份吊人胃口才妙啊……」
+grisaia2/makinass3#00029	@幸@「创刊号还附赠印有鲸鲨图案的甚平家居服哦」
+grisaia2/makinass3#00030	@莳菜@「根本不需要吧」
+grisaia2/makinass3#00031	@幸@「怎么会不需要呢，没有甚平的话夏天该穿什么过啊」
+grisaia2/makinass3#00032	@莳菜@「一年到头都穿着女仆装的幸酱，到底哪来的脸说这种话……」
+grisaia2/makinass3#00033	@由美子@「啊啊，该怎么办才好，就这样放着真的行吗……」
+grisaia2/makinass3#00034	@幸@「是在说鲸鲨的事吗？那本我觉得非常值得买哦」
+grisaia2/makinass3#00035	@由美子@「甚平？不对，不是那个。我是在犹豫买不买这次创刊的」
+grisaia2/makinass3#00036	@由美子@「《周刊·朋友》」
+grisaia2/makinass3#00037	@幸@「那、那是本什么样的杂志啊？」
+grisaia2/makinass3#00038	@由美子@「每周，都会附赠一个活生生的朋友」
+grisaia2/makinass3#00039	@天音@「哇啊啊啊！我觉得那种东西你还是趁早放弃比较好啊！」
+grisaia2/makinass3#00040	@由美子@「唔、嗯。既然让你们这么害怕嫌弃，那我去把预订取消掉好了」
+grisaia2/makinass3#00041	@幸@「原来您都已经预订了啊……」
+grisaia2/makinass3#00042	@莳菜@「由美姐，你到底是有多寂寞啊……」
+grisaia2/makinass3#00043	@天音@「这么一比，莳菜想买的那本杂志反而显得可爱多了呢……」
+grisaia2/makinass3#00044	@天音@「好吧，莳菜。那本我给你买」
+grisaia2/makinass3#00045	@莳菜@「真的吗！？太棒啦——！好开心！哇——伊！那我赶紧去预订咯——！」
+grisaia2/makinass3#00046	@幸@「小莳菜高兴成那样……才刚跑出去的瞬间连鞋子都被甩飞了呢」
+grisaia2/makinass3#00047	@天音@「嗯，要是能让她高兴成那样的话，也算值了吧……嗯」
+grisaia2/makinass3#00048	@莳菜@「唉……」
+grisaia2/makinass3#00049	@幸@「怎么了小莳菜，摆出那么垂头丧气的表情」
+grisaia2/makinass3#00050	@莳菜@「那个啊，之前说的那本《周刊·世界之前线》中止发售了」
+grisaia2/makinass3#00051	@天音@「诶，怎么又这样？」
+grisaia2/makinass3#00052	@莳菜@「说是他们好像真的做了原尺寸大的战场情景模型，最后得出结论是‘这玩意儿根本没人摆得下吧’，于是就黄了」
+grisaia2/makinass3#00053	@天音@「那是当然的吧……真可惜呢，莳菜」
+grisaia2/makinass3#00054	@幸@「……那我把我心爱的甚平送给你，打起精神来好不好？」
+grisaia2/makinass3#00055	@莳菜@「但是呢，又有一本新杂志创刊了哦！《周刊·栓动步枪之扳机》！」
+grisaia2/makinass3#00056	@莳菜@「每周唯独只聚焦在各种栓动步枪的扳机部位，彻底解析其材质、耐久度等等！」
+grisaia2/makinass3#00057	@天音@「……我觉得那种东西根本不会有人买的啦」
+grisaia2/makinass3#00058	@莳菜@「走起，飞奔去预订咯！」
+grisaia2/makinass3#00059	@雄二@「吵吵嚷嚷的干什么呢」
+grisaia2/makinass3#00060	@幸@「啊，风见先生，您买了什么东西回来吗？」
+grisaia2/makinass3#00061	@雄二@「啊，我买了本刚创刊的新杂志」
+grisaia2/makinass3#00062	@天音@「难、难道说！？到底是什么杂志啊？」
+grisaia2/makinass3#00063	@雄二@「《周刊·栓动步枪之扳机护圈》」
+grisaia2/makinass3#00064	@雄二@「这本是每周唯独只聚焦在各种栓动步枪的扳机护圈部位……」
+grisaia2/makinass3#00065	@天音@「你们给我适可而止一点——！」
 grisaia2/makinass4#00000	@戴夫教授@「呀，小朋友们！　家里的活儿都帮忙做了吗？」
 grisaia2/makinass4#00001	@莳菜@「做了哦――！」
 grisaia2/makinass4#00002	@戴夫教授@「今天的“神奇动物”，就像上周预告的那样，是“外表可爱却意外凶猛动物”特辑！」
