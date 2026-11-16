@@ -1859,6 +1859,16 @@ def classify_change(line_no, sid, ja, old_cn, new_cn):
     if "早食い" in ja or "チャンペスト" in ja or "アイスクリーム頭痛" in ja or "チョコバナナ" in ja or "短冊" in ja or "づっとお兄ちゃんと一緒" in ja or "黒い携帯" in ja:
         return "满刨冰脑结冰败退与七夕短册父女誓约", "绝妙还原满自封冠军之王（Champest）狂炫刨冰致脑结冰送医的活宝行径、天音舔食巧克力香蕉的母性反差、莳菜写错别字的七夕短册‘想永远和哥哥在一起’、以及雄二注视CIRS黑色手机暗誓守护莳菜的深情内核"
 
+    # makinass1 specific (Milestone 3 Chapter 19 - Makina Short Story 1)
+    if "カルビ将軍" in ja or "フレンドリーファイア" in ja or "女戦隊" in ja or "ミハマレンジャー" in ja or "鮫戦隊" in ja:
+        return "女子战队美滨连者与小幸鲨鱼战队执念", "爆笑呈现莳菜嫌弃金枪鱼超人单打独斗易误伤友军、企图拉拢美滨五女组建战队、以及小幸对鲨鱼走火入魔魔改出‘鲨鱼战队鲨鱼’令战队设定瞬间崩塌的活宝日常"
+    if "ミハマピー" in ja or "お小遣い" in ja or "黄色い" in ja or "ＰＥＥ" in ja or "巨大ロボット" in ja:
+        return "满被忽悠冠名美滨PEE与金发尿尿专属色", "纠正机翻将PEE荒谬译为‘放屁’（放屁为Fart，PEE实为尿尿），绝妙还原由美子给满零花钱把满驯化成伸手党、莳菜忽悠满金发非黄金而是尿尿色PEE并任命其为美滨PEE与巨大合体机器人驾驶员的名场面"
+    if "ミハマエロ" in ja or "ミハマエロー" in ja or "プロデューサー" in ja or "ビッチ" in ja or "春薬" in ja:
+        return "天音暂定美滨工口与大牌制作人P误会", "爆笑重现天音被莳菜以‘动不动色诱男人完全是工口碧池’为由强行冠名‘美滨工口’、要求摆出托胸眨眼成人特摄POSE、以及天音把PEE误当成战队大牌制作人P（Producer）的极品反差"
+    if "ブラック企業" in ja or "ミハマ色素沈着" in ja or "腹黒" in ja or "デイブ" in ja:
+        return "由美子黑心企业本家与美滨色素沉着终极大退缩", "传神还原莳菜以黑心企业本家与腹黑为由将由美子命名为美滨黑、逼问由美子‘哪里不黑’致其羞耻难当闭嘴、顺势扣上‘美滨色素沉着’恶心代号、最终全员太崩坏莳菜怒退战队去看戴夫动物世界的无厘头收尾"
+
     # mak_009 specific (Milestone 3 Chapter 18 - Makina After Story Chapter 9 Finale)
     if "アルマジロ" in ja or "アリクイ" in ja or "ラグ" in ja or "い草" in ja or "牛耳" in ja or "棒倒し" in ja:
         return "犰狳玩偶错认误会与蔺草攻城锤搬运", "爆笑还原满手抱小幸缝制的‘食蚁兽’玩偶却被雄二和满误作‘犰狳’、雄二吐槽‘分不清犰狳就像分不清蛆虫和白饭’、以及二人扛着2.5米蔺草地席宛如防卫大学推倒立木竞赛攻城锤的滑稽日常"
@@ -8376,6 +8386,32 @@ def build_report():
                 "section": "灰色的迷宫·入巢莳菜后日谈第四章·教室春梦吻满、水泥柱爆头与由美子美滨冷藏库落果论 (`grisaia2/mak_004`)"
             })
 
+    # Milestone 3 Chapter 19: Makina Short Story 1 (grisaia2/makinass1)
+    for lno in range(71579, 71668):
+        ja_raw = ja_lines[lno - 1].rstrip("\r\n")
+        cn_raw = cn_lines[lno - 1].rstrip("\r\n")
+        sid = ja_raw.split("\t")[0] if "\t" in ja_raw else f"L{lno}"
+        ja_txt = ja_raw.split("\t")[1] if "\t" in ja_raw else ja_raw
+        cn_txt = cn_raw.split("\t")[1] if "\t" in cn_raw else cn_raw
+
+        old_txt = cn_txt
+        if git_base_cn and len(git_base_cn) >= lno:
+            head_raw = git_base_cn[lno - 1].rstrip("\r\n")
+            old_txt = head_raw.split("\t")[1] if "\t" in head_raw else head_raw
+
+        if cn_txt != old_txt and cn_txt.strip() != "":
+            cat, reason = classify_change(lno, sid, ja_txt, old_txt, cn_txt)
+            diffs.append({
+                "lno": lno,
+                "sid": sid,
+                "ja": ja_txt,
+                "old": old_txt,
+                "new": cn_txt,
+                "cat": cat,
+                "reason": reason,
+                "section": "灰色的迷宫·入巢莳菜短篇第一章·女子战队美滨连者与全员崩坏变身代号 (`grisaia2/makinass1`)"
+            })
+
     # Milestone 3 Chapter 18: Makina After Story Chapter 9 Finale (grisaia2/mak_009)
     for lno in range(70908, 71579):
         ja_raw = ja_lines[lno - 1].rstrip("\r\n")
@@ -10423,6 +10459,15 @@ def build_report():
     md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
     md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
     for idx, d in enumerate(mak_004_diffs, 1):
+        md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
+    md.append("\n---\n")
+
+    # Section 218 - Milestone 3: Labyrinth of Grisaia Makina Short Story 1
+    makinass1_diffs = [d for d in diffs if d["section"].startswith("灰色的迷宫·入巢莳菜短篇第一章")]
+    md.append(f"## 二百一十八、 灰色的迷宫·入巢莳菜短篇第一章·女子战队美滨连者与全员崩坏变身代号 (`grisaia2/makinass1`，共 {len(makinass1_diffs)} 条) —— 【里程碑三·入巢莳菜短篇第一话】\n")
+    md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
+    md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
+    for idx, d in enumerate(makinass1_diffs, 1):
         md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
     md.append("\n---\n")
 
