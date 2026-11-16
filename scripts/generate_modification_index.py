@@ -1859,6 +1859,20 @@ def classify_change(line_no, sid, ja, old_cn, new_cn):
     if "早食い" in ja or "チャンペスト" in ja or "アイスクリーム頭痛" in ja or "チョコバナナ" in ja or "短冊" in ja or "づっとお兄ちゃんと一緒" in ja or "黒い携帯" in ja:
         return "满刨冰脑结冰败退与七夕短册父女誓约", "绝妙还原满自封冠军之王（Champest）狂炫刨冰致脑结冰送医的活宝行径、天音舔食巧克力香蕉的母性反差、莳菜写错别字的七夕短册‘想永远和哥哥在一起’、以及雄二注视CIRS黑色手机暗誓守护莳菜的深情内核"
 
+    # mak_007 specific (Milestone 3 Chapter 16 - Makina After Story Chapter 7)
+    if "竹箒" in ja or "文化包丁" in ja or "本土決戦" in ja or "２０１２年" in ja or "女子挺身隊" in ja:
+        return "竹扫帚绑菜刀与昭和本土决战荒诞突刺", "生动呈现小岭幸在后院拿绑着菜刀的竹扫帚疯狂捅刺稻草人、自称备战本土决战、雄二哭笑不得灵魂拷问‘今年是哪一年/二战何年结束’的爆笑互动"
+    if "クソメイド" in ja or "可愛がって" in ja or "茂み" in ja or "口までは許す" in ja or "パンツを取られました" in ja:
+        return "内裤被夺之耻与女仆茂密树丛求关照", "传神还原小幸痛失内裤后的不服输倔劲、莳菜临行前传授的‘可怜上目线’撒娇求疼爱秘技、莳菜‘只准亲亲’的底线、以及小幸主动邀请去灌木丛的危险发言"
+    if "切る”と“断つ" in ja or "戦車の履帯" in ja or "気合いと根性" in ja or "ナマクラ包丁" in ja:
+        return "切割物理学与日下部麻子斩断坦克履带传说", "细腻描摹雄二以纯物理力学向小幸拆解‘划切’与‘斩断’的区别、顺应自重切断木棍、以及日下部麻子当年手持军刀劈断坦克履带的怪物级特工传说"
+    if "縮地" in ja or "振り子" in ja or "魚雷" in ja or "雪崩" in ja or "止める" in ja:
+        return "重力贴身缩地与徒手格斗视觉盲区操典", "硬核还原雄二纠正小幸‘人肉鱼雷’前冲漏洞、以钟摆晃动制造视觉距离错觉的贴身‘缩地’步法、以及卸力与制动的实战摔拿格斗教学"
+    if "カラアゲ" in ja or "じゅる" in ja or "シューマイ" in ja or "グリンピース" in ja or "外資" in ja:
+        return "大巴垂涎欲滴与美利坚搜刮施舍强盗逻辑", "纠正机翻将流口水拟声词错译为‘嚼嚼’，爆笑重现莳菜在接送大巴上双眼放光死盯邻座壮汉便当、蛮横索要炸鸡烧麦并‘大发慈悲归还顶上青豆’的美式强盗哲学"
+    if "ハンバーグカレー" in ja or "チーズイン" in ja or "１２９０キロカロリー" in ja or "子持ち昆布" in ja or "戻ることはなかった" in ja:
+        return "王者全选高热量汉堡咖喱与风见雄二未归悬念", "传神勾勒由美子‘全都要才是王者抉择’的霸气点餐、天音从俏娇妻向母性宿舍管理员的转变、由美子多籽海带宵夜饭团、以及雄二傍晚散步彻夜未归的骤然悬念"
+
     # mak_006 specific (Milestone 3 Chapter 15 - Makina After Story Chapter 6)
     if "タライ回し" in ja or "部外者" in ja or "春寺" in ja or "ベッドの用意" in ja or "金髪女" in ja:
         return "千鹤留宿恩准与金发上司JB醉酒糗事", "纠正机翻将春寺由梨亚（JB）误译为‘春寺先生’以及反转‘给你添麻烦’语义的硬伤，生动呈现千鹤拍板留宿、小幸体贴铺床、以及雄二吐槽JB喝醉酒哭诉糗事的默契日常"
@@ -8342,6 +8356,32 @@ def build_report():
                 "section": "灰色的迷宫·入巢莳菜后日谈第四章·教室春梦吻满、水泥柱爆头与由美子美滨冷藏库落果论 (`grisaia2/mak_004`)"
             })
 
+    # Milestone 3 Chapter 16: Makina After Story Chapter 7 (grisaia2/mak_007)
+    for lno in range(70481, 70765):
+        ja_raw = ja_lines[lno - 1].rstrip("\r\n")
+        cn_raw = cn_lines[lno - 1].rstrip("\r\n")
+        sid = ja_raw.split("\t")[0] if "\t" in ja_raw else f"L{lno}"
+        ja_txt = ja_raw.split("\t")[1] if "\t" in ja_raw else ja_raw
+        cn_txt = cn_raw.split("\t")[1] if "\t" in cn_raw else cn_raw
+
+        old_txt = cn_txt
+        if git_base_cn and len(git_base_cn) >= lno:
+            head_raw = git_base_cn[lno - 1].rstrip("\r\n")
+            old_txt = head_raw.split("\t")[1] if "\t" in head_raw else head_raw
+
+        if cn_txt != old_txt and cn_txt.strip() != "":
+            cat, reason = classify_change(lno, sid, ja_txt, old_txt, cn_txt)
+            diffs.append({
+                "lno": lno,
+                "sid": sid,
+                "ja": ja_txt,
+                "old": old_txt,
+                "new": cn_txt,
+                "cat": cat,
+                "reason": reason,
+                "section": "灰色的迷宫·入巢莳菜后日谈第七章·竹扫帚本土决战操练、缩地真髓传授与邻座便当掠夺 (`grisaia2/mak_007`)"
+            })
+
     # Milestone 3 Chapter 15: Makina After Story Chapter 6 (grisaia2/mak_006)
     for lno in range(70329, 70481):
         ja_raw = ja_lines[lno - 1].rstrip("\r\n")
@@ -10311,6 +10351,15 @@ def build_report():
     md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
     md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
     for idx, d in enumerate(mak_004_diffs, 1):
+        md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
+    md.append("\n---\n")
+
+    # Section 215 - Milestone 3: Labyrinth of Grisaia Makina After Story Chapter 7
+    mak_007_diffs = [d for d in diffs if d["section"].startswith("灰色的迷宫·入巢莳菜后日谈第七章")]
+    md.append(f"## 二百一十五、 灰色的迷宫·入巢莳菜后日谈第七章·竹扫帚本土决战操练、缩地真髓传授与邻座便当掠夺 (`grisaia2/mak_007`，共 {len(mak_007_diffs)} 条) —— 【里程碑三·入巢莳菜后日谈第七话】\n")
+    md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
+    md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
+    for idx, d in enumerate(mak_007_diffs, 1):
         md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
     md.append("\n---\n")
 
