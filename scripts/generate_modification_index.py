@@ -14,6 +14,14 @@ def escape_md(text):
     return text.replace("|", "\\|").replace("\n", " ").replace("\r", "")
 
 def classify_change(line_no, sid, ja, old_cn, new_cn):
+    # ama_003 specific (Milestone 3 Chapter 3 - Amane After Story Chapter 3: Bathhouse bust, air mattress cuckold drama, model girlfriend declaration, zoo promise & entire day off)
+    if (66739 <= line_no <= 66852):
+        if any(k in ja for k in ["一生ヤッてろ", "温めのお湯", "野良犬", "大浴場", "エアマット", "見せつけて", "一緒にやるっ"]):
+            return "大浴场充气床垫捉奸、生野狗羞耻play与‘有种就做上一辈子’暴怒", "爆笑捉奸！雄二被困在大浴场充气床垫上与天音拉扯，遭满妹推门撞破现行并当场吓哭；满妹痛斥‘大白天在公共浴池像野狗一样交配’‘你们俩有种就做上一辈子啊！’破门而逃；天音却破罐子破摔反客为主，借羞耻刺激更加热情索欢"
+        if any(k in ja for k in ["反語", "賢い女友達", "男が一番引く", "動物園", "パンダ", "全休"]):
+            return "反语讽刺误读、贤淑模范女友宣言、带天音去动物园与难得全休承诺", "温情收束！面对满妹的讽刺，天音误以为雄二要当真做一辈子，雄二冷峻科普‘反语讽刺’；天音展现‘最让男人安心的知性贤内助’觉悟，主动宽慰劳碌的雄二；雄二心生怜惜，许下待难得全天公休时带天音去动物园看熊猫的约会承诺，两人相拥温存"
+        return "周防天音后日谈第三章深度精校与去机翻重构", "词句润色！生动还原大浴场啼笑皆非的捉奸修罗场、雄二与天音在公共浴室的荒唐推拉，以及由欲转温情的动物园约会承诺，完美清除机翻生硬语病"
+
     # ama_002 specific (Milestone 3 Chapter 2 - Amane After Story Chapter 2: First night dentist comparison, free-size bondage lingerie, Hong Kong roast suckling pig insult, 4-hour struggle to fasten belts, morning light & emergency toilet cry)
     if (66691 <= line_no <= 66738):
         if any(k in ja for k in ["歯医者", "詩的だし", "贖罪行為", "フリーサイズ", "パッツンパッツン"]):
@@ -7912,6 +7920,32 @@ def build_report():
                 "section": "灰色的迷宫·周防天音后日谈第二章·初夜拔牙妙喻、紧缚烤乳猪惨案、四小时塞肉恶战与尿意大爆发 (`grisaia2/ama_002`)"
             })
 
+    # Milestone 3 Chapter 3: Amane After Story Chapter 3 (grisaia2/ama_003)
+    for lno in range(66739, 66853):
+        ja_raw = ja_lines[lno - 1].rstrip("\r\n")
+        cn_raw = cn_lines[lno - 1].rstrip("\r\n")
+        sid = ja_raw.split("\t")[0] if "\t" in ja_raw else f"L{lno}"
+        ja_txt = ja_raw.split("\t")[1] if "\t" in ja_raw else ja_raw
+        cn_txt = cn_raw.split("\t")[1] if "\t" in cn_raw else cn_raw
+
+        old_txt = cn_txt
+        if git_base_cn and len(git_base_cn) >= lno:
+            head_raw = git_base_cn[lno - 1].rstrip("\r\n")
+            old_txt = head_raw.split("\t")[1] if "\t" in head_raw else head_raw
+
+        if cn_txt != old_txt and cn_txt.strip() != "":
+            cat, reason = classify_change(lno, sid, ja_txt, old_txt, cn_txt)
+            diffs.append({
+                "lno": lno,
+                "sid": sid,
+                "ja": ja_txt,
+                "old": old_txt,
+                "new": cn_txt,
+                "cat": cat,
+                "reason": reason,
+                "section": "灰色的迷宫·周防天音后日谈第三章·大浴场气垫床捉奸修罗场、反客为主贤女友宣言与动物园之约 (`grisaia2/ama_003`)"
+            })
+
     print(f"Total indexed modifications: {len(diffs)}")
 
     # Build Markdown
@@ -9730,6 +9764,15 @@ def build_report():
     md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
     md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
     for idx, d in enumerate(ama_002_diffs, 1):
+        md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
+    md.append("\n---\n")
+
+    # Section 202 - Milestone 3: Labyrinth of Grisaia Amane After Story Chapter 3
+    ama_003_diffs = [d for d in diffs if d["section"].startswith("灰色的迷宫·周防天音后日谈第三章")]
+    md.append(f"## 二百零二、 灰色的迷宫·周防天音后日谈第三章·大浴场气垫床捉奸修罗场、反客为主贤女友宣言与动物园之约 (`grisaia2/ama_003`，共 {len(ama_003_diffs)} 条) —— 【里程碑三·周防天音后日谈第三话】\n")
+    md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
+    md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
+    for idx, d in enumerate(ama_003_diffs, 1):
         md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
     md.append("\n---\n")
 
