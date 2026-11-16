@@ -14,6 +14,14 @@ def escape_md(text):
     return text.replace("|", "\\|").replace("\n", " ").replace("\r", "")
 
 def classify_change(line_no, sid, ja, old_cn, new_cn):
+    # amaness3 specific (Milestone 3 Chapter 8 - Amane Short Story 2: Guess what is in the box boob trap vs Yuuji military endurance KIM test & zero fruit juice)
+    if (68508 <= line_no <= 68600):
+        if any(k in ja for k in ["箱の中身は何でしょね", "マシュマロ", "グミ", "果汁", "ジャージ"]):
+            return "摸箱子诱惑情趣机关、果汁含量百分百妄想与运动服操场集合反转", "爆笑误会！天音嫌雄二最近冷淡，奇思妙想自制胸口掏洞纸箱玩‘猜猜箱子里装着什么’，妄想雄二摸大胸大赞‘棉花糖般松软、果汁百分百’；兴冲冲向雄二发出邀请，雄二误解为特种部队极限侦察特训，冷酷下令‘换上运动服，操场A点集合！’"
+        if any(k in ja for k in ["耐久訓練", "ラペリング", "ブリッジクロスイング", "泥水", "木箱", "泥塹壕", "無果汁"]):
+            return "特种悬崖索降、独木吊桥横渡、浑浊泥水泅渡与小幸‘纯人工无果汁’神补刀", "高能神展开！雄二把天音拉进深山开展残酷魔鬼耐力特训：七十度悬崖速降五花大绑、二十七米高空独木吊桥、全身浸湿浑水水渠泅渡；在极限疲惫下强逼天音死记弹药箱装备清单；天音澡堂崩溃吐槽，并策划升级版‘拍裆咬咬剪刀石头布’，惨遭小幸狂揉大胸补刀‘哟，纯人工无果汁！’"
+        return "周防天音短篇集第二话深度精校与去机翻重构", "词句润色！生动还原摸箱子情趣陷阱惨遭军用极限特训惩治的爆笑喜剧反转，彻底清除机翻生硬语病"
+
     # amaness1 specific (Milestone 3 Chapter 7 - Amane Short Story 1: Bus accident improv manzai, Kazu-chan & Ama-chan, survival dark jokes, Komori studio ghost & passerby indifference)
     if (68401 <= line_no <= 68507):
         if any(k in ja for k in ["コント", "安定剤", "カズちゃんアマちゃん", "ザ・遭難ズ", "塩のありがたみ"]):
@@ -8094,6 +8102,32 @@ def build_report():
                 "section": "灰色的迷宫·周防天音短篇集第一话·坠崖绝境小品漫才、后厨狗肉地狱笑话与古森踩踏惨剧 (`grisaia2/amaness1`)"
             })
 
+    # Milestone 3 Chapter 8: Amane Short Story 2 (grisaia2/amaness3)
+    for lno in range(68508, 68601):
+        ja_raw = ja_lines[lno - 1].rstrip("\r\n")
+        cn_raw = cn_lines[lno - 1].rstrip("\r\n")
+        sid = ja_raw.split("\t")[0] if "\t" in ja_raw else f"L{lno}"
+        ja_txt = ja_raw.split("\t")[1] if "\t" in ja_raw else ja_raw
+        cn_txt = cn_raw.split("\t")[1] if "\t" in cn_raw else cn_raw
+
+        old_txt = cn_txt
+        if git_base_cn and len(git_base_cn) >= lno:
+            head_raw = git_base_cn[lno - 1].rstrip("\r\n")
+            old_txt = head_raw.split("\t")[1] if "\t" in head_raw else head_raw
+
+        if cn_txt != old_txt and cn_txt.strip() != "":
+            cat, reason = classify_change(lno, sid, ja_txt, old_txt, cn_txt)
+            diffs.append({
+                "lno": lno,
+                "sid": sid,
+                "ja": ja_txt,
+                "old": old_txt,
+                "new": cn_txt,
+                "cat": cat,
+                "reason": reason,
+                "section": "灰色的迷宫·周防天音短篇集第二话·摸箱子情趣大陷阱、特种悬崖索降特训与纯人工无果汁 (`grisaia2/amaness3`)"
+            })
+
     print(f"Total indexed modifications: {len(diffs)}")
 
     # Build Markdown
@@ -9957,6 +9991,15 @@ def build_report():
     md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
     md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
     for idx, d in enumerate(amaness1_diffs, 1):
+        md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
+    md.append("\n---\n")
+
+    # Section 207 - Milestone 3: Labyrinth of Grisaia Amane Short Story 2
+    amaness3_diffs = [d for d in diffs if d["section"].startswith("灰色的迷宫·周防天音短篇集第二话")]
+    md.append(f"## 二百零七、 灰色的迷宫·周防天音短篇集第二话·摸箱子情趣大陷阱、特种悬崖索降特训与纯人工无果汁 (`grisaia2/amaness3`，共 {len(amaness3_diffs)} 条) —— 【里程碑三·周防天音短篇集第二话】\n")
+    md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
+    md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
+    for idx, d in enumerate(amaness3_diffs, 1):
         md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
     md.append("\n---\n")
 
