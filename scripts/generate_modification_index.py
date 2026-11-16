@@ -14,6 +14,20 @@ def escape_md(text):
     return text.replace("|", "\\|").replace("\n", " ").replace("\r", "")
 
 def classify_change(line_no, sid, ja, old_cn, new_cn):
+    # mak_005 specific (Milestone 3 Chapter 14 - Makina After Story Chapter 5: Chizuru daifuku, Gosei, catgirl mental pollution, Sachi rice cooker revolt, Michiru adult panties stripped & Amane curry party tears)
+    if (69979 <= line_no <= 70328):
+        if any(k in ja for k in ["大福", "童顔", "饅頭", "鳥人", "バードマン", "ブーメラン", "至誠", "無精", "おヒゲ", "竹槍", "ニャー", "精神汚染"]):
+            return "千鹤大福偷吃、海军五省反省与猫耳猫语精神污染", "爆笑调戏！雄二闯入办公室撞破千鹤偷吃大福饼，化身魔鬼教官痛斥‘大白馒头脸’；回忆海军陆战队‘回旋镖’与‘鸟人’代号，背诵海军五省深沉反省发号施令者资质；威逼千鹤长猫耳学猫叫‘喵是理事会的走狗喵’，雄二遭重度萌系精神污染当场破防"
+        if any(k in ja for k in ["背わた", "炊飯器", "セカンドフェイズ", "反旗", "マイコン", "洗脳", "教化", "ポーチドエッグ", "大尉殿"]):
+            return "电饭煲人类反叛危机、教化信仰与水波荷包蛋", "女仆萌点！小幸正坐电饭煲前倒计时焖饭，深信微电脑终将觉醒并征服世界，对着电饭煲搭讪试探；自称被雄二‘教化’而非洗脑，甚至表示与雄二‘可绝不止接吻就会满足’；莳菜与天音挑虾线笑闹厨房"
+        if any(k in ja for k in ["決戦日", "勝負下着", "ネット通販", "大人パンツ", "手帳", "アソコ", "狂気の祭典", "奇祭", "全裸"]):
+            return "决战胜负内衣当场扒光、神速扒窃技与全裸奇祭误会", "高能相声！满洗香香进门自备大人胜负内裤，遭莳菜神速扒窃手法当场扒光底裤；小幸补刀‘寄送时为防爆炸已透视全检确认是决战战袍’；由美子推门目睹满下半身全裸以为是全裸吃咖喱的猎奇民俗异祭，欲拔腿就跑"
+        if any(k in ja for k in ["ただいま", "空騒ぎ", "お袋の味", "サフランライス", "インスタントコーヒー", "練乳", "お餅", "ドロッ"]):
+            return "久违归家别扭傲娇、理解万岁与天音速溶咖啡浓稠咖喱秘方", "温情羁绊与料理秘籍！雄二温柔点破莳菜因不习惯‘我回来了’而以胡闹掩饰害羞，肯定满的细腻体贴令其娇羞傲娇；揭秘天音秘制咖喱灵魂配方：三种市售咖喱块、速溶咖啡提焦苦、甜炼乳中和、研磨年糕增稠，盛上炸黑虎虾与带皮土豆"
+        if any(k in ja for k in ["学食", "泣いて", "お水", "なくしてみて", "国防", "カレー美味しいね"]):
+            return "感动泪流家庭之味、美滨守护者誓言与咖喱世界和平祈愿", "催泪升华！莳菜吃着熟悉的‘妈妈的味道’不自觉泪流满面，由衷感恩天音每日做饭；雄二由此感悟军人的守护真谛——所谓‘国防’，不过是为了守护身边珍视之人能够笑着说出‘这咖喱真香啊’的微小而伟大的和平"
+        return "入巢莳菜后日谈第五话深度精校与去机翻重构", "词句润色！生动还原满员咖喱派对的极致欢乐与温暖羁绊，彻底纠正‘布丁蛋卷’（荷包蛋）、‘虾背壳’（虾线）等低级机翻错误"
+
     # mak_004 specific (Milestone 3 Chapter 13 - Makina After Story Chapter 4: Classroom kiss with Michiru, concrete pillar headbang, prosthetic arm alligator lie & Yumiko vending machine fallen fruit monologue)
     if (69588 <= line_no <= 69978):
         if any(k in ja for k in ["チュー", "ムチュー", "ブチュウ", "モミアゲ", "尻肉", "豚のように", "コンクリの柱", "記憶なくなれ", "自傷行動", "火男"]):
@@ -8314,6 +8328,32 @@ def build_report():
                 "section": "灰色的迷宫·入巢莳菜后日谈第四章·教室春梦吻满、水泥柱爆头与由美子美滨冷藏库落果论 (`grisaia2/mak_004`)"
             })
 
+    # Milestone 3 Chapter 14: Makina After Story Chapter 5 (grisaia2/mak_005)
+    for lno in range(69979, 70329):
+        ja_raw = ja_lines[lno - 1].rstrip("\r\n")
+        cn_raw = cn_lines[lno - 1].rstrip("\r\n")
+        sid = ja_raw.split("\t")[0] if "\t" in ja_raw else f"L{lno}"
+        ja_txt = ja_raw.split("\t")[1] if "\t" in ja_raw else ja_raw
+        cn_txt = cn_raw.split("\t")[1] if "\t" in cn_raw else cn_raw
+
+        old_txt = cn_txt
+        if git_base_cn and len(git_base_cn) >= lno:
+            head_raw = git_base_cn[lno - 1].rstrip("\r\n")
+            old_txt = head_raw.split("\t")[1] if "\t" in head_raw else head_raw
+
+        if cn_txt != old_txt and cn_txt.strip() != "":
+            cat, reason = classify_change(lno, sid, ja_txt, old_txt, cn_txt)
+            diffs.append({
+                "lno": lno,
+                "sid": sid,
+                "ja": ja_txt,
+                "old": old_txt,
+                "new": cn_txt,
+                "cat": cat,
+                "reason": reason,
+                "section": "灰色的迷宫·入巢莳菜后日谈第五章·千鹤大福猫语、胜负内衣神速扒窃与天音秘制咖喱泪流满面 (`grisaia2/mak_005`)"
+            })
+
     print(f"Total indexed modifications: {len(diffs)}")
 
     # Build Markdown
@@ -10231,6 +10271,15 @@ def build_report():
     md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
     md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
     for idx, d in enumerate(mak_004_diffs, 1):
+        md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
+    md.append("\n---\n")
+
+    # Section 213 - Milestone 3: Labyrinth of Grisaia Makina After Story Chapter 5
+    mak_005_diffs = [d for d in diffs if d["section"].startswith("灰色的迷宫·入巢莳菜后日谈第五章")]
+    md.append(f"## 二百一十三、 灰色的迷宫·入巢莳菜后日谈第五章·千鹤大福猫语、胜负内衣神速扒窃与天音秘制咖喱泪流满面 (`grisaia2/mak_005`，共 {len(mak_005_diffs)} 条) —— 【里程碑三·入巢莳菜后日谈第五话】\n")
+    md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
+    md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
+    for idx, d in enumerate(mak_005_diffs, 1):
         md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
     md.append("\n---\n")
 
