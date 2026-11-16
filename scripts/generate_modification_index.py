@@ -14,6 +14,12 @@ def escape_md(text):
     return text.replace("|", "\\|").replace("\n", " ").replace("\r", "")
 
 def classify_change(line_no, sid, ja, old_cn, new_cn):
+    # amaness4 specific (Milestone 3 Chapter 9 - Amane Short Story 3: Tsuchinoko pot, Skyfish eel kabayaki, Crystal skull somen bowl & talking OOPArts)
+    if (68601 <= line_no <= 68708):
+        if any(k in ja for k in ["ツチノコ", "マムシ", "スカイフィッシュ", "クリスタルスカル", "オーパーツ", "おそうめん", "ワーレーノーネームリー"]):
+            return "美滨三大未解之谜、天音黑暗料理全席吞吃UMA与说话的水晶头骨素面碗", "爆笑绝景！莳菜接连目击神秘生物UMA与欧帕兹古代遗物：野槌蛇土龙、超音速飞天飞棍、玛雅水晶头骨；美滨众人四处寻宝未果，天音却如数家珍端出野味全席：土龙炖成滋补蝮蛇火锅、飞天鱼烤成香喷喷蒲烧鳗鱼重、水晶骷髅头骨更是被砂纸生生磨平当成冰镇和风素面碗；素面碗通体神圣发光并咆哮‘究竟是谁敢唤醒吾之沉睡’，满妹抓狂吐槽‘碗说话了啊’！"
+        return "周防天音短篇集第三话深度精校与去机翻重构", "词句润色！生动还原美滨全员吞吃未确认生物UMA与欧帕兹餐具的无厘头爆笑喜剧，纠正器皿说话者与生硬机翻"
+
     # amaness3 specific (Milestone 3 Chapter 8 - Amane Short Story 2: Guess what is in the box boob trap vs Yuuji military endurance KIM test & zero fruit juice)
     if (68508 <= line_no <= 68600):
         if any(k in ja for k in ["箱の中身は何でしょね", "マシュマロ", "グミ", "果汁", "ジャージ"]):
@@ -8128,6 +8134,32 @@ def build_report():
                 "section": "灰色的迷宫·周防天音短篇集第二话·摸箱子情趣大陷阱、特种悬崖索降特训与纯人工无果汁 (`grisaia2/amaness3`)"
             })
 
+    # Milestone 3 Chapter 9: Amane Short Story 3 (grisaia2/amaness4)
+    for lno in range(68601, 68709):
+        ja_raw = ja_lines[lno - 1].rstrip("\r\n")
+        cn_raw = cn_lines[lno - 1].rstrip("\r\n")
+        sid = ja_raw.split("\t")[0] if "\t" in ja_raw else f"L{lno}"
+        ja_txt = ja_raw.split("\t")[1] if "\t" in ja_raw else ja_raw
+        cn_txt = cn_raw.split("\t")[1] if "\t" in cn_raw else cn_raw
+
+        old_txt = cn_txt
+        if git_base_cn and len(git_base_cn) >= lno:
+            head_raw = git_base_cn[lno - 1].rstrip("\r\n")
+            old_txt = head_raw.split("\t")[1] if "\t" in head_raw else head_raw
+
+        if cn_txt != old_txt and cn_txt.strip() != "":
+            cat, reason = classify_change(lno, sid, ja_txt, old_txt, cn_txt)
+            diffs.append({
+                "lno": lno,
+                "sid": sid,
+                "ja": ja_txt,
+                "old": old_txt,
+                "new": cn_txt,
+                "cat": cat,
+                "reason": reason,
+                "section": "灰色的迷宫·周防天音短篇集第三话·美滨三大UMA黑暗料理全席与说话的水晶头骨碗 (`grisaia2/amaness4`)"
+            })
+
     print(f"Total indexed modifications: {len(diffs)}")
 
     # Build Markdown
@@ -10000,6 +10032,15 @@ def build_report():
     md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
     md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
     for idx, d in enumerate(amaness3_diffs, 1):
+        md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
+    md.append("\n---\n")
+
+    # Section 208 - Milestone 3: Labyrinth of Grisaia Amane Short Story 3
+    amaness4_diffs = [d for d in diffs if d["section"].startswith("灰色的迷宫·周防天音短篇集第三话")]
+    md.append(f"## 二百零八、 灰色的迷宫·周防天音短篇集第三话·美滨三大UMA黑暗料理全席与说话的水晶头骨碗 (`grisaia2/amaness4`，共 {len(amaness4_diffs)} 条) —— 【里程碑三·周防天音短篇集第三话·周防天音全篇完结】\n")
+    md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
+    md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
+    for idx, d in enumerate(amaness4_diffs, 1):
         md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
     md.append("\n---\n")
 
