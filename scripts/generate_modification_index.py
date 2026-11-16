@@ -14,6 +14,18 @@ def escape_md(text):
     return text.replace("|", "\\|").replace("\n", " ").replace("\r", "")
 
 def classify_change(line_no, sid, ja, old_cn, new_cn):
+    # mak_002 specific (Milestone 3 Chapter 11 - Makina After Story Chapter 2: brain-controlled prosthetic arm, Danny V8 muscle car & bakery reunion)
+    if (69095 <= line_no <= 69323):
+        if any(k in ja for k in ["義手", "パルスモジュレータ", "メダル", "お姉さん", "蹴り", "饅頭顔"]):
+            return "脑控机械义肢微操、街机厅送币与吃醋小馒头脸飞踢", "高能日常！雄二用左脑脉冲调控机械义肢精细投币，感悟左撇子与一姬麻子教诲；送多余代币给狸猫脸大学女生，遭吃醋赶到的莳菜飞踢小腿，小馒头脸鼓成河豚抗议‘爸爸招蜂引蝶要被乱棍打死’"
+        if any(k in ja for k in ["女癖", "天然ジゴロ", "ブースター", "ブロッカー", "カウンセリング", "ハードプライマー"]):
+            return "天生小白脸调侃、神经增效药偏头痛与基娅拉心理辅导", "毒舌与羁绊！莳菜吐槽雄二‘在弗吉尼亚就是无可救药的天生小白脸’；雄二发现莳菜服药偏头痛，回想基娅拉在莳菜首次实人狙击后的面谈，坚决守护莳菜初心与人生选择"
+        if any(k in ja for k in ["ダニエル", "４３０馬力", "Ｖ８", "理性", "センサーシップ", "寮母"]):
+            return "丹尼尔V8肌肉车、430匹强权克制哲学与天音审查来信", "硬核内省！雄二驾驶丹尼尔遗留的430匹V8钢铁猛兽，传授麻子‘强者需理性克制’的铁血哲学；翻看天音盖有机密开检审查红印的来信，得知天音毕业留校担任宿舍管理员"
+        if any(k in ja for k in ["パン屋", "石窯", "放火", "見舞金", "呵呵大笑", "いつも"]):
+            return "纵火重修欧式面包房、石窑德式手艺与劫后重逢释怀", "感人催泪！莳菜近乡情怯欲逃跑遭雄二提领生擒，面包房老店主冲出紧紧拥抱哈哈大笑；老人自费赴欧学成正统手艺重修气派石窑，用刚出炉面包化解莳菜负罪感，一句‘永远欢迎回来当看板娘’温暖治愈"
+        return "入巢莳菜后日谈第二话深度精校与去机翻重构", "词句润色！生动还原父女默契吐槽与重返三岛崎的温馨羁绊，彻底纠正‘天然ジゴロ’与‘女癖’等严重机翻错译"
+
     # mak_001 specific (Milestone 3 Chapter 10 - Makina After Story Chapter 1: 1270m sniper teacup & phone, Yuuji prosthetic arm & JB bond, Kiyoka & Sawada terror)
     if (68877 <= line_no <= 69094):
         if any(k in ja for k in ["ペネトレーター", "ホットローダー", "トルクレンチ", "風力計", "光学照準器", "１２７０", "装弾"]):
@@ -8196,6 +8208,32 @@ def build_report():
                 "section": "灰色的迷宫·入巢莳菜后日谈第一章·千米狙杀红茶杯、义肢雄二与恶母清夏狼狈抱头 (`grisaia2/mak_001`)"
             })
 
+    # Milestone 3 Chapter 11: Makina After Story Chapter 2 (grisaia2/mak_002)
+    for lno in range(69095, 69324):
+        ja_raw = ja_lines[lno - 1].rstrip("\r\n")
+        cn_raw = cn_lines[lno - 1].rstrip("\r\n")
+        sid = ja_raw.split("\t")[0] if "\t" in ja_raw else f"L{lno}"
+        ja_txt = ja_raw.split("\t")[1] if "\t" in ja_raw else ja_raw
+        cn_txt = cn_raw.split("\t")[1] if "\t" in cn_raw else cn_raw
+
+        old_txt = cn_txt
+        if git_base_cn and len(git_base_cn) >= lno:
+            head_raw = git_base_cn[lno - 1].rstrip("\r\n")
+            old_txt = head_raw.split("\t")[1] if "\t" in head_raw else head_raw
+
+        if cn_txt != old_txt and cn_txt.strip() != "":
+            cat, reason = classify_change(lno, sid, ja_txt, old_txt, cn_txt)
+            diffs.append({
+                "lno": lno,
+                "sid": sid,
+                "ja": ja_txt,
+                "old": old_txt,
+                "new": cn_txt,
+                "cat": cat,
+                "reason": reason,
+                "section": "灰色的迷宫·入巢莳菜后日谈第二章·脑控义肢微操、430匹V8狂暴克制与面包房温暖重聚 (`grisaia2/mak_002`)"
+            })
+
     print(f"Total indexed modifications: {len(diffs)}")
 
     # Build Markdown
@@ -10086,6 +10124,15 @@ def build_report():
     md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
     md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
     for idx, d in enumerate(mak_001_diffs, 1):
+        md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
+    md.append("\n---\n")
+
+    # Section 210 - Milestone 3: Labyrinth of Grisaia Makina After Story Chapter 2
+    mak_002_diffs = [d for d in diffs if d["section"].startswith("灰色的迷宫·入巢莳菜后日谈第二章")]
+    md.append(f"## 二百一十、 灰色的迷宫·入巢莳菜后日谈第二章·脑控义肢微操、430匹V8狂暴克制与面包房温暖重聚 (`grisaia2/mak_002`，共 {len(mak_002_diffs)} 条) —— 【里程碑三·入巢莳菜后日谈第二话】\n")
+    md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
+    md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
+    for idx, d in enumerate(mak_002_diffs, 1):
         md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
     md.append("\n---\n")
 
