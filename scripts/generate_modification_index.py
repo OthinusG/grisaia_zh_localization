@@ -14,6 +14,22 @@ def escape_md(text):
     return text.replace("|", "\\|").replace("\n", " ").replace("\r", "")
 
 def classify_change(line_no, sid, ja, old_cn, new_cn):
+    # mak_004 specific (Milestone 3 Chapter 13 - Makina After Story Chapter 4: Classroom kiss with Michiru, concrete pillar headbang, prosthetic arm alligator lie & Yumiko vending machine fallen fruit monologue)
+    if (69588 <= line_no <= 69978):
+        if any(k in ja for k in ["チュー", "ムチュー", "ブチュウ", "モミアゲ", "尻肉", "豚のように", "コンクリの柱", "記憶なくなれ", "自傷行動", "火男"]):
+            return "教室春梦深吻、小猪哼叫与水泥柱爆头物理格式化", "爆笑日常！满做春梦迷糊索吻，雄二托臀深吻导致满鼻孔发出小猪般兴奋哼叫；得知是现实后满绝望崩溃，移步角落以头猛撞水泥柱企图物理格式化记忆，雄二冷酷补刀‘杀了长官战争也不会结束’"
+        if any(k in ja for k in ["デコピン", "処女崇拝", "ブランド", "箸", "二千円", "シューマイ", "クソになった", "水に流された", "リアジ"]):
+            return "脑崩儿处女情结批判与两千日元烧卖便当化为排泄物", "名场面汉化！精准纠正老译文将‘その手’误译为‘手膜’等荒谬机翻；雄二弹脑门儿长篇大论批判日本劣根性处女崇拜，并坦言借的两千日元买了烧卖便当‘数小时后变成大便冲进马桶’，惹得满悲愤抗议善意被水冲走"
+        if any(k in ja for k in ["義手", "取れた", "サムおじさん", "再認識", "ワニ", "クロコダイル", "サルサソース", "ホオジロザメ", "ゴム", "抱く気"]):
+            return "假肢扯脱吓哭、鳄鱼莎莎酱烤肉谎言与自备避孕套调戏", "硬核喜剧！满用力过猛扯脱雄二机械义手当场吓哭；雄二胡诌在亚马逊中洲被鳄鱼咬掉手臂后将其捕获蘸莎莎酱烤着吃；临走邀请满晚上来房间，调戏满‘记得自备避孕套我这可没有’导致满当场娇羞暴走"
+        if any(k in ja for k in ["１万円札", "自販機", "無糖レモンティー", "タブ", "上目遣い", "正社員", "辞令", "スパイ天国", "高官", "烏龍茶"]):
+            return "自动贩卖机偶遇、开易拉罐与间谍天堂情报博弈", "细腻互动！由美子飘然现身自动贩卖机前，大小姐娇憨抠不开易拉罐拉环害羞求助雄二；由美子凭直觉试探出雄二入编授衔尉官，雄二深刻剖析‘日本间谍天堂’利用官员自尊套话的话术心理"
+        if any(k in ja for k in ["安住の地", "腐っていくだけ", "遮断壁", "果実", "冷蔵庫", "入れ物", "理事会", "希少なサンプル", "立ち直った振り"]):
+            return "美滨学园落果冷藏库哲学与装作重生的绝望样本", "文学级核心神韵！由美子道破美滨学园的残酷本质——容纳停滞不前者的虚妄容器、避免落果腐烂的冷藏库；并揭露理事会是把雄二作为‘背负绝望创伤却佯装振作重生的稀有样本’才特批全额奖学金入学的深层真相"
+        if any(k in ja for k in ["言ってみただけ", "由美ちゃん", "流行る", "意趣返し", "１２０円", "小銭入れ", "色気のない", "ふんぬっ", "トゲ"]):
+            return "由美酱破防暴走、借一百二十日元乌龙茶与怒砸黑零钱包", "爆笑傲娇！雄二现学现卖由美子口头禅‘随口说说罢了’戏称‘由美酱’令其抓狂破防；煞有介事深情铺垫后居然只是借120日元投币乌龙茶，被由美子羞愤怒掷毫无女人味的黑色朴素零钱包"
+        return "入巢莳菜后日谈第四话深度精校与去机翻重构", "词句润色！生动还原美滨重逢的爆笑相声、深层哲学探讨与傲娇羁绊，彻底纠正‘手膜’、‘腋下金毛’等离谱错译"
+
     # mak_003 specific (Milestone 3 Chapter 12 - Makina After Story Chapter 3: Sachi CQC panties, Apple seedling planting, Virginia parachute bootcamp & Amane curry party)
     if (69324 <= line_no <= 69587):
         if any(k in ja for k in ["パンツ", "サッちん", "組み付き", "メイド服", "清楚", "スコップ"]):
@@ -8272,6 +8288,32 @@ def build_report():
                 "section": "灰色的迷宫·入巢莳菜后日谈第三章·CQC倒提女仆掀裙、苹果幼苗托付与天音秘制咖喱派对 (`grisaia2/mak_003`)"
             })
 
+    # Milestone 3 Chapter 13: Makina After Story Chapter 4 (grisaia2/mak_004)
+    for lno in range(69588, 69979):
+        ja_raw = ja_lines[lno - 1].rstrip("\r\n")
+        cn_raw = cn_lines[lno - 1].rstrip("\r\n")
+        sid = ja_raw.split("\t")[0] if "\t" in ja_raw else f"L{lno}"
+        ja_txt = ja_raw.split("\t")[1] if "\t" in ja_raw else ja_raw
+        cn_txt = cn_raw.split("\t")[1] if "\t" in cn_raw else cn_raw
+
+        old_txt = cn_txt
+        if git_base_cn and len(git_base_cn) >= lno:
+            head_raw = git_base_cn[lno - 1].rstrip("\r\n")
+            old_txt = head_raw.split("\t")[1] if "\t" in head_raw else head_raw
+
+        if cn_txt != old_txt and cn_txt.strip() != "":
+            cat, reason = classify_change(lno, sid, ja_txt, old_txt, cn_txt)
+            diffs.append({
+                "lno": lno,
+                "sid": sid,
+                "ja": ja_txt,
+                "old": old_txt,
+                "new": cn_txt,
+                "cat": cat,
+                "reason": reason,
+                "section": "灰色的迷宫·入巢莳菜后日谈第四章·教室春梦吻满、水泥柱爆头与由美子美滨冷藏库落果论 (`grisaia2/mak_004`)"
+            })
+
     print(f"Total indexed modifications: {len(diffs)}")
 
     # Build Markdown
@@ -10180,6 +10222,15 @@ def build_report():
     md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
     md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
     for idx, d in enumerate(mak_003_diffs, 1):
+        md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
+    md.append("\n---\n")
+
+    # Section 212 - Milestone 3: Labyrinth of Grisaia Makina After Story Chapter 4
+    mak_004_diffs = [d for d in diffs if d["section"].startswith("灰色的迷宫·入巢莳菜后日谈第四章")]
+    md.append(f"## 二百一十二、 灰色的迷宫·入巢莳菜后日谈第四章·教室春梦吻满、水泥柱爆头与由美子美滨冷藏库落果论 (`grisaia2/mak_004`，共 {len(mak_004_diffs)} 条) —— 【里程碑三·入巢莳菜后日谈第四话】\n")
+    md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
+    md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
+    for idx, d in enumerate(mak_004_diffs, 1):
         md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
     md.append("\n---\n")
 
