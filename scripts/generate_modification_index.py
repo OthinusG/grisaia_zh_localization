@@ -14,6 +14,18 @@ def escape_md(text):
     return text.replace("|", "\\|").replace("\n", " ").replace("\r", "")
 
 def classify_change(line_no, sid, ja, old_cn, new_cn):
+    # ama_005 specific (Milestone 3 Chapter 5 - Amane After Story Chapter 5: Ultraman Seven panting run, Chizuru glasses punishment, Kotone Kansai housewife charms, father brawl & marriage blessed)
+    if (67413 <= line_no <= 67905):
+        if any(k in ja for k in ["福ダヌキ", "セブン", "ハイポトニック", "包丁", "研ぎ石", "スリッパ", "走る"]):
+            return "福狸长跑特训、赛文奥特曼喘息、低渗机能水补给与天音持菜刀磨刀霍霍", "特训风波！天音为减肥在河堤清晨晨跑，累成死狗发出赛文奥特曼般的惨烈喘息；雄二体贴递上‘低渗补水功能饮料’；天音被福狸招牌扎心，立志塑身；雄二回忆天音手持磨刀石狂磨菜刀并手持菜刀出门的修罗场恐惧，天音羞愤追杀，雄二穿拖鞋健步如飞"
+        if any(k in ja for k in ["ミス・ケイティー", "らーふけてー", "クソメガネ", "千鶴", "びわ", "八百屋", "メガネをかけ"]):
+            return "凯蒂小姐呼救奇遇、千鹤校长眼镜封印、水灵枇杷试吃与恶劣毒舌调侃", "爆笑日常！千鹤校长高呼‘救命啊’失足跌倒，雄二误听为‘拉夫·凯蒂’当场封为‘凯蒂小姐’；揭穿千鹤平时不戴眼镜实为‘摘掉封印眼镜才能装出知性美女’的腹黑心机；千鹤戴上红框土鳖眼镜瞬间化身‘臭眼镜书呆子’；千鹤在菜摊大方请吃甘甜枇杷，雄二犀利毒舌连环暴击"
+        if any(k in ja for k in ["琴音", "関西弁", "お母さん", "たかし", "天", "ビール瓶", "ドロップキック"]):
+            return "岳母琴音关西腔绝妙反差、天音老爹决斗飞踢与啤酒瓶飞天大战", "见岳父修罗场！雄二与天音归家，岳母琴音身段妖娆、兼具关西腔与京都腔之反差萌，热情周到宛如酒家风骚少妇；老爹周防天（Takashi）归来，雄二当场九十度鞠躬直球大喊‘请把天音交给我！’；老爹暴怒抄起啤酒瓶投掷，雄二敏捷闪避；岳父祭出凌空飞踢，雄二巧妙擒抱锁喉压制老爹"
+        if any(k in ja for k in ["生きてて良かった", "孫の顔", "遺品", "一姫", "お父さん", "結婚"]):
+            return "老爹泪崩感佩活着真好、早生贵子催促、一姬遗物交接与正式获赠婚约", "温情落幕！老爹心服口服擦拭鼻血，感叹雄二身手不凡、是个真正顶天立地的男子汉，放声大哭‘天音能活下来真是太好了’；岳母与老爹齐声催促‘赶紧领证结婚，让我们早点抱上白白胖胖的大胖孙子’；天音珍重供奉一姬遗物，老爹深情将女儿天音托付给雄二，婚约圆满获准"
+        return "周防天音后日谈第五章深度精校与去机翻重构", "词句润色！生动还原奥特曼长跑特训、凯蒂小姐眼镜封印逗趣、琴音少妇风韵、老爹决斗与温情获赠婚约，彻底清除机翻语病，情感真挚饱满"
+
     # ama_004 specific (Milestone 3 Chapter 4 - Amane After Story Chapter 4: JB dummy job negotiation, Sachi raw boob warning, Makina cheer & bento, Mihama girls tailing squad, Kenmeri skyline car memories, lawn knee-pillow, Kazuki drool/skirt memory, sadistic iron claw, crying into Yumiko jacket & numb leg fawn poking)
     if (66853 <= line_no <= 67412):
         if any(k in ja for k in ["全休", "飼い主ヅラ", "ダミーのジョブ", "マルタイ", "ズルい男", "さすのは男の仕事", "生乳をポロン", "盛ってんじゃねーぞ"]):
@@ -7984,6 +7996,32 @@ def build_report():
                 "section": "灰色的迷宫·周防天音后日谈第四章·动物园约会、自贩机卡肉惨剧、老爹天际线老爷车狂飙与由美子外套消音大擤鼻涕 (`grisaia2/ama_004`)"
             })
 
+    # Milestone 3 Chapter 5: Amane After Story Chapter 5 (grisaia2/ama_005)
+    for lno in range(67413, 67906):
+        ja_raw = ja_lines[lno - 1].rstrip("\r\n")
+        cn_raw = cn_lines[lno - 1].rstrip("\r\n")
+        sid = ja_raw.split("\t")[0] if "\t" in ja_raw else f"L{lno}"
+        ja_txt = ja_raw.split("\t")[1] if "\t" in ja_raw else ja_raw
+        cn_txt = cn_raw.split("\t")[1] if "\t" in cn_raw else cn_raw
+
+        old_txt = cn_txt
+        if git_base_cn and len(git_base_cn) >= lno:
+            head_raw = git_base_cn[lno - 1].rstrip("\r\n")
+            old_txt = head_raw.split("\t")[1] if "\t" in head_raw else head_raw
+
+        if cn_txt != old_txt and cn_txt.strip() != "":
+            cat, reason = classify_change(lno, sid, ja_txt, old_txt, cn_txt)
+            diffs.append({
+                "lno": lno,
+                "sid": sid,
+                "ja": ja_txt,
+                "old": old_txt,
+                "new": cn_txt,
+                "cat": cat,
+                "reason": reason,
+                "section": "灰色的迷宫·周防天音后日谈第五章·奥特曼喘息长跑、凯蒂小姐眼镜惩罚、琴音少妇诱惑与岳父决斗获赠婚约 (`grisaia2/ama_005`)"
+            })
+
     print(f"Total indexed modifications: {len(diffs)}")
 
     # Build Markdown
@@ -9820,6 +9858,15 @@ def build_report():
     md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
     md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
     for idx, d in enumerate(ama_004_diffs, 1):
+        md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
+    md.append("\n---\n")
+
+    # Section 204 - Milestone 3: Labyrinth of Grisaia Amane After Story Chapter 5
+    ama_005_diffs = [d for d in diffs if d["section"].startswith("灰色的迷宫·周防天音后日谈第五章")]
+    md.append(f"## 二百零四、 灰色的迷宫·周防天音后日谈第五章·奥特曼喘息长跑、凯蒂小姐眼镜惩罚、琴音少妇诱惑与岳父决斗获赠婚约 (`grisaia2/ama_005`，共 {len(ama_005_diffs)} 条) —— 【里程碑三·周防天音后日谈第五话】\n")
+    md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
+    md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
+    for idx, d in enumerate(ama_005_diffs, 1):
         md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
     md.append("\n---\n")
 
