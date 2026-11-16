@@ -14,6 +14,18 @@ def escape_md(text):
     return text.replace("|", "\\|").replace("\n", " ").replace("\r", "")
 
 def classify_change(line_no, sid, ja, old_cn, new_cn):
+    # ama_006 specific (Milestone 3 Chapter 6 - Amane After Story Chapter 6: Makina C&GSC bureaucracy dream & boob-biting Yumiko, Kazuki heaven letters, Yuuji left-hand walk, Sachi American joke & Kazami Yuuki birth)
+    if (67906 <= line_no <= 68400):
+        if any(k in ja for k in ["メンコ", "７３式小型トラック", "指揮幕僚課程", "ガッ", "吸乳", "倒置法"]):
+            return "莳菜军政升官推演、数饭碗不如数星星、吸奶斗志与倒装句吐槽", "爆笑日常！莳菜为天音算账推演雄二仕途，描绘三十五岁坐进红毯单间、专车接送、屁股磨真皮座椅狂学指挥幕僚课程；科普‘数饭碗工龄不如看肩上将星’；莳菜燃起旺盛斗志去浴室粗暴狂吸由美子奶子，天音无语吐槽其倒装句与无厘头"
+        if any(k in ja for k in ["拝啓、風見一姫様", "ツンデレ", "男っぽい", "ビッチ", "オッパイ押し付け", "気味が悪い"]):
+            return "致一姬天国密信、傲娇弟控神还原、大胸倒贴宣誓主权与京都闺蜜毛骨悚然论", "真情独白！天音在日记中向天国的一姬倾诉心声，细数雄二与一姬如出一辙的傲娇抖S毒舌与‘但是那样的女人我也不讨厌’神同步；自白深爱雄二的面容、行动力与体味，羞认自己嫉妒心爆发时故意用巨乳猛撞雄二宣誓主权；提及京都闺蜜质疑雄二轻易原谅仇人之妹‘令人毛骨悚然’的纠结"
+        if any(k in ja for k in ["野良犬に噛まれた", "由美ちゃんのオッパイ", "犯人は貴様か", "俺の天音", "泣き疲れた", "左手"]):
+            return "由美子被咬乌龙复仇大案、真凶莳菜落网、‘能欺负天音的只有我’霸气护妻与左手之约", "高能神转折！由美子哭红眼，雄二误以为其被野狗或歹徒非礼誓死复仇，结果真凶竟是自家徒弟莳菜咬由美子咪咪；天音向雄二哭诉心结，雄二直球告白‘我本就不是寻常普通人，能欺负天音的只有我’，天音哭崩释怀；雄二执意牵天音左手护送，感怀右手握冰冷扳机、左手握挚爱温暖的微小幸福"
+        if any(k in ja for k in ["アメリカンジョーク", "マサオ君の５０円", "赤点女王", "優羽姫", "ゆうき", "死人に引きずられる", "スーザン"]):
+            return "小幸美式冷笑话二人转、挂科红点女王、悠贵小天使诞生与永不退信的天国奇迹", "圆满终章！后日谈美滨日常小幸讲冷笑话调戏留级挂科的满妹，自导自演神级傲娇；天音与雄二正式入籍更名风见天音，顺遂诞下爱女；雄二起名‘勇气’遭一秒驳回，取名优羽姬（悠贵）；天音寄往天国的一姬信件从不退回，坚信奇迹与挚友重逢，为天音篇画上无上感人句号"
+        return "周防天音后日谈第六章深度精校与去机翻重构", "词句润色！生动还原莳菜军旅官瘾与咬奶搞笑、致一姬天国密信的深情独白、由美子被咬乌龙、霸气护妻与优羽姬降生的温馨感动，清除机翻硬伤与尤吉错译"
+
     # ama_005 specific (Milestone 3 Chapter 5 - Amane After Story Chapter 5: Ultraman Seven panting run, Chizuru glasses punishment, Kotone Kansai housewife charms, father brawl & marriage blessed)
     if (67413 <= line_no <= 67905):
         if any(k in ja for k in ["福ダヌキ", "セブン", "ハイポトニック", "包丁", "研ぎ石", "スリッパ", "走る"]):
@@ -8022,6 +8034,32 @@ def build_report():
                 "section": "灰色的迷宫·周防天音后日谈第五章·奥特曼喘息长跑、凯蒂小姐眼镜惩罚、琴音少妇诱惑与岳父决斗获赠婚约 (`grisaia2/ama_005`)"
             })
 
+    # Milestone 3 Chapter 6: Amane After Story Chapter 6 (grisaia2/ama_006)
+    for lno in range(67906, 68401):
+        ja_raw = ja_lines[lno - 1].rstrip("\r\n")
+        cn_raw = cn_lines[lno - 1].rstrip("\r\n")
+        sid = ja_raw.split("\t")[0] if "\t" in ja_raw else f"L{lno}"
+        ja_txt = ja_raw.split("\t")[1] if "\t" in ja_raw else ja_raw
+        cn_txt = cn_raw.split("\t")[1] if "\t" in cn_raw else cn_raw
+
+        old_txt = cn_txt
+        if git_base_cn and len(git_base_cn) >= lno:
+            head_raw = git_base_cn[lno - 1].rstrip("\r\n")
+            old_txt = head_raw.split("\t")[1] if "\t" in head_raw else head_raw
+
+        if cn_txt != old_txt and cn_txt.strip() != "":
+            cat, reason = classify_change(lno, sid, ja_txt, old_txt, cn_txt)
+            diffs.append({
+                "lno": lno,
+                "sid": sid,
+                "ja": ja_txt,
+                "old": old_txt,
+                "new": cn_txt,
+                "cat": cat,
+                "reason": reason,
+                "section": "灰色的迷宫·周防天音后日谈第六章·莳菜咬奶惨剧、致一姬天国长信、雄二霸气护妻与优羽姬天使降生 (`grisaia2/ama_006`)"
+            })
+
     print(f"Total indexed modifications: {len(diffs)}")
 
     # Build Markdown
@@ -9867,6 +9905,15 @@ def build_report():
     md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
     md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
     for idx, d in enumerate(ama_005_diffs, 1):
+        md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
+    md.append("\n---\n")
+
+    # Section 205 - Milestone 3: Labyrinth of Grisaia Amane After Story Chapter 6
+    ama_006_diffs = [d for d in diffs if d["section"].startswith("灰色的迷宫·周防天音后日谈第六章")]
+    md.append(f"## 二百零五、 灰色的迷宫·周防天音后日谈第六章·莳菜咬奶惨剧、致一姬天国长信、雄二霸气护妻与优羽姬天使降生 (`grisaia2/ama_006`，共 {len(ama_006_diffs)} 条) —— 【里程碑三·周防天音后日谈第六话·终章】\n")
+    md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
+    md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
+    for idx, d in enumerate(ama_006_diffs, 1):
         md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
     md.append("\n---\n")
 
