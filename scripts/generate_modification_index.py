@@ -1859,6 +1859,14 @@ def classify_change(line_no, sid, ja, old_cn, new_cn):
     if "早食い" in ja or "チャンペスト" in ja or "アイスクリーム頭痛" in ja or "チョコバナナ" in ja or "短冊" in ja or "づっとお兄ちゃんと一緒" in ja or "黒い携帯" in ja:
         return "满刨冰脑结冰败退与七夕短册父女誓约", "绝妙还原满自封冠军之王（Champest）狂炫刨冰致脑结冰送医的活宝行径、天音舔食巧克力香蕉的母性反差、莳菜写错别字的七夕短册‘想永远和哥哥在一起’、以及雄二注视CIRS黑色手机暗誓守护莳菜的深情内核"
 
+    # mak_008 specific (Milestone 3 Chapter 17 - Makina After Story Chapter 8)
+    if "トリムタブ" in ja or "情報屋" in ja or "座間" in ja or "バラスト" in ja or "アメ車" in ja:
+        return "义肢配平长跑与彻夜搜集入巢本家动向", "生动呈现雄二为探寻入巢家动向彻夜奔波厚木与座间、义肢重量不均导致跑步失衡以飞机配平片打舵为喻、以及借来美式肌肉旧车的硬汉日常"
+    if "ドラシャ" in ja or "ブレーキ" in ja or "Ｖ８" in ja or "ヨレ" in ja or "ピラー" in ja or "パイオツ" in ja:
+        return "天音V8肌肉车油门过弯与底盘变形暴走", "绝妙还原天音以欧派为筹码求开车、高超驾驶技术降服暴躁化油器引擎、油门载荷转移漂移过弯、以及门柱扭出缝隙疯狂高呼‘V8万岁’的飙车狂本色"
+    if "レンジャー" in ja or "円周率" in ja or "防衛費" in ja or "森口博信" in ja or "堆土の線" in ja or "ダイヤの徽章" in ja:
+        return "全金属狂潮式自卫队游骑兵地狱咆哮", "硬核还原陆自游骑兵（Ranger）集训地狱：教官狂喷宽松世代‘圆周率大概等于3’、省下米虫饲料费全金属狂潮式训话、全员嘶吼‘游骑兵’卧倒突进、以及莳菜搭档森口博信的残酷考核"
+
     # mak_007 specific (Milestone 3 Chapter 16 - Makina After Story Chapter 7)
     if "竹箒" in ja or "文化包丁" in ja or "本土決戦" in ja or "２０１２年" in ja or "女子挺身隊" in ja:
         return "竹扫帚绑菜刀与昭和本土决战荒诞突刺", "生动呈现小岭幸在后院拿绑着菜刀的竹扫帚疯狂捅刺稻草人、自称备战本土决战、雄二哭笑不得灵魂拷问‘今年是哪一年/二战何年结束’的爆笑互动"
@@ -8356,6 +8364,32 @@ def build_report():
                 "section": "灰色的迷宫·入巢莳菜后日谈第四章·教室春梦吻满、水泥柱爆头与由美子美滨冷藏库落果论 (`grisaia2/mak_004`)"
             })
 
+    # Milestone 3 Chapter 17: Makina After Story Chapter 8 (grisaia2/mak_008)
+    for lno in range(70765, 70908):
+        ja_raw = ja_lines[lno - 1].rstrip("\r\n")
+        cn_raw = cn_lines[lno - 1].rstrip("\r\n")
+        sid = ja_raw.split("\t")[0] if "\t" in ja_raw else f"L{lno}"
+        ja_txt = ja_raw.split("\t")[1] if "\t" in ja_raw else ja_raw
+        cn_txt = cn_raw.split("\t")[1] if "\t" in cn_raw else cn_raw
+
+        old_txt = cn_txt
+        if git_base_cn and len(git_base_cn) >= lno:
+            head_raw = git_base_cn[lno - 1].rstrip("\r\n")
+            old_txt = head_raw.split("\t")[1] if "\t" in head_raw else head_raw
+
+        if cn_txt != old_txt and cn_txt.strip() != "":
+            cat, reason = classify_change(lno, sid, ja_txt, old_txt, cn_txt)
+            diffs.append({
+                "lno": lno,
+                "sid": sid,
+                "ja": ja_txt,
+                "old": old_txt,
+                "new": cn_txt,
+                "cat": cat,
+                "reason": reason,
+                "section": "灰色的迷宫·入巢莳菜后日谈第八章·美系肌肉车V8暴走漂移与自卫队游骑兵地狱操练 (`grisaia2/mak_008`)"
+            })
+
     # Milestone 3 Chapter 16: Makina After Story Chapter 7 (grisaia2/mak_007)
     for lno in range(70481, 70765):
         ja_raw = ja_lines[lno - 1].rstrip("\r\n")
@@ -10351,6 +10385,15 @@ def build_report():
     md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
     md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
     for idx, d in enumerate(mak_004_diffs, 1):
+        md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
+    md.append("\n---\n")
+
+    # Section 216 - Milestone 3: Labyrinth of Grisaia Makina After Story Chapter 8
+    mak_008_diffs = [d for d in diffs if d["section"].startswith("灰色的迷宫·入巢莳菜后日谈第八章")]
+    md.append(f"## 二百一十六、 灰色的迷宫·入巢莳菜后日谈第八章·美系肌肉车V8暴走漂移与自卫队游骑兵地狱操练 (`grisaia2/mak_008`，共 {len(mak_008_diffs)} 条) —— 【里程碑三·入巢莳菜后日谈第八话】\n")
+    md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
+    md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
+    for idx, d in enumerate(mak_008_diffs, 1):
         md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
     md.append("\n---\n")
 
