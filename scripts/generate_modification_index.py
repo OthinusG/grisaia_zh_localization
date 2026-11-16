@@ -14,6 +14,16 @@ def escape_md(text):
     return text.replace("|", "\\|").replace("\n", " ").replace("\r", "")
 
 def classify_change(line_no, sid, ja, old_cn, new_cn):
+    # ama_002 specific (Milestone 3 Chapter 2 - Amane After Story Chapter 2: First night dentist comparison, free-size bondage lingerie, Hong Kong roast suckling pig insult, 4-hour struggle to fasten belts, morning light & emergency toilet cry)
+    if (66691 <= line_no <= 66738):
+        if any(k in ja for k in ["歯医者", "詩的だし", "贖罪行為", "フリーサイズ", "パッツンパッツン"]):
+            return "初夜自我赎罪、轻松如看牙医、均码紧缚皮带与肉感暴走", "深情追忆！天音追忆当年自献残躯欲赎重罪的心路历程，自嘲初夜体验出奇轻松舒适宛如拔牙不痛；换装情趣紧缚装因未填尺码致使丰腴肉体被皮带勒得紧绷欲裂，反向沦为极致公开处刑羞耻play"
+        if any(k in ja for k in ["香港", "マーケット", "香草を詰め", "タコ糸", "子豚", "ビタミンＢ１", "ブタに見えない"]):
+            return "香港市集五花大绑香草烤乳猪、野猪持久战与天音泪崩‘我不是猪’", "爆笑毒舌！雄二端详天音勒痕肉感直言勾起食欲，大谈香港市集用棉线五花大绑香草烤乳猪的绝妙美味；天音惊觉自己被当成待宰肥猪当场破防痛哭；雄二一本正经以丛林野猪补充维生素B1打胜仗严谨科普，反遭天音崩溃怒吼"
+        if any(k in ja for k in ["泣き止むまで", "お尻のお肉", "胴回りのベルト", "ガーターベルト", "ふぇひがひぇひなふて", "トイレ"]):
+            return "哄哭塞肉四小时鏖战、鱼肚白黎明、口齿不清与尿急大爆发", "爆笑收束！雄二哄哭三十分钟、重新挑战塞入丰臀溢肉与外侧扣带耗时四小时，直至初夏黎明破晓；好不容易穿戴齐备，动弹不得的天音却含糊不清哀鸣‘喘不上气快恶心死了……老娘要上厕所啦！’"
+        return "周防天音后日谈第二章深度精校与去机翻重构", "词句润色！生动还原天音内心独白与雄二天然毒舌交锋，完美清除生硬机翻，令啼笑皆非的换装闹剧跃然纸上"
+
     # ama_001 specific (Milestone 3 Chapter 1 - Amane After Story Chapter 1: Phantom sniper mission, Ueda taxi, marriage thoughts, domestic finance, masked kangaroo court, closet NTR fantasy, Soft SM lingerie & Tiger Girl)
     if (66165 <= line_no <= 66690):
         if any(k in ja for k in ["オバケ", "くじ引き", "飛ばす", "三桁ナンバー", "あさひクリーン", "上田", "昇進試験", "危険手当", "泥金", "１日３千円", "財布を持たず", "ＪＢに至っては"]):
@@ -7876,6 +7886,32 @@ def build_report():
                 "section": "灰色的迷宫·周防天音后日谈第一章·虚警撤收、贤内助掌财、蒙面后宫仲裁会议、壁橱被绿妄想与猛虎少女软调教 (`grisaia2/ama_001`)"
             })
 
+    # ama_002 (Milestone 3 Chapter 2 - Amane After Story Chapter 2: First night dentist comparison, free-size bondage lingerie, Hong Kong roast suckling pig insult, 4-hour struggle to fasten belts, morning light & emergency toilet cry)
+    for lno in range(66691, 66739):
+        ja_raw = ja_lines[lno - 1].rstrip("\r\n")
+        cn_raw = cn_lines[lno - 1].rstrip("\r\n")
+        sid = ja_raw.split("\t")[0] if "\t" in ja_raw else f"L{lno}"
+        ja_txt = ja_raw.split("\t")[1] if "\t" in ja_raw else ja_raw
+        cn_txt = cn_raw.split("\t")[1] if "\t" in cn_raw else cn_raw
+
+        old_txt = cn_txt
+        if git_base_cn and len(git_base_cn) >= lno:
+            head_raw = git_base_cn[lno - 1].rstrip("\r\n")
+            old_txt = head_raw.split("\t")[1] if "\t" in head_raw else head_raw
+
+        if cn_txt != old_txt and cn_txt.strip() != "":
+            cat, reason = classify_change(lno, sid, ja_txt, old_txt, cn_txt)
+            diffs.append({
+                "lno": lno,
+                "sid": sid,
+                "ja": ja_txt,
+                "old": old_txt,
+                "new": cn_txt,
+                "cat": cat,
+                "reason": reason,
+                "section": "灰色的迷宫·周防天音后日谈第二章·初夜拔牙妙喻、紧缚烤乳猪惨案、四小时塞肉恶战与尿意大爆发 (`grisaia2/ama_002`)"
+            })
+
     print(f"Total indexed modifications: {len(diffs)}")
 
     # Build Markdown
@@ -9685,6 +9721,15 @@ def build_report():
     md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
     md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
     for idx, d in enumerate(ama_001_diffs, 1):
+        md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
+    md.append("\n---\n")
+
+    # Section 201 - Milestone 3: Labyrinth of Grisaia Amane After Story Chapter 2
+    ama_002_diffs = [d for d in diffs if d["section"].startswith("灰色的迷宫·周防天音后日谈第二章")]
+    md.append(f"## 二百零一、 灰色的迷宫·周防天音后日谈第二章·初夜拔牙妙喻、紧缚烤乳猪惨案、四小时塞肉恶战与尿意大爆发 (`grisaia2/ama_002`，共 {len(ama_002_diffs)} 条) —— 【里程碑三·周防天音后日谈第二话】\n")
+    md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
+    md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
+    for idx, d in enumerate(ama_002_diffs, 1):
         md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
     md.append("\n---\n")
 
