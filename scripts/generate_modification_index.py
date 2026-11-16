@@ -14,6 +14,18 @@ def escape_md(text):
     return text.replace("|", "\\|").replace("\n", " ").replace("\r", "")
 
 def classify_change(line_no, sid, ja, old_cn, new_cn):
+    # ama_004 specific (Milestone 3 Chapter 4 - Amane After Story Chapter 4: JB dummy job negotiation, Sachi raw boob warning, Makina cheer & bento, Mihama girls tailing squad, Kenmeri skyline car memories, lawn knee-pillow, Kazuki drool/skirt memory, sadistic iron claw, crying into Yumiko jacket & numb leg fawn poking)
+    if (66853 <= line_no <= 67412):
+        if any(k in ja for k in ["全休", "飼い主ヅラ", "ダミーのジョブ", "マルタイ", "ズルい男", "さすのは男の仕事", "生乳をポロン", "盛ってんじゃねーぞ"]):
+            return "全休申请智斗JB、饲主反咬理论、白花花大奶掏出警告与交配狗熊粗口", "特工休假！雄二为与天音约会软磨硬泡向JB请全休，搬出‘只给口粮摆饲主架子会被反咬’与‘与其等死不如扣动扳机’陆战队哲理；JB挂名虚设差事并调侃恋人当VIP保护；雄二黄腔‘插进去是男人本职’气坏JB；中庭飞石击中小幸，警惕小幸一言不合duang地掏出白花花大奶把玩；回忆当年与麻子看狗熊交配破口大骂粗口往事"
+        if any(k in ja for k in ["トランス脂肪酸", "ビビリビッチ", "自販機", "トップロープ", "腋毛", "髪の毛をかき上げる", "ケンメリ", "ナンチャッテＲ", "シャコタン", "カバ", "ＨＳ-Ｖ"]):
+            return "美滨尾行四人组、自贩机卡肉惨剧、刮腋毛撩发暗恋大揭底与天音老爹经典老车回忆", "爆笑日常！天音精心制作少反式脂肪炸鸡，莳菜暖心开导怂包荡妇天姐；满妹避嫌雄二卡死在走廊自贩机夹缝动弹不得，被莳菜揭穿独占欲超强宛如摔角边绳飞扑；莳菜当场扒皮由美子大冬天刮腋毛与频频撩发诱惑男人的少女心思，美滨四女羞愤组成尾行小队；天音在轻卡上追忆开改装Kenmeri天际线老车与KP61的不良老爹，看河马联想到本田HSV赛车"
+        if any(k in ja for k in ["シシカバブ", "ケバブ", "死骸", "弱肉強食", "フカフカ", "ウエスト", "一姫", "アイドルタイム", "アイアンクロー", "子宮", "ドＳ"]):
+            return "土耳其烤肉尸骸死板解说、草坪大腿膝枕、一姬午睡撩裙回忆与雄二重度抖S铁爪功", "情感升温！小幸一本正经以‘开膛破肚千刀万剐在熊熊烈火炙烤动物尸骸’死板科普土耳其烤肉，告诫孩子们弱肉强食；天音在草坪为雄二提供大腿膝枕，任由雄二捏腰间赘肉宣示主权并祭出‘大胸负责论’；天音回忆当年为一姬膝枕时一姬流口水还伸手掏裙底内裤的怪癖，澄清自己并非百合；追忆初遇雄二时被其冷酷使出致命铁爪功捏头、体内子宫却小鹿乱撞萌生爱意的抖S心动瞬间"
+        if any(k in ja for k in ["薄い水色", "上着", "消音", "鼻をかむ", "足が痺れ", "生まれたての小鹿", "ドＭ", "お漏らし"]):
+            return "由美子高级外套消音大擤鼻涕惨案、初生小鹿恶趣味戳麻筋与抖M失禁妄想", "高能神收束！美滨四女在草丛偷窥被由美子淡蓝色内裤走光打乱节奏；小幸感叹天音在雄二心中的不可替代性，莳菜心疼感动落泪；小幸将由美子外套团成一团糊在莳菜脸上当消音器，莳菜放声大哭并猛擤一大滩鼻涕气疯由美子；天音膝枕十分钟双腿麻木，雄二恶趣味连环戳麻筋令天音宛如初生小鹿般颤抖哀鸣，天音重度抖M觉醒并在众目睽睽失禁妄想中幸福返程"
+        return "周防天音后日谈第四章深度精校与去机翻重构", "词句润色！生动还原动物园约会的甜蜜温存、美滨四女爆笑尾行暗恋修罗场、一姬回忆与雄二抖S调教，完美清除生硬机翻，令全篇高能剧情跃然纸上"
+
     # ama_003 specific (Milestone 3 Chapter 3 - Amane After Story Chapter 3: Bathhouse bust, air mattress cuckold drama, model girlfriend declaration, zoo promise & entire day off)
     if (66739 <= line_no <= 66852):
         if any(k in ja for k in ["一生ヤッてろ", "温めのお湯", "野良犬", "大浴場", "エアマット", "見せつけて", "一緒にやるっ"]):
@@ -7946,6 +7958,32 @@ def build_report():
                 "section": "灰色的迷宫·周防天音后日谈第三章·大浴场气垫床捉奸修罗场、反客为主贤女友宣言与动物园之约 (`grisaia2/ama_003`)"
             })
 
+    # Milestone 3 Chapter 4: Amane After Story Chapter 4 (grisaia2/ama_004)
+    for lno in range(66853, 67413):
+        ja_raw = ja_lines[lno - 1].rstrip("\r\n")
+        cn_raw = cn_lines[lno - 1].rstrip("\r\n")
+        sid = ja_raw.split("\t")[0] if "\t" in ja_raw else f"L{lno}"
+        ja_txt = ja_raw.split("\t")[1] if "\t" in ja_raw else ja_raw
+        cn_txt = cn_raw.split("\t")[1] if "\t" in cn_raw else cn_raw
+
+        old_txt = cn_txt
+        if git_base_cn and len(git_base_cn) >= lno:
+            head_raw = git_base_cn[lno - 1].rstrip("\r\n")
+            old_txt = head_raw.split("\t")[1] if "\t" in head_raw else head_raw
+
+        if cn_txt != old_txt and cn_txt.strip() != "":
+            cat, reason = classify_change(lno, sid, ja_txt, old_txt, cn_txt)
+            diffs.append({
+                "lno": lno,
+                "sid": sid,
+                "ja": ja_txt,
+                "old": old_txt,
+                "new": cn_txt,
+                "cat": cat,
+                "reason": reason,
+                "section": "灰色的迷宫·周防天音后日谈第四章·动物园约会、自贩机卡肉惨剧、老爹天际线老爷车狂飙与由美子外套消音大擤鼻涕 (`grisaia2/ama_004`)"
+            })
+
     print(f"Total indexed modifications: {len(diffs)}")
 
     # Build Markdown
@@ -9773,6 +9811,15 @@ def build_report():
     md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
     md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
     for idx, d in enumerate(ama_003_diffs, 1):
+        md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
+    md.append("\n---\n")
+
+    # Section 203 - Milestone 3: Labyrinth of Grisaia Amane After Story Chapter 4
+    ama_004_diffs = [d for d in diffs if d["section"].startswith("灰色的迷宫·周防天音后日谈第四章")]
+    md.append(f"## 二百零三、 灰色的迷宫·周防天音后日谈第四章·动物园约会、自贩机卡肉惨剧、老爹天际线老爷车狂飙与由美子外套消音大擤鼻涕 (`grisaia2/ama_004`，共 {len(ama_004_diffs)} 条) —— 【里程碑三·周防天音后日谈第四话】\n")
+    md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
+    md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
+    for idx, d in enumerate(ama_004_diffs, 1):
         md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
     md.append("\n---\n")
 
