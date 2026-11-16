@@ -14,6 +14,20 @@ def escape_md(text):
     return text.replace("|", "\\|").replace("\n", " ").replace("\r", "")
 
 def classify_change(line_no, sid, ja, old_cn, new_cn):
+    # ama_001 specific (Milestone 3 Chapter 1 - Amane After Story Chapter 1: Phantom sniper mission, Ueda taxi, marriage thoughts, domestic finance, masked kangaroo court, closet NTR fantasy, Soft SM lingerie & Tiger Girl)
+    if (66165 <= line_no <= 66690):
+        if any(k in ja for k in ["オバケ", "くじ引き", "飛ばす", "三桁ナンバー", "あさひクリーン", "上田", "昇進試験", "危険手当", "泥金", "１日３千円", "財布を持たず", "ＪＢに至っては"]):
+            return "天台虚警收摊、三位数特工出租车、转正考试、掌财娇妻与应急黑钱", "特工日常！生动重塑雄二天台高层狙击待命扑空、收起‘玩具’撤收的‘幽灵差事’心理；细化三位数外围特工上田接应与自裁防范心理；展现雄二为结婚考转正避开危险津贴的务实决心，对比麻子不带钱包全赖徒弟与JB乱塞三万大钞的粗线条，烘托天音掌管全额薪水、每日定投三千零花与十万压箱底应急黑钱的贤惠持家"
+        if any(k in ja for k in ["ハンバーグ", "微調整", "カニのコロッケ", "料亭の娘", "アイロン", "潜水艦乗り", "チルチル", "キュンとして", "揉めば大きく", "ハポハポ", "電気代が"]):
+            return "食谱心理计算、鼻歌熨衣、满妹洗头揉胸与小幸擦背妄想暴走", "宿舍温情！天音精准摸透雄二胃口，提前数日轮转菜谱诱导开荤，展现料亭千金察言观色神技；莳菜浴后欢呼潜艇兵享受，自曝撒娇击沉傲娇满妹并互揉胸部暴论；天音狂乱妄想小幸在走廊以‘樱桃小嘴咕啾咕啾吸吮擦身’截胡雄二，急得攥着通电电熨斗狂奔捉奸引发爆笑闹剧"
+        if any(k in ja for k in ["覆面会議", "Ｐ汁", "ビッチ感", "ギャップ萌え", "ツンデレ", "グローバルスタンダード", "オイルライター", "オマエでゲソッ", "二つに折れる棒アイス", "記憶に御座いません", "秘書が勝手に", "ＴチバナＣ鶴", "愛人６号", "ダン・イリス", "ふえぇぇぇぇ"]):
+            return "蒙面后宫仲裁会议、精液隐语大辩论、政客甩锅推诿与天音泪崩‘雄二是我的’", "高能神展开！美滨四女头戴面具召开‘雄二天音交往对策’秘密仲裁会；小幸提议‘P汁’强化荡妇人设，满妹力推九分傲一分娇与煤油打火机普世理论；莳菜乌贼娘附体揭穿草丛推倒逼孕阴谋，小幸狂飙‘毫无记忆’‘秘书擅自做主’政客名梗；搬出千鹤授权书排定位次逼由美子沦为情妇6号，天音彻底破防嚎啕大哭宣誓雄二主权"
+        if any(k in ja for k in ["クローゼット", "寝取られプレイ", "戦隊ヒーロー", "ウサギのヌイグルミ", "ティッシュ箱", "脚踏多只船", "一姫を…アンタのお姉ちゃんを見捨てた", "それでも俺は天音がいい", "背中に顔面", "スッゴイ乱暴"]):
+            return "壁橱被绿妄想、特摄挨揍癖好、深情非你不可告白与粗暴求虐情调", "病态依恋！天音重度抖M本性大发，妄想藏身衣柜偷窥雄二与莳菜苟合并被当场抓包，自曝童年看战队英雄被暴打虐待便浑身发麻的怪癖；面对天音让雄二推倒全员的试探，雄二冷峻拒绝并给出最真挚硬核的告白：‘再怎么说我也只要天音，正因你是这样的天音，一姬当年才拼命救下了你’，天音后背蹭涕泪崩求狠狠疼爱"
+        if any(k in ja for k in ["どっちに入ってるか", "タイガー・ガール", "ソフトＳＭ", "愛されボンデ", "ウッドエレメンタル", "着せてぇん", "純真無垢な小娘風", "ムチャ振り"]):
+            return "猛虎少女读者赠礼、万智牌木元素废卡吐槽、极致紧缚装试穿与纯真少女娇嗔", "情趣升温！盘点两性倦怠期千奇百怪的狂野角色扮演；天音祭出辣妹不良神刊《猛虎少女》读者大奖‘极致受宠紧缚装’；雄二祭出万智牌木元素经典废卡死板吐槽；在天音撒娇要求下被迫上演‘完全不知男人险恶的纯真无邪小娘子’换装play，因羞耻破防重归扑克脸，在复杂捆带迷宫中拉开缠绵序幕"
+        return "周防天音后日谈第一章全方位深度精校与去机翻重构", "词句润色！全面修复代号黑话、俚语典故（如幽灵差事、泥金、P汁、打火机标准、政客答辩、木元素废卡等），精准还原雄二硬派面瘫宠溺与天音关西风大姐姐兼深层抖M的极致反差，完美消灭生硬机翻，令甜蜜与爆笑剧情跃然纸上"
+
     # yuj_015_p2 specific (Milestone 3 Chapter 15 Part 2 - Yuuji Past Chapter 15: Hokkaido touring, engine breakdown, youth realization, mountain cabin visit, Mihama girls reading dossier, Adam sniper mission, Oslo returned PTSD, TV consulate bombing & Yuuji wanted suspect)
     if (85265 <= line_no <= 85936):
         if any(k in ja for k in ["北海道", "アメリカンバイク", "ツルッパゲ", "アクスルシャフト", "サケザンギ", "焼きつき", "ＣＢＲ", "青春だな", "青春か"]):
@@ -7836,6 +7850,32 @@ def build_report():
                 "section": "灰色的迷宫·雄二过去篇第十五章后篇·北海道流浪悟青春、爱车大修折返山梨、美滨五女通宵研读档案与领事馆袭杀惊天剧变 (`grisaia2/yuj_015_p2`)"
             })
 
+    # ama_001 (Milestone 3 Chapter 1 - Amane After Story Chapter 1: Phantom sniper mission, Ueda taxi, marriage thoughts, domestic finance, masked kangaroo court, closet NTR fantasy, Soft SM lingerie & Tiger Girl)
+    for lno in range(66165, 66691):
+        ja_raw = ja_lines[lno - 1].rstrip("\r\n")
+        cn_raw = cn_lines[lno - 1].rstrip("\r\n")
+        sid = ja_raw.split("\t")[0] if "\t" in ja_raw else f"L{lno}"
+        ja_txt = ja_raw.split("\t")[1] if "\t" in ja_raw else ja_raw
+        cn_txt = cn_raw.split("\t")[1] if "\t" in cn_raw else cn_raw
+
+        old_txt = cn_txt
+        if git_base_cn and len(git_base_cn) >= lno:
+            head_raw = git_base_cn[lno - 1].rstrip("\r\n")
+            old_txt = head_raw.split("\t")[1] if "\t" in head_raw else head_raw
+
+        if cn_txt != old_txt and cn_txt.strip() != "":
+            cat, reason = classify_change(lno, sid, ja_txt, old_txt, cn_txt)
+            diffs.append({
+                "lno": lno,
+                "sid": sid,
+                "ja": ja_txt,
+                "old": old_txt,
+                "new": cn_txt,
+                "cat": cat,
+                "reason": reason,
+                "section": "灰色的迷宫·周防天音后日谈第一章·虚警撤收、贤内助掌财、蒙面后宫仲裁会议、壁橱被绿妄想与猛虎少女软调教 (`grisaia2/ama_001`)"
+            })
+
     print(f"Total indexed modifications: {len(diffs)}")
 
     # Build Markdown
@@ -9636,6 +9676,15 @@ def build_report():
     md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
     md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
     for idx, d in enumerate(yuj_015_p2_diffs, 1):
+        md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
+    md.append("\n---\n")
+
+    # Section 200 - Milestone 3: Labyrinth of Grisaia Amane After Story Chapter 1
+    ama_001_diffs = [d for d in diffs if d["section"].startswith("灰色的迷宫·周防天音后日谈第一章")]
+    md.append(f"## 二百、 灰色的迷宫·周防天音后日谈第一章·虚警撤收、贤内助掌财、蒙面后宫仲裁会议、壁橱被绿妄想与猛虎少女软调教 (`grisaia2/ama_001`，共 {len(ama_001_diffs)} 条) —— 【里程碑三·周防天音后日谈第一话】\n")
+    md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
+    md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
+    for idx, d in enumerate(ama_001_diffs, 1):
         md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
     md.append("\n---\n")
 
