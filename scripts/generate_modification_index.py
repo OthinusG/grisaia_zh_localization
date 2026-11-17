@@ -1859,6 +1859,18 @@ def classify_change(line_no, sid, ja, old_cn, new_cn):
     if "早食い" in ja or "チャンペスト" in ja or "アイスクリーム頭痛" in ja or "チョコバナナ" in ja or "短冊" in ja or "づっとお兄ちゃんと一緒" in ja or "黒い携帯" in ja:
         return "满刨冰脑结冰败退与七夕短册父女誓约", "绝妙还原满自封冠军之王（Champest）狂炫刨冰致脑结冰送医的活宝行径、天音舔食巧克力香蕉的母性反差、莳菜写错别字的七夕短册‘想永远和哥哥在一起’、以及雄二注视CIRS黑色手机暗誓守护莳菜的深情内核"
 
+    # mic_005 specific (Milestone 3 Chapter 27 - Michiru After Story Chapter 5)
+    if "羊" in ja or "地獄" in ja or "数え" in ja or "柵" in ja or "一頭" in ja:
+        return "数羊地狱与绵羊量词哲思", "纠正机翻将满数羊不让羊消失误译，绝妙重现满夜不能寐数羊却在脑内堆积200只活羊化作蠕动肉块惨剧、里满吐槽为何不让羊跳完消失、以及纠结羊该按‘只’数还是按‘头’数的无厘头哲学思考"
+    if "毒キノコ" in ja or "ムーンパワー" in ja or "門柱" in ja or "新聞紙" in ja or "折りたたむ" in ja:
+        return "小幸月光毒菇狂笑与由美子怪力拔门柱妄想", "绝妙还原满凌晨四点过度紧张的离谱妄想：小幸服食月光瓦罐毒菇精神错乱笑个不停并邀请共食、以及由美子化身怪兽徒手拔走校门门柱导致雄二认不出集合地点战略撤退的爆笑被害妄想"
+    if "ブリトー" in ja or "水切り" in ja or "鼻血" in ja or "鼻水" in ja or "ブラジル" in ja or "クルトン" in ja:
+        return "便利店病夫卷饼、温热鼻涕闲聊与银河巴西第一喜欢", "修正机翻，生动还原雄二吐槽便利店卷饼像病夫坏死皮肤、喂食烫嘴、满硬聊‘以为是鼻血其实是温热鼻涕’的奇葩破冰话题、以及小满向雄二一口气宣誓‘世界第一宇宙第一银河第一巴西第一喜欢’被嫌太吵的傲娇反差"
+    if "和風ハンバーグ" in ja or "ショートケーキ" in ja or "イチゴ" in ja or "三秒ルール" in ja or "薄暗い" in ja:
+        return "草莓蛋糕三秒规则惨剧与和风汉堡排羞耻爆鸣", "修正机翻将薄暗い误译为好刺眼，生动再现满蛋糕草莓失手滑落被路人踩碎、雄二宠溺叉草莓投喂、小满感动过度原地爆炸发出‘哇呼呼呜呜巴啊啊啊’惨叫被服务员空耳听成点单‘和风汉堡排（Wafuu Hamburg）’的顶级相声"
+    if "ラブホテル" in ja or "ランデブー" in ja or "セカンドキス" in ja or "ふつつか者" in ja or "クリーナー" in ja or "バケツ" in ja:
+        return "玻璃清洁剂浇顶落汤鸡与献给里满的温柔第二吻", "高潮泪点！生动再现满害羞提议情侣酒店开房、突遇洗窗工人倾倒玻璃水浇成落汤鸡喜提商务酒店洗浴、向雄二坦白里满暗中指导约会、里满人格切换害羞见礼、以及雄二看穿一切俯身印下属于里满的温柔第二吻（セカンドキス）"
+
     # mic_004 specific (Milestone 3 Chapter 26 - Michiru After Story Chapter 4)
     if "スノーグローブ" in ja or "スノードーム" in ja or "骨董" in ja or "泥棒" in ja or "北野くん" in ja:
         return "旧货店奇迹雪花球与被盗赃物北野君谢罪", "生动还原银边眼镜古董杂货店主赠送不标价的‘呼唤奇迹魔法道具’雪花球、满初见漫天飞雪感动万分旋即被雄二‘垃圾堆捡的/别人家物置讨的’破防、脑补雄二为爱犯罪偷窃并誓言一同坐牢赎罪向假想朋友北野君道歉的爆笑名场面"
@@ -8446,6 +8458,32 @@ def build_report():
                 "section": "灰色的迷宫·入巢莳菜后日谈第四章·教室春梦吻满、水泥柱爆头与由美子美滨冷藏库落果论 (`grisaia2/mak_004`)"
             })
 
+    # Milestone 3 Chapter 27: Michiru After Story Chapter 5 (grisaia2/mic_005)
+    for lno in range(73556, 74293):
+        ja_raw = ja_lines[lno - 1].rstrip("\r\n")
+        cn_raw = cn_lines[lno - 1].rstrip("\r\n")
+        sid = ja_raw.split("\t")[0] if "\t" in ja_raw else f"L{lno}"
+        ja_txt = ja_raw.split("\t")[1] if "\t" in ja_raw else ja_raw
+        cn_txt = cn_raw.split("\t")[1] if "\t" in cn_raw else cn_raw
+
+        old_txt = cn_txt
+        if git_base_cn and len(git_base_cn) >= lno:
+            head_raw = git_base_cn[lno - 1].rstrip("\r\n")
+            old_txt = head_raw.split("\t")[1] if "\t" in head_raw else head_raw
+
+        if cn_txt != old_txt and cn_txt.strip() != "":
+            cat, reason = classify_change(lno, sid, ja_txt, old_txt, cn_txt)
+            diffs.append({
+                "lno": lno,
+                "sid": sid,
+                "ja": ja_txt,
+                "old": old_txt,
+                "new": cn_txt,
+                "cat": cat,
+                "reason": reason,
+                "section": "灰色的迷宫·松岛满后日谈第五章·数羊地狱、和风汉堡排羞耻爆鸣与献给里满的温柔第二吻 (`grisaia2/mic_005`)"
+            })
+
     # Milestone 3 Chapter 26: Michiru After Story Chapter 4 (grisaia2/mic_004)
     for lno in range(73178, 73556):
         ja_raw = ja_lines[lno - 1].rstrip("\r\n")
@@ -10701,6 +10739,15 @@ def build_report():
     md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
     md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
     for idx, d in enumerate(mak_004_diffs, 1):
+        md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
+    md.append("\n---\n")
+
+    # Section 226 - Milestone 3: Labyrinth of Grisaia Michiru After Story Chapter 5
+    mic_005_diffs = [d for d in diffs if d["section"].startswith("灰色的迷宫·松岛满后日谈第五章")]
+    md.append(f"## 二百二十六、 灰色的迷宫·松岛满后日谈第五章·数羊地狱、和风汉堡排羞耻爆鸣与献给里满的温柔第二吻 (`grisaia2/mic_005`，共 {len(mic_005_diffs)} 条) —— 【里程碑三·松岛满后日谈第五话】\n")
+    md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
+    md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
+    for idx, d in enumerate(mic_005_diffs, 1):
         md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
     md.append("\n---\n")
 
