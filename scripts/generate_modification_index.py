@@ -1859,6 +1859,16 @@ def classify_change(line_no, sid, ja, old_cn, new_cn):
     if "早食い" in ja or "チャンペスト" in ja or "アイスクリーム頭痛" in ja or "チョコバナナ" in ja or "短冊" in ja or "づっとお兄ちゃんと一緒" in ja or "黒い携帯" in ja:
         return "满刨冰脑结冰败退与七夕短册父女誓约", "绝妙还原满自封冠军之王（Champest）狂炫刨冰致脑结冰送医的活宝行径、天音舔食巧克力香蕉的母性反差、莳菜写错别字的七夕短册‘想永远和哥哥在一起’、以及雄二注视CIRS黑色手机暗誓守护莳菜的深情内核"
 
+    # ss2 specific (Milestone 3 Miscellaneous Short 4: Tragic Ogre Legend & Tag Game Melodrama)
+    if (78056 <= line_no <= 78107) or sid.startswith("grisaia2/ss2#"):
+        if "鬼ごっこスタート" in ja or "逃げにくいわ" in ja or "鬼さんごめんなさい" in ja or "食べちゃうぞ" in ja:
+            return "捉鬼抓人沉重开幕、满崩溃怒吼与幸‘嗷呜吃掉你们’神反转", "名场面爆笑谢幕！讲完致郁催泪童话后，幸无缝切换‘捉鬼游戏正式开始，人类们快逃吧’；满当场崩溃咆哮‘这谁还逃得动啊！’，莳菜痛哭道歉，幸淡定‘嗷呜吃掉你们’，反差拉满"
+        if "弓矢" in ja or "かばい" in ja or "お星様" in ja or "目を閉じました" in ja or "許さないぞ" in ja or "心に誓った" in ja or "武器" in ja or "怪物" in ja:
+            return "少年肉身挡箭化作繁星、温厚恶鬼血海复仇与追杀人类之誓", "催泪悲剧高潮！村民误会恶鬼掳走儿童乱箭射击，少年挺身挡箭中矢殒命，弥留之际嘱托‘化作繁星也要一辈子当朋友’；温厚恶鬼悲绝立誓天涯海角追杀全人类，笔触极其催泪"
+        if "小鳥" in ja or "オラ" in ja or "山にこもって" in ja or "友達" in ja or "少年" in ja or "醜い" in ja:
+            return "深山温柔丑恶鬼救小鸟、孤独少年打破隔阂结为至交", "幸自编悲剧童话展开！幸因猜拳落败当鬼，开局却煞有介事讲述深山自卑丑陋的恶鬼救助雏鸟，与同样遭村人孤立的年幼少年结下超越种族的真挚友谊"
+        return "美滨日常短篇第四话捉鬼游戏细节润色", "修正生硬机械翻译，优化猜拳互动与幸声情并茂讲述民间故事的生动口吻"
+
     # ss1 specific (Milestone 3 Miscellaneous Short 3: Operation HPH String Panties Night Vision Infiltration)
     if (78020 <= line_no <= 78055) or sid.startswith("grisaia2/ss1#"):
         if "ＨＰＨ" in ja or "ナイトビジョン" in ja or "マルタイ" in ja or "突入" in ja or "戦術チーム" in ja or "退路" in ja or "潜入" in ja:
@@ -8686,6 +8696,32 @@ def build_report():
                 "section": "灰色的迷宫·入巢莳菜后日谈第四章·教室春梦吻满、水泥柱爆头与由美子美滨冷藏库落果论 (`grisaia2/mak_004`)"
             })
 
+    # Milestone 3 Chapter 45: Miscellaneous Short 4 (grisaia2/ss2)
+    for lno in range(78056, 78108):
+        ja_raw = ja_lines[lno - 1].rstrip("\r\n")
+        cn_raw = cn_lines[lno - 1].rstrip("\r\n")
+        sid = ja_raw.split("\t")[0] if "\t" in ja_raw else f"L{lno}"
+        ja_txt = ja_raw.split("\t")[1] if "\t" in ja_raw else ja_raw
+        cn_txt = cn_raw.split("\t")[1] if "\t" in cn_raw else cn_raw
+
+        old_txt = cn_txt
+        if git_base_cn and len(git_base_cn) >= lno:
+            head_raw = git_base_cn[lno - 1].rstrip("\r\n")
+            old_txt = head_raw.split("\t")[1] if "\t" in head_raw else head_raw
+
+        if cn_txt != old_txt and cn_txt.strip() != "":
+            cat, reason = classify_change(lno, sid, ja_txt, old_txt, cn_txt)
+            diffs.append({
+                "lno": lno,
+                "sid": sid,
+                "ja": ja_txt,
+                "old": old_txt,
+                "new": cn_txt,
+                "cat": cat,
+                "reason": reason,
+                "section": "灰色的迷宫·美滨日常短篇第四话·捉迷藏划拳输者当鬼、自编温柔恶鬼与挡箭少年致郁悲剧 (`grisaia2/ss2`)"
+            })
+
     # Milestone 3 Chapter 44: Miscellaneous Short 3 (grisaia2/ss1)
     for lno in range(78020, 78056):
         ja_raw = ja_lines[lno - 1].rstrip("\r\n")
@@ -11409,6 +11445,15 @@ def build_report():
     md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
     md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
     for idx, d in enumerate(mak_004_diffs, 1):
+        md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
+    md.append("\n---\n")
+
+    # Section 244 - Milestone 3: Labyrinth of Grisaia Miscellaneous Short 4
+    ss2_diffs = [d for d in diffs if d["section"].startswith("灰色的迷宫·美滨日常短篇第四话")]
+    md.append(f"## 二百四十四、 灰色的迷宫·美滨日常短篇第四话·捉迷藏划拳输者当鬼、自编温柔恶鬼与挡箭少年致郁悲剧 (`grisaia2/ss2`，共 {len(ss2_diffs)} 条) —— 【里程碑三·美滨日常短篇第四话】\n")
+    md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
+    md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
+    for idx, d in enumerate(ss2_diffs, 1):
         md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
     md.append("\n---\n")
 
