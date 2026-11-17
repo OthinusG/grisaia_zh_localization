@@ -1859,6 +1859,14 @@ def classify_change(line_no, sid, ja, old_cn, new_cn):
     if "早食い" in ja or "チャンペスト" in ja or "アイスクリーム頭痛" in ja or "チョコバナナ" in ja or "短冊" in ja or "づっとお兄ちゃんと一緒" in ja or "黒い携帯" in ja:
         return "满刨冰脑结冰败退与七夕短册父女誓约", "绝妙还原满自封冠军之王（Champest）狂炫刨冰致脑结冰送医的活宝行径、天音舔食巧克力香蕉的母性反差、莳菜写错别字的七夕短册‘想永远和哥哥在一起’、以及雄二注视CIRS黑色手机暗誓守护莳菜的深情内核"
 
+    # mic_002 specific (Milestone 3 Chapter 24 - Michiru After Story Chapter 2)
+    if "鍋つかみ" in ja or "ミトン" in ja or "ウェザリング" in ja or "汚し" in ja or "知恵熱" in ja:
+        return "连指手套端锅垫与二战军模做旧工艺吐槽", "彻底修正机翻将知惠热（知恵熱）误译为中暑、将锅垫防烫夹（鍋つかみ）与连指手套（ミトン）生硬直译，生动再现满自制粗笨手套被雄二误认为二战军需物资端锅防烫垫、被赞叹军模做旧工艺（Weathering/刻意做脏）入木三分的爆笑互动"
+    if "シリカゲル" in ja or "ビッチ" in ja or "さきっちょ" in ja or "主婦" in ja or "昼間っから" in ja:
+        return "干燥剂屁股谐音梗与大衣口袋摸男人风评被害", "纠正机翻平铺直叙，绝妙重现满随身携带硅胶干燥剂（シリカゲル因谐音‘屁股’被满脑补成色情物）、强行把手伸进雄二长裤口袋被路过主妇当场目击痛斥‘大白天就摸男人那种地方世风日下’的顶级公开处刑"
+    if "雪合戦" in ja or "歌合戦" in ja or "塹壕" in ja or "タコツボ" in ja or "アイスの棒" in ja or "エンピ" in ja:
+        return "冰块打雪仗散兵坑与冰棒木棍掘进单兵堑壕", "彻底纠正机翻，生动还原满拿硬冰块当雪球偷袭砸裂表盘、雄二战术说教要求先挖一米深防炮散兵坑（タコツボ）、给满一根吃剩的冰棒木棍在坚硬泥地硬刨半小时刨成死狗、以及雄二吐槽‘红白歌会（歌合战）也是合法合战’的无厘头收尾"
+
     # mic_001 specific (Milestone 3 Chapter 23 - Michiru After Story Chapter 1)
     if "ぶぶ漬け" in ja or "ジュネーブ条約" in ja or "ダッフルコート" in ja or "待った" in ja or "五時間以上" in ja:
         return "宇治茶泡饭逐客令与日内瓦公约提前八小时蹲守约会", "彻底修正机翻将宇治茶泡饭（ぶぶ漬け）荒谬误译为‘烤蔬菜’、将待った（让你久等了）误译为‘我等到了吗’，绝妙还原雄二晨跑吐槽京都茶泡饭逐客令、满身裹粗呢大衣背诵战俘审讯台词、提前八小时蹲守约会算不清十四减六除以二的爆笑开场"
@@ -8418,6 +8426,32 @@ def build_report():
                 "section": "灰色的迷宫·入巢莳菜后日谈第四章·教室春梦吻满、水泥柱爆头与由美子美滨冷藏库落果论 (`grisaia2/mak_004`)"
             })
 
+    # Milestone 3 Chapter 24: Michiru After Story Chapter 2 (grisaia2/mic_002)
+    for lno in range(72286, 72644):
+        ja_raw = ja_lines[lno - 1].rstrip("\r\n")
+        cn_raw = cn_lines[lno - 1].rstrip("\r\n")
+        sid = ja_raw.split("\t")[0] if "\t" in ja_raw else f"L{lno}"
+        ja_txt = ja_raw.split("\t")[1] if "\t" in ja_raw else ja_raw
+        cn_txt = cn_raw.split("\t")[1] if "\t" in cn_raw else cn_raw
+
+        old_txt = cn_txt
+        if git_base_cn and len(git_base_cn) >= lno:
+            head_raw = git_base_cn[lno - 1].rstrip("\r\n")
+            old_txt = head_raw.split("\t")[1] if "\t" in head_raw else head_raw
+
+        if cn_txt != old_txt and cn_txt.strip() != "":
+            cat, reason = classify_change(lno, sid, ja_txt, old_txt, cn_txt)
+            diffs.append({
+                "lno": lno,
+                "sid": sid,
+                "ja": ja_txt,
+                "old": old_txt,
+                "new": cn_txt,
+                "cat": cat,
+                "reason": reason,
+                "section": "灰色的迷宫·松岛满后日谈第二章·连指手套做旧工艺、大衣口袋摸男人与冰棒棍战壕掘进 (`grisaia2/mic_002`)"
+            })
+
     # Milestone 3 Chapter 23: Michiru After Story Chapter 1 (grisaia2/mic_001)
     for lno in range(71908, 72286):
         ja_raw = ja_lines[lno - 1].rstrip("\r\n")
@@ -10595,6 +10629,15 @@ def build_report():
     md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
     md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
     for idx, d in enumerate(mak_004_diffs, 1):
+        md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
+    md.append("\n---\n")
+
+    # Section 223 - Milestone 3: Labyrinth of Grisaia Michiru After Story Chapter 2
+    mic_002_diffs = [d for d in diffs if d["section"].startswith("灰色的迷宫·松岛满后日谈第二章")]
+    md.append(f"## 二百二十三、 灰色的迷宫·松岛满后日谈第二章·连指手套做旧工艺、大衣口袋摸男人与冰棒棍战壕掘进 (`grisaia2/mic_002`，共 {len(mic_002_diffs)} 条) —— 【里程碑三·松岛满后日谈第二话】\n")
+    md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
+    md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
+    for idx, d in enumerate(mic_002_diffs, 1):
         md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
     md.append("\n---\n")
 
