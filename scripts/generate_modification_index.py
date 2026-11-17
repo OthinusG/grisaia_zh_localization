@@ -1859,6 +1859,18 @@ def classify_change(line_no, sid, ja, old_cn, new_cn):
     if "早食い" in ja or "チャンペスト" in ja or "アイスクリーム頭痛" in ja or "チョコバナナ" in ja or "短冊" in ja or "づっとお兄ちゃんと一緒" in ja or "黒い携帯" in ja:
         return "满刨冰脑结冰败退与七夕短册父女誓约", "绝妙还原满自封冠军之王（Champest）狂炫刨冰致脑结冰送医的活宝行径、天音舔食巧克力香蕉的母性反差、莳菜写错别字的七夕短册‘想永远和哥哥在一起’、以及雄二注视CIRS黑色手机暗誓守护莳菜的深情内核"
 
+    # sac_005 Part 1 specific (Milestone 3 Chapter 35 - Sachi After Story Chapter 5 Part 1: Wedding Morning JB Breakfast, Girls' Confession Closure & Cake Bomb Scare)
+    if "新郎" in ja or "モッサリヘアー" in ja or "ジャーマンポテト" in ja or "ヴィシソワーズ" in ja or "エッグトースト" in ja or "麻子が死んだ" in ja or "ネクタイ、曲がってる" in ja or "ジュリア" in ja:
+        return "JB大卷发早餐温情与麻子逝后收留养育之恩", "婚礼清晨泪目羁绊！雄二醒来回味丈夫责任，JB身着职业西装套围裙烹饪德式土豆与法式土豆冷汤；雄二回想当年麻子骤逝后自己形如槁木，正是JB在公寓每日下厨悉心照料；出门前JB如结发妻子般整理领带，雄二郑重道谢‘谢谢你，茱莉亚’"
+    if "柱にぶつける" in ja or "教育者" in ja or "命の恩人" in ja or "王子様" in ja or "飲み明かしましょう" in ja or "スクール水着" in ja or "親馬鹿" in ja:
+        return "千鹤撞柱自怜、王子殿下往事与由美子死库水赌约", "长辈与傲娇的暗流！千鹤目送雄二背影撞柱抱头喊痛，向JB坦白当年异国机场溺水获救的‘王子殿下’情结，相约今晚成熟女性彻夜畅饮；休息室由美子毒舌陪伴，赌上处女之身预言雄二必成溺爱笨蛋老爹"
+    if "ロリロリツルペタ" in ja or "ツンデレ処女" in ja or "Ｆカップ" in ja or "ケジメ" in ja or "フラれるチャンス" in ja or "ずっとお兄ちゃんのことが好きでした" in ja or "幸一人だけ" in ja:
+        return "三女休息室集体告白求被甩与终身唯一专情誓言", "名场面泪崩与释怀！莳菜、满与天音盛装突袭新郎休息室‘外卖上门’，坦言昨夜开会决定‘求被甩’以求在婚礼前对心意做个彻底了断；莳菜紧张呛咳深情告白，天音与满相继袒露爱意，雄二严肃郑重拒绝‘我此生誓死深爱的唯有幸一人’，少女们释怀含泪祝福"
+    if "プレゼントボックス" in ja or "パチンコ玉" in ja or "金属棒" in ja or "クシャミ" in ja or "耐爆防御" in ja or "蜂はイヤ" in ja or "Ｃカップなお胸" in ja:
+        return "假模型蛋糕炸弹惊魂、按人中止喷嚏与防绿帽肉盾拦截", "大闹婚礼爆笑排爆！满代班签到误收蛋糕炸弹礼盒，顶盖掀开后弹珠平衡触发引信，满浑身僵硬即将打喷嚏，莳菜神速猛掐人中截停；雄二冷静探查识破重量不足的假模型，解除警报后满猛扑拥抱，被幸瞬间闪现挺起暴增2厘米的84cm酥胸‘肉盾拦截’"
+    if "誕生日" in ja or "１０才の誕生日" in ja or "負のイメージ" in ja or "脱着" in ja or "香水の男" in ja or "あの時の“香水男”" in ja:
+        return "幸生日大婚深意揭秘、婚礼延期危机与香水炸弹客电话", "悬疑惊悚急转直下！雄二执意今日完婚，向JB坦白十岁生日车祸让这天成为幸的受罪纪念日，誓用婚礼洗刷阴影；幸盛装感动致谢，但二人敏锐断定愉悦犯绝非如此轻易落网；座机骤响，商店街曾擦肩而过的肥皂香水男自曝正是‘TOY BOMBER’"
+
     # sac_004 specific (Milestone 3 Chapter 34 - Sachi After Story Chapter 4: Sachi Mother Sage vs Wizard, Blue Shark Quiz, Nursing School & Bridal Night Lingerie)
     if "寛子" in ja or "賢者" in ja or "魔法使い" in ja or "オルゴール" in ja or "好きよりも" in ja or "好きより好き" in ja:
         return "贤者母亲与魔法使父亲比喻与八音盒回忆", "深刻动人的母亲教诲！童年幸回忆母亲点拨‘比喜欢更喜欢’的结婚真意——并非单纯索取，而是抱着用双手给予对方幸福的觉悟；工场中专注机械的父亲是魔法师，在一旁默默守护治愈全家的母亲是贤者，幸暗誓成为像母亲一样的新娘"
@@ -8552,6 +8564,32 @@ def build_report():
                 "section": "灰色的迷宫·入巢莳菜后日谈第四章·教室春梦吻满、水泥柱爆头与由美子美滨冷藏库落果论 (`grisaia2/mak_004`)"
             })
 
+    # Milestone 3 Chapter 35: Sachi After Story Chapter 5 Part 1 (grisaia2/sac_005 Part 1)
+    for lno in range(76281, 76875):
+        ja_raw = ja_lines[lno - 1].rstrip("\r\n")
+        cn_raw = cn_lines[lno - 1].rstrip("\r\n")
+        sid = ja_raw.split("\t")[0] if "\t" in ja_raw else f"L{lno}"
+        ja_txt = ja_raw.split("\t")[1] if "\t" in ja_raw else ja_raw
+        cn_txt = cn_raw.split("\t")[1] if "\t" in cn_raw else cn_raw
+
+        old_txt = cn_txt
+        if git_base_cn and len(git_base_cn) >= lno:
+            head_raw = git_base_cn[lno - 1].rstrip("\r\n")
+            old_txt = head_raw.split("\t")[1] if "\t" in head_raw else head_raw
+
+        if cn_txt != old_txt and cn_txt.strip() != "":
+            cat, reason = classify_change(lno, sid, ja_txt, old_txt, cn_txt)
+            diffs.append({
+                "lno": lno,
+                "sid": sid,
+                "ja": ja_txt,
+                "old": old_txt,
+                "new": cn_txt,
+                "cat": cat,
+                "reason": reason,
+                "section": "灰色的迷宫·小岭幸后日谈第五章（前篇）·JB大卷发晨光早餐、三女告白求被甩、蛋糕炸弹惊魂与香水炸弹客电话 (`grisaia2/sac_005` Part 1)"
+            })
+
     # Milestone 3 Chapter 34: Sachi After Story Chapter 4 (grisaia2/sac_004)
     for lno in range(75759, 76281):
         ja_raw = ja_lines[lno - 1].rstrip("\r\n")
@@ -11015,6 +11053,15 @@ def build_report():
     md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
     md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
     for idx, d in enumerate(mak_004_diffs, 1):
+        md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
+    md.append("\n---\n")
+
+    # Section 234 - Milestone 3: Labyrinth of Grisaia Sachi After Story Chapter 5 Part 1
+    sac_005_p1_diffs = [d for d in diffs if d["section"].startswith("灰色的迷宫·小岭幸后日谈第五章（前篇）")]
+    md.append(f"## 二百三十四、 灰色的迷宫·小岭幸后日谈第五章（前篇）·JB大卷发晨光早餐、三女告白求被甩、蛋糕炸弹惊魂与香水炸弹客电话 (`grisaia2/sac_005` Part 1，共 {len(sac_005_p1_diffs)} 条) —— 【里程碑三·小岭幸后日谈第五话（前篇）】\n")
+    md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
+    md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
+    for idx, d in enumerate(sac_005_p1_diffs, 1):
         md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
     md.append("\n---\n")
 
