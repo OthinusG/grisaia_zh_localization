@@ -74579,190 +74579,190 @@ grisaia2/mic_006#00285	请容我再次强调一遍，只要用对方法，无论
 grisaia2/mic_006#00286	那么，为了你倾心的女人，你又能做到何种地步？接下来，该轮到你来掀起属于你们的奇迹了。
 grisaia2/michiruss2#00000	○月×日黎明……
 grisaia2/michiruss2#00001	橘千鹤的尸体被冲上了海滩……。
-grisaia2/michiruss2#00002	@莳菜@「原来如此，这是一起事故啊。年纪轻轻的……」
-grisaia2/michiruss2#00003	@满@「哟，辛苦了，辛苦了，干得怎么样啊」
-grisaia2/michiruss2#00004	@莳菜@「啊，警部。今日也辛苦了哟」
-grisaia2/michiruss2#00005	@满@「嗯嗯。今天也热啊。那么，情况如何？」
-grisaia2/michiruss2#00006	@莳菜@「报告。女尸一具，损伤并不严重，恐怕是在游泳时溺亡了」
-grisaia2/michiruss2#00007	@莳菜@「被潮水冲向 offshore 回不了岸，是常见的案子哟」
-grisaia2/michiruss2#00008	@满@「哦哦，事故，啊」
-grisaia2/michiruss2#00009	@莳菜@「就是这样哟。所以我们这就收队……」
-grisaia2/michiruss2#00010	@满@「唔――，不对劲啊。这不对劲。有股可疑的味道……」
-grisaia2/michiruss2#00011	@莳菜@「警部，这只是单纯的事故哟。想太多也没用哟？」
-grisaia2/michiruss2#00012	@满@「那这个怎么说？」
-grisaia2/michiruss2#00013	@满@「这是粘在肌肤上的东西」
-grisaia2/michiruss2#00014	@莳菜@「这是……？　闪着光的、小小的板状物哟」
-grisaia2/michiruss2#00015	@满@「嗯，没错，不自然。恐怕不是单纯的事故。是杀人事件」
-grisaia2/michiruss2#00016	@莳菜@「杀、杀人事件!?」
-grisaia2/michiruss2#00017	@满@「嗯没错。马上排查嫌疑人」
-grisaia2/michiruss2#00018	@莳菜@「好、好的哟！」
+grisaia2/michiruss2#00002	@莳菜@「原来如此，这毫无疑问是起意外事故呢。明明还那么年轻的说……」
+grisaia2/michiruss2#00003	@满@「哟，辛苦啦辛苦啦，调查进展得如何啦？」
+grisaia2/michiruss2#00004	@莳菜@「啊，警部。今天您也辛苦了的说哟」
+grisaia2/michiruss2#00005	@满@「嗯嗯。今天也热得要命呢。那么，案情如何？」
+grisaia2/michiruss2#00006	@莳菜@「报告！发现女性尸体一具，由于体表损伤并不怎么严重，想必大概是在海里游泳时不幸溺水身亡了吧」
+grisaia2/michiruss2#00007	@莳菜@「被潮水冲向外海游不回来，可是相当常见的案子哟」
+grisaia2/michiruss2#00008	@满@「嚯嚯，单纯的意外事故啊」
+grisaia2/michiruss2#00009	@莳菜@「正是如此哟。既然这样，咱们就赶紧收队……」
+grisaia2/michiruss2#00010	@满@「唔——不对劲啊。这太不对劲了。我怎么闻到了一股可疑的腥味呢……」
+grisaia2/michiruss2#00011	@莳菜@「警部，这真的只是一起单纯的意外事故哟。就算想破脑袋也是白搭的啦？」
+grisaia2/michiruss2#00012	@满@「那这个你怎么解释？」
+grisaia2/michiruss2#00013	@满@「这可是黏在死者肌肤上的关键证物哦」
+grisaia2/michiruss2#00014	@莳菜@「这是……？闪闪发光的、宛如微型金属片一样的东西哟」
+grisaia2/michiruss2#00015	@满@「没错，这太不自然了。恐怕这绝非单纯的意外。而是一起恶性杀人事件」
+grisaia2/michiruss2#00016	@莳菜@「杀、杀人事件！？」
+grisaia2/michiruss2#00017	@满@「啊啊，没错。立刻给我彻底排查嫌疑人！」
+grisaia2/michiruss2#00018	@莳菜@「遵、遵命哟！」
 grisaia2/michiruss2#00019	
 
 
 
 
 $C(255,0,0)$A1学园长杀人事件
-grisaia2/michiruss2#00020	@莳菜@「这里就是遇害的女教师生前任职的美滨学园」
-grisaia2/michiruss2#00021	@满@「哦哦，挺干净的地方嘛。不过有点怪」
-grisaia2/michiruss2#00022	@莳菜@「报告。据说是个有隐情的设施哟」
-grisaia2/michiruss2#00023	@满@「隐情啊……。那，嫌疑人锁定了吗？」
-grisaia2/michiruss2#00024	@莳菜@「当然哟！　首先是榊由美子。这个女人是有钱人家的小姐，但性格恶劣没有朋友。还有丑」
-grisaia2/michiruss2#00025	@满@「原来如此……丑吗。有味道」
-grisaia2/michiruss2#00026	@莳菜@「还有目击情报说她平时就爱挥舞刀具哟」
-grisaia2/michiruss2#00027	@满@「……这基本就是凶手了吧？」
-grisaia2/michiruss2#00028	@莳菜@「要逮捕吗！」
-grisaia2/michiruss2#00029	@满@「等等，其他嫌疑人呢？」
-grisaia2/michiruss2#00030	@莳菜@「报告。周防天音。这家伙胸大无脑，应该是欲求不满犯下的案子哟」
-grisaia2/michiruss2#00031	@莳菜@「另有目击情报称她平时全裸乱晃」
-grisaia2/michiruss2#00032	@满@「全裸乱晃……。
-grisaia2/michiruss2#00033	反社会人格吗」
-grisaia2/michiruss2#00034	@莳菜@「根据走访，还有卖淫嫌疑之类没之类」
-grisaia2/michiruss2#00035	@满@「什么，卖淫嫌疑？」
-grisaia2/michiruss2#00036	@莳菜@「就是这样哟。有啊，还是没啊」
-grisaia2/michiruss2#00037	@满@「到底是有还是没有，能不能说清楚」
+grisaia2/michiruss2#00020	@莳菜@「这里就是遇害女性生前所任职的美滨学园了」
+grisaia2/michiruss2#00021	@满@「嚯嚯，还挺干净整洁的嘛。不过总觉得气氛有点怪异呢」
+grisaia2/michiruss2#00022	@莳菜@「报告！据说是一所背景复杂、大有隐情的隐秘设施哟」
+grisaia2/michiruss2#00023	@满@「大有隐情吗……。那么，嫌疑人锁定了吗？」
+grisaia2/michiruss2#00024	@莳菜@「这还用说嘛哟！首先是榊由美子。这个女人虽然是有钱人家的大小姐，但性格极其恶劣而且一个朋友都没有哟。而且还是个丑八怪」
+grisaia2/michiruss2#00025	@满@「原来如此……丑八怪吗。嗅到了可疑的味道呢」
+grisaia2/michiruss2#00026	@莳菜@「另有目击情报称，她平时就经常挥舞着危险刀刃四处乱晃哟」
+grisaia2/michiruss2#00027	@满@「……这不基本上就是真凶本人了吗？」
+grisaia2/michiruss2#00028	@莳菜@「要直接实行逮捕吗！」
+grisaia2/michiruss2#00029	@满@「且慢，其他嫌疑人呢？」
+grisaia2/michiruss2#00030	@莳菜@「报告！周防天音。这家伙欧派巨大，所以本官推断是由于性欲过剩无处发泄而犯下的罪行哟」
+grisaia2/michiruss2#00031	@莳菜@「平时也多次有人目击到她全身一丝不挂全裸四处晃荡」
+grisaia2/michiruss2#00032	@满@「全裸四处晃荡……。
+grisaia2/michiruss2#00033	反社会人格障碍吗」
+grisaia2/michiruss2#00034	@莳菜@「此外根据走访排查，据说好像还有卖淫嫌疑、又好像没有的样子」
+grisaia2/michiruss2#00035	@满@「什么！？卖淫嫌疑！？」
+grisaia2/michiruss2#00036	@莳菜@「正是如此哟。好像有呢，又好像没有呢」
+grisaia2/michiruss2#00037	@满@「到底是有还是没有，能不能给我说清楚啊」
 grisaia2/michiruss2#00038	@莳菜@「那，没有」
-grisaia2/michiruss2#00039	@满@「嗯？　没有吗？」
+grisaia2/michiruss2#00039	@满@「嗯？没有吗？」
 grisaia2/michiruss2#00040	@莳菜@「没有」
-grisaia2/michiruss2#00041	@满@「……诶，那刚才说个没之类的什么意思？」
-grisaia2/michiruss2#00042	@莳菜@「诶？　不能说吗？」
-grisaia2/michiruss2#00043	@满@「诶？　倒不是不能。诶？」
+grisaia2/michiruss2#00041	@满@「……诶，那刚才干嘛要说什么有啊没有啊的？」
+grisaia2/michiruss2#00042	@莳菜@「诶？说出来不行吗？」
+grisaia2/michiruss2#00043	@满@「诶？倒不是说不行啦。诶？」
 grisaia2/michiruss2#00044	@莳菜@「啊？」
-grisaia2/michiruss2#00045	@满@「……那，下一个是？」
-grisaia2/michiruss2#00046	@莳菜@「小岭幸。据情报称是在学园做打扫的女仆型存在哟」
-grisaia2/michiruss2#00047	@满@「哦，女仆吗。这家伙哪里可疑？」
-grisaia2/michiruss2#00048	@莳菜@「据说是和共犯把学园的设施爆破掉了之类没之类」
-grisaia2/michiruss2#00049	@满@「又来这套。反正爆破什么的也没干过吧？」
-grisaia2/michiruss2#00050	@莳菜@「干了！」
-grisaia2/michiruss2#00051	@满@「诶，干了？　爆破？　明明是女仆？」
-grisaia2/michiruss2#00052	@莳菜@「就是哟。这就是列入侦查视线的嫌疑人们哟」
-grisaia2/michiruss2#00053	@满@「这样啊，这家伙那家伙全都可疑。先从榊问起吧……」
-grisaia2/michiruss2#00054	@满@「啊――，你就是榊小姐？」
-grisaia2/michiruss2#00055	@由美子@「是啊……你们，是谁？」
-grisaia2/michiruss2#00056	@莳菜@「啰嗦，逮捕你哟这个下水道丑女！」
-grisaia2/michiruss2#00057	@由美子@「哈？
-grisaia2/michiruss2#00058	　等等你，突然闯过来不觉得失礼吗!?」
-grisaia2/michiruss2#00059	@满@「哎呀，抱歉啊。这家伙脾气爆了点。回头我会说她」
-grisaia2/michiruss2#00060	@莳菜@「呜噜噜噜噜」
-grisaia2/michiruss2#00061	@由美子@「那、那样的话就帮大忙了呢」
-grisaia2/michiruss2#00062	@满@「然后呢，下水道丑女小姐」
+grisaia2/michiruss2#00045	@满@「……那、那下一个呢？」
+grisaia2/michiruss2#00046	@莳菜@「小岭幸。情报显示她是负责打扫学园卫生等杂务的女仆型存在哟」
+grisaia2/michiruss2#00047	@满@「嚯，女仆吗。这家伙又有哪里可疑了？」
+grisaia2/michiruss2#00048	@莳菜@「据说是和共犯一起把学园的设施炸飞了、又好像没炸飞的样子」
+grisaia2/michiruss2#00049	@满@「怎么又来这套啊。反正肯定根本就没炸飞过吧？」
+grisaia2/michiruss2#00050	@莳菜@「炸了！」
+grisaia2/michiruss2#00051	@满@「诶，真炸了？爆破？明明是个女仆！？」
+grisaia2/michiruss2#00052	@莳菜@「正是如此哟。以上就是目前列入搜查线上的嫌疑人们哟」
+grisaia2/michiruss2#00053	@满@「这样啊，看来看去没一个省油的灯都很可疑呢。先从那个榊开始审问调查吧……」
+grisaia2/michiruss2#00054	@满@「啊——请问你就是榊小姐吗？」
+grisaia2/michiruss2#00055	@由美子@「正是……你们二位，到底是什么人？」
+grisaia2/michiruss2#00056	@莳菜@「少啰嗦，小心我以现行犯逮捕你啊你这个超级大丑女！」
+grisaia2/michiruss2#00057	@由美子@「哈啊？
+grisaia2/michiruss2#00058	　我说你这人，突然闯进来未免也太没礼貌了吧！？」
+grisaia2/michiruss2#00059	@满@「哎呀——真是万分抱歉啊。这家伙脾气向来暴躁了点。回头我一定会严厉批评她的」
+grisaia2/michiruss2#00060	@莳菜@「呜噜噜噜噜（龇牙低吼）」
+grisaia2/michiruss2#00061	@由美子@「那、能那样的话就再好不过了呢」
+grisaia2/michiruss2#00062	@满@「那么，丑八怪小姐」
 grisaia2/michiruss2#00063	@由美子@「我叫榊！」
-grisaia2/michiruss2#00064	@满@「啊失礼。榊，下水道丑女小姐」
+grisaia2/michiruss2#00064	@满@「啊失礼了。榊·丑八怪小姐」
 grisaia2/michiruss2#00065	@由美子@「……」
-grisaia2/michiruss2#00066	@满@「你昨晚，在做什么？」
-grisaia2/michiruss2#00067	@由美子@「昨天？　昨天我记得是早早洗了澡……。那个，这是审讯吗？」
-grisaia2/michiruss2#00068	@满@「审讯？　哪有的事，只是稍微听听情况而已」
-grisaia2/michiruss2#00069	@由美子@「那也就是说，没必要老老实实回答咯？」
-grisaia2/michiruss2#00070	@满@「话是没错，可您要是不配合，我们这边也只好采取相应的手段了呢」
-grisaia2/michiruss2#00071	@由美子@「那是什么意思？」
-grisaia2/michiruss2#00072	@莳菜@「少废话老实交代哟！　你这个下水道丑女！」
-grisaia2/michiruss2#00073	@满@「喂，入巢君，适可而止」
-grisaia2/michiruss2#00074	@满@「你仔细看看。才不是下水道丑女，是平均分。没有丑到下水道的份。还过得去，过得去」
-grisaia2/michiruss2#00075	@莳菜@「哈，确实。不算丑，也不算好哟。
-grisaia2/michiruss2#00076	仔细一看是平均分。失礼了，敬礼」
-grisaia2/michiruss2#00077	@满@「抱歉啊，平均分的榊小姐。入巢君也不是故意的……」
-grisaia2/michiruss2#00078	@由美子@「能赶紧往下推进吗!?　总觉得非常不愉快」
-grisaia2/michiruss2#00079	@满@「是啊，回到正题吧。那么，想了解一下洗澡后的行动」
-grisaia2/michiruss2#00080	@由美子@「洗完澡后，我在房间里」
-grisaia2/michiruss2#00081	@满@「在房间做什么？」
-grisaia2/michiruss2#00082	@由美子@「在房间……上网」
-grisaia2/michiruss2#00083	@满@「能告诉我在看什么网站吗？」
-grisaia2/michiruss2#00084	@由美子@「……这是任意配合吧？　那我拒绝」
-grisaia2/michiruss2#00085	@满@「唔，可疑啊……」
-grisaia2/michiruss2#00086	@由美子@「不、不可疑……」
-grisaia2/michiruss2#00087	@莳菜@「不可疑的话，就说出浏览过的网站名哟！」
-grisaia2/michiruss2#00088	@由美子@「那个，有点……」
-grisaia2/michiruss2#00089	@莳菜@「快说哟，擦边平均分！」
-grisaia2/michiruss2#00090	@由美子@「龟甲缚.to!!」
-grisaia2/michiruss2#00091	@莳菜@「浏览这种小众网站，终于露出尾巴了哟――！」
-grisaia2/michiruss2#00092	@由美子@「什么尾巴！　看什么网站是我的自由吧！」
+grisaia2/michiruss2#00066	@满@「请问你昨天晚上都在做些什么呢？」
+grisaia2/michiruss2#00067	@由美子@「昨天？昨天我记得早早就去洗澡了……。请问，这是在审讯我吗？」
+grisaia2/michiruss2#00068	@满@「审讯？怎么会呢，只是例行公事稍微向您了解一下情况而已啦」
+grisaia2/michiruss2#00069	@由美子@「那也就是说，我根本没有老老实实配合回答的义务对吧？」
+grisaia2/michiruss2#00070	@满@「话虽如此，但如果您拒不配合调查的话，我们这边也不得不采取相应的强制手段了呢」
+grisaia2/michiruss2#00071	@由美子@「你这话是什么意思？」
+grisaia2/michiruss2#00072	@莳菜@「少废话给我老实交代！你这个超级大丑女！」
+grisaia2/michiruss2#00073	@满@「喂，入巢君，给我适可而止一点！」
+grisaia2/michiruss2#00074	@满@「你给我瞪大眼睛仔细看好。才不是什么超级大丑女呢，明明就是平均分水准。根本没有丑到被叫丑女的份上嘛。也就马马虎虎，马马虎虎啦」
+grisaia2/michiruss2#00075	@莳菜@「哈啊，确实。既不算难看，但也没好看哪里去的感觉哟。
+grisaia2/michiruss2#00076	仔细一瞧确实是平均分。万分失礼了，唰！（敬礼）」
+grisaia2/michiruss2#00077	@满@「真是太抱歉了呢，平均分的榊小姐。入巢君其实也没有什么恶意的……」
+grisaia2/michiruss2#00078	@由美子@「能不能少废话赶紧进入正题啊！？总觉得被你们两个弄得极度火大不爽哎」
+grisaia2/michiruss2#00079	@满@「说的也是呢，言归正传。那么我想了解一下你沐浴之后的行动轨迹」
+grisaia2/michiruss2#00080	@由美子@「洗完澡之后我就一直待在自己的房间里」
+grisaia2/michiruss2#00081	@满@「在房间里做了什么？」
+grisaia2/michiruss2#00082	@由美子@「在房间里……上网」
+grisaia2/michiruss2#00083	@满@「能告诉我们你具体都浏览了些什么网站吗？」
+grisaia2/michiruss2#00084	@由美子@「……这属于自愿配合的范畴吧？那我拒绝回答」
+grisaia2/michiruss2#00085	@满@「哼哼，可疑啊……」
+grisaia2/michiruss2#00086	@由美子@「才、不可疑……」
+grisaia2/michiruss2#00087	@莳菜@「既然不可疑，那就把看过的网站名字大声念出来哟！」
+grisaia2/michiruss2#00088	@由美子@「那种事情，有点……」
+grisaia2/michiruss2#00089	@莳菜@「少废话快老实交代，你这个勉强擦边的及格平均分！」
+grisaia2/michiruss2#00090	@由美子@「龟甲缚.to（亀甲縛り.to）！！」
+grisaia2/michiruss2#00091	@莳菜@「居然敢看这么重口硬核的小众猎奇网站，你终于露出狐狸尾巴了吧——！」
+grisaia2/michiruss2#00092	@由美子@「露出什么尾巴啦！我想看哪个网站是我自己的自由吧！」
 grisaia2/michiruss2#00093	@由美子@「啊……」
-grisaia2/michiruss2#00094	@由美子@「说起来，昨晚我看到有人朝学园长的房间去了」
-grisaia2/michiruss2#00095	@莳菜@「你敢撒谎哟这贱货！　我要给你拆穿不在场证明哟！」
-grisaia2/michiruss2#00096	@由美子@「我没撒谎。虽然没看真切，但那奇怪的脚步声，我记得」
-grisaia2/michiruss2#00097	@满@「哦，奇怪的脚步声。可疑啊……这也可疑啊……。
-grisaia2/michiruss2#00098	那么，感谢您的配合」
-grisaia2/michiruss2#00099	@莳菜@「那女人，果然有问题哟」
-grisaia2/michiruss2#00100	@满@「不，她说的是实话吧。下一个，周防」
-grisaia2/michiruss2#00101	@天音@「学园长她？　怎么会……」
-grisaia2/michiruss2#00102	@满@「节哀顺变。我们正在向各位了解情况，昨天你在做什么？」
+grisaia2/michiruss2#00094	@由美子@「说起来，昨天夜里我确实看到有人朝着学园长的房间走过去了」
+grisaia2/michiruss2#00095	@莳菜@「少撒谎了你这贱女人！看本官把你的不在场证明彻底粉碎哟！」
+grisaia2/michiruss2#00096	@由美子@「我才没有撒谎！虽然当时没有看得很真切，但我清楚记得那脚步声相当奇特古怪」
+grisaia2/michiruss2#00097	@满@「嚯，奇特的脚步声。可疑啊……这又是一股可疑的腥味呢……。
+grisaia2/michiruss2#00098	那么，多谢您的配合了」
+grisaia2/michiruss2#00099	@莳菜@「那个女人，绝对脱不了干系哟」
+grisaia2/michiruss2#00100	@满@「不，她说的应该是实话。下一个，周防」
+grisaia2/michiruss2#00101	@天音@「学园长她？怎么会这样……」
+grisaia2/michiruss2#00102	@满@「请节哀。我们目前正在向全员询问调查，请问你昨天都在做些什么呢？」
 grisaia2/michiruss2#00103	@天音@「练肌肉」
-grisaia2/michiruss2#00104	@满@「……请讲？」
-grisaia2/michiruss2#00105	@天音@「锻炼下腹部肌肉的训练。然后，一心一意地……」
-grisaia2/michiruss2#00106	@莳菜@「怎么练的哟」
-grisaia2/michiruss2#00107	@天音@「首先像这样，做深蹲一样的动作……」
-grisaia2/michiruss2#00108	@莳菜@「哦……哦、哦」
-grisaia2/michiruss2#00109	@天音@「然后，意念，把意念集中到下腹！」
+grisaia2/michiruss2#00104	@满@「……哈啊？」
+grisaia2/michiruss2#00105	@天音@「锻炼下腹部深层肌肉的专项特训。心无旁骛、全身心地投入其中……」
+grisaia2/michiruss2#00106	@莳菜@「具体是怎么个练法哟」
+grisaia2/michiruss2#00107	@天音@「首先像这样摆出深蹲一般的姿势……」
+grisaia2/michiruss2#00108	@莳菜@「哦呜……哦、哦呜」
+grisaia2/michiruss2#00109	@天音@「然后意念！把全部意念集中到下腹部！」
 grisaia2/michiruss2#00110	@莳菜@「意念！」
-grisaia2/michiruss2#00111	@天音@「这样你也完美了！　那接下来是这种泵状的器具……」
-grisaia2/michiruss2#00112	@满@「行，嗯。够了，就到这吧」
-grisaia2/michiruss2#00113	@天音@「话说，这里才是正片哦？」
-grisaia2/michiruss2#00114	@满@「昨天你一直在做这个？」
-grisaia2/michiruss2#00115	@天音@「是啊，一直……」
-grisaia2/michiruss2#00116	@莳菜@「这学园里全是变态哟！」
-grisaia2/michiruss2#00117	@满@「听说昨晚听到了奇怪的脚步声，有印象吗？」
-grisaia2/michiruss2#00118	@天音@「啊――。嗯――，是啊，没有……。不过，是觉得有点怪。走廊是湿的」
+grisaia2/michiruss2#00111	@天音@「这样一来你也能达到完美境界！接下来使用这个气泵状的辅助器具……」
+grisaia2/michiruss2#00112	@满@「行了行了，嗯。够了，那种东西可以不用展示了」
+grisaia2/michiruss2#00113	@天音@「不是等等，高潮戏码现在才正要开始呢好不好？」
+grisaia2/michiruss2#00114	@满@「昨天一整天你都在做这个吗？」
+grisaia2/michiruss2#00115	@天音@「是啊，一直在做……」
+grisaia2/michiruss2#00116	@莳菜@「这所学园里全是一群变态哟！」
+grisaia2/michiruss2#00117	@满@「听说昨晚有人听到了奇特的脚步声，你有什么头绪吗？」
+grisaia2/michiruss2#00118	@天音@「啊——。嗯——，说的也是呢，倒没有什么特别的……。不过，我隐约觉得有点反常。走廊当时好像是湿漉漉的」
 grisaia2/michiruss2#00119	@幸@「那个，刑警先生」
-grisaia2/michiruss2#00120	@莳菜@「你不就是小岭的小幸吗哟」
-grisaia2/michiruss2#00121	@满@「来得正好。小岭小姐，你在学园里到处打扫什么的。走廊上的液体，有印象吗？」
-grisaia2/michiruss2#00122	@满@「昨天，见到什么可疑的人了吗？」
-grisaia2/michiruss2#00123	@幸@「见过。但是，不知道能不能说……」
-grisaia2/michiruss2#00124	@幸@「我看到学园长，和那个人一起往外走了。靠得非常人般的紧，我怀疑是不是那种关系……」
-grisaia2/michiruss2#00125	@莳菜@「那个对象是谁哟！　快从实招来！」
-grisaia2/michiruss2#00126	@满@「等等入巢君。小岭小姐，你看到的，和这个有关系吧？」
-grisaia2/michiruss2#00127	@幸@「!!」
-grisaia2/michiruss2#00128	@莳菜@「那是……小小的会发光的神秘板状物！」
-grisaia2/michiruss2#00129	@幸@「是的，正是如此」
-grisaia2/michiruss2#00130	@满@「果然如此……我知道凶手是谁了」
-grisaia2/michiruss2#00131	@满@「凶手会回到现场。这句话，对如今复杂的犯罪来说，恐怕已经不太适用了」
-grisaia2/michiruss2#00132	@满@「只是，这一次，倒像是应验了呢」
-grisaia2/michiruss2#00133	@莳菜@「警部，这里只有我们两个人哟。您在跟谁说话？」
-grisaia2/michiruss2#00134	@满@「入巢君。在那里哟，看不见吗，那里」
-grisaia2/michiruss2#00135	@莳菜@「看见？　不，我只看到地面」
-grisaia2/michiruss2#00136	@满@「就是那地面。地面上不是掉着东西吗？」
-grisaia2/michiruss2#00137	@莳菜@「哈，一条鱼。可那只是普通的鱼哟？」
-grisaia2/michiruss2#00138	@满@「不，不对。您已经不必躲了，金枪鱼侠先生」
-grisaia2/michiruss2#00139	@鱼@「……不愧是刑警先生」
-grisaia2/michiruss2#00140	@莳菜@「啊，你是，金枪鱼侠！　我还以为只是条巨大的鱼掉在地上！」
-grisaia2/michiruss2#00141	@满@「一开始我就觉得可疑了。现场漂着鱼腥味。还有这小小的鳞片。这是您的鳞片吧？」
-grisaia2/michiruss2#00142	@金枪鱼侠@「……正是。确实那是我的鳞片。回家冲澡的时候，发现右腋下的鳞片掉了」
-grisaia2/michiruss2#00143	@满@「于是回到现场，警察却已经到了，是这样吧」
-grisaia2/michiruss2#00144	@金枪鱼侠@「能问一个问题吗？　左腹的鱼腩也应该掉了，那去哪了？」
-grisaia2/michiruss2#00145	@满@「鱼腩？　那种东西……」
-grisaia2/michiruss2#00146	@莳菜@「啊，那是我吃了哟！」
-grisaia2/michiruss2#00147	@满@「吃了？」
-grisaia2/michiruss2#00148	@莳菜@「现场掉了鱼腩肉，心想这可真是走运，就吃了！　真好吃！」
-grisaia2/michiruss2#00149	@满@「……今后，是不是该留作证物呢？」
-grisaia2/michiruss2#00150	@莳菜@「明白了哟！」
-grisaia2/michiruss2#00151	@金枪鱼侠@「可恨，要是连鳞片都找不到，就是完美犯罪了！」
-grisaia2/michiruss2#00152	@满@「能……讲讲动机吗？」
-grisaia2/michiruss2#00153	@金枪鱼侠@「那女人说是我的粉丝凑上来的。起初我还老实信了，只觉得她黏得反常」
-grisaia2/michiruss2#00154	@金枪鱼侠@「结果那家伙，竟然拿勺子挖中段肉吃！　我以为，我以为她是纯爱，结果她只是图我的身体！」
-grisaia2/michiruss2#00155	@满@「原来如此……于是一时冲动杀了她抛进海里，是这样吧？」
-grisaia2/michiruss2#00156	@金枪鱼侠@「刑警先生，您能懂眼睁睁看着中段肉被偷吃的心情吗!?　还有，亲手杀了心爱的女人的我的心情……」
-grisaia2/michiruss2#00157	@满@「金枪鱼侠啊，你犯下的罪孽太深重了。但是呐，人啊，是可以无数次重来的生物」
-grisaia2/michiruss2#00158	@满@「再坏的人，只要打心底悔悟、想重新做人，什么时候都能回到正道」
-grisaia2/michiruss2#00159	@满@「人，就是这样一种生物啊」
+grisaia2/michiruss2#00120	@莳菜@「你不就是小岭家的小幸嘛哟」
+grisaia2/michiruss2#00121	@满@「来得正好啊。小岭小姐，你平时因为负责学园的打扫总到处走动巡视。关于走廊上的液体，你有什么线索吗？」
+grisaia2/michiruss2#00122	@满@「昨天，你有没有看到什么形迹可疑的家伙？」
+grisaia2/michiruss2#00123	@幸@「是的。但是，我不知道该不该说……」
+grisaia2/michiruss2#00124	@幸@「我看到学园长和那个人一起往外面走去了。而且是以一种极不寻常的姿势紧紧贴在一起，我还以为他们是那种亲密关系呢……」
+grisaia2/michiruss2#00125	@莳菜@「那家伙到底是谁哟！快点给我从实招来！」
+grisaia2/michiruss2#00126	@满@「且慢，入巢君。小岭小姐，你所看到的，是否跟这个东西有关联呢？」
+grisaia2/michiruss2#00127	@幸@「！！」
+grisaia2/michiruss2#00128	@莳菜@「那是……闪烁着微光的神秘小型板状物体！」
+grisaia2/michiruss2#00129	@幸@「是的，正如您所料」
+grisaia2/michiruss2#00130	@满@「果然如此吗……真凶我已经彻底看穿了」
+grisaia2/michiruss2#00131	@满@「凶手终究会重返案发现场。这句话对于如今错综复杂的现代犯罪或许并不怎么适用了」
+grisaia2/michiruss2#00132	@满@「然而，唯独这一次，看来确实应验了呢」
+grisaia2/michiruss2#00133	@莳菜@「警部，这里明明只有我们两个人哟。您到底在冲着谁发表高见啊？」
+grisaia2/michiruss2#00134	@满@「入巢君。就在那里啊，难道你看不到吗？」
+grisaia2/michiruss2#00135	@莳菜@「看得到？不，我眼里看到的就只有光秃秃的地面哟」
+grisaia2/michiruss2#00136	@满@「就是那片地面啊。地面上不是掉着什么东西吗？」
+grisaia2/michiruss2#00137	@莳菜@「哈啊，一条鱼。可那不过就是条普普通通的鱼嘛哟？」
+grisaia2/michiruss2#00138	@满@「不，并非如此。你已经用不着再躲躲藏藏了哦，金枪鱼侠先生」
+grisaia2/michiruss2#00139	@鱼@「……真不愧是刑警先生呢」
+grisaia2/michiruss2#00140	@莳菜@「啊，你这家伙是，金枪鱼侠！我还以为只是条大号死鱼掉在地上呢！」
+grisaia2/michiruss2#00141	@满@「我从一开始就觉得可疑了。弥漫在现场那股浓烈的生鱼腥味。以及这枚小小的薄片。这是你身上的鱼鳞吧？」
+grisaia2/michiruss2#00142	@金枪鱼侠@「……正是如此。那确实是我的鱼鳞没错。回家正准备冲凉洗澡时，我才猛然察觉右胁腹的一片鱼鳞不知掉在了哪里」
+grisaia2/michiruss2#00143	@满@「于是你匆匆忙忙折返现场企图回收销毁证据，却发现警察早已先一步赶到了现场，是吧」
+grisaia2/michiruss2#00144	@金枪鱼侠@「我能问一个问题吗？我记得左腹部的上等中腹鱼腩（中トロ）应该也掉在了这里才对，到底被弄到哪里去了？」
+grisaia2/michiruss2#00145	@满@「鱼腩？那种东西怎么可能……」
+grisaia2/michiruss2#00146	@莳菜@「啊，那个已经被我吃下肚了哟！」
+grisaia2/michiruss2#00147	@满@「你吃了！？」
+grisaia2/michiruss2#00148	@莳菜@「现场正好掉着一块新鲜肥美的金枪鱼腩切片，本官心想真是走大运了，就顺手吃了！超级美味的说！」
+grisaia2/michiruss2#00149	@满@「……以后记得当作呈堂证供好好妥善保管起来行不行啊！？」
+grisaia2/michiruss2#00150	@莳菜@「明白遵命了哟！」
+grisaia2/michiruss2#00151	@金枪鱼侠@「可恶，要不是那片该死的鱼鳞被发现，这本该是一场天衣无缝的完美犯罪啊！」
+grisaia2/michiruss2#00152	@满@「能请你……把作案动机如实交代出来吗？」
+grisaia2/michiruss2#00153	@金枪鱼侠@「那个女人，自称是我的粉丝凑了过来。起初我还老老实实全盘相信了，只是觉得她总爱黏黏糊糊地贴上来」
+grisaia2/michiruss2#00154	@金枪鱼侠@「可是那个女人，居然做出那种天理难容的事……她竟然趁我不备拿汤匙挖我骨缝里的鲜嫩中落肉（中落ち）生吃啊！亏我还一直以为那是至死不渝的纯爱，没想到她从头到尾只是图我的肉体啊！！」
+grisaia2/michiruss2#00155	@满@「原来如此……所以你一时怒火攻心将她杀害抛尸大海，是这么回事吧？」
+grisaia2/michiruss2#00156	@金枪鱼侠@「刑警先生，你能体会到被人背地里用汤匙一点点偷挖骨髓中落肉生吃的绝望心情吗！？还有，亲手弑杀自己挚爱之人的我的悲痛……」
+grisaia2/michiruss2#00157	@满@「金枪鱼啊，你犯下的罪孽固然深重。但是啊，人类是一种无论跌倒多少次都能重新来过的坚韧生物」
+grisaia2/michiruss2#00158	@满@「哪怕曾是十恶不赦之徒，只要从心底真诚悔悟、渴望洗心革面，任何时候都能重新回归正道」
+grisaia2/michiruss2#00159	@满@「这就是所谓人类这种生物啊」
 grisaia2/michiruss2#00160	@金枪鱼侠@「刑警先生……」
-grisaia2/michiruss2#00161	@金枪鱼侠@「我是，鱼类啊……」
+grisaia2/michiruss2#00161	@金枪鱼侠@「可老子……是鱼类啊……」
 grisaia2/michiruss2#00162	@满@「……啊」
-grisaia2/michiruss2#00163	@金枪鱼侠@「呜呜呜呜呜，千鹤，我这就过去――！」
-grisaia2/michiruss2#00164	@莳菜@「啊，金枪鱼侠从悬崖跳海了！」
-grisaia2/michiruss2#00165	@金枪鱼侠@「金――枪――鱼――侠――!!」
-grisaia2/michiruss2#00166	@莳菜@「掉下去了！　警部，金枪鱼那家伙，掉下去了哟！」
-grisaia2/michiruss2#00167	@满@「从这个高度，恐怕连挣扎的余地都没有吧……」
-grisaia2/michiruss2#00168	@满@「就这样，学园长杀人事件在令人意犹未尽中收场了。真正的坏人，究竟是谁呢？」
-grisaia2/michiruss2#00169	@满@「图人身接近的学园长。容不下这个而下狠手的金枪鱼」
-grisaia2/michiruss2#00170	@满@「捡起鱼腩就吃掉的入巢君。对鱼类说了句刻薄话的我」
-grisaia2/michiruss2#00171	@满@「不，谁都没有错。硬要说的话，是时代错了。世界变得好悲哀啊」
-grisaia2/michiruss2#00172	@满@「入巢君。今天我请客，喝一杯如何」
-grisaia2/michiruss2#00173	@莳菜@「警部难得大方哟」
-grisaia2/michiruss2#00174	@满@「什么嘛，就是突然想吃上好的鱼腩了嘛……」
+grisaia2/michiruss2#00163	@金枪鱼侠@「呜呜呜呜呜，千鹤，我现在就来陪你了——！」
+grisaia2/michiruss2#00164	@莳菜@「啊，金枪鱼侠从悬崖纵身跃入大海了哟！」
+grisaia2/michiruss2#00165	@金枪鱼侠@「金——枪——鱼——侠——！！」
+grisaia2/michiruss2#00166	@莳菜@「摔下去了！警部，金枪鱼那家伙，彻底摔下去了哟！」
+grisaia2/michiruss2#00167	@满@「从这种万丈悬崖的高度跳下去，恐怕当场就粉身碎骨了吧……」
+grisaia2/michiruss2#00168	@满@「就这样，学园长杀人事件以令人怅然若失的结局拉下了帷幕。真正犯错的究竟是谁呢？」
+grisaia2/michiruss2#00169	@满@「是图谋肉体而刻意接近的学园长？还是忍无可忍诉诸暴力的金枪鱼？」
+grisaia2/michiruss2#00170	@满@「是捡起掉落的金枪鱼腩当场咽下肚的入巢君？还是对鱼类说出了刻薄风凉话的我？」
+grisaia2/michiruss2#00171	@满@「不，谁都没有错。硬要说的话，错的是这个时代。真是变成了一个可悲的世界啊」
+grisaia2/michiruss2#00172	@满@「入巢君。今天本警部请客，去喝一杯如何？」
+grisaia2/michiruss2#00173	@莳菜@「这可真不像警部一贯的抠门作风哟」
+grisaia2/michiruss2#00174	@满@「哎呀，说来难为情……我突然特别想吃上等肥美的中腹金枪鱼腩（中トロ）了嘛……」
 grisaia2/michiruss2#00175	
 
 
 
 
-$C(255,0,0)$A(1)完！
+$C(255,0,0)$A(1)完っ！
 grisaia2/michiruss3#00000	@少女@「桃子的表面，长着细细的绒毛，对吧？」
 grisaia2/michiruss3#00001	@满@「嗯」
 grisaia2/michiruss3#00002	@少女@「那个，是不是和，这样，鼻子下面长的那个一样？」

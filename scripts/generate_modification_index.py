@@ -1859,6 +1859,18 @@ def classify_change(line_no, sid, ja, old_cn, new_cn):
     if "早食い" in ja or "チャンペスト" in ja or "アイスクリーム頭痛" in ja or "チョコバナナ" in ja or "短冊" in ja or "づっとお兄ちゃんと一緒" in ja or "黒い携帯" in ja:
         return "满刨冰脑结冰败退与七夕短册父女誓约", "绝妙还原满自封冠军之王（Champest）狂炫刨冰致脑结冰送医的活宝行径、天音舔食巧克力香蕉的母性反差、莳菜写错别字的七夕短册‘想永远和哥哥在一起’、以及雄二注视CIRS黑色手机暗誓守护莳菜的深情内核"
 
+    # michiruss2 specific (Milestone 3 Chapter 29 - Michiru Short Story 2: Detective Michiru & Principal Murder Case)
+    if "橘千鶴" in ja or "浜辺" in ja or "死体" in ja or "遊泳" in ja or "沖" in ja or "プレート" in ja or "学園長殺人事件" in ja:
+        return "硬派刑侦剧片场与海滩千鹤尸体疑案", "爆笑恶搞开幕！满化身大牌警部、莳菜化身入巢刑警调查橘千鹤海滩‘尸体’案；纠正机翻将‘沖（外海）’遗留为生硬英文字母‘offshore’的低级错误；由千鹤肌肤上的发光鳞片断定为恶性杀人事件"
+    if "榊" in ja or "ブス" in ja or "ドブス" in ja or "刃物" in ja or "平均点" in ja or "すりきり" in ja or "亀甲縛り" in ja or "尻尾" in ja:
+        return "由美子平均分丑女与龟甲缚网站不在场证明", "毒舌暴击！莳菜狂喷由美子是‘性格恶劣没朋友的超级大丑女（ドブス）’，由美子破防抗议；满出面‘劝架’却精准背刺由美子其实是‘擦边及格平均分（すりきり平均点）’；审问上网记录逼出由美子深更半夜浏览重口‘龟甲缚.to’网站的不在场证明"
+    if "パイオツ" in ja or "カイデー" in ja or "筋トレ" in ja or "下腹部" in ja or "意識" in ja or "ポンプ" in ja or "サッちん" in ja or "爆破" in ja:
+        return "天音深蹲意念健美操与小幸设施爆破案", "高能相声！纠正机翻将莳菜倒装行业黑话‘パイオツがカイデー（欧派巨大）’错译为胸大无脑；天音一本正经演示深蹲集中意念至下腹部、掏出神秘气泵器具；小幸被曝曾伙同共犯爆破学园设施"
+    if "マグロマン" in ja or "魚" in ja or "地面" in ja or "生臭い" in ja or "ウロコ" in ja or "鱗" in ja or "中落ち" in ja or "スプーン" in ja or "純愛" in ja or "体目当て" in ja:
+        return "金枪鱼侠真身暴露与汤匙刮中落肉惨剧", "荒诞神展开！满当场识破倒在地上伪装死鱼的‘金枪鱼侠（マグロマン）’，指出现场鱼腥味与遗落鱼鳞破绽；揭秘作案动机：千鹤借粉丝之名接近，实则趁夜拿汤匙偷偷挖食金枪鱼侠骨缝里的鲜嫩中落肉（中落ち）生吃，纯爱惨变图谋肉体"
+    if "やり直せる" in ja or "人間" in ja or "魚類" in ja or "崖" in ja or "時代" in ja or "後味" in ja or "中トロ" in ja or "完っ" in ja:
+        return "金枪鱼哲学感化翻车与万丈悬崖跃入大海", "泪点与笑点齐飞！满警部发表硬汉日剧说教试图感化凶手‘人类可以重新来过’，惨遭金枪鱼侠一句‘老子是鱼类啊’当场光速打脸；金枪鱼侠大喊千鹤名字纵身跳崖殉情；结尾满反思时代悲哀，转头带莳菜去吃上等中腹鱼腩（中トロ）"
+
     # mic_006 specific (Milestone 3 Chapter 28 - Michiru After Story Chapter 6)
     if "視点" in ja or "価値観" in ja or "愛してる" in ja or "説教" in ja or "アルバム" in ja or "写真" in ja:
         return "视角转换大道理与漫漫长路爱情哲学", "生动还原雄二的人生哲理：通过雪花球引导满转换审视人生的视角，将执念与烦恼化为无足轻重；坦言哪怕未来这些大道理被扔进垃圾桶也无妨，只要满记住一句‘无论何时我都爱着你’；二人约定拍下海量照片封存所有微小幸福"
@@ -8470,6 +8482,32 @@ def build_report():
                 "section": "灰色的迷宫·入巢莳菜后日谈第四章·教室春梦吻满、水泥柱爆头与由美子美滨冷藏库落果论 (`grisaia2/mak_004`)"
             })
 
+    # Milestone 3 Chapter 29: Michiru Short Story 2 (grisaia2/michiruss2)
+    for lno in range(74580, 74766):
+        ja_raw = ja_lines[lno - 1].rstrip("\r\n")
+        cn_raw = cn_lines[lno - 1].rstrip("\r\n")
+        sid = ja_raw.split("\t")[0] if "\t" in ja_raw else f"L{lno}"
+        ja_txt = ja_raw.split("\t")[1] if "\t" in ja_raw else ja_raw
+        cn_txt = cn_raw.split("\t")[1] if "\t" in cn_raw else cn_raw
+
+        old_txt = cn_txt
+        if git_base_cn and len(git_base_cn) >= lno:
+            head_raw = git_base_cn[lno - 1].rstrip("\r\n")
+            old_txt = head_raw.split("\t")[1] if "\t" in head_raw else head_raw
+
+        if cn_txt != old_txt and cn_txt.strip() != "":
+            cat, reason = classify_change(lno, sid, ja_txt, old_txt, cn_txt)
+            diffs.append({
+                "lno": lno,
+                "sid": sid,
+                "ja": ja_txt,
+                "old": old_txt,
+                "new": cn_txt,
+                "cat": cat,
+                "reason": reason,
+                "section": "灰色的迷宫·松岛满短篇第二话·满警部入巢刑警、美滨学园长杀人事件与金枪鱼侠骨肉纯爱跳崖惨剧 (`grisaia2/michiruss2`)"
+            })
+
     # Milestone 3 Chapter 28: Michiru After Story Chapter 6 (grisaia2/mic_006)
     for lno in range(74293, 74580):
         ja_raw = ja_lines[lno - 1].rstrip("\r\n")
@@ -10777,6 +10815,15 @@ def build_report():
     md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
     md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
     for idx, d in enumerate(mak_004_diffs, 1):
+        md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
+    md.append("\n---\n")
+
+    # Section 228 - Milestone 3: Labyrinth of Grisaia Michiru Short Story 2
+    michiruss2_diffs = [d for d in diffs if d["section"].startswith("灰色的迷宫·松岛满短篇第二话")]
+    md.append(f"## 二百二十八、 灰色的迷宫·松岛满短篇第二话·满警部入巢刑警、美滨学园长杀人事件与金枪鱼侠骨肉纯爱跳崖惨剧 (`grisaia2/michiruss2`，共 {len(michiruss2_diffs)} 条) —— 【里程碑三·松岛满短篇第二话】\n")
+    md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
+    md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
+    for idx, d in enumerate(michiruss2_diffs, 1):
         md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
     md.append("\n---\n")
 
