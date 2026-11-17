@@ -1859,6 +1859,16 @@ def classify_change(line_no, sid, ja, old_cn, new_cn):
     if "早食い" in ja or "チャンペスト" in ja or "アイスクリーム頭痛" in ja or "チョコバナナ" in ja or "短冊" in ja or "づっとお兄ちゃんと一緒" in ja or "黒い携帯" in ja:
         return "满刨冰脑结冰败退与七夕短册父女誓约", "绝妙还原满自封冠军之王（Champest）狂炫刨冰致脑结冰送医的活宝行径、天音舔食巧克力香蕉的母性反差、莳菜写错别字的七夕短册‘想永远和哥哥在一起’、以及雄二注视CIRS黑色手机暗誓守护莳菜的深情内核"
 
+    # sac_005 Part 2 specific (Milestone 3 Chapter 36 - Sachi After Story Chapter 5 Part 2: Vent Duct Crawl, Kitchen Fridge Blast, Maid Hybrid Wedding Dress & Bouquet Toss)
+    if "通気ダクト" in ja or "ダクトの中" in ja or "潜水艦の艦長" in ja or "やれるな？" in ja or "幸運のおまじない" in ja or "ハサミで、ドレスの裾" in ja or "亜鉛鉄板" in ja:
+        return "剪裁婚纱潜入风管与潜艇艇长抉择", "悲壮果决的潜艇艇长决断！香水炸弹狂徒以全场性命相胁诱逼拆弹，通风管道唯有幸能够钻入；面对JB的极力阻拦，雄二如潜艇艇长般做出冷酷正确的唯一决断；幸毅然用剪刀裁断心爱婚纱裙摆，额吻护身符后潜入冰冷镀锌铁皮风管"
+    if "厨房は何処にある" in ja or "トラップ型" in ja or "業務用冷蔵庫" in ja or "身体を突っ張るような姿勢" in ja or "内臓を直接握り込まれる" in ja or "勝負は俺の勝ち" in ja:
+        return "诡雷陷阱肉身抵柜闷杀核爆与后背灼伤", "硬核惊险的肉身排爆决战！幸冷静带出四螺栓陷阱诡雷（仅余3分钟且不可拆解），雄二飞奔后厨将炸弹塞入商用不锈钢冷藏柜、用食材填死缝隙并以血肉之躯死死抵住柜门；炸弹爆轰撕裂脏腑、后背严重灼伤，雄二硬生生扛下冲击波彻底闷杀爆炸"
+    if "ウェディングドレスのことだ" in ja or "破れ方を見て思いついた" in ja or "キヌさん" in ja or "キヨさん" in ja or "ビデオカメラ" in ja or "刑務所みたいな学園" in ja:
+        return "婚纱尽毁痛哭自责、镇民温情见证与天音改纱妙计", "绝美爱情与小镇温情！后厨硝烟中幸痛哭扑来，雄二不顾满身灼伤反倒深情致歉‘害得你亲手剪碎了最期待的婚纱’，两人泪眼交融；大堂阿清阿婆与阿绢阿婆笑忆美滨孩子们的懂事与成长；天音灵光乍现提议用随身女仆装面料重构拼接破损婚纱"
+    if "メイド服の生地をみんなで縫い合わせた" in ja or "みにくいアヒルの子" in ja or "穴っぽこだらけ" in ja or "ヴァージンロード" in ja or "神父役のＪＢ" in ja or "ブーケが、証明" in ja:
+        return "特制女仆婚纱走红毯、满泪崩扎手与捧花飞向晴空", "终生圆满的盛大婚礼高潮！伙伴们连夜用女仆装布料缝缀特制拼花嫁衣，满手指扎满针眼感动泪崩；千鹤牵手引领幸步入教堂托付雄二，JB庄严主持誓约；在满场欢呼中，象征着战胜一切磨难、开启永恒幸福的新娘捧花高高飞向晴空"
+
     # sac_005 Part 1 specific (Milestone 3 Chapter 35 - Sachi After Story Chapter 5 Part 1: Wedding Morning JB Breakfast, Girls' Confession Closure & Cake Bomb Scare)
     if "新郎" in ja or "モッサリヘアー" in ja or "ジャーマンポテト" in ja or "ヴィシソワーズ" in ja or "エッグトースト" in ja or "麻子が死んだ" in ja or "ネクタイ、曲がってる" in ja or "ジュリア" in ja:
         return "JB大卷发早餐温情与麻子逝后收留养育之恩", "婚礼清晨泪目羁绊！雄二醒来回味丈夫责任，JB身着职业西装套围裙烹饪德式土豆与法式土豆冷汤；雄二回想当年麻子骤逝后自己形如槁木，正是JB在公寓每日下厨悉心照料；出门前JB如结发妻子般整理领带，雄二郑重道谢‘谢谢你，茱莉亚’"
@@ -8564,6 +8574,32 @@ def build_report():
                 "section": "灰色的迷宫·入巢莳菜后日谈第四章·教室春梦吻满、水泥柱爆头与由美子美滨冷藏库落果论 (`grisaia2/mak_004`)"
             })
 
+    # Milestone 3 Chapter 36: Sachi After Story Chapter 5 Part 2 (grisaia2/sac_005 Part 2)
+    for lno in range(76875, 77468):
+        ja_raw = ja_lines[lno - 1].rstrip("\r\n")
+        cn_raw = cn_lines[lno - 1].rstrip("\r\n")
+        sid = ja_raw.split("\t")[0] if "\t" in ja_raw else f"L{lno}"
+        ja_txt = ja_raw.split("\t")[1] if "\t" in ja_raw else ja_raw
+        cn_txt = cn_raw.split("\t")[1] if "\t" in cn_raw else cn_raw
+
+        old_txt = cn_txt
+        if git_base_cn and len(git_base_cn) >= lno:
+            head_raw = git_base_cn[lno - 1].rstrip("\r\n")
+            old_txt = head_raw.split("\t")[1] if "\t" in head_raw else head_raw
+
+        if cn_txt != old_txt and cn_txt.strip() != "":
+            cat, reason = classify_change(lno, sid, ja_txt, old_txt, cn_txt)
+            diffs.append({
+                "lno": lno,
+                "sid": sid,
+                "ja": ja_txt,
+                "old": old_txt,
+                "new": cn_txt,
+                "cat": cat,
+                "reason": reason,
+                "section": "灰色的迷宫·小岭幸后日谈第五章（后篇）·剪婚纱潜管道、后厨冷藏柜肉身抵爆、女仆拼接嫁衣与晴空捧花誓约 (`grisaia2/sac_005` Part 2)"
+            })
+
     # Milestone 3 Chapter 35: Sachi After Story Chapter 5 Part 1 (grisaia2/sac_005 Part 1)
     for lno in range(76281, 76875):
         ja_raw = ja_lines[lno - 1].rstrip("\r\n")
@@ -11053,6 +11089,15 @@ def build_report():
     md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
     md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
     for idx, d in enumerate(mak_004_diffs, 1):
+        md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
+    md.append("\n---\n")
+
+    # Section 235 - Milestone 3: Labyrinth of Grisaia Sachi After Story Chapter 5 Part 2
+    sac_005_p2_diffs = [d for d in diffs if d["section"].startswith("灰色的迷宫·小岭幸后日谈第五章（后篇）")]
+    md.append(f"## 二百三十五、 灰色的迷宫·小岭幸后日谈第五章（后篇）·剪婚纱潜管道、后厨冷藏柜肉身抵爆、女仆拼接嫁衣与晴空捧花誓约 (`grisaia2/sac_005` Part 2，共 {len(sac_005_p2_diffs)} 条) —— 【里程碑三·小岭幸后日谈第五话（后篇·完结）】\n")
+    md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
+    md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
+    for idx, d in enumerate(sac_005_p2_diffs, 1):
         md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
     md.append("\n---\n")
 
