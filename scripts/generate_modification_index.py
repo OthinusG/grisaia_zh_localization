@@ -1859,6 +1859,18 @@ def classify_change(line_no, sid, ja, old_cn, new_cn):
     if "早食い" in ja or "チャンペスト" in ja or "アイスクリーム頭痛" in ja or "チョコバナナ" in ja or "短冊" in ja or "づっとお兄ちゃんと一緒" in ja or "黒い携帯" in ja:
         return "满刨冰脑结冰败退与七夕短册父女誓约", "绝妙还原满自封冠军之王（Champest）狂炫刨冰致脑结冰送医的活宝行径、天音舔食巧克力香蕉的母性反差、莳菜写错别字的七夕短册‘想永远和哥哥在一起’、以及雄二注视CIRS黑色手机暗誓守护莳菜的深情内核"
 
+    # mic_006 specific (Milestone 3 Chapter 28 - Michiru After Story Chapter 6)
+    if "視点" in ja or "価値観" in ja or "愛してる" in ja or "説教" in ja or "アルバム" in ja or "写真" in ja:
+        return "视角转换大道理与漫漫长路爱情哲学", "生动还原雄二的人生哲理：通过雪花球引导满转换审视人生的视角，将执念与烦恼化为无足轻重；坦言哪怕未来这些大道理被扔进垃圾桶也无妨，只要满记住一句‘无论何时我都爱着你’；二人约定拍下海量照片封存所有微小幸福"
+    if "プール" in ja or "ダンス" in ja or "反時計回り" in ja or "冒険" in ja or "陰謀" in ja or "掃除屋" in ja or "抹消" in ja:
+        return "海滩圆舞曲与无法预测的人生无常", "细腻刻画小满如跳入泳池般扑入雄二怀中、雄二逆时针抱转圆舞曲的温馨互动；以及雄二对未来未知的深沉觉悟——无常世事中可能遭遇清道夫抹杀，因而与满相视而笑的每一秒皆如奇迹"
+    if "チャフ" in ja or "爆撃機" in ja or "戦略爆撃機" in ja or "電探欺瞞紙" in ja or "アルミ箔" in ja or "電波探知機" in ja or "瓶" in ja:
+        return "真夏奇迹飞雪与战略轰炸机雷达箔条真相", "爆笑高能揭秘！纠正老译文机翻，还原小满目睹万里无云盛夏飘落‘白雪’感动嚎啕大哭以为是白色圣诞节，雄二却一本正经科普此乃‘电波探知机欺瞒纸’（雷达干扰金属箔条）、二战复刻版铝箔条、以及当年战友开瓶吸入金属粉尘鼻腔剧痛的硬核军事冷笑话"
+    if "アルファ" in ja or "ミシマザキ" in ja or "マナツノキセキ" in ja or "ネリス" in ja or "テキサス" in ja or "大佐" in ja or "少将" in ja or "麻子" in ja or "ケニア" in ja or "サイパン" in ja:
+        return "内利斯基地无线电联络与得克萨斯少将人情", "极致排面！雄二当面用无线电联络老战友阿尔法（得克萨斯少将），通报‘真夏奇迹行动’圆满终了；揭秘B-52战略轰炸机系得克萨斯个人从肯尼亚打捞整修的民间机体、因欠日下部麻子人情特意偏航演习撒布箔条为雄二约会造雪，得克萨斯大校称谓背后的军衔轶事"
+    if "新婚旅行" in ja or "軍事博物館" in ja or "奇跡" in ja or "サンタ" in ja or "ペテン師" in ja or "手品師" in ja or "終わりよければ" in ja or "番だ" in ja:
+        return "轰炸机约会收尾与致敬读者的奇迹终章", "感动与吐槽并存的完美收官！小满对硬核战略轰炸机约会抱头抓狂，雄二提议蜜月去参观得克萨斯军事博物馆；总结全篇致敬莎翁名言‘结局美好，一切皆好’，并打破第四面墙激励读者：‘这回轮到你去为了深爱的女人掀起奇迹了！’"
+
     # mic_005 specific (Milestone 3 Chapter 27 - Michiru After Story Chapter 5)
     if "羊" in ja or "地獄" in ja or "数え" in ja or "柵" in ja or "一頭" in ja:
         return "数羊地狱与绵羊量词哲思", "纠正机翻将满数羊不让羊消失误译，绝妙重现满夜不能寐数羊却在脑内堆积200只活羊化作蠕动肉块惨剧、里满吐槽为何不让羊跳完消失、以及纠结羊该按‘只’数还是按‘头’数的无厘头哲学思考"
@@ -8458,6 +8470,32 @@ def build_report():
                 "section": "灰色的迷宫·入巢莳菜后日谈第四章·教室春梦吻满、水泥柱爆头与由美子美滨冷藏库落果论 (`grisaia2/mak_004`)"
             })
 
+    # Milestone 3 Chapter 28: Michiru After Story Chapter 6 (grisaia2/mic_006)
+    for lno in range(74293, 74580):
+        ja_raw = ja_lines[lno - 1].rstrip("\r\n")
+        cn_raw = cn_lines[lno - 1].rstrip("\r\n")
+        sid = ja_raw.split("\t")[0] if "\t" in ja_raw else f"L{lno}"
+        ja_txt = ja_raw.split("\t")[1] if "\t" in ja_raw else ja_raw
+        cn_txt = cn_raw.split("\t")[1] if "\t" in cn_raw else cn_raw
+
+        old_txt = cn_txt
+        if git_base_cn and len(git_base_cn) >= lno:
+            head_raw = git_base_cn[lno - 1].rstrip("\r\n")
+            old_txt = head_raw.split("\t")[1] if "\t" in head_raw else head_raw
+
+        if cn_txt != old_txt and cn_txt.strip() != "":
+            cat, reason = classify_change(lno, sid, ja_txt, old_txt, cn_txt)
+            diffs.append({
+                "lno": lno,
+                "sid": sid,
+                "ja": ja_txt,
+                "old": old_txt,
+                "new": cn_txt,
+                "cat": cat,
+                "reason": reason,
+                "section": "灰色的迷宫·松岛满后日谈第六章·视角转换奇迹、美军B-52轰炸机撒布箔条飞雪与真夏奇迹行动 (`grisaia2/mic_006`)"
+            })
+
     # Milestone 3 Chapter 27: Michiru After Story Chapter 5 (grisaia2/mic_005)
     for lno in range(73556, 74293):
         ja_raw = ja_lines[lno - 1].rstrip("\r\n")
@@ -10739,6 +10777,15 @@ def build_report():
     md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
     md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
     for idx, d in enumerate(mak_004_diffs, 1):
+        md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
+    md.append("\n---\n")
+
+    # Section 227 - Milestone 3: Labyrinth of Grisaia Michiru After Story Chapter 6
+    mic_006_diffs = [d for d in diffs if d["section"].startswith("灰色的迷宫·松岛满后日谈第六章")]
+    md.append(f"## 二百二十七、 灰色的迷宫·松岛满后日谈第六章·视角转换奇迹、美军B-52轰炸机撒布箔条飞雪与真夏奇迹行动 (`grisaia2/mic_006`，共 {len(mic_006_diffs)} 条) —— 【里程碑三·松岛满后日谈第六话】\n")
+    md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
+    md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
+    for idx, d in enumerate(mic_006_diffs, 1):
         md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
     md.append("\n---\n")
 
