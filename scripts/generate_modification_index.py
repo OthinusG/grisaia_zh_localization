@@ -1859,6 +1859,16 @@ def classify_change(line_no, sid, ja, old_cn, new_cn):
     if "早食い" in ja or "チャンペスト" in ja or "アイスクリーム頭痛" in ja or "チョコバナナ" in ja or "短冊" in ja or "づっとお兄ちゃんと一緒" in ja or "黒い携帯" in ja:
         return "满刨冰脑结冰败退与七夕短册父女誓约", "绝妙还原满自封冠军之王（Champest）狂炫刨冰致脑结冰送医的活宝行径、天音舔食巧克力香蕉的母性反差、莳菜写错别字的七夕短册‘想永远和哥哥在一起’、以及雄二注视CIRS黑色手机暗誓守护莳菜的深情内核"
 
+    # mic_004 specific (Milestone 3 Chapter 26 - Michiru After Story Chapter 4)
+    if "スノーグローブ" in ja or "スノードーム" in ja or "骨董" in ja or "泥棒" in ja or "北野くん" in ja:
+        return "旧货店奇迹雪花球与被盗赃物北野君谢罪", "生动还原银边眼镜古董杂货店主赠送不标价的‘呼唤奇迹魔法道具’雪花球、满初见漫天飞雪感动万分旋即被雄二‘垃圾堆捡的/别人家物置讨的’破防、脑补雄二为爱犯罪偷窃并誓言一同坐牢赎罪向假想朋友北野君道歉的爆笑名场面"
+    if "低脳メス豚" in ja or "知らん" in ja or "ホウキ" in ja or "嫉妬" in ja:
+        return "小幸代词人身攻击低能母猪与嫉妒使坏知らん连发", "绝妙重现小幸奉莳菜之命捉弄刚约会归来的满、将满问‘你觉得这个像什么’故意曲解为人身攻击‘低能母猪’、装傻充愣把代词绕进扫帚、‘知らん’冷面二连击、以及坦白承认夹杂微量少女嫉妒心的小恶魔名场面"
+    if "壺" in ja or "尿意" in ja or "月" in ja or "サメ" in ja or "冷め" in ja or "さーメシ" in ja or "思うつぼ" in ja:
+        return "由美子开运瓦罐极度憋尿与小幸鲨鱼空耳投怀送抱", "彻底修正机翻，生动还原由美子为脱身买下天价邪教开运瓦罐死命憋尿惨状、雄二深夜自语感叹恋爱终会冷却（冷め）却被门外路过的小幸空耳成‘心情是鲨鱼（サメ）’激动破门投怀送抱求抱抱、以及雄二玩梗‘吃晚饭（サ・メシ）’顺势把瓦罐推销给幸的顶级相声"
+    if "オマエ" in ja or "愛着形成" in ja or "乙女心" in ja or "コンパクトミラー" in ja or "５点" in ja:
+        return "里满体贴深层剖析少女心与粉饼镜前双重人格打分", "直击泪点！生动再现心脏移植另一人格（里满）借着空调弱风向雄二剖析满盛夏穿冬大衣纯粹是为了被心上人夸可爱的少女心、指出满患有依恋障碍才总是缺乏安全感胡闹、揭示雄二唤其‘你（オマエ）’乃是克制不让其自我膨胀受伤的温柔、以及粉饼折叠镜前给满初次约会打出满分800仅得5分的傲娇互怼"
+
     # mic_003 specific (Milestone 3 Chapter 25 - Michiru After Story Chapter 3)
     if "ヤング・カルビ" in ja or "モモテール教授" in ja or "ウルテ" in ja or "骨付きカルビ" in ja or "マグロマン" in ja:
         return "烤肉将军衍生电影与塑料带骨牛排应援", "纠正机翻将PVC骨付きカルビ误译为‘盐腌带骨肉’，绝妙还原特摄超人番外篇《年轻烤肉3D》关于拯救世界或拯救牛软骨恋人的悲情抉择、影院全场挥舞塑料牛排应援、以及满为烤肉将军凄美命运感动落泪的爆笑神回"
@@ -8436,6 +8446,32 @@ def build_report():
                 "section": "灰色的迷宫·入巢莳菜后日谈第四章·教室春梦吻满、水泥柱爆头与由美子美滨冷藏库落果论 (`grisaia2/mak_004`)"
             })
 
+    # Milestone 3 Chapter 26: Michiru After Story Chapter 4 (grisaia2/mic_004)
+    for lno in range(73178, 73556):
+        ja_raw = ja_lines[lno - 1].rstrip("\r\n")
+        cn_raw = cn_lines[lno - 1].rstrip("\r\n")
+        sid = ja_raw.split("\t")[0] if "\t" in ja_raw else f"L{lno}"
+        ja_txt = ja_raw.split("\t")[1] if "\t" in ja_raw else ja_raw
+        cn_txt = cn_raw.split("\t")[1] if "\t" in cn_raw else cn_raw
+
+        old_txt = cn_txt
+        if git_base_cn and len(git_base_cn) >= lno:
+            head_raw = git_base_cn[lno - 1].rstrip("\r\n")
+            old_txt = head_raw.split("\t")[1] if "\t" in head_raw else head_raw
+
+        if cn_txt != old_txt and cn_txt.strip() != "":
+            cat, reason = classify_change(lno, sid, ja_txt, old_txt, cn_txt)
+            diffs.append({
+                "lno": lno,
+                "sid": sid,
+                "ja": ja_txt,
+                "old": old_txt,
+                "new": cn_txt,
+                "cat": cat,
+                "reason": reason,
+                "section": "灰色的迷宫·松岛满后日谈第四章·旧货店奇迹雪景球、里满少女心剖析与小幸鲨鱼空耳投怀送抱 (`grisaia2/mic_004`)"
+            })
+
     # Milestone 3 Chapter 25: Michiru After Story Chapter 3 (grisaia2/mic_003)
     for lno in range(72644, 73178):
         ja_raw = ja_lines[lno - 1].rstrip("\r\n")
@@ -10665,6 +10701,15 @@ def build_report():
     md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
     md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
     for idx, d in enumerate(mak_004_diffs, 1):
+        md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
+    md.append("\n---\n")
+
+    # Section 225 - Milestone 3: Labyrinth of Grisaia Michiru After Story Chapter 4
+    mic_004_diffs = [d for d in diffs if d["section"].startswith("灰色的迷宫·松岛满后日谈第四章")]
+    md.append(f"## 二百二十五、 灰色的迷宫·松岛满后日谈第四章·旧货店奇迹雪景球、里满少女心剖析与小幸鲨鱼空耳投怀送抱 (`grisaia2/mic_004`，共 {len(mic_004_diffs)} 条) —— 【里程碑三·松岛满后日谈第四话】\n")
+    md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
+    md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
+    for idx, d in enumerate(mic_004_diffs, 1):
         md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
     md.append("\n---\n")
 
