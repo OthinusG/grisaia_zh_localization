@@ -1859,6 +1859,18 @@ def classify_change(line_no, sid, ja, old_cn, new_cn):
     if "早食い" in ja or "チャンペスト" in ja or "アイスクリーム頭痛" in ja or "チョコバナナ" in ja or "短冊" in ja or "づっとお兄ちゃんと一緒" in ja or "黒い携帯" in ja:
         return "满刨冰脑结冰败退与七夕短册父女誓约", "绝妙还原满自封冠军之王（Champest）狂炫刨冰致脑结冰送医的活宝行径、天音舔食巧克力香蕉的母性反差、莳菜写错别字的七夕短册‘想永远和哥哥在一起’、以及雄二注视CIRS黑色手机暗誓守护莳菜的深情内核"
 
+    # etcess1 specific (Milestone 3 Miscellaneous Short 1: Chizuru Sushi Crazy & Crazy Loan Boob Grab Gags)
+    if (68709 <= line_no <= 68785) or sid.startswith("grisaia2/etcess1#"):
+        if "クレイジーローン" in ja or "サラ金" in ja or "消費者金融" in ja or "お金貸し屋" in ja or "松嶋さん" in ja or "お金に困って" in ja:
+            return "由美子出资疯狂借贷放贷暴富计划与满躺枪", "高利放贷大暴走！千鹤退而求其次又盯上榊家巨款，企图成立‘疯狂借贷（Crazy Loan）’高利放贷公司；雄二当场遁走，迎面走来哼歌的满不幸沦为千鹤眼中待宰肥羊"
+        if "おっぱい" in ja or "握ってみせて" in ja or "つまんでみせて" in ja or "胸を握る" in ja:
+            return "‘快握/摘给我看’双关抓胸暴击与千鹤当场炸毛", "名梗高能开场！千鹤向雄二请求‘快握（捏寿司）给我看’、‘快摘（借贷）给我看’，雄二毫不犹豫上手大力揉捏千鹤欧派，一本正经辩称‘手感正合适’，千鹤面红耳赤当场抓狂"
+        if "イカ" in ja or "ハムスター" in ja or "カラストンビ" in ja or "吸盤" in ja or "軟骨" in ja or "塩辛" in ja or "目玉" in ja or "こそぎ取れ" in ja:
+            return "生剖大乌贼吓破胆、仓鼠死不瞑目眼神与下酒菜解说", "解体水产大惨败！雄二拿出整条乌贼指导千鹤开膛，千鹤惨叫乌贼死瞪眼神像极了老家去世的黄金仓鼠；雄二科普鸟嘴硬齿与盐辛鱿鱼极品下酒菜，千鹤被刮吸盘吓退彻底放弃当寿司师傅"
+        if "スシクレイジー" in ja or "スシハカセ" in ja or "お寿司屋さん" in ja or "海外展開" in ja or "アメリカ進出" in ja or "職人" in ja:
+            return "寿司狂人进军好莱坞暴赚妄想与雄二冷酷补刀", "千鹤商业野心大爆发！千鹤抱怨办学园不赚钱，妄想赴美开设正宗寿司店‘寿司狂人（Sushi Crazy）’吸金好莱坞名流；雄二冷酷吐槽外行少对匠人行当指手画脚"
+        return "千鹤寿司狂人与疯狂借贷短篇日常润色", "修正生硬机械翻译，优化千鹤逗趣活宝校长语调与雄二面瘫吐槽"
+
     # sachiss4 specific (Milestone 3 Sachi Short Story 4: Poetic Dusk Soliloquy & Happy Pot Salesman Punchline)
     if (77979 <= line_no <= 78019) or sid.startswith("grisaia2/sachiss4#"):
         if "壷" in ja or "買った" in ja or "毎度ありがとう" in ja or "つまり、どういうこと" in ja:
@@ -8654,6 +8666,32 @@ def build_report():
                 "section": "灰色的迷宫·入巢莳菜后日谈第四章·教室春梦吻满、水泥柱爆头与由美子美滨冷藏库落果论 (`grisaia2/mak_004`)"
             })
 
+    # Milestone 3 Chapter 42: Miscellaneous Short 1 (grisaia2/etcess1)
+    for lno in range(68709, 68786):
+        ja_raw = ja_lines[lno - 1].rstrip("\r\n")
+        cn_raw = cn_lines[lno - 1].rstrip("\r\n")
+        sid = ja_raw.split("\t")[0] if "\t" in ja_raw else f"L{lno}"
+        ja_txt = ja_raw.split("\t")[1] if "\t" in ja_raw else ja_raw
+        cn_txt = cn_raw.split("\t")[1] if "\t" in cn_raw else cn_raw
+
+        old_txt = cn_txt
+        if git_base_cn and len(git_base_cn) >= lno:
+            head_raw = git_base_cn[lno - 1].rstrip("\r\n")
+            old_txt = head_raw.split("\t")[1] if "\t" in head_raw else head_raw
+
+        if cn_txt != old_txt and cn_txt.strip() != "":
+            cat, reason = classify_change(lno, sid, ja_txt, old_txt, cn_txt)
+            diffs.append({
+                "lno": lno,
+                "sid": sid,
+                "ja": ja_txt,
+                "old": old_txt,
+                "new": cn_txt,
+                "cat": cat,
+                "reason": reason,
+                "section": "灰色的迷宫·美滨日常短篇第一话·千鹤握寿司揉欧派进军好莱坞、生剖大乌贼与疯狂借贷高利贷暴走 (`grisaia2/etcess1`)"
+            })
+
     # Milestone 3 Chapter 41: Sachi Short Story 4 (grisaia2/sachiss4)
     for lno in range(77979, 78020):
         ja_raw = ja_lines[lno - 1].rstrip("\r\n")
@@ -11299,6 +11337,15 @@ def build_report():
     md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
     md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
     for idx, d in enumerate(mak_004_diffs, 1):
+        md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
+    md.append("\n---\n")
+
+    # Section 241 - Milestone 3: Labyrinth of Grisaia Miscellaneous Short 1
+    etcess1_diffs = [d for d in diffs if d["section"].startswith("灰色的迷宫·美滨日常短篇第一话")]
+    md.append(f"## 二百四十一、 灰色的迷宫·美滨日常短篇第一话·千鹤握寿司揉欧派进军好莱坞、生剖大乌贼与疯狂借贷高利贷暴走 (`grisaia2/etcess1`，共 {len(etcess1_diffs)} 条) —— 【里程碑三·美滨日常短篇第一话】\n")
+    md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
+    md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
+    for idx, d in enumerate(etcess1_diffs, 1):
         md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
     md.append("\n---\n")
 
