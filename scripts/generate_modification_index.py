@@ -1859,6 +1859,14 @@ def classify_change(line_no, sid, ja, old_cn, new_cn):
     if "早食い" in ja or "チャンペスト" in ja or "アイスクリーム頭痛" in ja or "チョコバナナ" in ja or "短冊" in ja or "づっとお兄ちゃんと一緒" in ja or "黒い携帯" in ja:
         return "满刨冰脑结冰败退与七夕短册父女誓约", "绝妙还原满自封冠军之王（Champest）狂炫刨冰致脑结冰送医的活宝行径、天音舔食巧克力香蕉的母性反差、莳菜写错别字的七夕短册‘想永远和哥哥在一起’、以及雄二注视CIRS黑色手机暗誓守护莳菜的深情内核"
 
+    # ss1 specific (Milestone 3 Miscellaneous Short 3: Operation HPH String Panties Night Vision Infiltration)
+    if (78020 <= line_no <= 78055) or sid.startswith("grisaia2/ss1#"):
+        if "ＨＰＨ" in ja or "ナイトビジョン" in ja or "マルタイ" in ja or "突入" in ja or "戦術チーム" in ja or "退路" in ja or "潜入" in ja:
+            return "夜视仪战术渗透闺房、锁定VIP目标与HPH系带内裤作战", "绝密军事突入！莳菜率领幸与满组成战术特勤小队，佩戴军规夜视仪深夜破门潜入由美子闺房，执行代号‘HPH（听说穿了系带内裤哟？）’作战，术语与战术口令严密还原"
+        if "紐パン" in ja or "パジャマ" in ja or "ステイシャープ" in ja or "辱めてやる" in ja or "ヒモのおパンツ" in ja or "なぜそれを" in ja:
+            return "深层熟睡褪下睡裤、确认系带内裤实物与次日教室当众处刑", "色气与恶作剧大获全胜！幸在目标熟睡之际悄然褪下睡裤，目击确认由美子确穿性感系带内裤；莳菜次日在教室当面揭穿，由美子面红耳赤破防惊呼‘你怎么会知道’"
+        return "美滨日常短篇第三话对话与叙事细节润色", "修正生硬机械翻译，优化少女们军武恶搞与校园日常的无缝反差演出"
+
     # etcess2 specific (Milestone 3 Miscellaneous Short 2: Maguroman Backstage Gossip & Midlife Crisis)
     if (68786 <= line_no <= 68876) or sid.startswith("grisaia2/etcess2#"):
         if "次期も決定" in ja or "息子の登場" in ja or "おやっさん" in ja or "脇役" in ja or "主役" in ja or "バーベキュー" in ja or "呼ばれてへん" in ja:
@@ -8678,6 +8686,32 @@ def build_report():
                 "section": "灰色的迷宫·入巢莳菜后日谈第四章·教室春梦吻满、水泥柱爆头与由美子美滨冷藏库落果论 (`grisaia2/mak_004`)"
             })
 
+    # Milestone 3 Chapter 44: Miscellaneous Short 3 (grisaia2/ss1)
+    for lno in range(78020, 78056):
+        ja_raw = ja_lines[lno - 1].rstrip("\r\n")
+        cn_raw = cn_lines[lno - 1].rstrip("\r\n")
+        sid = ja_raw.split("\t")[0] if "\t" in ja_raw else f"L{lno}"
+        ja_txt = ja_raw.split("\t")[1] if "\t" in ja_raw else ja_raw
+        cn_txt = cn_raw.split("\t")[1] if "\t" in cn_raw else cn_raw
+
+        old_txt = cn_txt
+        if git_base_cn and len(git_base_cn) >= lno:
+            head_raw = git_base_cn[lno - 1].rstrip("\r\n")
+            old_txt = head_raw.split("\t")[1] if "\t" in head_raw else head_raw
+
+        if cn_txt != old_txt and cn_txt.strip() != "":
+            cat, reason = classify_change(lno, sid, ja_txt, old_txt, cn_txt)
+            diffs.append({
+                "lno": lno,
+                "sid": sid,
+                "ja": ja_txt,
+                "old": old_txt,
+                "new": cn_txt,
+                "cat": cat,
+                "reason": reason,
+                "section": "灰色的迷宫·美滨日常短篇第三话·HPH绝密渗透由美子闺房、军规夜视仪与确认性感系带内裤 (`grisaia2/ss1`)"
+            })
+
     # Milestone 3 Chapter 43: Miscellaneous Short 2 (grisaia2/etcess2)
     for lno in range(68786, 68877):
         ja_raw = ja_lines[lno - 1].rstrip("\r\n")
@@ -11375,6 +11409,15 @@ def build_report():
     md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
     md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
     for idx, d in enumerate(mak_004_diffs, 1):
+        md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
+    md.append("\n---\n")
+
+    # Section 243 - Milestone 3: Labyrinth of Grisaia Miscellaneous Short 3
+    ss1_diffs = [d for d in diffs if d["section"].startswith("灰色的迷宫·美滨日常短篇第三话")]
+    md.append(f"## 二百四十三、 灰色的迷宫·美滨日常短篇第三话·HPH绝密渗透由美子闺房、军规夜视仪与确认性感系带内裤 (`grisaia2/ss1`，共 {len(ss1_diffs)} 条) —— 【里程碑三·美滨日常短篇第三话】\n")
+    md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
+    md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
+    for idx, d in enumerate(ss1_diffs, 1):
         md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
     md.append("\n---\n")
 
