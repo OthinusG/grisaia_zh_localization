@@ -1859,6 +1859,14 @@ def classify_change(line_no, sid, ja, old_cn, new_cn):
     if "早食い" in ja or "チャンペスト" in ja or "アイスクリーム頭痛" in ja or "チョコバナナ" in ja or "短冊" in ja or "づっとお兄ちゃんと一緒" in ja or "黒い携帯" in ja:
         return "满刨冰脑结冰败退与七夕短册父女誓约", "绝妙还原满自封冠军之王（Champest）狂炫刨冰致脑结冰送医的活宝行径、天音舔食巧克力香蕉的母性反差、莳菜写错别字的七夕短册‘想永远和哥哥在一起’、以及雄二注视CIRS黑色手机暗誓守护莳菜的深情内核"
 
+    # makinass4 specific (Milestone 3 Chapter 22 - Makina Short Story 4)
+    if "デイブ教授" in ja or "ジャイアントパンダ" in ja or "人民服" in ja or "第六の指" in ja or "カラテ" in ja:
+        return "戴夫教授大熊猫第六指与中山装撕碎惨剧", "绝妙还原戴夫在电视节目中打空手道进中国熊猫笼子科普‘第六指第七指’却被熊猫揪住中山装暴打撕碎致卧床半年的荒诞美式纪录片恶搞"
+    if "ツンデレー" in ja or "萌えない" in ja or "百合的" in ja or "ビクンビクン" in ja or "折り紙" in ja:
+        return "珍兽傲娇兽不可燃谐音与满妹耳咬娇躯颤抖", "彻底纠正机翻将ツンデレー误译为‘别扭兽’、将不可燃（萌えない）误译为‘不可爱’，传神重现莳菜拿火柴点烧满、满咬莳菜耳朵致其敏感娇躯一颤（ビクンビクン）以及满把黑色折纸当海苔吃拉肚子的活宝日常"
+    if "クーデレン" in ja or "電話一本" in ja or "肘" in ja or "メイドーン" in ja or "おやき" in ja:
+        return "珍兽冰山兽尺神经爆咬与小幸烤馅饼诱捕", "彻底纠正机翻将クーデレン误译为‘策士’、将おやき误译为‘烤年糕’，生动再现莳菜以‘咬手肘就能交到朋友不会被人借口打电话半路躲开’忽悠由美子狠咬麻筋尺神经痛得莳菜怒骂读空气、由美子陷入PTSD循环、以及小幸烤馅饼秒速诱捕莳菜的名场面"
+
     # makinass3 specific (Milestone 3 Chapter 21 - Makina Short Story 3)
     if "世界の前線" in ja or "カランタン" in ja or "ジオラマキット" in ja or "ミニミニ魚雷クン" in ja or "誇大広告" in ja:
         return "世界前线等身模型与卡朗唐二战杂志恶搞", "纠正机翻将卡朗唐（カランタン）误译为‘卡拉丹坦’，还原迪亚哥分册杂志恶搞：号称附赠1比1原尺寸等身二战模型与迷你鱼雷为国捐躯、最终因根本没人摆得下而发售中止的爆笑讽刺"
@@ -8402,6 +8410,32 @@ def build_report():
                 "section": "灰色的迷宫·入巢莳菜后日谈第四章·教室春梦吻满、水泥柱爆头与由美子美滨冷藏库落果论 (`grisaia2/mak_004`)"
             })
 
+    # Milestone 3 Chapter 22: Makina Short Story 4 (grisaia2/makinass4)
+    for lno in range(71793, 71908):
+        ja_raw = ja_lines[lno - 1].rstrip("\r\n")
+        cn_raw = cn_lines[lno - 1].rstrip("\r\n")
+        sid = ja_raw.split("\t")[0] if "\t" in ja_raw else f"L{lno}"
+        ja_txt = ja_raw.split("\t")[1] if "\t" in ja_raw else ja_raw
+        cn_txt = cn_raw.split("\t")[1] if "\t" in cn_raw else cn_raw
+
+        old_txt = cn_txt
+        if git_base_cn and len(git_base_cn) >= lno:
+            head_raw = git_base_cn[lno - 1].rstrip("\r\n")
+            old_txt = head_raw.split("\t")[1] if "\t" in head_raw else head_raw
+
+        if cn_txt != old_txt and cn_txt.strip() != "":
+            cat, reason = classify_change(lno, sid, ja_txt, old_txt, cn_txt)
+            diffs.append({
+                "lno": lno,
+                "sid": sid,
+                "ja": ja_txt,
+                "old": old_txt,
+                "new": cn_txt,
+                "cat": cat,
+                "reason": reason,
+                "section": "灰色的迷宫·入巢莳菜短篇第四章·戴夫神奇动物秀模仿与珍兽美滨学园 (`grisaia2/makinass4`)"
+            })
+
     # Milestone 3 Chapter 21: Makina Short Story 3 (grisaia2/makinass3)
     for lno in range(71727, 71793):
         ja_raw = ja_lines[lno - 1].rstrip("\r\n")
@@ -10527,6 +10561,15 @@ def build_report():
     md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
     md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
     for idx, d in enumerate(mak_004_diffs, 1):
+        md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
+    md.append("\n---\n")
+
+    # Section 221 - Milestone 3: Labyrinth of Grisaia Makina Short Story 4
+    makinass4_diffs = [d for d in diffs if d["section"].startswith("灰色的迷宫·入巢莳菜短篇第四章")]
+    md.append(f"## 二百二十一、 灰色的迷宫·入巢莳菜短篇第四章·戴夫神奇动物秀模仿与珍兽美滨学园 (`grisaia2/makinass4`，共 {len(makinass4_diffs)} 条) —— 【里程碑三·入巢莳菜短篇第四话】\n")
+    md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
+    md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
+    for idx, d in enumerate(makinass4_diffs, 1):
         md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
     md.append("\n---\n")
 

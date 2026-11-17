@@ -71790,121 +71790,121 @@ grisaia2/makinass3#00062	@天音@「难、难道说！？到底是什么杂志�
 grisaia2/makinass3#00063	@雄二@「《周刊·栓动步枪之扳机护圈》」
 grisaia2/makinass3#00064	@雄二@「这本是每周唯独只聚焦在各种栓动步枪的扳机护圈部位……」
 grisaia2/makinass3#00065	@天音@「你们给我适可而止一点——！」
-grisaia2/makinass4#00000	@戴夫教授@「呀，小朋友们！　家里的活儿都帮忙做了吗？」
-grisaia2/makinass4#00001	@莳菜@「做了哦――！」
-grisaia2/makinass4#00002	@戴夫教授@「今天的“神奇动物”，就像上周预告的那样，是“外表可爱却意外凶猛动物”特辑！」
-grisaia2/makinass4#00003	@戴夫教授@「美丽的蔷薇也有刺，看起来温顺的淑女在床上也很火辣。我要给大家介绍的就是这类动物！」
-grisaia2/makinass4#00004	@莳菜@「难得说这种下流话!?　今天的戴夫不太一样嘛」
-grisaia2/makinass4#00005	@戴夫教授@「哎哟！　哈哈，这空手道功夫怎么样，漂亮吧？」
-grisaia2/makinass4#00006	@戴夫教授@「为什么突然表演空手道？　因为这里是中国啊！　我是特意从远方赶来见大熊猫的。哎哟！」
-grisaia2/makinass4#00007	@莳菜@「把亚洲搞得一团糊涂，这就是美国人的粗糙…」
-grisaia2/makinass4#00008	@戴夫教授@「大熊猫有着白黑配色的可爱外表，给人印象是只吃竹子吧？」
-grisaia2/makinass4#00009	@戴夫教授@「可它并不只是老实。实际上它也吃肉，袭击人的例子也不在少数」
-grisaia2/makinass4#00010	@戴夫教授@「在圣迭戈动物园我完全压制了熊猫，可这里是真正的中国熊猫会怎么样呢？　我们就不管不顾地靠近，试着被它袭击一下吧！」
-grisaia2/makinass4#00011	@莳菜@「毫不犹豫地冲向熊猫的笼子！」
-grisaia2/makinass4#00012	@戴夫教授@「一旦领地被侵犯，谁都会感到生命危险，那样的话它出手攻击也不奇怪吧？」
-grisaia2/makinass4#00013	@戴夫教授@「来，看眼前这只熊猫，吼吼吼！」
-grisaia2/makinass4#00014	@莳菜@「啊，胸前的衣服被抓住了!!」
-grisaia2/makinass4#00015	@戴夫教授@「小朋友们听好了，熊猫为了抓竹子，指周围的骨骼发生了特殊进化」
-grisaia2/makinass4#00016	@戴夫教授@「“第六指”“第七指”，在圣迭戈已经学过了吧！」
-grisaia2/makinass4#00017	@戴夫教授@「现在，双钳兽把它的衣服撕破了！　它灵活地运用骨头抓住竹子，戴夫引以为傲的中山装已经千疮百孔……」
-grisaia2/makinass4#00018	@戴夫教授@「哎哟!!」
-grisaia2/makinass4#00019	@莳菜@「啊！　脸被打中了！　动作挺可爱的，可这一拳好重！」
-grisaia2/makinass4#00020	@戴夫教授@「哦哦，这一下可不得了！　比预想的还要疼上八倍！　小朋友们听好了，这不是钝痛，是剧痛！」
-grisaia2/makinass4#00021	@莳菜@「戴夫的脸色唰地就变青了哦！」
-grisaia2/makinass4#00022	@莳菜@「啊―，戴夫―。高潮部分要来了！」
-grisaia2/makinass4#00023	@天音@「我说玛琪娜，这个节目你看得也太多了」
-grisaia2/makinass4#00024	@莳菜@「这是我特别喜欢的这一集哦？　因为这之后戴夫会被迫休养半年」
-grisaia2/makinass4#00025	@天音@「今天不许看戴夫。老是这样被人陪着看，我会看腻的」
-grisaia2/makinass4#00026	@莳菜@「诶―！　小气、小气―！」
-grisaia2/makinass4#00027	@天音@「总之出去外面玩一会儿吧」
+grisaia2/makinass4#00000	@戴夫教授@「嗨小朋友们！大家平时在家里都有好好帮家里人做家务吗？」
+grisaia2/makinass4#00001	@莳菜@「有好好做哦——！」
+grisaia2/makinass4#00002	@戴夫教授@「今天的‘神奇动物’，正如上周预告的那样，是‘外表看似呆萌实则凶暴无比的动物’大特辑！」
+grisaia2/makinass4#00003	@戴夫教授@「美丽蔷薇必有刺，看似文静的淑女到了床上也一样狂野！今天就为大家介绍这样一群动物！」
+grisaia2/makinass4#00004	@莳菜@「戴夫居然难得开起了黄腔！？今天的戴夫有种别样的风味啊」
+grisaia2/makinass4#00005	@戴夫教授@「阿达——！哈哈，怎么样，我这身空手道身手，相当帅气吧？」
+grisaia2/makinass4#00006	@戴夫教授@「问我为什么突然打起空手道？没错，这里就是中国！我千里迢迢赶到这里，就是为了来见大熊猫的！阿达——！」
+grisaia2/makinass4#00007	@莳菜@「把整个亚洲一股脑混为一谈，还真是有够美国人的粗线条啊……」
+grisaia2/makinass4#00008	@戴夫教授@「大熊猫有着黑白相间的可爱外貌，大家也总觉得它们平时只啃竹子对吧？」
+grisaia2/makinass4#00009	@戴夫教授@「但千万别以为它们性格温顺！实际上它们也吃肉，袭击人类的案例更是数不胜数！」
+grisaia2/makinass4#00010	@戴夫教授@「虽然在圣迭戈动物园里我彻底压制了熊猫，但在这大本营中国的熊猫到底表现如何呢？就让我们立刻大大咧咧地凑过去，试试看会不会被它袭击吧！」
+grisaia2/makinass4#00011	@莳菜@「居然毫不犹豫地钻进熊猫笼子里了！」
+grisaia2/makinass4#00012	@戴夫教授@「一旦领地遭到侵犯，换作是谁都会感到危险，那么发起攻击也是理所当然的对吧？」
+grisaia2/makinass4#00013	@戴夫教授@「看哪，现在我眼前这只熊猫，哦哦哦哦！」
+grisaia2/makinass4#00014	@莳菜@「啊，衣领被一把揪住了！！」
+grisaia2/makinass4#00015	@戴夫教授@「小朋友们听好了，熊猫为了抓牢竹子，指爪周边的骨骼发生了特殊的进化！」
+grisaia2/makinass4#00016	@戴夫教授@「关于‘第六指’和‘第七指’，我们在圣迭戈那一期已经学过了对吧！」
+grisaia2/makinass4#00017	@戴夫教授@「现在，衣服正在被双钳给撕裂开来！就像用骨头熟练地夹住竹子一样，戴夫我引以为傲的中山装被扯得稀巴烂……」
+grisaia2/makinass4#00018	@戴夫教授@「嗷呜痛——！！」
+grisaia2/makinass4#00019	@莳菜@「啊！脸被狠狠揍了一拳！动作看起来那么萌，拳头却重得要死！」
+grisaia2/makinass4#00020	@戴夫教授@「嗷呜，这家伙可太带劲了！居然传来了比预想还要疼上八倍的剧痛！小朋友们听好了，可不是钝痛哦，是货真价实的剧痛啊！」
+grisaia2/makinass4#00021	@莳菜@「戴夫的脸色眼看着唰地一下就全青了！」
+grisaia2/makinass4#00022	@莳菜@「啊——戴夫——精彩的高潮部分才刚刚要开始呢！」
+grisaia2/makinass4#00023	@天音@「我说莳菜，同一个节目你看太多遍了吧」
+grisaia2/makinass4#00024	@莳菜@「这一期可是我特别喜欢的名场面哦？这之后戴夫可是直接被迫卧床休养了整整半年——」
+grisaia2/makinass4#00025	@天音@「好啦好啦，今天禁止看戴夫。一直被人在身边拉着看同一个节目，我都快看吐了」
+grisaia2/makinass4#00026	@莳菜@「诶——！小气鬼、小气鬼——！」
+grisaia2/makinass4#00027	@天音@「好啦，去外头跑跑玩一会儿吧」
 grisaia2/makinass4#00028	@莳菜@「……」
-grisaia2/makinass4#00029	@莳菜@「入巢莳菜的神奇动物秀！」
-grisaia2/makinass4#00030	@莳菜@「小朋友们，精神好吗――？　我是伊丽莎白・玛琪娜星号的玛琪娜教授！　那么今天要介绍什么动物呢――？」
-grisaia2/makinass4#00031	@莳菜@「来――，介绍什么动物……」
-grisaia2/makinass4#00032	@满@「吧唧吧唧，调味海苔真香」
-grisaia2/makinass4#00033	@莳菜@「啊，OK！　今天介绍珍兽别扭兽――！」
-grisaia2/makinass4#00034	@满@「咦？　突然说什么呢？」
-grisaia2/makinass4#00035	@莳菜@「这只珍兽别扭兽怕水！　证据就是沉到水里就会死掉！」
-grisaia2/makinass4#00036	@满@「谁是珍兽啊。再说了，一般沉到水里谁都会死掉吧？」
-grisaia2/makinass4#00037	@莳菜@「但它不怕火！」
-grisaia2/makinass4#00038	@满@「才不怕呢！」
-grisaia2/makinass4#00039	@莳菜@「诶―，不怕吗？　真叫人失望。这样也好意思自称珍兽」
-grisaia2/makinass4#00040	@满@「呜咕……　不、才不怕呢。我，我不怕火的！」
-grisaia2/makinass4#00041	@莳菜@「所以你才不可爱啊，你」
-grisaia2/makinass4#00042	@满@「咦！　总觉得刚才被从奇怪的方向骂了……」
-grisaia2/makinass4#00043	@莳菜@「那就用火柴点火烧烧这只不可燃素材做成的珍兽别扭兽试试看！　一二三」
+grisaia2/makinass4#00029	@莳菜@「入巢莳菜的神奇动物秀（Amazing Animals）！」
+grisaia2/makinass4#00030	@莳菜@「小朋友们，最近过得精神吗——？我是‘入巢莳菜之星’的莳菜教授！那么今天到底要给大家介绍什么动物呢——？」
+grisaia2/makinass4#00031	@莳菜@「来～介绍什么动物好呢……」
+grisaia2/makinass4#00032	@满@「舔舔、嚼嚼，调味海苔真好吃」
+grisaia2/makinass4#00033	@莳菜@「啊！欧克！今天就来介绍珍兽‘傲娇兽（ツンデレー）’——！」
+grisaia2/makinass4#00034	@满@「哈？冷不丁的突然瞎嚷嚷什么呢？」
+grisaia2/makinass4#00035	@莳菜@「这只珍兽‘傲娇兽’，其致命弱点是水！证据就是只要按进水里就会淹死！」
+grisaia2/makinass4#00036	@满@「你说谁是珍兽啊！而且正常人沉进水里谁都会被淹死的好不好！？」
+grisaia2/makinass4#00037	@莳菜@「但是它对火的耐性极强！」
+grisaia2/makinass4#00038	@满@「才没有那么强呢！」
+grisaia2/makinass4#00039	@莳菜@「诶——耐性不强吗？真是太让人失望了。就这水平也好意思自称珍兽啊」
+grisaia2/makinass4#00040	@满@「呜咕……才、才没有很弱呢！我、我对火可是耐性很强的！」
+grisaia2/makinass4#00041	@莳菜@「原来是因为你‘不可燃（毫无萌点）’啊，你这家伙」
+grisaia2/makinass4#00042	@满@「诶！感觉刚才是不是从某个奇怪的角度被你给骂了一通……」
+grisaia2/makinass4#00043	@莳菜@「那么，就对这只由不可燃素材制成的珍兽‘傲娇兽’，用火柴点火试一试吧！预备——」
 grisaia2/makinass4#00044	@莳菜@「点火！」
-grisaia2/makinass4#00045	@满@「啊呜!!　等、干什么呀」
-grisaia2/makinass4#00046	@莳菜@「唔―，和电视上看到的不一样嘛……　珍兽的话，不是该有点热情的反应吗？」
-grisaia2/makinass4#00047	@满@「什么电视，这是录下来的吗？　什么时候播出？　哪个台，哪个台？」
-grisaia2/makinass4#00048	@莳菜@「你该不会要做那种街头采访的主妇反应吧！」
-grisaia2/makinass4#00049	@满@「可在电视上看起来会有点胖，我挺在意啊……」
-grisaia2/makinass4#00050	@莳菜@「是不是得像戴夫那样被咬一下？　那就咬咬看？　咬玛琪娜教授试试？　来，来」
-grisaia2/makinass4#00051	@满@「咦!?
-grisaia2/makinass4#00052	　嗯，好，啊呜」
+grisaia2/makinass4#00045	@满@「烫死了！！等、你干嘛啊！」
+grisaia2/makinass4#00046	@莳菜@「唔——跟电视上看到的感觉不一样啊……既然是珍兽，就不能给出更狂野热烈一点的反应吗？」
+grisaia2/makinass4#00047	@满@「什么电视啊，现在是在录像吗？什么时候播？几频道？到底在几频道放啊？」
+grisaia2/makinass4#00048	@莳菜@「少给我摆出那种在街头被采访的主妇反应啦！」
+grisaia2/makinass4#00049	@满@「因为上电视的话整个人会被拉宽显胖嘛，人家当然很在意啊……」
+grisaia2/makinass4#00050	@莳菜@「看来是这样吗，必须得像戴夫那样被狠狠咬上一口才行吧？好，那要不要试着咬咬看？来咬一口莳菜教授试试？来嘛、来嘛」
+grisaia2/makinass4#00051	@满@「诶！？
+grisaia2/makinass4#00052	　嗯、嗯……啊呜」
 
-grisaia2/makinass4#00053	@莳菜@「呀！　为什么要咬耳朵！」
-grisaia2/makinass4#00054	@满@「咦，因为你说要咬，就咬突起的地方了」
-grisaia2/makinass4#00055	@莳菜@「谁要那种百合展开啊！　偏偏瞄准那里，你真是不挑食啊，笨蛋！」
-grisaia2/makinass4#00056	@满@「我、我不知道，为什么会被骂啊，完全搞不懂」
-grisaia2/makinass4#00057	@莳菜@「总之待会儿我再来，在那之前你先变得像珍兽一点。啊？　那么回见！」
-grisaia2/makinass4#00058	@满@「咦，那是什么意思啊」
-grisaia2/makinass4#00059	@莳菜@「好险，差点就抖起来了…」
-grisaia2/makinass4#00060	@由美子@「我掉了黑色的折纸…」
-grisaia2/makinass4#00061	@莳菜@「啊！　发现珍兽策士！」
+grisaia2/makinass4#00053	@莳菜@「咿呀！干嘛咬人家的耳朵啦！」
+grisaia2/makinass4#00054	@满@「诶，因为你说让我咬，我就挑凸出来的地方咬了嘛」
+grisaia2/makinass4#00055	@莳菜@「才不需要这种百合剧情展开啦！偏偏瞄准那种敏感部位咬，你这家伙也太没用了吧！」
+grisaia2/makinass4#00056	@满@「搞、搞不懂啊，到底为什么要骂我，完全搞不懂嘛！」
+grisaia2/makinass4#00057	@莳菜@「总之我待会儿还会再过来，在那之前你给我好好保持珍兽的样子呆着。知道了吗？回见！」
+grisaia2/makinass4#00058	@满@「诶，那到底、是要我怎样啦……」
+grisaia2/makinass4#00059	@莳菜@「好险好险……差点就要敏感得娇躯一颤一颤了……」
+grisaia2/makinass4#00060	@由美子@「把黑色的折纸给弄丢了……」
+grisaia2/makinass4#00061	@莳菜@「啊！发现珍兽‘冰山兽（クーデレン）’！」
 grisaia2/makinass4#00062	@由美子@「谁、谁是珍兽啊」
-grisaia2/makinass4#00063	@莳菜@「那么马上来，被咬一下吧！
-grisaia2/makinass4#00064	　策士，咬咬看？」
-grisaia2/makinass4#00065	@由美子@「这种事怎么可能做得到吧？　入巢小姐，你在想什么？」
-grisaia2/makinass4#00066	@莳菜@「……真是不会配合的女人。所以交不到朋友嘛」
-grisaia2/makinass4#00067	@由美子@「呜。
-grisaia2/makinass4#00068	　我配合得挺好的呀。不过，被咬很奇怪吧？」
-grisaia2/makinass4#00069	@莳菜@「拿着裁纸刀转圈才奇怪吧。所以人际关系就只会停留在表面上的交往啊？」
-grisaia2/makinass4#00070	@由美子@「哪有那种事」
-grisaia2/makinass4#00071	@莳菜@「一起走回家的人，不是经常中途说“不好意思，我打个电话再回去，你们先走”吗？」」
-grisaia2/makinass4#00072	@由美子@「是啊，那种事确实很多」
-grisaia2/makinass4#00073	@莳菜@「那只是被人躲着罢了」
-grisaia2/makinass4#00074	@由美子@「!!」
-grisaia2/makinass4#00075	@莳菜@「认清自己的立场之后，好，来，咬一下？」
-grisaia2/makinass4#00076	@由美子@「咬了就能成为朋友？　就再也不能打一个电话了？」
-grisaia2/makinass4#00077	@莳菜@「能能能。既然能，来吧」
-grisaia2/makinass4#00078	@由美子@「要、要咬哪里才好呢？」
-grisaia2/makinass4#00079	@莳菜@「先从肘部？」
-grisaia2/makinass4#00080	@由美子@「我明白了，咬肘部就行吧？　嗯……」
-grisaia2/makinass4#00081	@莳菜@「来，咬」
-grisaia2/makinass4#00082	@由美子@「能成为朋友的话…我想要朋友…」
+grisaia2/makinass4#00063	@莳菜@「话不多说，立刻来被咬一口吧！
+grisaia2/makinass4#00064	　冰山兽，来咬一口试试？」
+grisaia2/makinass4#00065	@由美子@「我怎么可能会做那种事？入巢同学，你到底在想些什么啊？」
+grisaia2/makinass4#00066	@莳菜@「……真是不解风情的女人。所以你才交不到朋友嘛」
+grisaia2/makinass4#00067	@由美子@「唔。
+grisaia2/makinass4#00068	我才没有不解风情。但是，去咬人什么的也太奇怪了吧？」
+grisaia2/makinass4#00069	@莳菜@「天天挥舞裁纸刀转圈圈的家伙才更奇怪吧。正因为这样，你的人际关系才会永远只停留在表面上的泛泛之交哦？」
+grisaia2/makinass4#00070	@由美子@「才没有那种事」
+grisaia2/makinass4#00071	@莳菜@「平时跟你一起结伴回家的人，是不是经常半路上说『不好意思，我得先去打个电话，你先走吧』然后开溜？」
+grisaia2/makinass4#00072	@由美子@「是啊，那种事确实常常发生呢」
+grisaia2/makinass4#00073	@莳菜@「那只是人家在躲着你而已啦」
+grisaia2/makinass4#00074	@由美子@「！！」
+grisaia2/makinass4#00075	@莳菜@「充分认识到自己的处境了吧？好啦，来咬一口吧？」
+grisaia2/makinass4#00076	@由美子@「咬了的话……就能交到朋友吗？大家就不会再找借口『打个电话』半路开溜了吗？」
+grisaia2/makinass4#00077	@莳菜@「能交到的能交到的。肯定能交到的啦，来吧」
+grisaia2/makinass4#00078	@由美子@「那、那要咬哪里才好呢？」
+grisaia2/makinass4#00079	@莳菜@「先从手肘开始？」
+grisaia2/makinass4#00080	@由美子@「我知道了，咬手肘就可以了吧？唔……」
+grisaia2/makinass4#00081	@莳菜@「来，咬吧」
+grisaia2/makinass4#00082	@由美子@「只要能交到朋友的话……因为我真的很想交朋友……」
 grisaia2/makinass4#00083	@由美子@「啊呜」
-grisaia2/makinass4#00084	@莳菜@「唔哦哦！　为什么!?　手臂都麻了、麻麻的！　你刚才是不是连神经的部分都咬了！」
-grisaia2/makinass4#00085	@由美子@「对、对不起…　因为你说要咬肘部…」
-grisaia2/makinass4#00086	@莳菜@「啊啊啊，麻了，啊啊啊，手臂麻麻的……啊啊啊」
-grisaia2/makinass4#00087	@由美子@「你、你好吗？　入巢小姐？」
-grisaia2/makinass4#00088	@莳菜@「所以才交不到朋友嘛！　读空气啊!!」
-grisaia2/makinass4#00089	@由美子@「!!」
-grisaia2/makinass4#00090	@莳菜@「真是的，明明只是想开个小玩笑，受伤了怎么办嘛……」
-grisaia2/makinass4#00091	@由美子@「所以朋友…交不到…朋友…交不到」
-grisaia2/makinass4#00092	@莳菜@「好―，下一只珍兽是」
-grisaia2/makinass4#00093	@莳菜@「啊，珍兽女仆酱登场！」
-grisaia2/makinass4#00094	@幸@「玛琪娜，我做了烤年糕，要吃吗？」
-grisaia2/makinass4#00095	@莳菜@「咦？　吃！　那个我要吃――！」
-grisaia2/makinass4#00096	@幸@「那我们过去那边吧」
-grisaia2/makinass4#00097	@莳菜@「去去去――！　烤年糕――烤年糕――!!」
+grisaia2/makinass4#00084	@莳菜@「唔嗷嗷！干嘛咬那么用力啊！？手臂麻了、麻得发颤！你刚才绝对把神经给咬到了吧！」
+grisaia2/makinass4#00085	@由美子@「对、对不起……因为你说要咬手肘……」
+grisaia2/makinass4#00086	@莳菜@「啊啊啊，麻木了，啊啊啊，手臂一阵一阵麻酥酥的……啊啊啊」
+grisaia2/makinass4#00087	@由美子@「你、你没事吧？入巢同学？」
+grisaia2/makinass4#00088	@莳菜@「所以你才交不到朋友的啊！给我好好读读空气啊！！」
+grisaia2/makinass4#00089	@由美子@「！！」
+grisaia2/makinass4#00090	@莳菜@「真是的，人家明明只是想开个玩笑恶搞一下而已，要是真的受了伤打算怎么负责啊……」
+grisaia2/makinass4#00091	@由美子@「所以朋友……交不到……所以朋友……交不到」
+grisaia2/makinass4#00092	@莳菜@「好啦～接下来轮到哪只珍兽了呢」
+grisaia2/makinass4#00093	@莳菜@「啊，出现了，珍兽‘女仆兽（メイドーン）’！」
+grisaia2/makinass4#00094	@幸@「小莳菜，我做了烤馅饼（おやき），你要吃吗？」
+grisaia2/makinass4#00095	@莳菜@「诶？要吃！那个我要吃——！」
+grisaia2/makinass4#00096	@幸@「那我们去那边吧」
+grisaia2/makinass4#00097	@莳菜@「去去去——！烤馅饼～烤馅饼～」
 grisaia2/makinass4#00098	……。
-grisaia2/makinass4#00099	………………
-grisaia2/makinass4#00100	与此同时，被告知“待会儿再来、要变得像珍兽一样”的满!!
+grisaia2/makinass4#00099	………………。
+grisaia2/makinass4#00100	与此同时，被交代了‘待会儿再来找你，在此之前先保持珍兽样子呆着’的满——！！
 grisaia2/makinass4#00101	@满@「呐，珍兽是这种感觉吗？
-grisaia2/makinass4#00102	　哼哼！
-grisaia2/makinass4#00103	　哼哼！」
-grisaia2/makinass4#00104	@猫@「喵？」
-grisaia2/makinass4#00105	@满@「不是啦，是这样、
-grisaia2/makinass4#00106	哼哼
-grisaia2/makinass4#00107	哼哼！
-grisaia2/makinass4#00108	　这样的？」
+grisaia2/makinass4#00102	　哼哧！
+grisaia2/makinass4#00103	　哼哧！」
+grisaia2/makinass4#00104	@猫@「喵～？」
+grisaia2/makinass4#00105	@满@「不是啦，是像这样，
+grisaia2/makinass4#00106	哼哧
+grisaia2/makinass4#00107	哼哧！
+grisaia2/makinass4#00108	　像这样吗？」
 
-grisaia2/makinass4#00109	@猫@「喵？」
-grisaia2/makinass4#00110	满拼命追求着珍兽的感觉，可莳菜始终没有回到这里！
-grisaia2/makinass4#00111	@满@「啊，肚子疼……」
-grisaia2/makinass4#00112	结果她把掉落的折纸错当成海苔吃了，拉起了肚子！
+grisaia2/makinass4#00109	@猫@「喵～？」
+grisaia2/makinass4#00110	尽管满拼尽全力追求珍兽的神韵，但莳菜却再也没有回到这里！
+grisaia2/makinass4#00111	@满@「啊，肚子好痛……」
+grisaia2/makinass4#00112	最后因为把掉在地上黑色折纸错当成海苔吃下去，她彻底拉起了肚子！
 grisaia2/mic_001#00000	――你相信奇迹吗？
 grisaia2/mic_001#00001	我尽量不去相信看不见的东西。
 grisaia2/mic_001#00002	当然，看得见的东西并不代表一切，但一旦开始轻视经验与努力、把性命托付给“某种东西”，就彻底完了。
