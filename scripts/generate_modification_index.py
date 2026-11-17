@@ -1859,6 +1859,14 @@ def classify_change(line_no, sid, ja, old_cn, new_cn):
     if "早食い" in ja or "チャンペスト" in ja or "アイスクリーム頭痛" in ja or "チョコバナナ" in ja or "短冊" in ja or "づっとお兄ちゃんと一緒" in ja or "黒い携帯" in ja:
         return "满刨冰脑结冰败退与七夕短册父女誓约", "绝妙还原满自封冠军之王（Champest）狂炫刨冰致脑结冰送医的活宝行径、天音舔食巧克力香蕉的母性反差、莳菜写错别字的七夕短册‘想永远和哥哥在一起’、以及雄二注视CIRS黑色手机暗誓守护莳菜的深情内核"
 
+    # sac_006 specific (Milestone 3 Chapter 37 - Sachi Route Epilogue: 11 Years Later, Daughter Yukiho 10th Birthday & Heirloom Music Box)
+    if "１１年前" in ja or "幸穂" in ja or "お母さんみたいなお母さん" in ja or "スーパーマンさん" in ja:
+        return "十一年前婚礼溯源与长女幸穗崇拜", "十一年后温馨尾声！大婚十一年后幸与雄二育有一女‘幸穗’，十岁幸穗依偎幸怀中倾听当年大婚拆弹往事，立志‘若将来结婚也想成为像妈妈一样无所不能的超级超人’，幸感动泪盈称赞幸穗真是个乖孩子"
+    if "抱っこ" in ja or "太ったか" in ja or "デリカシーがない" in ja or "洗濯" in ja or "親バカ" in ja:
+        return "笨蛋老爹雄二抱女被嫌与洗衣服代沟", "爆笑日常暖心重现！雄二请假回家抱起女儿打趣‘长胖了’被幸穗抗议‘太没眼力见，这是长大了！’；幸调侃若总这么说话女儿以后就不让把衣服放一起洗了；雄二回想当年女儿拒绝共浴时失魂落魄被JB痛骂的蠢样，笨蛋老爹属性拉满"
+    if "写真" in ja or "おじいちゃんとおばあちゃん" in ja or "手先が器用" in ja or "オルゴール" in ja:
+        return "双亲遗照追忆与十岁八音盒传家信物", "两代传承宿命闭环！幸穗好奇凝望外公外婆照片，幸深情追忆手巧修机械的父亲与全能贤者的母亲；雄二盛赞幸继承双亲心愿成为坚韧母亲；迎来十岁生日的幸穗接过母亲赠予的八音盒传家宝，彻底洗刷十年前生日车祸阴霾"
+
     # sac_005 Part 2 specific (Milestone 3 Chapter 36 - Sachi After Story Chapter 5 Part 2: Vent Duct Crawl, Kitchen Fridge Blast, Maid Hybrid Wedding Dress & Bouquet Toss)
     if "通気ダクト" in ja or "ダクトの中" in ja or "潜水艦の艦長" in ja or "やれるな？" in ja or "幸運のおまじない" in ja or "ハサミで、ドレスの裾" in ja or "亜鉛鉄板" in ja:
         return "剪裁婚纱潜入风管与潜艇艇长抉择", "悲壮果决的潜艇艇长决断！香水炸弹狂徒以全场性命相胁诱逼拆弹，通风管道唯有幸能够钻入；面对JB的极力阻拦，雄二如潜艇艇长般做出冷酷正确的唯一决断；幸毅然用剪刀裁断心爱婚纱裙摆，额吻护身符后潜入冰冷镀锌铁皮风管"
@@ -8574,6 +8582,32 @@ def build_report():
                 "section": "灰色的迷宫·入巢莳菜后日谈第四章·教室春梦吻满、水泥柱爆头与由美子美滨冷藏库落果论 (`grisaia2/mak_004`)"
             })
 
+    # Milestone 3 Chapter 37: Sachi Route Epilogue (grisaia2/sac_006)
+    for lno in range(77468, 77522):
+        ja_raw = ja_lines[lno - 1].rstrip("\r\n")
+        cn_raw = cn_lines[lno - 1].rstrip("\r\n")
+        sid = ja_raw.split("\t")[0] if "\t" in ja_raw else f"L{lno}"
+        ja_txt = ja_raw.split("\t")[1] if "\t" in ja_raw else ja_raw
+        cn_txt = cn_raw.split("\t")[1] if "\t" in cn_raw else cn_raw
+
+        old_txt = cn_txt
+        if git_base_cn and len(git_base_cn) >= lno:
+            head_raw = git_base_cn[lno - 1].rstrip("\r\n")
+            old_txt = head_raw.split("\t")[1] if "\t" in head_raw else head_raw
+
+        if cn_txt != old_txt and cn_txt.strip() != "":
+            cat, reason = classify_change(lno, sid, ja_txt, old_txt, cn_txt)
+            diffs.append({
+                "lno": lno,
+                "sid": sid,
+                "ja": ja_txt,
+                "old": old_txt,
+                "new": cn_txt,
+                "cat": cat,
+                "reason": reason,
+                "section": "灰色的迷宫·小岭幸后日谈尾声·十一年后长女幸穗十岁生日、笨蛋老爹雄二与传家八音盒 (`grisaia2/sac_006`)"
+            })
+
     # Milestone 3 Chapter 36: Sachi After Story Chapter 5 Part 2 (grisaia2/sac_005 Part 2)
     for lno in range(76875, 77468):
         ja_raw = ja_lines[lno - 1].rstrip("\r\n")
@@ -11089,6 +11123,15 @@ def build_report():
     md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
     md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
     for idx, d in enumerate(mak_004_diffs, 1):
+        md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
+    md.append("\n---\n")
+
+    # Section 236 - Milestone 3: Labyrinth of Grisaia Sachi Route Epilogue
+    sac_006_diffs = [d for d in diffs if d["section"].startswith("灰色的迷宫·小岭幸后日谈尾声")]
+    md.append(f"## 二百三十六、 灰色的迷宫·小岭幸后日谈尾声·十一年后长女幸穗十岁生日、笨蛋老爹雄二与传家八音盒 (`grisaia2/sac_006`，共 {len(sac_006_diffs)} 条) —— 【里程碑三·小岭幸后日谈尾声】\n")
+    md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
+    md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
+    for idx, d in enumerate(sac_006_diffs, 1):
         md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
     md.append("\n---\n")
 
