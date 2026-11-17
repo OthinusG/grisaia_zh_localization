@@ -1859,6 +1859,18 @@ def classify_change(line_no, sid, ja, old_cn, new_cn):
     if "早食い" in ja or "チャンペスト" in ja or "アイスクリーム頭痛" in ja or "チョコバナナ" in ja or "短冊" in ja or "づっとお兄ちゃんと一緒" in ja or "黒い携帯" in ja:
         return "满刨冰脑结冰败退与七夕短册父女誓约", "绝妙还原满自封冠军之王（Champest）狂炫刨冰致脑结冰送医的活宝行径、天音舔食巧克力香蕉的母性反差、莳菜写错别字的七夕短册‘想永远和哥哥在一起’、以及雄二注视CIRS黑色手机暗誓守护莳菜的深情内核"
 
+    # sac_001 specific (Milestone 3 Chapter 31 - Sachi After Story Chapter 1: Submarine Captain, EOD House & September 23 Wedding)
+    if "潜水艦" in ja or "艦長" in ja or "決断力" in ja or "トウガラシ" in ja or "毒ガス" in ja or "防毒マスク" in ja or "ガスマスク" in ja or "プレゼント" in ja or "ＲＥＤ" in ja or "ごっこ" in ja:
+        return "潜艇艇长决断力与二选一爆弹处理过家家", "硬核开幕与反差爆笑！雄二独白弗吉尼亚潜艇艇长冷彻决断力；画面一转竟是雄二在帐篷里点干辣椒做催泪烟雾，肉身硬抗泪流满面指导头戴防毒面具的小幸排爆‘过家家’，拆解二选一模拟炸弹"
+    if "美浜学園" in ja or "改修工事" in ja or "寮母" in ja or "学生結婚" in ja or "プラスチック爆薬" in ja or "粘土" in ja or "Ｐ９０" in ja:
+        return "学园炸毁复建与天音人妻舍监情结", "战后新生活揭秘！美滨学园在两人一年前的爆破后仍在翻修、租用写字楼上课；天音毕业留校担任舍监寮母兼旁听高四；小幸自责曾将C4炸药误认成黏土而苦练排爆，神速进步甚至被雄二吐槽快能拿P90当特种兵；小幸调侃雄二有人妻舍监癖好"
+    if "靴飛ばし" in ja or "フライングフィッシュ" in ja or "スカイフィッシュ" in ja or "ポエム" in ja or "幼馴染み" in ja or "ポテンシャル" in ja:
+        return "小满踢鞋恋爱进化学与飞鱼借口", "小满爆笑客串！小满坚信踢鞋决斗是恋爱制胜法则，在操场苦练踢鞋调整射程；被撞破后嘴硬偷瞄雄二，被小幸警告后借口‘在看雄二脑后飞掠的飞鱼（Skyfish）’，嫉妒青梅竹马神速定下9月23日婚期"
+    if "オムライス" in ja or "ごっそうでがんした" in ja or "セッちん" in ja or "ネコ" in ja or "ヤブイヌ" in ja or "変な声" in ja:
+        return "莳菜广岛腔呛死与小动物啼叫内裤风波", "宿舍午餐高能相声！莳菜飙广岛方言秒杀天音蛋包饭，咽喉卡饭狂喊‘小泄（茅房）快拿水’；小满当众盘问雄二房间深夜传出‘嗯嗯、啊嗯、啊’小动物叫声怀疑偷养猫，小幸害羞低头、由美子尴尬别开视线，小满脑洞大开追问是不是丛林薮犬"
+    if "お母さん" in ja or "病院" in ja or "ステンドグラス" in ja or "春寺" in ja or "オーガニック" in ja or "半脱ぎ" in ja or "負けず嫌い" in ja or "好敵手" in ja or "ライバル" in ja:
+        return "病房白花探视、内通告密者与床榻少女心胜负", "深情与爱意交织！二人探视小幸昏迷母亲倾诉教堂彩绘玻璃婚礼憧憬；入夜小幸沐浴后进房，洗发水香味暴露与JB每两周聚餐互通情报、甚至向JB告密‘雄二比起全裸更喜欢半遮半露半脱’的内通者身份；欢好后小幸赌气‘今天我又输了、被弄高潮更多次’的要强少女心，雄二承诺深爱她的刚毅坚强"
+
     # michiruss3 specific (Milestone 3 Chapter 30 - Michiru Short Story 3: Heart's Maiden & Roasted Chicken Skin)
     if "桃" in ja or "鼻の下" in ja or "サンタ" in ja or "小麦粉" in ja or "粉物" in ja or "愛と勇気" in ja:
         return "桃子绒毛圣诞老人与面粉爱与勇气之谜", "温馨无厘头闺话！小满与寄宿在心房中的心脏捐献者少女闲聊：桃子表皮绒毛与人中汗毛对比、喝牛奶嘴唇留白像圣诞老人、面粉抹鼻子为‘全天下粉状物的爱与勇气’"
@@ -8494,6 +8506,32 @@ def build_report():
                 "section": "灰色的迷宫·入巢莳菜后日谈第四章·教室春梦吻满、水泥柱爆头与由美子美滨冷藏库落果论 (`grisaia2/mak_004`)"
             })
 
+    # Milestone 3 Chapter 31: Sachi After Story Chapter 1 (grisaia2/sac_001)
+    for lno in range(74875, 75181):
+        ja_raw = ja_lines[lno - 1].rstrip("\r\n")
+        cn_raw = cn_lines[lno - 1].rstrip("\r\n")
+        sid = ja_raw.split("\t")[0] if "\t" in ja_raw else f"L{lno}"
+        ja_txt = ja_raw.split("\t")[1] if "\t" in ja_raw else ja_raw
+        cn_txt = cn_raw.split("\t")[1] if "\t" in cn_raw else cn_raw
+
+        old_txt = cn_txt
+        if git_base_cn and len(git_base_cn) >= lno:
+            head_raw = git_base_cn[lno - 1].rstrip("\r\n")
+            old_txt = head_raw.split("\t")[1] if "\t" in head_raw else head_raw
+
+        if cn_txt != old_txt and cn_txt.strip() != "":
+            cat, reason = classify_change(lno, sid, ja_txt, old_txt, cn_txt)
+            diffs.append({
+                "lno": lno,
+                "sid": sid,
+                "ja": ja_txt,
+                "old": old_txt,
+                "new": cn_txt,
+                "cat": cat,
+                "reason": reason,
+                "section": "灰色的迷宫·小岭幸后日谈第一章·潜艇艇长决断力、辣椒催泪排爆过家家与青梅竹马踢鞋胜负终身约定 (`grisaia2/sac_001`)"
+            })
+
     # Milestone 3 Chapter 30: Michiru Short Story 3 (grisaia2/michiruss3)
     for lno in range(74766, 74875):
         ja_raw = ja_lines[lno - 1].rstrip("\r\n")
@@ -10853,6 +10891,15 @@ def build_report():
     md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
     md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
     for idx, d in enumerate(mak_004_diffs, 1):
+        md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
+    md.append("\n---\n")
+
+    # Section 230 - Milestone 3: Labyrinth of Grisaia Sachi After Story Chapter 1
+    sac_001_diffs = [d for d in diffs if d["section"].startswith("灰色的迷宫·小岭幸后日谈第一章")]
+    md.append(f"## 二百三十、 灰色的迷宫·小岭幸后日谈第一章·潜艇艇长决断力、辣椒催泪排爆过家家与青梅竹马踢鞋胜负终身约定 (`grisaia2/sac_001`，共 {len(sac_001_diffs)} 条) —— 【里程碑三·小岭幸后日谈第一话】\n")
+    md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
+    md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
+    for idx, d in enumerate(sac_001_diffs, 1):
         md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
     md.append("\n---\n")
 
