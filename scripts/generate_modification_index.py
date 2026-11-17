@@ -1859,6 +1859,14 @@ def classify_change(line_no, sid, ja, old_cn, new_cn):
     if "早食い" in ja or "チャンペスト" in ja or "アイスクリーム頭痛" in ja or "チョコバナナ" in ja or "短冊" in ja or "づっとお兄ちゃんと一緒" in ja or "黒い携帯" in ja:
         return "满刨冰脑结冰败退与七夕短册父女誓约", "绝妙还原满自封冠军之王（Champest）狂炫刨冰致脑结冰送医的活宝行径、天音舔食巧克力香蕉的母性反差、莳菜写错别字的七夕短册‘想永远和哥哥在一起’、以及雄二注视CIRS黑色手机暗誓守护莳菜的深情内核"
 
+    # mic_001 specific (Milestone 3 Chapter 23 - Michiru After Story Chapter 1)
+    if "ぶぶ漬け" in ja or "ジュネーブ条約" in ja or "ダッフルコート" in ja or "待った" in ja or "五時間以上" in ja:
+        return "宇治茶泡饭逐客令与日内瓦公约提前八小时蹲守约会", "彻底修正机翻将宇治茶泡饭（ぶぶ漬け）荒谬误译为‘烤蔬菜’、将待った（让你久等了）误译为‘我等到了吗’，绝妙还原雄二晨跑吐槽京都茶泡饭逐客令、满身裹粗呢大衣背诵战俘审讯台词、提前八小时蹲守约会算不清十四减六除以二的爆笑开场"
+    if "前戯" in ja or "オーラル" in ja or "水切り" in ja or "母乳" in ja or "ズブニュルッシュ" in ja:
+        return "小幸口交前戏妄想与满妹打水漂喷射母乳空耳", "爆笑重现满向小幸倾诉雄二慢跑约会不满、小幸误以为聊前戏且脑补口交侍奉（オーラル）、将打水漂娇滴滴撒娇尾音（よん）空耳成河中喷射母乳、以及黏湿噗哧（ズブニュルッシュ）下流妄想的名场面"
+    if "朽ち果てろ天ぷら" in ja or "雪女" in ja or "黒髪戻し" in ja or "甘酒" in ja or "バド" in ja:
+        return "臭夏天天妇罗烂透去死与金发雪女点单百威啤酒", "传神还原满把约会失败归咎于夏天并怒咒‘臭夏天给我烂掉去死吧天妇罗’、莳菜以‘雪女若长金发在雪山遇难只会让人喊续一杯百威啤酒’忽悠满黑发才是冬天唯一真理、小幸黑发喷雾被汗冲花脸、以及大热天喝热甜酒当场呕吐的极致盛夏严冬约会"
+
     # makinass4 specific (Milestone 3 Chapter 22 - Makina Short Story 4)
     if "デイブ教授" in ja or "ジャイアントパンダ" in ja or "人民服" in ja or "第六の指" in ja or "カラテ" in ja:
         return "戴夫教授大熊猫第六指与中山装撕碎惨剧", "绝妙还原戴夫在电视节目中打空手道进中国熊猫笼子科普‘第六指第七指’却被熊猫揪住中山装暴打撕碎致卧床半年的荒诞美式纪录片恶搞"
@@ -8410,6 +8418,32 @@ def build_report():
                 "section": "灰色的迷宫·入巢莳菜后日谈第四章·教室春梦吻满、水泥柱爆头与由美子美滨冷藏库落果论 (`grisaia2/mak_004`)"
             })
 
+    # Milestone 3 Chapter 23: Michiru After Story Chapter 1 (grisaia2/mic_001)
+    for lno in range(71908, 72286):
+        ja_raw = ja_lines[lno - 1].rstrip("\r\n")
+        cn_raw = cn_lines[lno - 1].rstrip("\r\n")
+        sid = ja_raw.split("\t")[0] if "\t" in ja_raw else f"L{lno}"
+        ja_txt = ja_raw.split("\t")[1] if "\t" in ja_raw else ja_raw
+        cn_txt = cn_raw.split("\t")[1] if "\t" in cn_raw else cn_raw
+
+        old_txt = cn_txt
+        if git_base_cn and len(git_base_cn) >= lno:
+            head_raw = git_base_cn[lno - 1].rstrip("\r\n")
+            old_txt = head_raw.split("\t")[1] if "\t" in head_raw else head_raw
+
+        if cn_txt != old_txt and cn_txt.strip() != "":
+            cat, reason = classify_change(lno, sid, ja_txt, old_txt, cn_txt)
+            diffs.append({
+                "lno": lno,
+                "sid": sid,
+                "ja": ja_txt,
+                "old": old_txt,
+                "new": cn_txt,
+                "cat": cat,
+                "reason": reason,
+                "section": "灰色的迷宫·松岛满后日谈第一章·盛夏严冬约会、茶泡饭逐客令与黑发甜酒狂想曲 (`grisaia2/mic_001`)"
+            })
+
     # Milestone 3 Chapter 22: Makina Short Story 4 (grisaia2/makinass4)
     for lno in range(71793, 71908):
         ja_raw = ja_lines[lno - 1].rstrip("\r\n")
@@ -10561,6 +10595,15 @@ def build_report():
     md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
     md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
     for idx, d in enumerate(mak_004_diffs, 1):
+        md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
+    md.append("\n---\n")
+
+    # Section 222 - Milestone 3: Labyrinth of Grisaia Michiru After Story Chapter 1
+    mic_001_diffs = [d for d in diffs if d["section"].startswith("灰色的迷宫·松岛满后日谈第一章")]
+    md.append(f"## 二百二十二、 灰色的迷宫·松岛满后日谈第一章·盛夏严冬约会、茶泡饭逐客令与黑发甜酒狂想曲 (`grisaia2/mic_001`，共 {len(mic_001_diffs)} 条) —— 【里程碑三·松岛满后日谈第一话】\n")
+    md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
+    md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
+    for idx, d in enumerate(mic_001_diffs, 1):
         md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
     md.append("\n---\n")
 
