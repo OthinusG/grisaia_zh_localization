@@ -1859,6 +1859,18 @@ def classify_change(line_no, sid, ja, old_cn, new_cn):
     if "早食い" in ja or "チャンペスト" in ja or "アイスクリーム頭痛" in ja or "チョコバナナ" in ja or "短冊" in ja or "づっとお兄ちゃんと一緒" in ja or "黒い携帯" in ja:
         return "满刨冰脑结冰败退与七夕短册父女誓约", "绝妙还原满自封冠军之王（Champest）狂炫刨冰致脑结冰送医的活宝行径、天音舔食巧克力香蕉的母性反差、莳菜写错别字的七夕短册‘想永远和哥哥在一起’、以及雄二注视CIRS黑色手机暗誓守护莳菜的深情内核"
 
+    # sachiss4 specific (Milestone 3 Sachi Short Story 4: Poetic Dusk Soliloquy & Happy Pot Salesman Punchline)
+    if (77979 <= line_no <= 78019) or sid.startswith("grisaia2/sachiss4#"):
+        if "壷" in ja or "買った" in ja or "毎度ありがとう" in ja or "つまり、どういうこと" in ja:
+            return "铺垫长篇抒情后反手推销开运幸福之壶与由美子秒买神反转", "神级灵感商法反转！在长达三十多句极度深情文艺的内心独白后，幸冷不防掏出‘开运幸福壶’推销‘自从买了这个我就幸福了’；由美子当场秒答‘买了’，戏剧性反转笑喷全场"
+        if "路地裏" in ja or "排水溝" in ja or "ビニール袋" in ja or "好きな人" in ja or "おこがましい" in ja or "自惚れ" in ja or "自由に伝えて" in ja:
+            return "后巷丢弃物下水道自比悲情、买菜塑料袋微小幸福与向大家表露心声", "幸的心灵救赎之旅！追忆过去曾自轻如后巷失物任由大雨冲入下水道，如今手中提着采购食材的塑料袋思念所爱之人，领悟人人皆有表达心声之权利，彻底驱散自卑阴霾"
+        if "夕暮れ" in ja or "母親に手を引かれ" in ja or "オレンジ色" in ja or "街灯" in ja or "足音" in ja or "怖がり" in ja:
+            return "黄昏街道寂寥独行、母子牵手乡愁与路灯窥视胆怯独白", "极美氛围烘托！幸独行于橙红落日与渐凉秋风中，见母子牵手感慨再也回不去纯真年代；将路灯与身后脚步拟人化为不祥窥视，坦白自己实为胆小鬼，文笔清冷细腻"
+        if "変化" in ja or "背筋" in ja or "笑顔を作って" in ja or "相応しい自分" in ja or "折り目" in ja or "邪魔なもの" in ja or "窮屈" in ja:
+            return "生活潜移默化蜕变、给时间打上折痕与勉力微笑迎向未来", "深刻人生哲思！幸探讨脱胎换骨的顿悟与细水长流的转变，告诫低头叹气只会错失转机；昂首深呼吸勉力展露笑容，时刻准备成为配得上幸福的人"
+        return "幸短篇第四话细腻独白与心理描写润色", "修正生硬机械翻译，优化幸文艺深沉女仆语调与细腻文学质感"
+
     # sachiss3 specific (Milestone 3 Sachi Short Story 3: Sachiderella Fairy Tale Parody, USMC Desert Boots & Nude Fairy Laundering)
     if (77832 <= line_no <= 77978) or sid.startswith("grisaia2/sachiss3#"):
         if "デザートブーツ" in ja or "足跡" in ja or "ドレインホール" in ja or "九五式" in ja or "海兵隊" in ja or "偽装" in ja or "逸品" in ja or "めでたし" in ja or "王子様" in ja:
@@ -8642,6 +8654,32 @@ def build_report():
                 "section": "灰色的迷宫·入巢莳菜后日谈第四章·教室春梦吻满、水泥柱爆头与由美子美滨冷藏库落果论 (`grisaia2/mak_004`)"
             })
 
+    # Milestone 3 Chapter 41: Sachi Short Story 4 (grisaia2/sachiss4)
+    for lno in range(77979, 78020):
+        ja_raw = ja_lines[lno - 1].rstrip("\r\n")
+        cn_raw = cn_lines[lno - 1].rstrip("\r\n")
+        sid = ja_raw.split("\t")[0] if "\t" in ja_raw else f"L{lno}"
+        ja_txt = ja_raw.split("\t")[1] if "\t" in ja_raw else ja_raw
+        cn_txt = cn_raw.split("\t")[1] if "\t" in cn_raw else cn_raw
+
+        old_txt = cn_txt
+        if git_base_cn and len(git_base_cn) >= lno:
+            head_raw = git_base_cn[lno - 1].rstrip("\r\n")
+            old_txt = head_raw.split("\t")[1] if "\t" in head_raw else head_raw
+
+        if cn_txt != old_txt and cn_txt.strip() != "":
+            cat, reason = classify_change(lno, sid, ja_txt, old_txt, cn_txt)
+            diffs.append({
+                "lno": lno,
+                "sid": sid,
+                "ja": ja_txt,
+                "old": old_txt,
+                "new": cn_txt,
+                "cat": cat,
+                "reason": reason,
+                "section": "灰色的迷宫·小岭幸短篇第四话·黄昏街景诗意独白、时间折痕与开运幸福之壶灵感商法神反转 (`grisaia2/sachiss4`)"
+            })
+
     # Milestone 3 Chapter 40: Sachi Short Story 3 (grisaia2/sachiss3)
     for lno in range(77832, 77979):
         ja_raw = ja_lines[lno - 1].rstrip("\r\n")
@@ -11261,6 +11299,15 @@ def build_report():
     md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
     md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
     for idx, d in enumerate(mak_004_diffs, 1):
+        md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
+    md.append("\n---\n")
+
+    # Section 240 - Milestone 3: Labyrinth of Grisaia Sachi Short Story 4
+    sachiss4_diffs = [d for d in diffs if d["section"].startswith("灰色的迷宫·小岭幸短篇第四话")]
+    md.append(f"## 二百四十、 灰色的迷宫·小岭幸短篇第四话·黄昏街景诗意独白、时间折痕与开运幸福之壶灵感商法神反转 (`grisaia2/sachiss4`，共 {len(sachiss4_diffs)} 条) —— 【里程碑三·小岭幸短篇第四话】\n")
+    md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
+    md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
+    for idx, d in enumerate(sachiss4_diffs, 1):
         md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
     md.append("\n---\n")
 
