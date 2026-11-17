@@ -1859,6 +1859,18 @@ def classify_change(line_no, sid, ja, old_cn, new_cn):
     if "早食い" in ja or "チャンペスト" in ja or "アイスクリーム頭痛" in ja or "チョコバナナ" in ja or "短冊" in ja or "づっとお兄ちゃんと一緒" in ja or "黒い携帯" in ja:
         return "满刨冰脑结冰败退与七夕短册父女誓约", "绝妙还原满自封冠军之王（Champest）狂炫刨冰致脑结冰送医的活宝行径、天音舔食巧克力香蕉的母性反差、莳菜写错别字的七夕短册‘想永远和哥哥在一起’、以及雄二注视CIRS黑色手机暗誓守护莳菜的深情内核"
 
+    # etcess2 specific (Milestone 3 Miscellaneous Short 2: Maguroman Backstage Gossip & Midlife Crisis)
+    if (68786 <= line_no <= 68876) or sid.startswith("grisaia2/etcess2#"):
+        if "次期も決定" in ja or "息子の登場" in ja or "おやっさん" in ja or "脇役" in ja or "主役" in ja or "バーベキュー" in ja or "呼ばれてへん" in ja:
+            return "乔迁烧烤落选惨剧、主角遭撤换降级边缘老爹与内定换血危机", "特摄圈职场中年危机！后辈兴高采烈聊起制片人乔迁烧烤宴，金枪鱼侠尴尬发现自己根本未受邀；雪上加霜得知下一季主角将被‘金枪鱼侠之子’顶替，自己遭降格为龙套‘老爹’，满腹辛酸"
+        if "時計" in ja or "八百" in ja or "八百万" in ja or "入浴剤" in ja or "別府" in ja or "生臭い" in ja or "安物" in ja:
+            return "八百万天价名表炫耀、别府温泉入浴剂悬殊落差与鱼腥味嫌弃", "娱乐圈人情冷暖暴击！牛肋条戴着制片人所赠（伪称自购）八百万天价名表，金枪鱼侠手抖归还，酸楚忆起自己生日仅收到一盒别府入浴剂；盘问间遭牛肋条嫌弃‘一股生鱼腥味别靠太近’"
+        if "ヤングカルビ" in ja or "岬ちゃん" in ja or "小柴さん" in ja or "デキてんの" in ja or "いくつ離れてる" in ja or "おかしいやん" in ja:
+            return "青年牛肋条单飞电影内幕、女优潜规则与老少配破防互怼", "行业潜规则大曝光！牛肋条坦白个人单飞电影全因制片人想捧关系户小岬，金枪鱼侠暗恋破灭心态失衡，既极力否认老少配可能又恼羞成怒逼问‘我俩并排真就那么刺眼吗’，死要面子拉满"
+        if "真夏日" in ja or "ルービー" in ja or "ロケ" in ja or "暑い" in ja or "もしもし" in ja or "Ｂ２９" in ja or "リハ" in ja or "言うてへん" in ja:
+            return "盛夏外景候场偷闲、行业倒装黑话倒苦水与彩排前暗搓搓记仇", "极致真实的候场群像！牛肋条一边打电话敷衍应酬一边用业界倒装黑话（鲁比=啤酒）吐槽酷暑外景；结尾二人望着天空胡扯B-29，金枪鱼侠直至上场彩排仍在暗暗介怀后辈用词不敬"
+        return "金枪鱼侠与牛肋条将军短篇幕后对话润色", "修正生硬机械翻译，优化关西腔过气英雄与轻佻年轻后辈的真实戏谑感"
+
     # etcess1 specific (Milestone 3 Miscellaneous Short 1: Chizuru Sushi Crazy & Crazy Loan Boob Grab Gags)
     if (68709 <= line_no <= 68785) or sid.startswith("grisaia2/etcess1#"):
         if "クレイジーローン" in ja or "サラ金" in ja or "消費者金融" in ja or "お金貸し屋" in ja or "松嶋さん" in ja or "お金に困って" in ja:
@@ -8666,6 +8678,32 @@ def build_report():
                 "section": "灰色的迷宫·入巢莳菜后日谈第四章·教室春梦吻满、水泥柱爆头与由美子美滨冷藏库落果论 (`grisaia2/mak_004`)"
             })
 
+    # Milestone 3 Chapter 43: Miscellaneous Short 2 (grisaia2/etcess2)
+    for lno in range(68786, 68877):
+        ja_raw = ja_lines[lno - 1].rstrip("\r\n")
+        cn_raw = cn_lines[lno - 1].rstrip("\r\n")
+        sid = ja_raw.split("\t")[0] if "\t" in ja_raw else f"L{lno}"
+        ja_txt = ja_raw.split("\t")[1] if "\t" in ja_raw else ja_raw
+        cn_txt = cn_raw.split("\t")[1] if "\t" in cn_raw else cn_raw
+
+        old_txt = cn_txt
+        if git_base_cn and len(git_base_cn) >= lno:
+            head_raw = git_base_cn[lno - 1].rstrip("\r\n")
+            old_txt = head_raw.split("\t")[1] if "\t" in head_raw else head_raw
+
+        if cn_txt != old_txt and cn_txt.strip() != "":
+            cat, reason = classify_change(lno, sid, ja_txt, old_txt, cn_txt)
+            diffs.append({
+                "lno": lno,
+                "sid": sid,
+                "ja": ja_txt,
+                "old": old_txt,
+                "new": cn_txt,
+                "cat": cat,
+                "reason": reason,
+                "section": "灰色的迷宫·美滨日常短篇第二话·金枪鱼侠过气中年危机、牛肋条八百万名表、潜规则八卦与烧烤未受邀落寞 (`grisaia2/etcess2`)"
+            })
+
     # Milestone 3 Chapter 42: Miscellaneous Short 1 (grisaia2/etcess1)
     for lno in range(68709, 68786):
         ja_raw = ja_lines[lno - 1].rstrip("\r\n")
@@ -11337,6 +11375,15 @@ def build_report():
     md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
     md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
     for idx, d in enumerate(mak_004_diffs, 1):
+        md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
+    md.append("\n---\n")
+
+    # Section 242 - Milestone 3: Labyrinth of Grisaia Miscellaneous Short 2
+    etcess2_diffs = [d for d in diffs if d["section"].startswith("灰色的迷宫·美滨日常短篇第二话")]
+    md.append(f"## 二百四十二、 灰色的迷宫·美滨日常短篇第二话·金枪鱼侠过气中年危机、牛肋条八百万名表、潜规则八卦与烧烤未受邀落寞 (`grisaia2/etcess2`，共 {len(etcess2_diffs)} 条) —— 【里程碑三·美滨日常短篇第二话】\n")
+    md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
+    md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
+    for idx, d in enumerate(etcess2_diffs, 1):
         md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
     md.append("\n---\n")
 
