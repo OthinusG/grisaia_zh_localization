@@ -1859,6 +1859,24 @@ def classify_change(line_no, sid, ja, old_cn, new_cn):
     if "早食い" in ja or "チャンペスト" in ja or "アイスクリーム頭痛" in ja or "チョコバナナ" in ja or "短冊" in ja or "づっとお兄ちゃんと一緒" in ja or "黒い携帯" in ja:
         return "满刨冰脑结冰败退与七夕短册父女誓约", "绝妙还原满自封冠军之王（Champest）狂炫刨冰致脑结冰送医的活宝行径、天音舔食巧克力香蕉的母性反差、莳菜写错别字的七夕短册‘想永远和哥哥在一起’、以及雄二注视CIRS黑色手机暗誓守护莳菜的深情内核"
 
+    # sac_002 specific (Milestone 3 Chapter 32 - Sachi After Story Chapter 2: Python Anaconda, Shark Morning Kiss & Wedding Dress Surprise)
+    if "服を着たまま" in ja or "海兵隊" in ja or "夜の海" in ja or "大蛇" in ja or "死霊" in ja or "寝苦しさ" in ja or "同衾" in ja:
+        return "海军陆战队溺水地狱与晨间大蟒锁身", "生动硬核的军旅回忆！雄二回想海军陆战队战友醉酒常说的‘着衣落水夜海如地狱’名言，将沉重窒息感反差映射到床榻上幸大蟒缠身般双腿死死夹紧大腿的‘装睡蓄谋犯案’"
+    if "ユウくん分" in ja or "寝込みを襲う" in ja or "暗殺者" in ja or "マキちゃん" in ja or "悪の親玉" in ja or "イチャイチャ" in ja or "抱き枕" in ja or "自己嫌悪" in ja:
+        return "暗杀者养分夜袭与小莳天音作风真传", "爆笑日常相声！幸坦白趁熟睡夜袭是为了‘尽情补充悠君养分’，撒娇讨好做派全盘继承自小莳，顺藤摸瓜揪出幕后恶之大Boss是天音；严肃探讨生理欲望与卿卿我我的哲学差异"
+    if "おはようのキス" in ja or "便器" in ja or "雑菌" in ja or "リンゴ" in ja or "サメ" in ja or "無防備" in ja or "開き直った" in ja or "そげんこと" in ja:
+        return "刚醒口腔细菌便池论与鲨鱼味早安吻", "高甜爆笑名场面！幸索要情侣仪式‘早安之吻’，雄二钢铁直男大泼冷水科普‘刚睡醒口腔细菌比马桶还多’；幸嗔怪‘我尝起来绝对是苹果味、悠君肯定是鲨鱼味’并强吻突袭，笑称已彻底掌握制造悠君破绽的绝技"
+    if "デレ" in ja or "朴念仁" in ja or "子宮" in ja or "キュン" in ja or "一筋縄" in ja or "ユ～ウくん" in ja or "ウゼェ" in ja or "小突く" in ja or "アイアンクロー" in ja:
+        return "由美子军师开导与雄二生硬撒娇试炼", "笨拙男人的浪漫觉悟！雄二特地请教由美子并被吐槽从当初只会说‘唔、明白、没问题’的死木桩大有长进；雄二向幸郑重宣告‘我决定娇了’令幸子宫发紧，幸严格开展‘娇羞试炼’直接将雄二整到破防"
+    if "み～そ～じ" in ja or "マグロマン" in ja or "カルビ将軍" in ja or "お湿り台詞" in ja or "茄子" in ja or "恋愛上級者" in ja or "インギン無礼" in ja or "生理なので" in ja:
+        return "年过三十比起吃肉与金枪鱼侠神曲情话", "扫荡机翻巨坑！纠正机翻将三十岁（みそじ）错译为‘味增汤’的荒谬错误，还原金枪鱼侠洗脑主题曲《年过三十岁比起吃肉》及衍生剧《牛小排将军》；雄二随口一句‘陪你闲逛就足够开心’被幸盛赞为情场老手自然情话，幸羞到鼓腮"
+    if "高梨" in ja or "冥土の土産" in ja or "美浜の暴れ馬" in ja or "４０は若けりゃ" in ja or "生牡蠣" in ja or "後生忘れずに" in ja or "房事" in ja:
+        return "美滨烈马房事调侃与高梨奶奶鲜蚝厚礼", "街坊邻里老少通吃！高梨老奶奶调侃雄二房事能力，幸自豪宣称‘美滨烈马名号当之无愧’，奶奶笑称年轻四十岁定要陪宿惹得幸吃醋下重手揉肩；老奶奶赠送整网兜鲜活生蚝，雄二立誓来世不忘赠蚝之恩"
+    if "甘ったるい匂い" in ja or "香水" in ja or "守れるのかな" in ja or "覚悟" in ja or "代車" in ja or "広告塔" in ja or "イメージアップ" in ja:
+        return "神秘甜香男子拷问觉悟与全镇贺礼重负", "暗线潜伏与温馨重压！路遇身上散发肥皂香水及微弱甜腻异香的神秘青年质问能否誓死守护幸；全镇热烈赠礼堆满雄二双臂成‘人形手推车’，千鹤借地方报纸采访将二人婚事打造成美滨学园挽回形象广告牌"
+    if "９月１６日" in ja or "ドレス" in ja or "一般の人も参列" in ja or "ウエディングドレス" in ja or "惚れ直す" in ja or "天地神明" in ja or "ハミング" in ja or "笑顔" in ja:
+        return "全镇列席观礼提议与婚纱惊喜单独拍板权", "情定终身动人余韵！幸提议举办让全镇乡邻均可列席的开放式婚礼并获赞同；幸请求对最终亮相婚纱保留唯一拍板权以保留婚礼当天惊喜，向天地神明立誓定选出让雄二神魂颠倒的婚纱，暮色下雀跃跳步哼唱"
+
     # sac_001 specific (Milestone 3 Chapter 31 - Sachi After Story Chapter 1: Submarine Captain, EOD House & September 23 Wedding)
     if "潜水艦" in ja or "艦長" in ja or "決断力" in ja or "トウガラシ" in ja or "毒ガス" in ja or "防毒マスク" in ja or "ガスマスク" in ja or "プレゼント" in ja or "ＲＥＤ" in ja or "ごっこ" in ja:
         return "潜艇艇长决断力与二选一爆弹处理过家家", "硬核开幕与反差爆笑！雄二独白弗吉尼亚潜艇艇长冷彻决断力；画面一转竟是雄二在帐篷里点干辣椒做催泪烟雾，肉身硬抗泪流满面指导头戴防毒面具的小幸排爆‘过家家’，拆解二选一模拟炸弹"
@@ -8506,6 +8524,32 @@ def build_report():
                 "section": "灰色的迷宫·入巢莳菜后日谈第四章·教室春梦吻满、水泥柱爆头与由美子美滨冷藏库落果论 (`grisaia2/mak_004`)"
             })
 
+    # Milestone 3 Chapter 32: Sachi After Story Chapter 2 (grisaia2/sac_002)
+    for lno in range(75181, 75505):
+        ja_raw = ja_lines[lno - 1].rstrip("\r\n")
+        cn_raw = cn_lines[lno - 1].rstrip("\r\n")
+        sid = ja_raw.split("\t")[0] if "\t" in ja_raw else f"L{lno}"
+        ja_txt = ja_raw.split("\t")[1] if "\t" in ja_raw else ja_raw
+        cn_txt = cn_raw.split("\t")[1] if "\t" in cn_raw else cn_raw
+
+        old_txt = cn_txt
+        if git_base_cn and len(git_base_cn) >= lno:
+            head_raw = git_base_cn[lno - 1].rstrip("\r\n")
+            old_txt = head_raw.split("\t")[1] if "\t" in head_raw else head_raw
+
+        if cn_txt != old_txt and cn_txt.strip() != "":
+            cat, reason = classify_change(lno, sid, ja_txt, old_txt, cn_txt)
+            diffs.append({
+                "lno": lno,
+                "sid": sid,
+                "ja": ja_txt,
+                "old": old_txt,
+                "new": cn_txt,
+                "cat": cat,
+                "reason": reason,
+                "section": "灰色的迷宫·小岭幸后日谈第二章·大蛇缠身晨袭、美滨烈马房事调侃与婚纱惊喜最终决定权 (`grisaia2/sac_002`)"
+            })
+
     # Milestone 3 Chapter 31: Sachi After Story Chapter 1 (grisaia2/sac_001)
     for lno in range(74875, 75181):
         ja_raw = ja_lines[lno - 1].rstrip("\r\n")
@@ -10891,6 +10935,15 @@ def build_report():
     md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
     md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
     for idx, d in enumerate(mak_004_diffs, 1):
+        md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
+    md.append("\n---\n")
+
+    # Section 231 - Milestone 3: Labyrinth of Grisaia Sachi After Story Chapter 2
+    sac_002_diffs = [d for d in diffs if d["section"].startswith("灰色的迷宫·小岭幸后日谈第二章")]
+    md.append(f"## 二百三十一、 灰色的迷宫·小岭幸后日谈第二章·大蛇缠身晨袭、美滨烈马房事调侃与婚纱惊喜最终决定权 (`grisaia2/sac_002`，共 {len(sac_002_diffs)} 条) —— 【里程碑三·小岭幸后日谈第二话】\n")
+    md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
+    md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
+    for idx, d in enumerate(sac_002_diffs, 1):
         md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
     md.append("\n---\n")
 
