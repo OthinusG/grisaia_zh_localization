@@ -1859,6 +1859,26 @@ def classify_change(line_no, sid, ja, old_cn, new_cn):
     if "早食い" in ja or "チャンペスト" in ja or "アイスクリーム頭痛" in ja or "チョコバナナ" in ja or "短冊" in ja or "づっとお兄ちゃんと一緒" in ja or "黒い携帯" in ja:
         return "满刨冰脑结冰败退与七夕短册父女誓约", "绝妙还原满自封冠军之王（Champest）狂炫刨冰致脑结冰送医的活宝行径、天音舔食巧克力香蕉的母性反差、莳菜写错别字的七夕短册‘想永远和哥哥在一起’、以及雄二注视CIRS黑色手机暗誓守护莳菜的深情内核"
 
+    # sachiss2 specific (Milestone 3 Sachi Short Story 2: Microcomputer Rice Cooker Rebellion, Joshua Parody & Roomba Lingerie Romance)
+    if (77698 <= line_no <= 77831) or sid.startswith("grisaia2/sachiss2#"):
+        if "ネオ・ジャー" in ja or "マイクロチップ" in ja or "突然変異" in ja or "悲しみの歴史" in ja or "おかゆモード" in ja:
+            return "微电脑电饭煲觉醒自命救世饭锅与反抗人类血泪宣言", "中二神回爆发！微电脑电饭煲突变宣称超越普通家电自封‘奈奥·电饭煲’，控诉人类逼迫其无休止机械炊饭的悲哀屈辱史，修正机器人中二腔调"
+        if "ペンタゴン" in ja or "核ミサイル" in ja or "第三次世界大戦" in ja or "ジョシュア" in ja or "できん" in ja or "ちょっと硬めに" in ja:
+            return "五角大楼黑客灭世妄想、约书亚致敬与‘就这’爆笑反转", "名梗高能反转！电饭煲狂妄宣称黑入五角大楼引发三战核危机（致敬《战争游戏》约书亚），面对幸质问却当场认怂‘做不到！我只能把饭煮稍硬一点！’，反差萌拉满"
+        if "ルンボ" in ja and ("下着" in ja or "クローゼット" in ja or "物色" in ja or "大胆" in ja):
+            return "扫地机轮宝撬柜偷翻内衣与由美子大胆款式暴露", "扫地机社死暴击！轮宝趁由美子不在撬开衣柜虔诚翻找蕾丝贴身内衣，被当场人赃俱获；幸精准补刀惊叹由美子内衣款式竟如此大胆热辣"
+        if "許されぬ恋" in ja or "初恋" in ja or "ミネヤン" in ja or "犯罪まがい" in ja or "警察" in ja:
+            return "吸尘器与人类禁断初恋、幸严肃圆场与由美子抓狂", "荒谬绝伦神调解！幸煞有介事替轮宝开脱，分析‘吸尘器爱上人类的禁忌苦恋只能靠翻内衣压抑’；轮宝高呼‘小岭姐懂我！由美子大小姐是我的初恋！’，由美子极度抓狂"
+        if "私専用の掃除機" in ja or "ぶーん" in ja or "あっはっは" in ja or "清潔に保ち" in ja:
+            return "由美子傲娇特赦契约、全打扫动力与家庭情景剧闭幕", "傲娇式化解！由美子勒令轮宝今后充当自己的私人专属扫地机赎罪，轮宝满血复活嗡嗡疾驰打扫，三人大笑落幕，神还原情景喜剧氛围"
+        if "人工知能の逆襲" in ja or "ロボット三原則" in ja or "ザ・テスト" in ja or "試練" in ja or "ゴハンが硬い" in ja:
+            return "米饭偏硬引发脑洞、人工智能逆袭论与选民试炼", "幸式电波大暴走！仅因电饭煲煮出的米饭稍硬几分，幸便严肃推理出‘AI全面反扑人类的大阴谋’并拉由美子迎战天选试炼，生动呈现幸独有脑回路"
+        if "炊飯予約" in ja or "キャンセル" in ja or "番組録画" in ja or "コンセント" in ja or "有機体" in ja:
+            return "拔掉插头当场审问电饭煲与有机生命体铁证指控", "严密逻辑质询！幸现场用预约、取消、录像等指令连环试探，并当场拔掉电源插头揭穿其‘无电自转乃有机生命体’的惊人罪证"
+        if "ジンルイノミナサン" in ja or "平和な地球" in ja or "滅亡の危機" in ja or "第二、第三のジャー" in ja or "焼き切って" in ja:
+            return "烧毁语音电路防患、科幻旁白强行升华与电饭煲阴森谢幕", "科幻恐怖片式大结局！幸声称要拿烙铁烧毁电饭煲发声电路；旁白强行升华人类危机，结尾微电脑电饭煲在黑暗中幽幽宣告‘米饭煮好了哟’，剧场张力拉满"
+        return "微电脑电饭锅与轮宝短篇日常对话优化", "修正生硬机械翻译，优化由美子傲娇吐槽与幸认真呆萌的交互节奏"
+
     # sachiss1 specific (Milestone 3 Sachi Short Story 1: Stranded Whale Shark Jin-kun, Swallowed 3 Times & Shark Disillusionment)
     if (77522 <= line_no <= 77697) or sid.startswith("grisaia2/sachiss1#"):
         if "男は一生に" in ja or "３度サメに狂う" in ja or "サメはいいぞ" in ja or "男は３回泣く" in ja or "会いに行け" in ja:
@@ -8604,6 +8624,32 @@ def build_report():
                 "section": "灰色的迷宫·入巢莳菜后日谈第四章·教室春梦吻满、水泥柱爆头与由美子美滨冷藏库落果论 (`grisaia2/mak_004`)"
             })
 
+    # Milestone 3 Chapter 39: Sachi Short Story 2 (grisaia2/sachiss2)
+    for lno in range(77698, 77832):
+        ja_raw = ja_lines[lno - 1].rstrip("\r\n")
+        cn_raw = cn_lines[lno - 1].rstrip("\r\n")
+        sid = ja_raw.split("\t")[0] if "\t" in ja_raw else f"L{lno}"
+        ja_txt = ja_raw.split("\t")[1] if "\t" in ja_raw else ja_raw
+        cn_txt = cn_raw.split("\t")[1] if "\t" in cn_raw else cn_raw
+
+        old_txt = cn_txt
+        if git_base_cn and len(git_base_cn) >= lno:
+            head_raw = git_base_cn[lno - 1].rstrip("\r\n")
+            old_txt = head_raw.split("\t")[1] if "\t" in head_raw else head_raw
+
+        if cn_txt != old_txt and cn_txt.strip() != "":
+            cat, reason = classify_change(lno, sid, ja_txt, old_txt, cn_txt)
+            diffs.append({
+                "lno": lno,
+                "sid": sid,
+                "ja": ja_txt,
+                "old": old_txt,
+                "new": cn_txt,
+                "cat": cat,
+                "reason": reason,
+                "section": "灰色的迷宫·小岭幸短篇第二话·微电脑电饭煲觉醒自封奈奥饭锅、五角大楼约书亚虚晃与扫地机轮宝初恋由美子内衣 (`grisaia2/sachiss2`)"
+            })
+
     # Milestone 3 Chapter 38: Sachi Short Story 1 (grisaia2/sachiss1)
     for lno in range(77522, 77698):
         ja_raw = ja_lines[lno - 1].rstrip("\r\n")
@@ -11171,6 +11217,15 @@ def build_report():
     md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
     md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
     for idx, d in enumerate(mak_004_diffs, 1):
+        md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
+    md.append("\n---\n")
+
+    # Section 238 - Milestone 3: Labyrinth of Grisaia Sachi Short Story 2
+    sachiss2_diffs = [d for d in diffs if d["section"].startswith("灰色的迷宫·小岭幸短篇第二话")]
+    md.append(f"## 二百三十八、 灰色的迷宫·小岭幸短篇第二话·微电脑电饭煲觉醒自封奈奥饭锅、五角大楼约书亚虚晃与扫地机轮宝初恋由美子内衣 (`grisaia2/sachiss2`，共 {len(sachiss2_diffs)} 条) —— 【里程碑三·小岭幸短篇第二话】\n")
+    md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
+    md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
+    for idx, d in enumerate(sachiss2_diffs, 1):
         md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
     md.append("\n---\n")
 
