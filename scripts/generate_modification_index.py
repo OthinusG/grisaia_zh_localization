@@ -1859,6 +1859,24 @@ def classify_change(line_no, sid, ja, old_cn, new_cn):
     if "早食い" in ja or "チャンペスト" in ja or "アイスクリーム頭痛" in ja or "チョコバナナ" in ja or "短冊" in ja or "づっとお兄ちゃんと一緒" in ja or "黒い携帯" in ja:
         return "满刨冰脑结冰败退与七夕短册父女誓约", "绝妙还原满自封冠军之王（Champest）狂炫刨冰致脑结冰送医的活宝行径、天音舔食巧克力香蕉的母性反差、莳菜写错别字的七夕短册‘想永远和哥哥在一起’、以及雄二注视CIRS黑色手机暗誓守护莳菜的深情内核"
 
+    # sachiss3 specific (Milestone 3 Sachi Short Story 3: Sachiderella Fairy Tale Parody, USMC Desert Boots & Nude Fairy Laundering)
+    if (77832 <= line_no <= 77978) or sid.startswith("grisaia2/sachiss3#"):
+        if "デザートブーツ" in ja or "足跡" in ja or "ドレインホール" in ja or "九五式" in ja or "海兵隊" in ja or "偽装" in ja or "逸品" in ja or "めでたし" in ja or "王子様" in ja:
+            return "军规沙漠靴脚印刑侦追踪、海军陆战队顶级逸品与九五式还鞋大圆满", "神级硬核反转！雄二王子不凭水晶鞋试穿，而是根据美军公发沙漠作战靴底纹刑侦追踪脚印至玄关；只因同为陆战队军靴爱惜逸品不忍浪费才物归原主，驾驶九五式小乘用车疾驰而去，达成极致硬核的童话大圆满"
+        if "妖精" in ja or "裸" in ja or "全裸" in ja or "現金化" in ja or "手数料３０" in ja or "ブブデ" in ja or "金に汚い" in ja or "願い" in ja:
+            return "天音全裸变态仙女登场、三成黑市抽水洗钱与恶搞咒语变现", "荒诞名场面！天音全裸仙女现身声称设定如此，面对幸‘支票兑换现金’的心愿当场黑市抽水三成手续费；念动恶搞咒语大笔现钞到手，贪财仙女嘴脸尽显"
+        if "金なら" in ja or "腐るほど" in ja or "クーデレラ" in ja or "茶封筒" in ja or "三百万円" in ja or "ゲンナマ" in ja or "小切手" in ja or "お金" in ja:
+            return "三无由美子‘钱多到烂不完’砸脸、茶色信封三百万巨额支票与现钞吐槽", "由美子壕气暴击！三无姐姐冷德瑞拉高呼‘老娘钱多到花不完’直接将三百万支票茶色信封强塞进口袋；老鼠莳菜疯狂吐槽关键时刻军费必须是现钞"
+        if "ネズミスクワッド" in ja or "殺っていい" in ja or "狙撃" in ja or "発砲許可" in ja or "オープンファイアー" in ja or "マキちゃん" in ja or "血の気" in ja or "ネズミ" in ja:
+            return "老鼠小队全天候严密布控、申请狙击许可与开火暴走", "军武老鼠暴走！莳菜化身老鼠小队狙击手，咬牙切齿随时准备狙杀恶毒后妈，追问幸‘批准开火转入交战状态，open fire！’，幸淡定进行交战交规科普"
+        if "ツンデレラ" in ja or "少年ギャング" in ja or "孤独死" in ja or "チョボちゃん" in ja or "ゴハン抜き" in ja or "デザートは食べ放題" in ja or "お母様" in ja:
+            return "傲娇满后妈断粮惩罚反手甜点管够与买错漫画互怼", "傲娇式后妈虐待！满后妈因买错周刊罚幸不许吃晚饭，转头傲娇高呼‘甜点管够吃到饱’；幸补刀断言后妈唯一乐趣是看漫画将来必孤独死"
+        if "延滞料金" in ja or "商品買取" in ja or "レンタル" in ja or "十二時" in ja or "階段を走りました" in ja:
+            return "午夜钟声超时滞纳金恐慌与强制买断沉重代价", "极度写实财务暴击！幸舞会落荒而逃并非魔法失效，而是担忧过了午夜十二点礼服被收高额超时滞纳金；弄丢一只靴子更要面临全额赔偿买断"
+        if "はじめまして" in ja or "灰をかぶって" in ja or "ダスト" in ja or "ピカピカ" in ja or "お掃除" in ja or "シャレ" in ja:
+            return "幸德瑞拉灰姑娘打扫开场与发光灰尘冷笑话谐音", "电波童话开篇！幸自封幸德瑞拉，陶醉于蒙尘物件擦拭锃亮的幸福，一本正经大讲发光（ダスト）与灰尘（Dust）的英文谐音冷笑话"
+        return "幸德瑞拉短篇日常对话与心理描写润色", "修正生硬机械翻译，优化全员角色恶搞反差语调与快节奏漫才吐槽"
+
     # sachiss2 specific (Milestone 3 Sachi Short Story 2: Microcomputer Rice Cooker Rebellion, Joshua Parody & Roomba Lingerie Romance)
     if (77698 <= line_no <= 77831) or sid.startswith("grisaia2/sachiss2#"):
         if "ネオ・ジャー" in ja or "マイクロチップ" in ja or "突然変異" in ja or "悲しみの歴史" in ja or "おかゆモード" in ja:
@@ -8624,6 +8642,32 @@ def build_report():
                 "section": "灰色的迷宫·入巢莳菜后日谈第四章·教室春梦吻满、水泥柱爆头与由美子美滨冷藏库落果论 (`grisaia2/mak_004`)"
             })
 
+    # Milestone 3 Chapter 40: Sachi Short Story 3 (grisaia2/sachiss3)
+    for lno in range(77832, 77979):
+        ja_raw = ja_lines[lno - 1].rstrip("\r\n")
+        cn_raw = cn_lines[lno - 1].rstrip("\r\n")
+        sid = ja_raw.split("\t")[0] if "\t" in ja_raw else f"L{lno}"
+        ja_txt = ja_raw.split("\t")[1] if "\t" in ja_raw else ja_raw
+        cn_txt = cn_raw.split("\t")[1] if "\t" in cn_raw else cn_raw
+
+        old_txt = cn_txt
+        if git_base_cn and len(git_base_cn) >= lno:
+            head_raw = git_base_cn[lno - 1].rstrip("\r\n")
+            old_txt = head_raw.split("\t")[1] if "\t" in head_raw else head_raw
+
+        if cn_txt != old_txt and cn_txt.strip() != "":
+            cat, reason = classify_change(lno, sid, ja_txt, old_txt, cn_txt)
+            diffs.append({
+                "lno": lno,
+                "sid": sid,
+                "ja": ja_txt,
+                "old": old_txt,
+                "new": cn_txt,
+                "cat": cat,
+                "reason": reason,
+                "section": "灰色的迷宫·小岭幸短篇第三话·幸德瑞拉灰姑娘恶搞童话、老鼠狙击队暴走、三成抽水全裸仙女与硬核军规沙漠靴追踪 (`grisaia2/sachiss3`)"
+            })
+
     # Milestone 3 Chapter 39: Sachi Short Story 2 (grisaia2/sachiss2)
     for lno in range(77698, 77832):
         ja_raw = ja_lines[lno - 1].rstrip("\r\n")
@@ -11217,6 +11261,15 @@ def build_report():
     md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
     md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
     for idx, d in enumerate(mak_004_diffs, 1):
+        md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
+    md.append("\n---\n")
+
+    # Section 239 - Milestone 3: Labyrinth of Grisaia Sachi Short Story 3
+    sachiss3_diffs = [d for d in diffs if d["section"].startswith("灰色的迷宫·小岭幸短篇第三话")]
+    md.append(f"## 二百三十九、 灰色的迷宫·小岭幸短篇第三话·幸德瑞拉灰姑娘恶搞童话、老鼠狙击队暴走、三成抽水全裸仙女与硬核军规沙漠靴追踪 (`grisaia2/sachiss3`，共 {len(sachiss3_diffs)} 条) —— 【里程碑三·小岭幸短篇第三话】\n")
+    md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
+    md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
+    for idx, d in enumerate(sachiss3_diffs, 1):
         md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
     md.append("\n---\n")
 
