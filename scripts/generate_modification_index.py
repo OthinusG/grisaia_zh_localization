@@ -1859,6 +1859,18 @@ def classify_change(line_no, sid, ja, old_cn, new_cn):
     if "早食い" in ja or "チャンペスト" in ja or "アイスクリーム頭痛" in ja or "チョコバナナ" in ja or "短冊" in ja or "づっとお兄ちゃんと一緒" in ja or "黒い携帯" in ja:
         return "满刨冰脑结冰败退与七夕短册父女誓约", "绝妙还原满自封冠军之王（Champest）狂炫刨冰致脑结冰送医的活宝行径、天音舔食巧克力香蕉的母性反差、莳菜写错别字的七夕短册‘想永远和哥哥在一起’、以及雄二注视CIRS黑色手机暗誓守护莳菜的深情内核"
 
+    # sac_004 specific (Milestone 3 Chapter 34 - Sachi After Story Chapter 4: Sachi Mother Sage vs Wizard, Blue Shark Quiz, Nursing School & Bridal Night Lingerie)
+    if "寛子" in ja or "賢者" in ja or "魔法使い" in ja or "オルゴール" in ja or "好きよりも" in ja or "好きより好き" in ja:
+        return "贤者母亲与魔法使父亲比喻与八音盒回忆", "深刻动人的母亲教诲！童年幸回忆母亲点拨‘比喜欢更喜欢’的结婚真意——并非单纯索取，而是抱着用双手给予对方幸福的觉悟；工场中专注机械的父亲是魔法师，在一旁默默守护治愈全家的母亲是贤者，幸暗誓成为像母亲一样的新娘"
+    if "婚前シンクロクイズ" in ja or "ヨシキリザメ" in ja or "シュモクザメ" in ja or "Ｂｌｕｅ Ｓｈａｒｋ" in ja or "専業主婦" in ja or "共働き" in ja or "もしもシリーズ" in ja or "無力化" in ja or "待避" in ja:
+        return "婚前默契测验大青鲨与无力化偏差", "宿舍活宝大考验！莳菜与满筹办婚前默契测验，幸最爱的鲨鱼考题雄二错答双髻鲨（实为蔚蓝大青鲨Blue Shark）；面对抢劫犯危机，雄二选择让幸避难撤退，幸却本能选择与雄二并肩将目标无力化，两人对‘幸福的形状’产生认知偏差"
+    if "看護師学校" in ja or "特待生" in ja or "進路" in ja or "命を危険に晒す" in ja or "同じ舞台" in ja or "怪我でも治して" in ja:
+        return "护士学校志愿书与并肩战医誓愿", "震撼心扉的终生选择！海边漫步幸递出特待生护士学校志愿书，坦言早已猜到雄二执行危险任务的特工本职；既然无法并肩作战，便立誓成为随时奔赴战场为雄二治愈创伤的专属医护，如母亲辅佐父亲般成为雄二的贤者"
+    if "病室" in ja or "エゴ" in ja or "母の病床" in ja or "誓いの言葉" in ja or "生涯の伴侶" in ja or "改めてプロポーズ" in ja or "親孝行" in ja:
+        return "病床前取消安全承诺与真挚二次求婚", "深沉庄严的男儿誓言！雄二带幸赶赴母亲病房，当着昏睡母亲的面坦白取消‘保幸一生安稳平淡’的旧誓，承认那是自己的傲慢；郑重许诺尊重幸的心愿并肩前行，并正式向幸二次求婚：‘能与我并肩共度余生的女人唯你一人’"
+    if "初夜" in ja or "勝負衣装" in ja or "ウェディングドレス" in ja or "ベッドの上" in ja or "抱いてください" in ja or "世界中でユウくん" in ja:
+        return "初夜胜负战袍与新婚前夜身心相属", "绝美纯爱与极度深情！满闹乌龙提前催促幸前往雄二房间，幸换上婚纱策划师破例赠送的‘初夜专用胜负战袍’，娇羞请求雄二在成为夫妻的前夜拥抱自己，确信自己早已彻底属于悠君，身心相印铭刻终身"
+
     # sac_003 specific (Milestone 3 Chapter 33 - Sachi After Story Chapter 3: Cake Nipple Pun, Toy Bomber & Double Slide Confession)
     if "ゴンドラ" in ja or "スカイダイビング" in ja or "入刀" in ja or "ニュウトウ" in ja or "ヒローエン" in ja or "晴れ舞台" in ja or "ブライダル" in ja:
         return "空中吊篮跳伞脑洞与切蛋糕乳头黄段子", "婚礼筹备爆笑开幕！众人大开脑洞提议高空跳伞与缆车吊篮登场，小满激动要求切蛋糕，小幸呆萌接梗‘若是乳头随时都可以’，小满咬牙强忍吐槽；雄二坚定选择不办奢华喜宴的学生质朴风"
@@ -8540,6 +8552,32 @@ def build_report():
                 "section": "灰色的迷宫·入巢莳菜后日谈第四章·教室春梦吻满、水泥柱爆头与由美子美滨冷藏库落果论 (`grisaia2/mak_004`)"
             })
 
+    # Milestone 3 Chapter 34: Sachi After Story Chapter 4 (grisaia2/sac_004)
+    for lno in range(75759, 76281):
+        ja_raw = ja_lines[lno - 1].rstrip("\r\n")
+        cn_raw = cn_lines[lno - 1].rstrip("\r\n")
+        sid = ja_raw.split("\t")[0] if "\t" in ja_raw else f"L{lno}"
+        ja_txt = ja_raw.split("\t")[1] if "\t" in ja_raw else ja_raw
+        cn_txt = cn_raw.split("\t")[1] if "\t" in cn_raw else cn_raw
+
+        old_txt = cn_txt
+        if git_base_cn and len(git_base_cn) >= lno:
+            head_raw = git_base_cn[lno - 1].rstrip("\r\n")
+            old_txt = head_raw.split("\t")[1] if "\t" in head_raw else head_raw
+
+        if cn_txt != old_txt and cn_txt.strip() != "":
+            cat, reason = classify_change(lno, sid, ja_txt, old_txt, cn_txt)
+            diffs.append({
+                "lno": lno,
+                "sid": sid,
+                "ja": ja_txt,
+                "old": old_txt,
+                "new": cn_txt,
+                "cat": cat,
+                "reason": reason,
+                "section": "灰色的迷宫·小岭幸后日谈第四章·贤者母亲治愈魔法使、婚前默契测验、战地护士誓愿与初夜胜负战袍 (`grisaia2/sac_004`)"
+            })
+
     # Milestone 3 Chapter 33: Sachi After Story Chapter 3 (grisaia2/sac_003)
     for lno in range(75505, 75759):
         ja_raw = ja_lines[lno - 1].rstrip("\r\n")
@@ -10977,6 +11015,15 @@ def build_report():
     md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
     md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
     for idx, d in enumerate(mak_004_diffs, 1):
+        md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
+    md.append("\n---\n")
+
+    # Section 233 - Milestone 3: Labyrinth of Grisaia Sachi After Story Chapter 4
+    sac_004_diffs = [d for d in diffs if d["section"].startswith("灰色的迷宫·小岭幸后日谈第四章")]
+    md.append(f"## 二百三十三、 灰色的迷宫·小岭幸后日谈第四章·贤者母亲治愈魔法使、婚前默契测验、战地护士誓愿与初夜胜负战袍 (`grisaia2/sac_004`，共 {len(sac_004_diffs)} 条) —— 【里程碑三·小岭幸后日谈第四话】\n")
+    md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
+    md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
+    for idx, d in enumerate(sac_004_diffs, 1):
         md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
     md.append("\n---\n")
 
