@@ -1859,6 +1859,22 @@ def classify_change(line_no, sid, ja, old_cn, new_cn):
     if "早食い" in ja or "チャンペスト" in ja or "アイスクリーム頭痛" in ja or "チョコバナナ" in ja or "短冊" in ja or "づっとお兄ちゃんと一緒" in ja or "黒い携帯" in ja:
         return "满刨冰脑结冰败退与七夕短册父女誓约", "绝妙还原满自封冠军之王（Champest）狂炫刨冰致脑结冰送医的活宝行径、天音舔食巧克力香蕉的母性反差、莳菜写错别字的七夕短册‘想永远和哥哥在一起’、以及雄二注视CIRS黑色手机暗誓守护莳菜的深情内核"
 
+    # sac_003 specific (Milestone 3 Chapter 33 - Sachi After Story Chapter 3: Cake Nipple Pun, Toy Bomber & Double Slide Confession)
+    if "ゴンドラ" in ja or "スカイダイビング" in ja or "入刀" in ja or "ニュウトウ" in ja or "ヒローエン" in ja or "晴れ舞台" in ja or "ブライダル" in ja:
+        return "空中吊篮跳伞脑洞与切蛋糕乳头黄段子", "婚礼筹备爆笑开幕！众人大开脑洞提议高空跳伞与缆车吊篮登场，小满激动要求切蛋糕，小幸呆萌接梗‘若是乳头随时都可以’，小满咬牙强忍吐槽；雄二坚定选择不办奢华喜宴的学生质朴风"
+    if "不審物" in ja or "ダイナマイト" in ja or "段ボール" in ja or "ＴＯＹ ＢＯＭＢＥＲ" in ja or "トイボマー" in ja or "プラスチック爆弾" in ja or "コンビニ" in ja:
+        return "玩具炸弹客新闻与便利店制弹论", "暗流涌动！电视播报三岛崎公园长椅发现纸箱伪装雷管炸药，锁定网络预告犯‘玩具炸弹客’；小幸精通塑胶炸药反被天音怀疑，由美子科普‘有一家便利店就能造炸弹’的网瘾硬核常识"
+    if "世界の全てを敵に" in ja or "テーラーメイド" in ja or "親族のみ" in ja or "ささやか" in ja or "主役" in ja or "安全" in ja:
+        return "为救幸与全世界为敌誓言与定制婚纱婉拒", "霸气守护与质朴初心！天音询问若小幸遇险怎么办，雄二冷峻宣告‘哪怕与全世界为敌也必救出小幸’；由美子欲动用人脉定制高级婚纱，小幸感念好意但坚持效仿父母亲族齐聚的质朴婚礼"
+    if "プランナー" in ja or "キャパ３５人" in ja or "チャージ料" in ja or "カタログ" in ja or "折り目" in ja or "撃墜王" in ja or "ファッションショー" in ja:
+        return "热血策划小姐扩编与百套婚纱击坠王时装秀", "欢脱选纱现场！热血新手女策划全力协助将教堂观礼名额免费扩容至35人；小幸翻烂画册、甚至拉来店员当店模，连试上百套婚纱化身‘百机击坠空中王牌’，现场演变成全员婚纱时装秀"
+    if "トマト煮" in ja or "そら豆" in ja or "高菜" in ja or "淘汰" in ja or "軍隊の飯より酷い" in ja or "母性" in ja or "満腹" in ja:
+        return "淘汰制偏食便当与看着你吃饱的母亲温情", "温馨野餐！小幸早起精心准备番茄炖豆子香肠和蚕豆雪菜饭团，全盘摸清雄二偏食喜好无情淘汰不爱之物；忆及刚交往时被吐槽‘比行军粮还难吃’哭湿枕头，如今体会到‘看着心爱之人吃饱便是最大幸福’的母亲心境"
+    if "児童公園" in ja or "少年兵" in ja or "摩周湖" in ja or "ハニートラップ" in ja or "レンジャー" in ja or "ランニング" in ja or "シーソー" in ja:
+        return "少年兵训练设施比喻与摩周湖清眸难拒", "硬核军旅脑回路！小幸体力充沛拉着雄二玩遍所有游具，雄二把滑梯和爬杆联想为游骑兵紧急撤离与绳攀训练，感叹儿童公园宛如少年兵训练营；面对小幸比摩周湖还清澈的双眸，雄二彻底缴械"
+    if "ボブスレー" in ja or "ゾンビ映画" in ja or "ラブラブ" in ja or "恋人滑り" in ja or "大好きだ" in ja or "護身術" in ja or "悪戯" in ja:
+        return "丧尸片炮灰情侣双人滑梯与大声告白恶作剧", "高甜压轴高潮！小幸圆梦模仿丧尸片最先被咬的笨情侣玩‘情侣双人滑滑梯’，紧紧相贴雪车坐姿；搬出防身术歪理‘必须放松身体消除紧张’，逼得雄二在全公园大喊‘幸！我最喜欢你了！’，恶作剧大获全胜"
+
     # sac_002 specific (Milestone 3 Chapter 32 - Sachi After Story Chapter 2: Python Anaconda, Shark Morning Kiss & Wedding Dress Surprise)
     if "服を着たまま" in ja or "海兵隊" in ja or "夜の海" in ja or "大蛇" in ja or "死霊" in ja or "寝苦しさ" in ja or "同衾" in ja:
         return "海军陆战队溺水地狱与晨间大蟒锁身", "生动硬核的军旅回忆！雄二回想海军陆战队战友醉酒常说的‘着衣落水夜海如地狱’名言，将沉重窒息感反差映射到床榻上幸大蟒缠身般双腿死死夹紧大腿的‘装睡蓄谋犯案’"
@@ -8524,6 +8540,32 @@ def build_report():
                 "section": "灰色的迷宫·入巢莳菜后日谈第四章·教室春梦吻满、水泥柱爆头与由美子美滨冷藏库落果论 (`grisaia2/mak_004`)"
             })
 
+    # Milestone 3 Chapter 33: Sachi After Story Chapter 3 (grisaia2/sac_003)
+    for lno in range(75505, 75759):
+        ja_raw = ja_lines[lno - 1].rstrip("\r\n")
+        cn_raw = cn_lines[lno - 1].rstrip("\r\n")
+        sid = ja_raw.split("\t")[0] if "\t" in ja_raw else f"L{lno}"
+        ja_txt = ja_raw.split("\t")[1] if "\t" in ja_raw else ja_raw
+        cn_txt = cn_raw.split("\t")[1] if "\t" in cn_raw else cn_raw
+
+        old_txt = cn_txt
+        if git_base_cn and len(git_base_cn) >= lno:
+            head_raw = git_base_cn[lno - 1].rstrip("\r\n")
+            old_txt = head_raw.split("\t")[1] if "\t" in head_raw else head_raw
+
+        if cn_txt != old_txt and cn_txt.strip() != "":
+            cat, reason = classify_change(lno, sid, ja_txt, old_txt, cn_txt)
+            diffs.append({
+                "lno": lno,
+                "sid": sid,
+                "ja": ja_txt,
+                "old": old_txt,
+                "new": cn_txt,
+                "cat": cat,
+                "reason": reason,
+                "section": "灰色的迷宫·小岭幸后日谈第三章·切蛋糕乳头谐音、玩具炸弹客与丧尸情侣双人滑梯大声告白恶作剧 (`grisaia2/sac_003`)"
+            })
+
     # Milestone 3 Chapter 32: Sachi After Story Chapter 2 (grisaia2/sac_002)
     for lno in range(75181, 75505):
         ja_raw = ja_lines[lno - 1].rstrip("\r\n")
@@ -10935,6 +10977,15 @@ def build_report():
     md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
     md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
     for idx, d in enumerate(mak_004_diffs, 1):
+        md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
+    md.append("\n---\n")
+
+    # Section 232 - Milestone 3: Labyrinth of Grisaia Sachi After Story Chapter 3
+    sac_003_diffs = [d for d in diffs if d["section"].startswith("灰色的迷宫·小岭幸后日谈第三章")]
+    md.append(f"## 二百三十二、 灰色的迷宫·小岭幸后日谈第三章·切蛋糕乳头谐音、玩具炸弹客与丧尸情侣双人滑梯大声告白恶作剧 (`grisaia2/sac_003`，共 {len(sac_003_diffs)} 条) —— 【里程碑三·小岭幸后日谈第三话】\n")
+    md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
+    md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
+    for idx, d in enumerate(sac_003_diffs, 1):
         md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
     md.append("\n---\n")
 
