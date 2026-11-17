@@ -1859,6 +1859,28 @@ def classify_change(line_no, sid, ja, old_cn, new_cn):
     if "早食い" in ja or "チャンペスト" in ja or "アイスクリーム頭痛" in ja or "チョコバナナ" in ja or "短冊" in ja or "づっとお兄ちゃんと一緒" in ja or "黒い携帯" in ja:
         return "满刨冰脑结冰败退与七夕短册父女誓约", "绝妙还原满自封冠军之王（Champest）狂炫刨冰致脑结冰送医的活宝行径、天音舔食巧克力香蕉的母性反差、莳菜写错别字的七夕短册‘想永远和哥哥在一起’、以及雄二注视CIRS黑色手机暗誓守护莳菜的深情内核"
 
+    # sachiss1 specific (Milestone 3 Sachi Short Story 1: Stranded Whale Shark Jin-kun, Swallowed 3 Times & Shark Disillusionment)
+    if (77522 <= line_no <= 77697) or sid.startswith("grisaia2/sachiss1#"):
+        if "男は一生に" in ja or "３度サメに狂う" in ja or "サメはいいぞ" in ja or "男は３回泣く" in ja or "会いに行け" in ja:
+            return "莳菜鲨鱼狂热金句与一生必疯三次暴言", "莳菜名台词爆笑登场！莳菜破门而入按住幸的双肩高呼‘男人一生哭三次，女人一生为鲨鱼发狂三次’，力劝幸奔赴海滩亲见鲨鱼"
+        if "サッちゃん" in ja or "滅亡の危機" in ja or "心の中" in ja or "テレパシー" in ja or "ジンくん" in ja:
+            return "幸与鲸鲨甚君脑内跨物种心灵感应会话", "超绝电波会话！幸在海滩凝视搁浅的鲸鲨甚君，脑内展开‘人类正濒临灭亡危机’的严肃科幻风心灵沟通，纠正旧译将甚君错译为‘小金’的严重语病"
+        if "飲み込まれ" in ja or "吐き出され" in ja or "口の中に" in ja or "イン" in ja or "３回" in ja or "丸呑み" in ja or "口を開け" in ja:
+            return "三次被鲸鲨生吞入腹又喷吐而出魔幻受难", "名场面震撼上演！幸被鲸鲨甚君整个人生吞入口中又喷吐而出，宛如洗礼般反复经历三次被吞吐奇观，笔触兼具惊险与极度荒谬的喜剧反差"
+        if "雷鳴と電光" in ja or "シュトラウス" in ja or "ポルカ" in ja or "電車" in ja or "イヤホン" in ja:
+            return "电车耳机播放雷鸣电光波尔卡与思绪漫游", "荒诞文艺之旅！幸乘上电车戴着耳机单曲循环小约翰·施特劳斯名曲《雷鸣电光波尔卡》，在轻快旋律中严肃思考人生与鲨鱼"
+        if "ニュースキャスター" in ja or "ジンベイザメ" in ja or "三島崎" in ja or "全長４メートル" in ja or "海岸" in ja:
+            return "电视突发鲸鲨搁浅快讯与三岛崎海岸骚动", "突发快讯演出！电视新闻播报三岛崎沿岸搁浅四米幼年活体鲸鲨（甚平鲛），引发当地居民聚集围观，修正播报腔调与专业海洋词汇"
+        if "地元民" in ja or "おっちゃん" in ja or "引っ張り出" in ja or "呆気" in ja:
+            return "目瞪口呆当地渔民大叔相救与海滩围观", "当地人灵魂吐槽！海滩渔民大叔目睹幸被鲨鱼吞吐吓得目瞪口呆，慌忙将湿漉漉的幸从海边拉出，纠正关西/渔民方言与口吻"
+        if "サメはダメです" in ja or "所詮、魚類でした" in ja or "生臭い" in ja or "海藻" in ja or "海水の匂い" in ja or "裏切られ" in ja or "Ｓ＆Ｓ" in ja:
+            return "满身海腥海藻归宿与‘鲨鱼终究只是鱼类’幻灭感言", "幻灭笑料闭环！幸浑身沾满海水海藻与生腥气味回到宿舍，平静吐出‘鲨鱼不行。终究只是鱼类而已’的清冷幻灭结论，纠正语气质感"
+        if "感動的" in ja or "感動してください" in ja:
+            return "旁白强行升华‘感动故事敬请感动’谢幕", "神级破壁旁白！结尾旁白一本正经宣布‘这是一个感人至深的故事，因此请务必感动’，达成完美的剧场式荒诞谢幕"
+        if "はじめまして" in ja or "蝉の鳴き声" in ja or "お茶" in ja or "夏休み" in ja:
+            return "盛夏宿舍静谧独白与悠闲品茗开场", "盛夏闲适开篇！幸在蝉鸣与烈日下悠闲沏茶，向观众自我介绍并抒发日常清幽，机翻生硬直译，润色为优雅自然的女仆内心独白"
+        return "小岭幸短篇日常细节与心理活动润色", "修正生硬机械翻译，优化女仆优雅从容语调与生动叙事细节"
+
     # sac_006 specific (Milestone 3 Chapter 37 - Sachi Route Epilogue: 11 Years Later, Daughter Yukiho 10th Birthday & Heirloom Music Box)
     if "１１年前" in ja or "幸穂" in ja or "お母さんみたいなお母さん" in ja or "スーパーマンさん" in ja:
         return "十一年前婚礼溯源与长女幸穗崇拜", "十一年后温馨尾声！大婚十一年后幸与雄二育有一女‘幸穗’，十岁幸穗依偎幸怀中倾听当年大婚拆弹往事，立志‘若将来结婚也想成为像妈妈一样无所不能的超级超人’，幸感动泪盈称赞幸穗真是个乖孩子"
@@ -8582,6 +8604,32 @@ def build_report():
                 "section": "灰色的迷宫·入巢莳菜后日谈第四章·教室春梦吻满、水泥柱爆头与由美子美滨冷藏库落果论 (`grisaia2/mak_004`)"
             })
 
+    # Milestone 3 Chapter 38: Sachi Short Story 1 (grisaia2/sachiss1)
+    for lno in range(77522, 77698):
+        ja_raw = ja_lines[lno - 1].rstrip("\r\n")
+        cn_raw = cn_lines[lno - 1].rstrip("\r\n")
+        sid = ja_raw.split("\t")[0] if "\t" in ja_raw else f"L{lno}"
+        ja_txt = ja_raw.split("\t")[1] if "\t" in ja_raw else ja_raw
+        cn_txt = cn_raw.split("\t")[1] if "\t" in cn_raw else cn_raw
+
+        old_txt = cn_txt
+        if git_base_cn and len(git_base_cn) >= lno:
+            head_raw = git_base_cn[lno - 1].rstrip("\r\n")
+            old_txt = head_raw.split("\t")[1] if "\t" in head_raw else head_raw
+
+        if cn_txt != old_txt and cn_txt.strip() != "":
+            cat, reason = classify_change(lno, sid, ja_txt, old_txt, cn_txt)
+            diffs.append({
+                "lno": lno,
+                "sid": sid,
+                "ja": ja_txt,
+                "old": old_txt,
+                "new": cn_txt,
+                "cat": cat,
+                "reason": reason,
+                "section": "灰色的迷宫·小岭幸短篇第一话·搁浅鲸鲨甚君、三次被生吞大震撼与鱼类幻灭感人故事 (`grisaia2/sachiss1`)"
+            })
+
     # Milestone 3 Chapter 37: Sachi Route Epilogue (grisaia2/sac_006)
     for lno in range(77468, 77522):
         ja_raw = ja_lines[lno - 1].rstrip("\r\n")
@@ -11123,6 +11171,15 @@ def build_report():
     md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
     md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
     for idx, d in enumerate(mak_004_diffs, 1):
+        md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
+    md.append("\n---\n")
+
+    # Section 237 - Milestone 3: Labyrinth of Grisaia Sachi Short Story 1
+    sachiss1_diffs = [d for d in diffs if d["section"].startswith("灰色的迷宫·小岭幸短篇第一话")]
+    md.append(f"## 二百三十七、 灰色的迷宫·小岭幸短篇第一话·搁浅鲸鲨甚君、三次被生吞大震撼与鱼类幻灭感人故事 (`grisaia2/sachiss1`，共 {len(sachiss1_diffs)} 条) —— 【里程碑三·小岭幸短篇第一话】\n")
+    md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
+    md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
+    for idx, d in enumerate(sachiss1_diffs, 1):
         md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
     md.append("\n---\n")
 
