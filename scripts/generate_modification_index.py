@@ -1859,6 +1859,18 @@ def classify_change(line_no, sid, ja, old_cn, new_cn):
     if "早食い" in ja or "チャンペスト" in ja or "アイスクリーム頭痛" in ja or "チョコバナナ" in ja or "短冊" in ja or "づっとお兄ちゃんと一緒" in ja or "黒い携帯" in ja:
         return "满刨冰脑结冰败退与七夕短册父女誓约", "绝妙还原满自封冠军之王（Champest）狂炫刨冰致脑结冰送医的活宝行径、天音舔食巧克力香蕉的母性反差、莳菜写错别字的七夕短册‘想永远和哥哥在一起’、以及雄二注视CIRS黑色手机暗誓守护莳菜的深情内核"
 
+    # michiruss3 specific (Milestone 3 Chapter 30 - Michiru Short Story 3: Heart's Maiden & Roasted Chicken Skin)
+    if "桃" in ja or "鼻の下" in ja or "サンタ" in ja or "小麦粉" in ja or "粉物" in ja or "愛と勇気" in ja:
+        return "桃子绒毛圣诞老人与面粉爱与勇气之谜", "温馨无厘头闺话！小满与寄宿在心房中的心脏捐献者少女闲聊：桃子表皮绒毛与人中汗毛对比、喝牛奶嘴唇留白像圣诞老人、面粉抹鼻子为‘全天下粉状物的爱与勇气’"
+    if "真に受ける" in ja or "イジメ" in ja or "従う" in ja or "きかない" in ja or "ピアノ" in ja or "アゴ" in ja or "アゴ牛" in ja:
+        return "听话反逻辑悖论与学园大小姐下巴弹钢琴", "少女心爆棚！少女要求满变得任性一点、不要对自己百依百顺，故意设计‘你不听我的话做不做得到’的双重反逻辑死循环；大小姐满曾学过钢琴，少女无厘头传授‘用下巴顶出志村健滑稽姿势砸琴键’的下巴钢琴秘技，满自创下巴牛相声接梗"
+    if "焼き鳥" in ja or "駐車場" in ja or "煙" in ja or "ネギ間" in ja or "皮" in ja or "油っぽい" in ja or "鳥肌" in ja or "お寿司" in ja:
+        return "停车场现烤鸡肉串与鸡皮执念狂欢", "吃货二人组！二人兴奋回忆超市停车场帐篷里浓烟滚滚的现烤鸡肉串，小满执念狂点‘金黄鸡皮’；少女吐槽鸡皮残留细毛令人毛骨悚然起鸡皮疙瘩（鳥肌），唱起烤鸡肉串打油歌，并科普疯狂连呼寿司名字的洗脑神曲《吃寿司去吧！》"
+    if "お芋" in ja or "戦争中" in ja or "甘さ" in ja or "チョコレート" in ja or "兵隊" in ja or "合成甘味料" in ja or "砂糖" in ja:
+        return "战时地瓜幸福论与浓甘高甜砂糖憧憬", "昭和怀旧童趣！二人探讨战争时期大家只能吃地瓜渡日，满幸福表示顿顿吃烤地瓜完全不觉得苦；探讨战后孩童追着美军大兵要巧克力的甘甜冲击、怀疑古代砂糖浓度极高是‘浓甘特级砂糖’，决定去超市买褐色黄糖亲自舔尝"
+    if "仲良く" in ja or "当たり前" in ja or "アイーン" in ja:
+        return "心之友志村健艾因永恒羁绊终章", "终极催泪与爆笑！纠正老译文将志村健传奇搞笑绝技‘アイーン（艾因/顶下巴）’机械音译为‘爱音’的严重机翻失误；少女与满相约买鸡皮、小满轻声祈愿‘以后也要一直这么要好哦’，少女元气满溢大喊‘那还用说嘛！艾——因！’，二人同频搞怪顶出下巴，为松岛满路线画上最温情动人的句点"
+
     # michiruss2 specific (Milestone 3 Chapter 29 - Michiru Short Story 2: Detective Michiru & Principal Murder Case)
     if "橘千鶴" in ja or "浜辺" in ja or "死体" in ja or "遊泳" in ja or "沖" in ja or "プレート" in ja or "学園長殺人事件" in ja:
         return "硬派刑侦剧片场与海滩千鹤尸体疑案", "爆笑恶搞开幕！满化身大牌警部、莳菜化身入巢刑警调查橘千鹤海滩‘尸体’案；纠正机翻将‘沖（外海）’遗留为生硬英文字母‘offshore’的低级错误；由千鹤肌肤上的发光鳞片断定为恶性杀人事件"
@@ -8482,6 +8494,32 @@ def build_report():
                 "section": "灰色的迷宫·入巢莳菜后日谈第四章·教室春梦吻满、水泥柱爆头与由美子美滨冷藏库落果论 (`grisaia2/mak_004`)"
             })
 
+    # Milestone 3 Chapter 30: Michiru Short Story 3 (grisaia2/michiruss3)
+    for lno in range(74766, 74875):
+        ja_raw = ja_lines[lno - 1].rstrip("\r\n")
+        cn_raw = cn_lines[lno - 1].rstrip("\r\n")
+        sid = ja_raw.split("\t")[0] if "\t" in ja_raw else f"L{lno}"
+        ja_txt = ja_raw.split("\t")[1] if "\t" in ja_raw else ja_raw
+        cn_txt = cn_raw.split("\t")[1] if "\t" in cn_raw else cn_raw
+
+        old_txt = cn_txt
+        if git_base_cn and len(git_base_cn) >= lno:
+            head_raw = git_base_cn[lno - 1].rstrip("\r\n")
+            old_txt = head_raw.split("\t")[1] if "\t" in head_raw else head_raw
+
+        if cn_txt != old_txt and cn_txt.strip() != "":
+            cat, reason = classify_change(lno, sid, ja_txt, old_txt, cn_txt)
+            diffs.append({
+                "lno": lno,
+                "sid": sid,
+                "ja": ja_txt,
+                "old": old_txt,
+                "new": cn_txt,
+                "cat": cat,
+                "reason": reason,
+                "section": "灰色的迷宫·松岛满短篇第三话·心之少女温柔闺话、下巴钢琴志村健艾因搞怪与金黄烤鸡皮之约 (`grisaia2/michiruss3`)"
+            })
+
     # Milestone 3 Chapter 29: Michiru Short Story 2 (grisaia2/michiruss2)
     for lno in range(74580, 74766):
         ja_raw = ja_lines[lno - 1].rstrip("\r\n")
@@ -10815,6 +10853,15 @@ def build_report():
     md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
     md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
     for idx, d in enumerate(mak_004_diffs, 1):
+        md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
+    md.append("\n---\n")
+
+    # Section 229 - Milestone 3: Labyrinth of Grisaia Michiru Short Story 3
+    michiruss3_diffs = [d for d in diffs if d["section"].startswith("灰色的迷宫·松岛满短篇第三话")]
+    md.append(f"## 二百二十九、 灰色的迷宫·松岛满短篇第三话·心之少女温柔闺话、下巴钢琴志村健艾因搞怪与金黄烤鸡皮之约 (`grisaia2/michiruss3`，共 {len(michiruss3_diffs)} 条) —— 【里程碑三·松岛满短篇第三话】\n")
+    md.append("| 序号 | 行号 | Scene ID | 日文原文 (JA) | 修改前机翻译文 (Old CN) | 修改后深度润色译文 (Polished CN) | 修改分类与原因 |")
+    md.append("| :---: | :---: | :--- | :--- | :--- | :--- | :--- |")
+    for idx, d in enumerate(michiruss3_diffs, 1):
         md.append(f"| {idx} | L{d['lno']} | `{d['sid']}` | {escape_md(d['ja'])} | {escape_md(d['old'])} | **{escape_md(d['new'])}** | `{d['cat']}`: {d['reason']} |")
     md.append("\n---\n")
 
