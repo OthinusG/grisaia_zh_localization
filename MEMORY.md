@@ -240,7 +240,7 @@
   - `grisaia2/etcess2` (Lines 68786 - L68876, 91 lines): Miscellaneous Short 2: Maguroman Backstage Gossip & Midlife Crisis: Maguroman and General Kalbi waiting on location shoot during midsummer heat; Kalbi's solo spin-off movie *Young Kalbi* revealed as producer Koshiba pushing his mistress Misaki-chan; Maguroman in denial over age gap with Misaki; Kalbi wearing 8,000,000 yen luxury watch, making Maguroman tremble comparing it to the Beppu bath salts set he received for his birthday; Maguroman realizing he was not invited to producer Koshiba's housewarming BBQ; learning *Maguroman* is casting "Maguroman's Son" for housewives and demoting him to "Pops" (おやっさん); mutual silence spotting a "B-29" in the sky; Maguroman resentful over Kalbi's casual attitude towards work (76 entries polished).
   - `grisaia2/ss1` (Lines 78020 - L78055, 36 lines): Miscellaneous Short 3: Operation HPH String Panties Night Vision Infiltration: Makina commanding tactical squad HPH with Sachi (HPH-1, NVG breach) and Michiru (HPH-2, perimeter escape route) infiltrating Yumiko's dorm room in the dead of night; pulling down pajama bottoms while Yumiko sleeps to confirm rumors she wears erotic string panties (`紐パン`); Sachi confirming target item in military brevity; Makina planning to tease Yumiko in class; next morning Makina teasing Yumiko in class, leaving Yumiko in disbelief at how she found out (34 entries polished).
   - `grisaia2/ss2` (Lines 78056 - L78107, 52 lines): Miscellaneous Short 4: Tragic Ogre Legend & Tag Game Melodrama: Sachi losing rock-paper-scissors to be the "oni" in tag game; asking for a moment to tell an intensely melodramatic folk tale about an ugly, gentle mountain ogre and a lonely boy who became best friends; villagers hunting ogre down, boy jumping in front of arrow to save ogre and dying in ogre's arms whispering to be friends forever even as a star; ogre weeping in rage vowing to hunt down humans to the ends of the earth; Sachi deadpanning: "All right, tag game officially begins! Run for your lives humans!" -> Michiru screaming "Nobody can run in this depressing mood!" -> Makina crying "Sorry Mr. Ogre!" -> Sachi chasing "Rawr, gonna eat you all up!" (52 entries polished).
-- Total indexed modifications: 75,277 entries documented in `grisaia_modification_index.md`.
+- Total indexed modifications: 88,115 entries documented in `grisaia_modification_index.md`.
 - Milestone 3 (`grisaia2`, L58281 - L89230, all 77 items) is 100% COMPLETE & VERIFIED:
   - Stage 3.1: 雄二过去篇 Caprice (`yuj_001` ~ `yuj_015`, 16 items, L78252 - L85936, 7,685 lines) 100% COMPLETE!
   - Stage 3.2: 周防天音 After Story & SS (`ama_001` ~ `ama_006` / `amaness*`, 9 items, L66165 - L68708, 2,544 lines) 100% COMPLETE!
@@ -249,7 +249,11 @@
   - Stage 3.5: 小岭幸 After Story & SS (`sac_001` ~ `sac_006` / `sachiss*`, 11 items, L74875 - L78019, 3,145 lines) 100% COMPLETE!
   - Stage 3.6: 榊由美子 After Story & SS (`yum_001` ~ `yum_005` / `yumikoss1`~`yumikoss7`, 11 items, L85937 - L89230, 3,294 lines) 100% COMPLETE!
   - Stage 3.7: 美滨日常短篇集与杂项篇 (`etcess1`~`etcess2`, `ss1`~`ss8`, 9 items, L68709 - L68876 & L78020 - L78251, 379 lines) 100% COMPLETE!
-- Next Target: Milestone 4 (《灰色的乐园》白翼之茧与决战篇, 共 57 项, L89231 - L106902, 17,672 lines), starting from M4.1.01 `grisaia3/bla_001A`.
+- Milestone 4 - Stage 4.1 (`grisaia3/bla_001A` ~ `bla_018J`, L89231 - L102990, 43 subtasks, 13,760 lines) is 100% COMPLETE & VERIFIED:
+  - Stage 4.1: 《灰色的乐园》白翼之茧篇（M4.1.01 ~ M4.1.43，共 43 个子任务）全部深度精校、结构对齐与索引归档完成！
+  - 覆盖范围：CIRS解体前夕、五人反逆生活、地下伊号潜水艇“白翼之茧”夺回计划、山王下攻防、高速公路直升机死斗、伊号潜艇深潜断缆、克隆体提丰血战、真假奥斯陆终极决算（含红西装三代目BAD END与彼岸归途TRUE END分支）、以及最终话格里萨亚之岛命名落成与全员落成纪念合影。
+  - 对应索引章节：第二百六十一至第三百零三（Sections 261-303），共计 43 话索引详尽归档。
+- Next Target: Stage 4.2: 世界树之种 / 终章 (`PRO_001` ~ `PRO_005`, 共 14 项, L102991 - L106902, 3,912 lines), starting from M4.2.01 `grisaia3/PRO_001`.
 - Alignment: Full 110,622-line structural verification (`python3 scripts/verify_alignment.py`) passes 100% with zero line drift, tab drift, or tag corruption.
 - Git Remote: Tracked with `git@github.com:OthinusG/grisaia_zh_localization.git` on branch `main`.
 - Project Plan & Roadmap: Exhaustive checklist maintained in `grisaia_localization_project_plan.md`.
