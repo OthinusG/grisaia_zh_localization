@@ -257,7 +257,7 @@
   - Stage 5.2: 《灰色的旋律 / 魔女的黄昏 / 偶像魔法少女 / 有坂真寻篇》（M5.2.01 ~ M5.2.06，共 6 个子任务，1,874 行，L106903 - L108776）全部深度精校、结构对齐与索引归档完成（Sections 318-323）。涵盖有坂真寻由失业女老师误入美滨、遭遇奇葩学生与“金钱换笑容”之救赎；日下部麻子少女特工时代的残酷暗杀任务与玛丽安之死；以及纯真魔法少女普莉姆拉番外篇！
   - Stage 5.1: 《灰色的残光》篇（M5.1.01 ~ M5.1.07，共 7 个子任务，1,846 行，L108777 - L110622）全部深度精校、结构对齐与索引归档完成（Sections 324-330）。涵盖麻子湾岸摩托车竞速、北五坂町枪匠山本与9029编号传奇渊源、温哥华机场战友丹尼尔·布恩（Danny）殉职军礼与1969克尔维特大排量跑车托孤、以及雄二初次为他人流泪的深刻蜕变；大结局中麻子与雄二深入山林追踪狡诈暗杀者“黄鼠狼”里卡多·巴尔博亚、雄二假扮飞钓少年堵塞洗手间侦察、麻子于800米开外情趣旅馆穿透15厘米微隙爆头击毙目标的神级狙击试炼、拉面摊上分赠叉烧与扣动扳机的哲学秘诀、以及雄二立志出师早日守护麻子的终极誓言！
   - Stage 5.3: 全量 110,622 行终验与 Release 封包（M5.3.01 ~ M5.3.03）100% 验证通过：`scripts/verify_alignment.py` 结构一致性 100% PASS，`scripts/scan_issues.py` 特征告警全量清零，全剧本 110,622 行圆满闭环封包！
-- Total indexed modifications: 95,331 entries documented in `grisaia_modification_index.md` and `analysis/grisaia_modification_index.md` (Sections 1 through 330).
+- Total indexed modifications: 95,331 entries documented in `grisaia_modification_index.md` (Sections 1 through 330).
 - Entire Frontwing Grisaia Trilogy + Side Stories Localization Project (110,622 lines total, Milestones 1 - 5) is 100% COMPLETE!
 - Alignment: Full 110,622-line structural verification (`python3 scripts/verify_alignment.py`) passes 100% with zero line drift, tab drift, or tag corruption.
 - Git Remote: Tracked with `git@github.com:OthinusG/grisaia_zh_localization.git` on branch `main`.
