@@ -253,15 +253,20 @@
   - Stage 4.1: 《灰色的乐园》白翼之茧篇（M4.1.01 ~ M4.1.43，共 43 个子任务，13,760 行）全部深度精校、结构对齐与索引归档完成（Sections 261-303）。
   - Stage 4.2: 《灰色的乐园》世界树之种 / 终章前传篇（M4.2.01 ~ M4.2.14，共 14 个子任务，3,912 行）全部深度精校、结构对齐与索引归档完成（Sections 304-317）。
   - 核心叙事完整闭环：从由美子孤身一人的囚鸟时光、天音轰鸣骑行加入、满傲娇双马尾现身、莳菜货柜箱收养与枇杷树深坑营救、幸跨县自行车狂飙报到、金枪鱼侠特摄漫才、三岛崎中止开发暴动、美滨全员义工外籍兵团清扫、梨子与“朋友”之泪，到千鹤通报男学生（风见雄二）即将转入美滨、由美子手握美工刀誓死捍卫这片灰色果园——完美无缝闭环交接回系列原点《灰色的果实》开篇！
-- Next Target: 【里程碑 5】《灰色外传集》与全量验收封包 (共 13 项, L106903 - L110622, 3,696 lines)，涵盖 Stage 5.1 残光篇 (`grizan_001` ~ `grizan_007`, 7 项) 与 Stage 5.2 旋律/魔女/有坂篇 (`melody_001` ~ `arisaka_003`, 6 项)。
+- Milestone 5 (`side`, L106903 - L110622, all 13 items + Stage 5.3, 3,720 lines) is 100% COMPLETE & VERIFIED:
+  - Stage 5.2: 《灰色的旋律 / 魔女的黄昏 / 偶像魔法少女 / 有坂真寻篇》（M5.2.01 ~ M5.2.06，共 6 个子任务，1,874 行，L106903 - L108776）全部深度精校、结构对齐与索引归档完成（Sections 318-323）。涵盖有坂真寻由失业女老师误入美滨、遭遇奇葩学生与“金钱换笑容”之救赎；日下部麻子少女特工时代的残酷暗杀任务与玛丽安之死；以及纯真魔法少女普莉姆拉番外篇！
+  - Stage 5.1: 《灰色的残光》篇（M5.1.01 ~ M5.1.07，共 7 个子任务，1,846 行，L108777 - L110622）全部深度精校、结构对齐与索引归档完成（Sections 324-330）。涵盖麻子湾岸摩托车竞速、北五坂町枪匠山本与9029编号传奇渊源、温哥华机场战友丹尼尔·布恩（Danny）殉职军礼与1969克尔维特大排量跑车托孤、以及雄二初次为他人流泪的深刻蜕变；大结局中麻子与雄二深入山林追踪狡诈暗杀者“黄鼠狼”里卡多·巴尔博亚、雄二假扮飞钓少年堵塞洗手间侦察、麻子于800米开外情趣旅馆穿透15厘米微隙爆头击毙目标的神级狙击试炼、拉面摊上分赠叉烧与扣动扳机的哲学秘诀、以及雄二立志出师早日守护麻子的终极誓言！
+  - Stage 5.3: 全量 110,622 行终验与 Release 封包（M5.3.01 ~ M5.3.03）100% 验证通过：`scripts/verify_alignment.py` 结构一致性 100% PASS，`scripts/scan_issues.py` 特征告警全量清零，全剧本 110,622 行圆满闭环封包！
+- Total indexed modifications: 95,331 entries documented in `grisaia_modification_index.md` and `analysis/grisaia_modification_index.md` (Sections 1 through 330).
+- Entire Frontwing Grisaia Trilogy + Side Stories Localization Project (110,622 lines total, Milestones 1 - 5) is 100% COMPLETE!
 - Alignment: Full 110,622-line structural verification (`python3 scripts/verify_alignment.py`) passes 100% with zero line drift, tab drift, or tag corruption.
 - Git Remote: Tracked with `git@github.com:OthinusG/grisaia_zh_localization.git` on branch `main`.
-- Project Plan & Roadmap: Exhaustive checklist maintained in `grisaia_localization_project_plan.md`.
+- Project Plan & Roadmap: Exhaustive checklist maintained in `grisaia_localization_project_plan.md` (all 330 sections checked off [x]).
 - Operational Rules:
   - TSV File Management: All scratch/extracted `.tsv` files are centralized in the `/tsv` folder (`tsv/`) to keep workspace root clean.
   - Temporary & Scratch Files: Intermediate dump JSONs and scratch texts are segregated into `/tmp` (`tmp/`), never placed in root.
   - Granular task checklist with active checkoff (`[x]`) upon each subtask completion.
   - Strict Task Granularity: Every single subtask in the project plan is strictly controlled to <= 1000 lines (329 fine-grained subtasks total across all 110,622 lines).
   - Real-time Git commit and push (`origin main`) after each subtask.
-  - Strict adherence to milestone gates: stop and pause upon completing user-specified milestone boundary (e.g. Milestone 1 completion).
+  - Strict adherence to milestone gates: stop and pause upon completing user-specified milestone boundary (Milestone 5 complete).
 
